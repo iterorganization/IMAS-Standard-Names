@@ -1,0 +1,30 @@
+[project]
+name = "imas-standard-names"
+version = "0.1.0"
+description = "A collection of Standard Names used in the Fusion Conventions and logic for creating a static website for documentation."
+authors = [
+    {name = "Maarten Sebregts",email = "msebregts@ignitioncomputing.com"},
+    {name = "Simon McIntosh",email = "simon.mcintosh@iter.org"}
+]
+license = {text = "LGPL"}
+readme = "README.md"
+requires-python = ">=3.10,<3.13"  # saxonche 
+dependencies = [
+    "mkdocs (>=1.6.1,<2.0.0)",
+    "mkdocs-material (>=9.6.5,<10.0.0)",
+    "mkdocs-data-plugin (>=0.2.0,<0.3.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+imas-python = {git = "git@github.com:iterorganization/IMAS-Python.git"}
+ipykernel = "^6.29.5"
+pandas = "^2.2.3"
+strictyaml = "^1.7.3"

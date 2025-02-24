@@ -1,0 +1,57 @@
+name: Create Standard Name
+description: Propose a Standard Name.
+title: "Standard Name"
+labels: ["triage"]
+assignees:
+  - Simon-McIntosh
+body:
+  - type: markdown
+    attributes:
+      value: |
+      
+        ## Characters
+        Standard names consist of lower-letters, digits and underscores, and begin with a letter. Upper case is not used.
+      
+        ### Spelling
+        US spelling is used e.g. vapor, sulfur.
+      
+        ### Qualifications
+        Standard names may be qualified by the addition of phrases in certain standard forms and order. 
+        These qualifications do not change the units of the quantity. All of the following phrases in [] are optional. 
+        The words in `typewriter` type appear explicitly as stated, while the words in *italic* indicate other words or 
+        phrases to be substituted. The new standard name is constructed by joining the base standard name to the 
+        qualifiers using underscores.
+      
+        [surface] [component] standard_name [`at` surface] [`in` medium] [`due to` process] [`assuming` condition]
+        
+  - type: input
+    id: name
+    attributes:
+      label: name
+      description: Enter Standard Name 
+      placeholder: ex. plasma_current
+    validations:
+      required: true
+  - type: input
+    id: units
+    attributes:
+      label: units
+      description: Enter units
+      placeholder: m^2
+    validations:
+      required: true
+  - type: textarea
+    id: documentation
+    attributes:
+      label: documentation
+      description: Add documentation for the proposed Standard Name.
+    validations:
+      required: true
+  - type: input
+    id: path
+    attributes:
+      label: DD path
+      description: Enter DD path, if applicable
+      placeholder: equilibrium/time_slice/global_quantities/ip
+    validations:
+      required: false
