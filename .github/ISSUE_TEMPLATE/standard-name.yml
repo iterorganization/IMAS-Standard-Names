@@ -48,7 +48,7 @@ body:
     validations:
       required: true
   - type: input
-    id: DD path
+    id: path
     attributes:
       label: DD path
       description: Enter DD path, if applicable
