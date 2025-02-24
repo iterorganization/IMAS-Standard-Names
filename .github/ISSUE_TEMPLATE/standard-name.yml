@@ -8,16 +8,18 @@ body:
   - type: markdown
     attributes:
       value: |
-        "## Characters
-         Standard names consist of lower-letters, digits and underscores, and begin with a letter. Upper case is not used.
+        "
+        ## Characters
+        Standard names consist of lower-letters, digits and underscores, and begin with a letter. Upper case is not used.
       
-         ### Spelling
-         US spelling is used e.g. vapor, sulfur.
+        ### Spelling
+        US spelling is used e.g. vapor, sulfur.
       
-         ### Qualifications
-         Standard names may be qualified by the addition of phrases in certain standard forms and order. These qualifications do not change the units of the quantity. All of the following phrases in [] are optional. The words in typewriter type appear explicitly as stated, while the words in italic indicate other words or phrases to be substituted. The new standard name is constructed by joining the base standard name to the qualifiers using underscores.
+        ### Qualifications
+        Standard names may be qualified by the addition of phrases in certain standard forms and order. These qualifications do not change the units of the quantity. All of the following phrases in [] are optional. The words in typewriter type appear explicitly as stated, while the words in italic indicate other words or phrases to be substituted. The new standard name is constructed by joining the base standard name to the qualifiers using underscores.
       
-         [surface] [component] standard_name [at surface] [in medium] [due to process] [assuming condition]"
+        [surface] [component] standard_name [at surface] [in medium] [due to process] [assuming condition]
+        "
   - type: input
     id: name
     attributes:
