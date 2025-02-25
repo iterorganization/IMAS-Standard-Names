@@ -76,7 +76,7 @@ body:
   - type: checkboxes
     id: overwrite
     attributes:
-      label: alias
+      label: overwrite
       description: Overwrite existing Standard Name.
       options:
         - label: Overwrite
