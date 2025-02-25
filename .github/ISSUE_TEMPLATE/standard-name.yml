@@ -1,9 +1,6 @@
 name: Propose a Standard Name addition or modification
 description: Propose a Standard Name.
-title: ""
-labels: ""
-assignees:
-  - Simon-McIntosh
+
 body:
   - type: markdown
     attributes:
