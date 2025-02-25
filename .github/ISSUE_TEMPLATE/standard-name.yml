@@ -1,5 +1,5 @@
-name: Propose a Standard Name addition or modification
-description: Propose a Standard Name.
+name: IMAS Standard Name
+description: Propose an IMAS Standard Name addition or modification.
 
 body:
   - type: markdown
