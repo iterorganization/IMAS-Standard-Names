@@ -1,2 +1,5 @@
 # mkdocs generated site
 site
+
+# pycache 
+__pycache__/

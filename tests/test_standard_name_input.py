@@ -1,0 +1,144 @@
+import json
+import pydantic
+import pytest
+
+from imas_standard_names.parse import (
+    StandardName,
+    ParseYaml,
+    ParseJson,
+    StandardNameFile,
+)
+
+import strictyaml as syaml
+
+
+standard_name_data = {
+    "name": "ion_temperature",
+    "units": "A",
+    "documentation": "some docs\non \nmultiple lines",
+    "tags": "",
+    "alias": "",
+}
+
+yaml_single = syaml.as_document(
+    {
+        standard_name_data["name"]: {
+            key: value for key, value in standard_name_data.items() if key != "name"
+        }
+    }
+)
+
+yaml_multi = syaml.as_document(
+    {
+        name: {"units": units, "documentation": "docs"}
+        for name, units in zip(
+            ["plasma_current", "plasma_current_density", "electron_temperature"],
+            ["A", "A/m^2", "eV"],
+        )
+    }
+)
+
+
+def test_standard_name():
+    standard_name = StandardName(**standard_name_data)
+    for key, value in standard_name_data.items():
+        assert getattr(standard_name, key) == value
+
+
+@pytest.mark.parametrize("name", ["1st_plasma", "Main_ion_density", "_private"])
+def test_name_validator(name):
+    with pytest.raises(pydantic.ValidationError):
+        StandardName(name=name, units="A", documentation="docs")
+
+
+def test_units_validator():
+    with pytest.raises(pydantic.ValidationError):
+        StandardName(name="plasma_current", units=1, documentation="docs")
+
+
+def test_docs_validator():
+    with pytest.raises(pydantic.ValidationError):
+        StandardName(name="plasma_current", units="A", documentation=None)
+
+
+def test_yaml_input():
+    standard_name = ParseYaml(yaml_single.as_yaml())[standard_name_data["name"]]
+    for key, value in standard_name_data.items():
+        if key == "name":
+            continue
+        assert getattr(standard_name, key) == value
+
+
+def test_json_input():
+    github_response = json.dumps(standard_name_data)
+    standard_name = ParseJson(github_response)[standard_name_data["name"]]
+    for key, value in standard_name_data.items():
+        if key == "name":
+            continue
+        assert getattr(standard_name, key) == value
+
+
+def test_json_name():
+    github_response = json.dumps(standard_name_data)
+    assert ParseJson(github_response).name == standard_name_data["name"]
+
+
+def test_yaml_json_equality():
+    yaml_standard_name = ParseYaml(yaml_single.as_yaml())[standard_name_data["name"]]
+    json_standard_name = ParseJson(json.dumps(standard_name_data)).standard_name
+    assert yaml_standard_name == json_standard_name
+
+
+def test_yaml_roundtrip():
+    standard_name = ParseYaml(yaml_multi.as_yaml())
+    for key in yaml_multi.as_marked_up():
+        assert (
+            ParseYaml(standard_name[key].as_yaml())[key]
+            == ParseYaml(yaml_multi.as_yaml())[key]
+        )
+
+
+@pytest.fixture()
+def standardnames(tmp_path_factory):
+    filepath = tmp_path_factory.mktemp("data") / "standardnames.yaml"
+    with open(filepath, "w") as f:
+        f.write(yaml_multi.as_yaml())
+    return filepath
+
+
+def test_standard_name_file(standardnames):
+    standard_input = ParseYaml(yaml_multi.as_yaml())
+    standard_names = StandardNameFile(standardnames)
+    for key in yaml_multi.as_marked_up():
+        assert standard_names[key] == standard_input[key]
+
+
+def test_file_update(standardnames):
+    standard_names = StandardNameFile(standardnames)
+    standard_names_document = standard_names.data.whole_document()
+    github_response = json.dumps(standard_name_data)
+    standard_names.update(github_response)
+    assert standard_name_data["name"] in standard_names.data
+    assert (
+        standard_names[standard_name_data["name"]]
+        == ParseJson(github_response).standard_name
+    )
+    new_standard_names = StandardNameFile(standardnames)
+    assert standard_names.data.whole_document() != standard_names_document
+    assert (
+        new_standard_names[standard_name_data["name"]]
+        == ParseJson(github_response).standard_name
+    )
+
+
+def test_file_update_overwrite_error(standardnames):
+    standard_names = StandardNameFile(standardnames)
+    github_response = json.dumps(
+        standard_name_data | {"name": "plasma_current", "overwrite": False}
+    )
+    with pytest.raises(ValueError):
+        standard_names.update(github_response)
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])

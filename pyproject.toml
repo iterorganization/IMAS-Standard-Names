@@ -1,30 +1,52 @@
 [project]
 name = "imas-standard-names"
-version = "0.1.0"
+dynamic = [ "version" ]
 description = "A collection of Standard Names used in the Fusion Conventions and logic for creating a static website for documentation."
 authors = [
     {name = "Maarten Sebregts",email = "msebregts@ignitioncomputing.com"},
     {name = "Simon McIntosh",email = "simon.mcintosh@iter.org"}
 ]
-license = {text = "LGPL"}
+license = {text = "CC BY-ND 4.0"}
 readme = "README.md"
 requires-python = ">=3.10,<3.13"  # saxonche 
 dependencies = [
     "mkdocs (>=1.6.1,<2.0.0)",
     "mkdocs-material (>=9.6.5,<10.0.0)",
-    "mkdocs-data-plugin (>=0.2.0,<0.3.0)"
+    "mkdocs-data-plugin (>=0.2.0,<0.3.0)",
+    "strictyaml (>=1.7.3,<2.0.0)",
+    "pydantic (>=2.10.6,<3.0.0)",
 ]
 
 
+[project.optional-dependencies]
+test = ["pytest (>=8.3.4,<9.0.0)", "pytest-cov (>=4.1.0,<5.0.0)"]
+
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core>=2.1",
+  "poetry-dynamic-versioning>=1.4"
+]
+build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry]
-package-mode = false
+name = "imas-standard-names"
+version = "0.0.0"
+package-mode = true
+packages = [{ include = "imas_standard_names" }]
+exclude = [ ".github" ]
 
 [tool.poetry.group.dev.dependencies]
 imas-python = {git = "git@github.com:iterorganization/IMAS-Python.git"}
 ipykernel = "^6.29.5"
 pandas = "^2.2.3"
-strictyaml = "^1.7.3"
+
+[tool.poetry.requires-plugins]
+poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
+poetry-plugin-shell = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "semver"
+pattern = "^(?P<base>\\d+\\.\\d+\\.\\d+)(-?((?P<stage>[a-zA-Z]+)\\.?(?P<revision>\\d+)?))?"
+format = "{base}+{distance}.{commit}"

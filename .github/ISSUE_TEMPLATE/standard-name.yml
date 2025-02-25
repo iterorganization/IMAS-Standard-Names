@@ -8,50 +8,75 @@ body:
   - type: markdown
     attributes:
       value: |
-      
-        ## Characters
-        Standard names consist of lower-letters, digits and underscores, and begin with a letter. Upper case is not used.
-      
-        ### Spelling
-        US spelling is used e.g. vapor, sulfur.
-      
-        ### Qualifications
-        Standard names may be qualified by the addition of phrases in certain standard forms and order. 
-        These qualifications do not change the units of the quantity. All of the following phrases in [] are optional. 
-        The words in `typewriter` type appear explicitly as stated, while the words in *italic* indicate other words or 
-        phrases to be substituted. The new standard name is constructed by joining the base standard name to the 
-        qualifiers using underscores.
-      
-        [surface] [component] standard_name [`at` surface] [`in` medium] [`due to` process] [`assuming` condition]
+        Guidelines for the construction of IMAS Standard Names 
+        can be found [here](https://github.com/iterorganization/IMAS-Standard-Names/blob/main/docs/guidelines.md).
+
+        These guidelines should be followed when proposing a new Standard Name.
         
   - type: input
     id: name
     attributes:
       label: name
-      description: Enter Standard Name 
-      placeholder: ex. plasma_current
+      description: |
+        Standard names consist of lower-lettters, digits and underscores, 
+        and begin with a letter. Upper case is not used.
+      placeholder: ex. poloidal_flux
     validations:
       required: true
+
   - type: input
     id: units
     attributes:
       label: units
-      description: Enter units
-      placeholder: m^2
+      description: |
+        Define SI units unless an alternative is widely used in the community.
+        
+        note: e (elementary charge unit), u (Dalton / atomic mass unit),
+         and eV for electron/ion/neutral temperatures]
+      placeholder: Wb
     validations:
       required: true
+
   - type: textarea
     id: documentation
     attributes:
       label: documentation
-      description: Add documentation for the proposed Standard Name.
+      description: Documentation for the proposed Standard Name.
+      placeholder: |
+        Poloidal flux. Integral of magnetic field passing through a contour
+        defined by the intersection of a flux surface passing through the point
+        of interest and a $Z=\mathrm{constant}$ plane. The surface normal is in
+        the same direction as increasing
+        [`vertical_distance`](#vertical_distance).
+
+        $$
+        \psi_{pol} = \oint_S \textbf{B} \cdot d\textbf{S}
+        $$
     validations:
       required: true
+
   - type: input
-    id: path
+    id: tags
     attributes:
-      label: DD path
-      description: Enter DD path, if applicable
-      placeholder: equilibrium/time_slice/global_quantities/ip
+      label: tags
+      description: Comma seperated list of tags.
+      placeholder: flux-coordinates, equilibrium
     validations:
       required: false
+
+  - type: input
+    id: alias
+    attributes:
+      label: alias
+      description: Alias to another Standard Name.
+      placeholder: 
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: overwrite
+    attributes:
+      label: alias
+      description: Overwrite existing Standard Name.
+    options:
+      - label: Overwrite
