@@ -75,6 +75,6 @@ body:
     id: overwrite
     attributes:
       label: overwrite
-      description: Overwrite existing Standard Name.
+      description: Overwrite an existing Standard Name.
       options:
         - label: Overwrite
