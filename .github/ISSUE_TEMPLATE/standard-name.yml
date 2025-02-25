@@ -78,5 +78,5 @@ body:
     attributes:
       label: alias
       description: Overwrite existing Standard Name.
-    options:
-      - label: Overwrite
+      options:
+        - label: Overwrite
