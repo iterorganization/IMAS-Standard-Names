@@ -9,7 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-
       - uses: stefanbuck/github-issue-parser@v3
         id: issue-parser
         with:
@@ -17,6 +16,14 @@ jobs:
 
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > submission.json
       
+        name: Process issue
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install .[test]
       # - run: node submission.js
 
       # - run: yarn

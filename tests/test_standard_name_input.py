@@ -7,6 +7,7 @@ from imas_standard_names.parse import (
     ParseYaml,
     ParseJson,
     StandardNameFile,
+    StandardInput,
 )
 
 import strictyaml as syaml
@@ -18,6 +19,7 @@ standard_name_data = {
     "documentation": "some docs\non \nmultiple lines",
     "tags": "",
     "alias": "",
+    "overwrite": False,
 }
 
 yaml_single = syaml.as_document(
@@ -117,7 +119,8 @@ def test_file_update(standardnames):
     standard_names = StandardNameFile(standardnames)
     standard_names_document = standard_names.data.whole_document()
     github_response = json.dumps(standard_name_data)
-    standard_names.update(github_response)
+    standard_name = ParseJson(github_response).standard_name
+    standard_names.update(standard_name)
     assert standard_name_data["name"] in standard_names.data
     assert (
         standard_names[standard_name_data["name"]]
@@ -136,8 +139,18 @@ def test_file_update_overwrite_error(standardnames):
     github_response = json.dumps(
         standard_name_data | {"name": "plasma_current", "overwrite": False}
     )
+    standard_name = ParseJson(github_response).standard_name
     with pytest.raises(ValueError):
-        standard_names.update(github_response)
+        standard_names.update(standard_name)
+
+
+@pytest.mark.parametrize("overwrite", ["Overwrite", []])
+def test_json_overwrite(tmp_path, overwrite):
+    filename = tmp_path / "test.json"
+    with open(filename, "w") as f:
+        json.dump(standard_name_data | {"overwrite": overwrite}, f)
+    standard_input = StandardInput(filename)
+    assert standard_input.standard_name.overwrite is (overwrite == "Overwrite")
 
 
 if __name__ == "__main__":

@@ -15,8 +15,11 @@ dependencies = [
     "mkdocs-data-plugin (>=0.2.0,<0.3.0)",
     "strictyaml (>=1.7.3,<2.0.0)",
     "pydantic (>=2.10.6,<3.0.0)",
+    "click (>=8.1.8,<9.0.0)",
 ]
 
+[project.scripts]
+add_standard_name = "imas_standard_names.add_standard_name:add_standard_name"
 
 [project.optional-dependencies]
 test = ["pytest (>=8.3.4,<9.0.0)", "pytest-cov (>=4.1.0,<5.0.0)"]
@@ -32,7 +35,7 @@ build-backend = "poetry_dynamic_versioning.backend"
 name = "imas-standard-names"
 version = "0.0.0"
 package-mode = true
-packages = [{ include = "imas_standard_names" }]
+# packages = [{ include = "imas_standard_names" }]
 exclude = [ ".github" ]
 
 [tool.poetry.group.dev.dependencies]

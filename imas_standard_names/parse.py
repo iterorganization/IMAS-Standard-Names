@@ -42,6 +42,10 @@ class StandardName(pydantic.BaseModel):
     def as_yaml(self) -> str:
         """Return standard name as YAML string."""
         return self.as_document().as_yaml()
+    
+    def as_json():
+        """Return standard name as JSON string."""
+        return json.dumps(self.as_document())
 
 
 @dataclass
@@ -96,7 +100,7 @@ class ParseJson(ParseYaml):
 
 @dataclass
 class StandardNameFile(ParseYaml):
-    """Interface with a standard name file."""
+    """Manage the project's standard name file."""
 
     input_: InitVar[str | Path]
 
@@ -124,9 +128,9 @@ class StandardNameFile(ParseYaml):
         """Add content of other to self, overiding existing keys."""
         return self.__add__(other)
 
-    def update(self, json_data: str):
+    def update(self, standard_name: StandardName):
         """Add json data to self and update standard names file."""
-        standard_name = ParseJson(json_data).standard_name
+        #standard_name = ParseJson(json_data).standard_name
         if not standard_name.overwrite:  # check for existing standard name
             try:
                 assert standard_name.name not in self.data
@@ -140,6 +144,23 @@ class StandardNameFile(ParseYaml):
             f.write(self.data.as_yaml())
 
 
+@dataclass
+class StandardInput(ParseJson):
+    """Process standard name input from a GitHub issue form."""
+
+    input_: InitVar[str | Path]
+
+    def __post_init__(self, input_: str | Path):
+        """Load JSON data and Format Overwrite flag."""
+        self.filename = Path(input_).with_suffix(".json")
+        with open(self.filename, "r") as f:
+            json_data = f.read()
+        data = json.loads(json_data)
+        data["overwrite"] = "Overwrite" in data["overwrite"]
+        super().__post_init__(json.dumps(data))
+
+
 if __name__ == "__main__":
     standard_names = StandardNameFile("../standardnames.yml")
-    print(standard_names["poloidal_flux"])
+
+
