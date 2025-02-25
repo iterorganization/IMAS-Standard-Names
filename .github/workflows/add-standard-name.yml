@@ -16,7 +16,7 @@ jobs:
 
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > submission.json
       
-        name: Process issue
+      - name: Process issue
         uses: actions/setup-python@v3
         with:
           python-version: "3.12"
