@@ -1,13 +1,14 @@
-name: Create Standard Name
+name: Propose a Standard Name addition or modification
 description: Propose a Standard Name.
-title: "Standard Name"
-labels: ["triage"]
+title: ""
+labels: ""
 assignees:
   - Simon-McIntosh
 body:
   - type: markdown
     attributes:
       value: |
+      
         Guidelines for the construction of IMAS Standard Names 
         can be found [here](https://github.com/iterorganization/IMAS-Standard-Names/blob/main/docs/guidelines.md).
 
@@ -60,7 +61,7 @@ body:
     attributes:
       label: tags
       description: Comma seperated list of tags.
-      placeholder: flux-coordinates, equilibrium
+      placeholder: flux-coordinates, equilibrium/time_slice/profiles_2d/psi
     validations:
       required: false
 
