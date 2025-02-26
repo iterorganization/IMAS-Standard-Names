@@ -16,7 +16,7 @@ jobs:
 
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > submission.json
       
-      - name: Process issue
+      - name: Set up Python 3.12
         uses: actions/setup-python@v3
         with:
           python-version: "3.12"
@@ -24,9 +24,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install .
+
+      - name: Check Standard Name
+        id: check-standard-name
+        run: |
+          echo "is_name=$(is_standard_name ${{ steps.issue-parser.outputs.issueparser_name }})\n" >> $GITHUB_OUTPUT
+
       - name: Update standardnames.yml
         run: |
-          set +e
           update_standardnames standardnames.yml submission.json
 
       # - run: node submission.js
@@ -49,4 +54,4 @@ jobs:
 
       - uses: peter-evans/close-issue@v1
         with:
-          comment: Merged **${{ steps.issue-parser.outputs.issueparser_name }}** to <a href="../">standardnames.yml</a>.
+          comment: Merged **${{ steps.issue-parser.outputs.issueparser_name }}** with <a href="../">standardnames.yml</a>.
