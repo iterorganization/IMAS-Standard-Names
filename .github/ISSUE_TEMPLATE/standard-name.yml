@@ -79,11 +79,10 @@ body:
     id: priority
     attributes:
       label: priority
-      description: Priority give to the proposed Standard Name.
+      description: Priority given to the proposed Standard Name.
       options:
         - low
         - medium
         - high
-        - blocking
     validations:
       required: true
