@@ -27,7 +27,7 @@ jobs:
       - name: Check Standard Name
         id: check-standard-name
         run: |
-          echo "is_name=$(is_standard_name ${{ steps.issue-parser.outputs.issueparser_name }})\n" >> $GITHUB_OUTPUT
+          echo "status=$(is_standardname ${{ steps.issue-parser.outputs.issueparser_name }})\n" >> $GITHUB_OUTPUT
 
       - name: Update standardnames.yml
         run: |
