@@ -25,9 +25,14 @@ jobs:
           pip install .
 
       - name: Check Standard Name
-        id: check-standard-name
+        id: is-standard-name
         run: |
           echo "status=$(is_standardname standardnames.yml ${{ steps.issue-parser.outputs.issueparser_name }})\n" >> $GITHUB_OUTPUT
+          
+      - name: Echo Standard Name
+        run: |
+          echo "${{ steps.is-standard-name.outputs.status }}"
+          echo "${{ contains(steps.is-standard-name.outputs.status, 'True') }}"
 
       - name: Update standardnames.yml
         run: |
