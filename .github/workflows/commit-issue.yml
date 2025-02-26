@@ -24,21 +24,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install .
 
-      - name: Check Standard Name
-        id: is-standard-name
-        run: |
-          echo "status=$(is_standardname standardnames.yml ${{ steps.issue-parser.outputs.issueparser_name }})" >> $GITHUB_OUTPUT
-
-      - name: Echo Standard Name
-        run: |
-          echo "${{ steps.is-standard-name.outputs.status }}"
-          echo "${{ contains(steps.is-standard-name.outputs.status, 'True') }}"
-        env:
-          found_standard_name: ${{ steps.is-standard-name.outputs.status }}
+      - name: Check for existing Standard Name
+        id: check-name
+        run: echo "status=$(is_standardname standardnames.yml ${{ steps.issue-parser.outputs.issueparser_name }}) == True" >> $GITHUB_OUTPUT
 
       - name: Update standardnames.yml
+        id: update-standardnames
+        if: ${{ !steps.check-name.outputs.status }} || ${{ steps.issue-parser.outputs.issueparser_overwrite }} == 'Overwrite'
+        run: update_standardnames standardnames.yml submission.json
+        continue-on-error: true
+
+      - name: Update failure
+        if: steps.update-standardnames.outcome != 'success'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          update_standardnames standardnames.yml submission.json
+          gh issue edit $ISSUE_URL --remove-label "merge"
+          exit 1
 
       # - run: node submission.js
 
