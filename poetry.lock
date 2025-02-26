@@ -1054,6 +1054,25 @@ files = [
 ]
 
 [[package]]
+name = "mkdocs-table-reader-plugin"
+version = "3.1.0"
+description = "MkDocs plugin to directly insert tables from files into markdown."
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "mkdocs_table_reader_plugin-3.1.0-py3-none-any.whl", hash = "sha256:50a1302661c14d96b90ba0434ae96110441e0c653ce23559e3c6911fe79e7bd2"},
+    {file = "mkdocs_table_reader_plugin-3.1.0.tar.gz", hash = "sha256:eb15688ee8c0cd1a842f506f18973b87be22bd7baa5e2e551089de6b7f9ec25b"},
+]
+
+[package.dependencies]
+mkdocs = ">=1.0"
+pandas = ">=1.1"
+PyYAML = ">=5.4.1"
+tabulate = ">=0.8.7"
+
+[[package]]
 name = "nest-asyncio"
 version = "1.6.0"
 description = "Patch asyncio to allow nested event loops"
@@ -1072,7 +1091,7 @@ version = "1.26.4"
 description = "Fundamental package for array computing in Python"
 optional = false
 python-versions = ">=3.9"
-groups = ["dev"]
+groups = ["main", "dev"]
 markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
 files = [
     {file = "numpy-1.26.4-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:9ff0f4f29c51e2803569d7a51c2304de5554655a60c5d776e35b4a41413830d0"},
@@ -1149,7 +1168,7 @@ version = "2.2.3"
 description = "Powerful data structures for data analysis, time series, and statistics"
 optional = false
 python-versions = ">=3.9"
-groups = ["dev"]
+groups = ["main", "dev"]
 markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
 files = [
     {file = "pandas-2.2.3-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:1948ddde24197a0f7add2bdc4ca83bf2b1ef84a1bc8ccffd95eda17fd836ecb5"},
@@ -1633,7 +1652,7 @@ version = "2025.1"
 description = "World timezone definitions, modern and historical"
 optional = false
 python-versions = "*"
-groups = ["dev"]
+groups = ["main", "dev"]
 markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
 files = [
     {file = "pytz-2025.1-py2.py3-none-any.whl", hash = "sha256:89dd22dca55b46eac6eda23b2d72721bf1bdfef212645d81513ef5d03038de57"},
@@ -2205,6 +2224,22 @@ hjson = "*"
 test = ["pytest (>=7.0)"]
 
 [[package]]
+name = "tabulate"
+version = "0.9.0"
+description = "Pretty-print tabular data"
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
+files = [
+    {file = "tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f"},
+    {file = "tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c"},
+]
+
+[package.extras]
+widechars = ["wcwidth"]
+
+[[package]]
 name = "termcolor"
 version = "2.5.0"
 description = "ANSI color formatting for output in terminal"
@@ -2321,7 +2356,7 @@ version = "2025.1"
 description = "Provider of IANA time zone data"
 optional = false
 python-versions = ">=2"
-groups = ["dev"]
+groups = ["main", "dev"]
 markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
 files = [
     {file = "tzdata-2025.1-py2.py3-none-any.whl", hash = "sha256:7e127113816800496f027041c570f50bcd464a020098a3b6b199517772303639"},
@@ -2544,4 +2579,4 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.13"
-content-hash = "b0f8661e5f9202c2c32465f1c0ca75310168f045b0cdd4883a598eda97d58714"
+content-hash = "7e0823f75c31041a8ec6c1c465778655f1000e08abbdbdbe43503f5530e91b79"

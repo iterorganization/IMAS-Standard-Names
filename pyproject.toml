@@ -13,6 +13,7 @@ dependencies = [
     "mkdocs (>=1.6.1,<2.0.0)",
     "mkdocs-material (>=9.6.5,<10.0.0)",
     "mkdocs-data-plugin (>=0.2.0,<0.3.0)",
+    "mkdocs-table-reader-plugin (>=3.1.0,<4.0.0)",
     "strictyaml (>=1.7.3,<2.0.0)",
     "pydantic (>=2.10.6,<3.0.0)",
     "click (>=8.1.8,<9.0.0)",
@@ -35,7 +36,6 @@ build-backend = "poetry_dynamic_versioning.backend"
 name = "imas-standard-names"
 version = "0.0.0"
 package-mode = true
-# packages = [{ include = "imas_standard_names" }]
 exclude = [ ".github" ]
 
 [tool.poetry.group.dev.dependencies]
