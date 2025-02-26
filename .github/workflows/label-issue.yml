@@ -7,7 +7,6 @@ jobs:
   label_issue:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: stefanbuck/github-issue-parser@v3
         id: issue-parser
         with:
@@ -17,4 +16,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          gh issue edit $ISSUE_URL --add-label "${{ steps.issue-parser.outputs.issueparser_priority }}""
+          gh issue edit $ISSUE_URL --add-label "${{ steps.issue-parser.outputs.issueparser_priority }}"
