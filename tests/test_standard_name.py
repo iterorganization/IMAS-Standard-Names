@@ -1,8 +1,9 @@
 import json
 import pydantic
 import pytest
+import strictyaml as syaml
 
-from imas_standard_names.parse import (
+from imas_standard_names.standard_name import (
     StandardName,
     ParseYaml,
     ParseJson,
@@ -10,13 +11,12 @@ from imas_standard_names.parse import (
     StandardInput,
 )
 
-import strictyaml as syaml
 
 
 standard_name_data = {
     "name": "ion_temperature",
     "units": "A",
-    "documentation": "some docs\non \nmultiple lines",
+    "documentation": "multi-line\ndoc string",
     "tags": "",
     "alias": "",
     "overwrite": False,

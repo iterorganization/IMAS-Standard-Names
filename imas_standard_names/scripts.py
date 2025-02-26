@@ -1,0 +1,14 @@
+import click
+
+from imas_standard_names.standard_name import StandardInput, StandardNameFile
+
+
+@click.command()
+@click.argument("standardnames_file")
+@click.argument("submission_file")
+def update_standardnames(standardnames_file, submission_file):
+    """Add a standard name to the project's standard name file."""
+    standardnames = StandardNameFile(standardnames_file)
+    standard_name = StandardInput(submission_file).standard_name
+    standardnames.update(standard_name)
+    click.echo(f"{standard_name.name} appended to {standardnames.filename}.")

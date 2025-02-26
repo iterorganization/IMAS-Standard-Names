@@ -130,7 +130,6 @@ class StandardNameFile(ParseYaml):
 
     def update(self, standard_name: StandardName):
         """Add json data to self and update standard names file."""
-        #standard_name = ParseJson(json_data).standard_name
         if not standard_name.overwrite:  # check for existing standard name
             try:
                 assert standard_name.name not in self.data
@@ -156,7 +155,8 @@ class StandardInput(ParseJson):
         with open(self.filename, "r") as f:
             json_data = f.read()
         data = json.loads(json_data)
-        data["overwrite"] = "Overwrite" in data["overwrite"]
+        if not isinstance(data['overwrite'], bool):
+            data["overwrite"] = "Overwrite" in data["overwrite"]
         super().__post_init__(json.dumps(data))
 
 
