@@ -14,7 +14,10 @@ jobs:
           template-path: .github/ISSUE_TEMPLATE/standard-name.yml
 
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > submission.json
-      
+        env:
+          standard_name: ${{ steps.issue-parser.outputs.issueparser_name }}
+          overwrite: ${{ steps.issue-parser.outputs.issueparser_overwrite }}
+
       - name: Set up Python 3.12
         uses: actions/setup-python@v3
         with:
@@ -27,12 +30,14 @@ jobs:
       - name: Check Standard Name
         id: is-standard-name
         run: |
-          echo "status=$(is_standardname standardnames.yml ${{ steps.issue-parser.outputs.issueparser_name }})\n" >> $GITHUB_OUTPUT
-          
+          echo "::set-output name=status::$(is_standardname standardnames.yml $standard_name)"
+
       - name: Echo Standard Name
         run: |
           echo "${{ steps.is-standard-name.outputs.status }}"
           echo "${{ contains(steps.is-standard-name.outputs.status, 'True') }}"
+        env:
+          found_standard_name: ${{ steps.is-standard-name.outputs.status }}
 
       - name: Update standardnames.yml
         run: |
