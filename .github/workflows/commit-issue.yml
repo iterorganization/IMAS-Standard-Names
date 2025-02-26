@@ -30,11 +30,11 @@ jobs:
 
       - name: Update standardnames.yml
         id: update-standardnames
-        if: ${{ !steps.check-name.outputs.status }} || ${{ steps.issue-parser.outputs.issueparser_overwrite }} == 'Overwrite'
+        if: ${{ !steps.check-name.outputs.status }} || ${{ contains(github.event.issue.labels.*.name, 'overwrite') }}
         run: update_standardnames standardnames.yml submission.json
         continue-on-error: true
 
-      - name: Update failure
+      - name: Exit on error
         if: steps.update-standardnames.outcome != 'success'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
