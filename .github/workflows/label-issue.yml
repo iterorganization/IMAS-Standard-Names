@@ -7,6 +7,7 @@ jobs:
   label_issue:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: stefanbuck/github-issue-parser@v3
         id: issue-parser
         with:
