@@ -74,3 +74,16 @@ body:
       description: Overwrite an existing Standard Name.
       options:
         - label: Overwrite
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: priority
+      description: Priority give to the proposed Standard Name.
+      options:
+        - low
+        - medium
+        - high
+        - blocking
+    validations:
+      required: true

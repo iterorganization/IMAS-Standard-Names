@@ -12,7 +12,6 @@ from imas_standard_names.standard_name import (
 )
 
 
-
 standard_name_data = {
     "name": "ion_temperature",
     "units": "A",
@@ -151,6 +150,13 @@ def test_json_overwrite(tmp_path, overwrite):
         json.dump(standard_name_data | {"overwrite": overwrite}, f)
     standard_input = StandardInput(filename)
     assert standard_input.standard_name.overwrite is (overwrite == "Overwrite")
+
+
+def test_json_extra_priority_attr(tmp_path):
+    filename = tmp_path / "test.json"
+    with open(filename, "w") as f:
+        json.dump(standard_name_data | {"priority": "high"}, f)
+    StandardInput(filename)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, InitVar
+from dataclasses import dataclass, field, fields, InitVar
 import json
 from pathlib import Path
 from typing import ClassVar
@@ -42,8 +42,8 @@ class StandardName(pydantic.BaseModel):
     def as_yaml(self) -> str:
         """Return standard name as YAML string."""
         return self.as_document().as_yaml()
-    
-    def as_json():
+
+    def as_json(self):
         """Return standard name as JSON string."""
         return json.dumps(self.as_document())
 
@@ -155,12 +155,17 @@ class StandardInput(ParseJson):
         with open(self.filename, "r") as f:
             json_data = f.read()
         data = json.loads(json_data)
-        if not isinstance(data['overwrite'], bool):
+        # filter attributes to match StandardName dataclass
+        data = {
+            attr: data[attr]
+            for attr in list(StandardName.__annotations__)
+            if attr in data
+        }
+
+        if not isinstance(data["overwrite"], bool):
             data["overwrite"] = "Overwrite" in data["overwrite"]
         super().__post_init__(json.dumps(data))
 
 
 if __name__ == "__main__":
     standard_names = StandardNameFile("../standardnames.yml")
-
-

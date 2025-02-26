@@ -49,6 +49,4 @@ jobs:
 
       - uses: peter-evans/close-issue@v1
         with:
-          comment: |
-            Merged ${{ steps.issue-parser.outputs.issueparser_name }} 
-            to <a href="../">standardnames.yml</a>.
+          comment: Merged **${{ steps.issue-parser.outputs.issueparser_name }}** to <a href="../">standardnames.yml</a>.
