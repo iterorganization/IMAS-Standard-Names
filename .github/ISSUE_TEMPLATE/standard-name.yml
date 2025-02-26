@@ -49,6 +49,18 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: priority
+    attributes:
+      label: priority
+      description: Priority given to the proposed Standard Name.
+      options:
+        - low priority
+        - medium priority
+        - high priority
+    validations:
+      required: true
+
   - type: input
     id: tags
     attributes:
@@ -71,18 +83,7 @@ body:
     id: overwrite
     attributes:
       label: overwrite
-      description: Overwrite an existing Standard Name.
+      description: |
+        Overwrite an existing Standard Name. Issue will be declined if the proposed standard name exists and overwrite is false.
       options:
         - label: Overwrite
-
-  - type: dropdown
-    id: priority
-    attributes:
-      label: priority
-      description: Priority given to the proposed Standard Name.
-      options:
-        - low
-        - medium
-        - high
-    validations:
-      required: true
