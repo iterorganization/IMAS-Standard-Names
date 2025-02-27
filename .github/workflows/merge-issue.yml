@@ -25,13 +25,9 @@ jobs:
 
       - name: Update
         id: update
-        env: 
-          submission: ${{ needs.parse-issue.outputs.submission }}
-          result: $(update_standardnames standardnames.yml submission.json)
         run: |
-          echo "$submission" > submission.json
-          echo "$result"
-          echo "result=result" >> "$GITHUB_OUTPUT"
+          echo "${{ needs.parse-issue.outputs.submission }}" > submission.json
+          echo "result=$(update_standardnames standardnames.yml submission.json)" >> "$GITHUB_OUTPUT"
 
       - name: Validate
         id: validate
