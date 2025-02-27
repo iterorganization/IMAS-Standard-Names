@@ -26,7 +26,7 @@ jobs:
       - name: Update
         id: update
         run: |
-          echo ${{ needs.parse-issue.outputs.submission }} > submission.json
+          echo "${{ needs.parse-issue.outputs.submission }}" > submission.json
           echo "result=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_OUTPUT
 
       - name: Validate
@@ -47,7 +47,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          echo ${{ steps.update.outputs.result }} > error_message.md
+          echo "${{ steps.update.outputs.result }}" > error_message.md
           gh issue comment $ISSUE_URL --body-file error_message.md
 
       # - run: node submission.js
