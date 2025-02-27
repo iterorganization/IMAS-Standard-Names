@@ -27,14 +27,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install .
-          
+
       - name: Has name
         id: has-name
         run: echo "status=$(has_standardname standardnames.yml ${{ steps.issue-parser.outputs.issueparser_name }}) == True" >> $GITHUB_OUTPUT
 
-      - name: Label Overwrite
+      - name: Label Duplicate
         if: ${{ steps.has-name.outputs.status }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
-        run: gh issue edit $ISSUE_URL --add-label "overwrite"
+        run: gh issue edit $ISSUE_URL --add-label "duplicate"
