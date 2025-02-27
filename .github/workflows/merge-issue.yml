@@ -10,7 +10,7 @@ jobs:
   label-issue:
     uses: ./.github/workflows/label-issue.yml
   
-  setup:
+  merge-issue:
     if: ${{ github.event.label.name == 'merge' }}
     runs-on: ubuntu-latest
     needs: [parse-issue,label-issue]
