@@ -31,10 +31,9 @@ jobs:
 
       - name: Validate
         id: validate
-        env:
-          success: contains(${{ steps.update.outputs.result }}, 'appended to')
         run: |
-          echo "succsess=$success" >> "$GITHUB_OUTPUT"
+          echo "result=${{ steps.update.outputs.result }}" >> "$GITHUB_ENV"
+          echo "succsess=contains($env.result, 'append to')" >> "$GITHUB_OUTPUT"
       
       - name: Remove merge label
         if: ${{ !steps.validate.outputs.success }}
