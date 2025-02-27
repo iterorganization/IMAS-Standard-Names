@@ -32,7 +32,7 @@ jobs:
       - name: Validate
         id: validate
         run: |
-          echo "succsess=$(contains( ${{ steps.update.outputs.result }}, 'appended to'))" >> $GITHUB_OUTPUT
+          echo "succsess=$(${{ steps.update.outputs.result }} == '*appended to*'))" >> $GITHUB_OUTPUT
       
       - name: Remove merge label
         if: ${{ !steps.validate.outputs.success }}
