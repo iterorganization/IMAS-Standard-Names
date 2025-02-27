@@ -1,11 +1,6 @@
 on:
   issues:
     types: [opened,edited]
-  workflow_call:
-    outputs:
-      has-name:
-        description: 'Standard Name already exists.'
-        value: ${{ jobs.label-issue.outputs.has-name }}
 
 jobs:
 
@@ -14,8 +9,6 @@ jobs:
 
   label-issue:
     runs-on: ubuntu-latest
-    outputs:
-      has-name: ${{ steps.has-name.outputs.status }}
     needs: parse-issue
 
     steps:

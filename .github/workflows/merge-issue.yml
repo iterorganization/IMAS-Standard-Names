@@ -7,13 +7,10 @@ jobs:
   parse-issue:
     uses: ./.github/workflows/parse-issue.yml
 
-  label-issue:
-    uses: ./.github/workflows/label-issue.yml
-  
   merge-issue:
     if: ${{ github.event.label.name == 'merge' }}
     runs-on: ubuntu-latest
-    needs: [parse-issue,label-issue]
+    needs: parse-issue
 
     steps:
 
@@ -25,21 +22,31 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install .
-        
-      - name: Update standardnames.yml
-        id: update-standardnames
-        if: ${{ !needs.label-issue.outputs.has-name }} || ${{ needs.parse-issue.outputs.overwrite }}
+
+      - name: Update
+        id: update
         run: |
           echo '${{ needs.parse-issue.outputs.submission }}' > submission.json
-          update_standardnames standardnames.yml submission.json
-        continue-on-error: true
+          echo "result=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_OUTPUT
 
+      - name: Validate
+        id: validate
+        run: |
+          echo "succsess=$(contains( ${{ steps.update.outputs.result }}, 'appended to'))" >> $GITHUB_OUTPUT
+      
       - name: Remove merge label
-        if: steps.update-standardnames.outcome != 'success'
+        if: ${{ !steps.validate.outputs.success }}
         env:
-          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: gh issue edit $ISSUE_URL --remove-label "merge"
+
+      - name: Comment on issue
+        if: ${{ !steps.validate.outputs.success }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: gh issue comment $ISSUE_URL --body ${{ steps.update.outputs.result }}
 
       # - run: node submission.js
 
@@ -60,7 +67,7 @@ jobs:
       # - run: git push
 
       - name: Close issue
-        if: steps.update-standardnames.outcome == 'success'
+        if: ${{ steps.validate.outputs.success }}
         uses: peter-evans/close-issue@v1
         with:
           comment: Merged **${{ needs.parse-issue.outputs.standard-name }}** with <a href="../">standardnames.yml</a>.

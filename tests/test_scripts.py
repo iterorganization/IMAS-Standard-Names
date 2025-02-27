@@ -56,8 +56,7 @@ def test_add_standard_name(tmp_path):
     assert github_input["overwrite"] is False
     with launch_cli(standardnames, github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert result.exit_code == 0
-    assert result.output.split(" ")[0] == f"{github_input['name']}"
+    assert f"{github_input['name']} appended to" in result.output
 
 
 def test_overwrite(tmp_path):
@@ -66,8 +65,7 @@ def test_overwrite(tmp_path):
     _github_input["overwrite"] = True
     with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert result.exit_code == 0
-    assert result.output.split(" ")[0] == "plasma_current"
+    assert "plasma_current appended to" in result.output
 
 
 def test_overwrite_error(tmp_path):
@@ -75,7 +73,31 @@ def test_overwrite_error(tmp_path):
     _github_input["name"] = "plasma_current"
     with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert result.exit_code == 1
+    assert "plasma_current already exists" in result.output
+
+
+def test_standard_name_error(tmp_path):
+    _github_input = github_input.copy()
+    _github_input["name"] = "1st_plasma_current"
+    with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
+        result = runner.invoke(update_standardnames, args)
+    assert f"{_github_input['name']} is not a valid IMAS standard name" in result.output
+
+
+def test_standard_name_alias(tmp_path):
+    _github_input = github_input.copy()
+    _github_input |= {"name": "second_plasma_current", "alias": "plasma_current"}
+    with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
+        result = runner.invoke(update_standardnames, args)
+    assert f"{_github_input['name']} appended to" in result.output in result.output
+
+
+def test_standard_name_alias_error(tmp_path):
+    _github_input = github_input.copy()
+    _github_input |= {"name": "second_plasma_current", "alias": "1st_plasma_current"}
+    with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
+        result = runner.invoke(update_standardnames, args)
+    assert f"{_github_input['alias']} does not exist" in result.output
 
 
 def test_is_standardname(tmp_path):
@@ -96,6 +118,7 @@ def test_is_not_standardname(tmp_path):
         result = runner.invoke(has_standardname, (standardnames_file, "PlasmaCurrent"))
     assert result.exit_code == 0
     assert result.output == "False\n"
+
 
 if __name__ == "__main__":
     pytest.main([__file__])

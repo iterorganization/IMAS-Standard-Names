@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, fields, InitVar
+from dataclasses import dataclass, field, InitVar
 import json
 from pathlib import Path
 from typing import ClassVar
@@ -16,7 +16,7 @@ def is_standard_name(name: str) -> bool:
         assert name.islower()  # Standard names are lowercase
         assert name[0].isalpha()  # Standard names start with a letter
     except AssertionError:
-        raise ValueError(f"{name} is not a valid IMAS standard name.")
+        raise NameError(f"{name} is not a valid IMAS standard name.")
     return name
 
 
@@ -24,8 +24,8 @@ class StandardName(pydantic.BaseModel):
     name: Annotated[str, pydantic.AfterValidator(is_standard_name)]
     units: str
     documentation: str
-    tags: str | list[str] = ""
-    alias: str | list[str] = ""
+    tags: str = ""
+    alias: str = ""
     overwrite: bool = False
 
     def as_document(self) -> syaml.representation.YAML:
@@ -61,8 +61,8 @@ class ParseYaml:
             {
                 "units": syaml.Str(),
                 "documentation": syaml.Str(),
-                syaml.Optional("tags"): syaml.Seq(syaml.Str()) | syaml.Str(),
-                syaml.Optional("alias"): syaml.Seq(syaml.Str()) | syaml.Str(),
+                syaml.Optional("tags"): syaml.Str(),
+                syaml.Optional("alias"): syaml.Str(),
                 syaml.Optional("overwrite"): syaml.Bool(),
             }
         ),
@@ -134,8 +134,16 @@ class StandardNameFile(ParseYaml):
             try:
                 assert standard_name.name not in self.data
             except AssertionError:
-                raise ValueError(
+                raise KeyError(
                     f"{standard_name.name} already exists in "
+                    f"standard names file {self.filename}."
+                )
+        if standard_name.alias:
+            try:
+                assert standard_name.alias in self.data
+            except AssertionError:
+                raise KeyError(
+                    f"{standard_name.alias} does not exist in "
                     f"standard names file {self.filename}."
                 )
         self += standard_name.as_document()

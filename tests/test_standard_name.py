@@ -48,7 +48,7 @@ def test_standard_name():
 
 @pytest.mark.parametrize("name", ["1st_plasma", "Main_ion_density", "_private"])
 def test_name_validator(name):
-    with pytest.raises(pydantic.ValidationError):
+    with pytest.raises(NameError):
         StandardName(name=name, units="A", documentation="docs")
 
 
@@ -60,6 +60,11 @@ def test_units_validator():
 def test_docs_validator():
     with pytest.raises(pydantic.ValidationError):
         StandardName(name="plasma_current", units="A", documentation=None)
+
+
+def test_alias_validator():
+    with pytest.raises(pydantic.ValidationError):
+        StandardName(name="plasma_current", units="A", documentation="docs", alias=1)
 
 
 def test_yaml_input():
@@ -116,6 +121,7 @@ def test_standard_name_file(standardnames):
 
 def test_file_update(standardnames):
     standard_names = StandardNameFile(standardnames)
+    assert standard_name_data["name"] not in standard_names.data
     standard_names_document = standard_names.data.whole_document()
     github_response = json.dumps(standard_name_data)
     standard_name = ParseJson(github_response).standard_name
@@ -133,13 +139,32 @@ def test_file_update(standardnames):
     )
 
 
+def test_alias_update(standardnames):
+    standard_names = StandardNameFile(standardnames)
+    github_response = json.dumps(
+        standard_name_data
+        | {"name": "another_plasma_current", "alias": "plasma_current"}
+    )
+    standard_name = ParseJson(github_response).standard_name
+    standard_names.update(standard_name)
+    assert "another_plasma_current" in standard_names.data
+
+
+def test_alias_update_error(standardnames):
+    standard_names = StandardNameFile(standardnames)
+    github_response = json.dumps(standard_name_data | {"alias": "undefined"})
+    standard_name = ParseJson(github_response).standard_name
+    with pytest.raises(KeyError):
+        standard_names.update(standard_name)
+
+
 def test_file_update_overwrite_error(standardnames):
     standard_names = StandardNameFile(standardnames)
     github_response = json.dumps(
         standard_name_data | {"name": "plasma_current", "overwrite": False}
     )
     standard_name = ParseJson(github_response).standard_name
-    with pytest.raises(ValueError):
+    with pytest.raises(KeyError):
         standard_names.update(standard_name)
 
 
