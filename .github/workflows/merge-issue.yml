@@ -29,7 +29,7 @@ jobs:
           echo "update=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_ENV
 
       - name: Validate
-        run: echo "success=contains($update, 'append to')" >> $GITHUB_ENV
+        run: echo "success=$($update == '* appended to *')" >> $GITHUB_ENV
       
       - name: Remove merge label
         if: env.success
@@ -46,7 +46,8 @@ jobs:
         run: |
           echo "env.success"
           echo "$update" > error_message.md
-          gh issue comment $ISSUE_URL --body-file error_message.md
+          echo "error_message=$(cat error_message.md)" >> $GITHUB_ENV
+          gh issue comment $ISSUE_URL --body "$error_message"
 
       # - run: node submission.js
 
