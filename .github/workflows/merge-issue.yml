@@ -24,32 +24,29 @@ jobs:
           pip install .
 
       - name: Update
-        id: update
         run: |
           echo '${{ needs.parse-issue.outputs.submission }}' > submission.json
-          echo "result=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_ENV
+          echo "update=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_ENV
 
       - name: Validate
-        id: validate
-        run: |
-          echo "$result"
-          echo "succsess=contains($result, 'append to')" >> $GITHUB_OUTPUT
+        run: echo "successful_update=contains($update, 'append to')" >> $GITHUB_ENV
       
       - name: Remove merge label
-        if: ${{ !steps.validate.outputs.success }}
+        if: !$successful_update
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: gh issue edit $ISSUE_URL --remove-label "merge"
 
       - name: Comment on issue
-        if: ${{ !steps.validate.outputs.success }}
+        if: !$successful_update
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          echo "${{ steps.update.outputs.result }}" > error_message.md
-          gh issue comment $ISSUE_URL -F error_message.md
+          echo "$successful_update"
+          echo "$update" > error_message.md
+          gh issue comment $ISSUE_URL --body-file error_message.md
 
       # - run: node submission.js
 
@@ -70,7 +67,7 @@ jobs:
       # - run: git push
 
       - name: Close issue
-        if: ${{ steps.validate.outputs.success }}
+        if: "$successful_update"
         uses: peter-evans/close-issue@v1
         with:
           comment: Merged **${{ needs.parse-issue.outputs.standard-name }}** with <a href="../">standardnames.yml</a>.
