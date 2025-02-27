@@ -2,10 +2,15 @@ on:
   issues:
     types:
       - opened
-  
+
 jobs:
-  label_issue:
+  parse-issue:
+    uses: ./.github/workflows/parse-issue.yml
+
+  label-issue:
     runs-on: ubuntu-latest
+    needs: parse-issue
+
     steps:
       - uses: actions/checkout@v3
       - uses: stefanbuck/github-issue-parser@v3
@@ -18,7 +23,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          gh issue edit $ISSUE_URL --add-label "${{ steps.issue-parser.outputs.issueparser_priority }}"
+          gh issue edit $ISSUE_URL --add-label "${{ needs.parse-issue.outputs.priority }}"
 
       - uses: actions/setup-python@v3
         with:
