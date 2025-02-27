@@ -29,22 +29,22 @@ jobs:
           echo "update=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_ENV
 
       - name: Validate
-        run: echo "successful_update=contains($update, 'append to')" >> $GITHUB_ENV
+        run: echo "success=contains($update, 'append to')" >> $GITHUB_ENV
       
       - name: Remove merge label
-        if: !$successful_update
+        if: env.success
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: gh issue edit $ISSUE_URL --remove-label "merge"
 
       - name: Comment on issue
-        if: !$successful_update
+        if: env.success
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          echo "$successful_update"
+          echo "env.success"
           echo "$update" > error_message.md
           gh issue comment $ISSUE_URL --body-file error_message.md
 
@@ -67,7 +67,7 @@ jobs:
       # - run: git push
 
       - name: Close issue
-        if: "$successful_update"
+        if: env.success
         uses: peter-evans/close-issue@v1
         with:
           comment: Merged **${{ needs.parse-issue.outputs.standard-name }}** with <a href="../">standardnames.yml</a>.
