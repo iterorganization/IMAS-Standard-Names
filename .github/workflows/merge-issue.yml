@@ -26,14 +26,14 @@ jobs:
       - name: Update
         id: update
         run: |
-          echo "${{ needs.parse-issue.outputs.submission }}" > submission.json
-          echo "result=$(update_standardnames standardnames.yml submission.json)" >> "$GITHUB_OUTPUT"
+          echo '${{ needs.parse-issue.outputs.submission }}' > submission.json
+          echo "result=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_ENV
 
       - name: Validate
         id: validate
         run: |
-          echo "result=${{ steps.update.outputs.result }}" >> "$GITHUB_ENV"
-          echo "succsess=contains($env.result, 'append to')" >> "$GITHUB_OUTPUT"
+          echo "$result"
+          echo "succsess=contains($result, 'append to')" >> $GITHUB_OUTPUT
       
       - name: Remove merge label
         if: ${{ !steps.validate.outputs.success }}
