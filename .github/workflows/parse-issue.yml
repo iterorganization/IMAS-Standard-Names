@@ -4,6 +4,9 @@ on:
       priority:
         description: 'Priority label to be added to the issue.'
         value: ${{ jobs.parse-issue.outputs.priority }}
+      standard-name:
+        description: 'Proposed Standard Name.'
+        value: ${{ jobs.parse-issue.outputs.standard-name }}
       has-name:
         description: 'True if the proposed Standard Name exists in the standardnames.yml file.'
         value: ${{ jobs.parse-issue.outputs.has-name }} 
@@ -13,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       priority: ${{ steps.issue-parser.outputs.issueparser_priority }}
+      standard-name: ${{ steps.issue-parser.outputs.issueparser_name }}
       has-name: ${{ steps.has-name.outputs.status }}
     
     steps:
@@ -21,6 +25,8 @@ jobs:
       id: issue-parser
       with:
         template-path: .github/ISSUE_TEMPLATE/standard-name.yml
+
+    - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > submission.json
 
     - uses: actions/setup-python@v3
       with:
