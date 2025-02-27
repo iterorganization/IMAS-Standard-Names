@@ -40,7 +40,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
-        run: gh issue comment $ISSUE_URL --body "${$update//$'\n'/<br />}"
+        run: gh issue comment $ISSUE_URL --body $'"$update"'
 
       # - run: node submission.js
 
