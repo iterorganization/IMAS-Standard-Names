@@ -1,14 +1,21 @@
 on:
   issues:
     types: [opened,edited]
+  workflow_call:
+    outputs:
+      has-name:
+        description: 'Standard Name already exists.'
+        value: ${{ jobs.label-issue.outputs.has-name }}
 
 jobs:
-    
+
   parse-issue:
     uses: ./.github/workflows/parse-issue.yml
 
   label-issue:
     runs-on: ubuntu-latest
+    outputs:
+      has-name: ${{ steps.has-name.outputs.status }}
     needs: parse-issue
 
     steps:
@@ -17,11 +24,22 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: gh issue edit $ISSUE_URL --add-label "${{ needs.parse-issue.outputs.priority }}"
+
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+      - name: Install imas-standard-names
         run: |
-          gh issue edit $ISSUE_URL --add-label "${{ needs.parse-issue.outputs.priority }}"
+          python -m pip install --upgrade pip
+          pip install .
+
+      - name: Check for existing Standard Name
+        id: has-name
+        run: echo "status=$(has_standardname standardnames.yml ${{ needs.parse-issue.outputs.standard-name }}) == True" >> $GITHUB_OUTPUT
 
       - name: Add duplicate label
-        if: ${{ needs.parse-issue.outputs.has-name }}
+        if: ${{ steps.has-name.outputs.status }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
