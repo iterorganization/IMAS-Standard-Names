@@ -26,7 +26,7 @@ jobs:
 
       - name: Check for existing Standard Name
         id: check-name
-        run: echo "status=$(is_standardname standardnames.yml ${{ steps.issue-parser.outputs.issueparser_name }}) == True" >> $GITHUB_OUTPUT
+        run: echo "status=$(has_standardname standardnames.yml ${{ steps.issue-parser.outputs.issueparser_name }}) == True" >> $GITHUB_OUTPUT
 
       - name: Update standardnames.yml
         id: update-standardnames
@@ -41,7 +41,6 @@ jobs:
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
           gh issue edit $ISSUE_URL --remove-label "merge"
-          exit 1
 
       # - run: node submission.js
 

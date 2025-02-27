@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 import strictyaml as syaml
 
-from imas_standard_names.scripts import is_standardname, update_standardnames
+from imas_standard_names.scripts import has_standardname, update_standardnames
 from tests.test_standard_name import standard_name_data as github_input
 from tests.test_standard_name import yaml_multi as standardnames
 
@@ -83,7 +83,7 @@ def test_is_standardname(tmp_path):
         click_runner(tmp_path) as (runner, temp_dir),
         write_standardnames(standardnames, temp_dir) as standardnames_file,
     ):
-        result = runner.invoke(is_standardname, (standardnames_file, "plasma_current"))
+        result = runner.invoke(has_standardname, (standardnames_file, "plasma_current"))
     assert result.exit_code == 0
     assert result.output == "True\n"
 
@@ -93,7 +93,7 @@ def test_is_not_standardname(tmp_path):
         click_runner(tmp_path) as (runner, temp_dir),
         write_standardnames(standardnames, temp_dir) as standardnames_file,
     ):
-        result = runner.invoke(is_standardname, (standardnames_file, "PlasmaCurrent"))
+        result = runner.invoke(has_standardname, (standardnames_file, "PlasmaCurrent"))
     assert result.exit_code == 0
     assert result.output == "False\n"
 

@@ -17,7 +17,7 @@ def update_standardnames(standardnames_file: str, submission_file: str):
 @click.command()
 @click.argument("standardnames_file")
 @click.argument("standard_name")
-def is_standardname(standardnames_file: str, standard_name: str):
+def has_standardname(standardnames_file: str, standard_name: str):
     """Check if a standard name exists in the project's standard name file."""
     standardnames = StandardNameFile(standardnames_file)
     click.echo(f"{standard_name in standardnames.data}")

@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [project.scripts]
-is_standardname = "imas_standard_names.scripts:is_standardname"
+has_standardname = "imas_standard_names.scripts:has_standardname"
 update_standardnames = "imas_standard_names.scripts:update_standardnames"
 
 [project.optional-dependencies]

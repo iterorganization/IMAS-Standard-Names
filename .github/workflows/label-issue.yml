@@ -13,8 +13,20 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/standard-name.yml
 
-      - env:
+      - name: Label Priority
+        env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
           gh issue edit $ISSUE_URL --add-label "${{ steps.issue-parser.outputs.issueparser_priority }}"
+
+      - name: Has name
+        id: has-name
+        run: echo "status=$(has_standardname standardnames.yml ${{ steps.issue-parser.outputs.issueparser_name }}) == True" >> $GITHUB_OUTPUT
+
+      - name: Label Overwrite
+        if: ${{ steps.has-name.outputs.status }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: gh issue edit $ISSUE_URL --add-label "overwrite"
