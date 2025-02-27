@@ -135,8 +135,10 @@ class StandardNameFile(ParseYaml):
                 assert standard_name.name not in self.data
             except AssertionError:
                 raise KeyError(
-                    f"{standard_name.name} already exists in "
-                    f"standard names file {self.filename}."
+                    f"The proposed standard name **{standard_name.name}** "
+                    f"found in {self.filename}.\n\n"
+                    f"{self[standard_name.name].as_yaml()}\n\n"
+                    "Check the *overwrite* flag to overwrite."
                 )
         if standard_name.alias:
             try:
