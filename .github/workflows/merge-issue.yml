@@ -46,7 +46,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
-        run: gh issue comment $ISSUE_URL --body ${{ steps.update.outputs.result }}
+        run: |
+          echo '${{ steps.update.outputs.result }}' > error.md
+          gh issue comment $ISSUE_URL --body-file error.md
 
       # - run: node submission.js
 
