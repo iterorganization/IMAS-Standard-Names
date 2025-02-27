@@ -29,14 +29,16 @@ jobs:
       - name: Update standardnames.yml
         id: update-standardnames
         if: ${{ !needs.label-issue.outputs.has-name }} || ${{ needs.parse-issue.outputs.overwrite }}
-        run: update_standardnames standardnames.yml submission.json
+        run: |
+          echo '${{ needs.parse-issue.outputs.submission }}' > submission.json
+          update_standardnames standardnames.yml submission.json
         continue-on-error: true
 
       - name: Remove merge label
         if: steps.update-standardnames.outcome != 'success'
-        #env:
-        #  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #  ISSUE_URL: ${{ github.event.issue.html_url }}
+        env:
+          # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
         run: gh issue edit $ISSUE_URL --remove-label "merge"
 
       # - run: node submission.js

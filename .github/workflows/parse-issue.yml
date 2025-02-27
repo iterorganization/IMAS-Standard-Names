@@ -10,6 +10,9 @@ on:
       overwrite:
         description: 'Overwrite checkbox status.'
         value: ${{ jobs.parse-issue.outputs.overwrite == 'Overwrite' }}
+      submission:
+        description: 'Submission JSON string.'
+        value: ${{ jobs.parse-issue.outputs.submission }}
 
 jobs:
   parse-issue:
@@ -18,6 +21,7 @@ jobs:
       standard-name: ${{ steps.issue-parser.outputs.issueparser_name }}
       priority: ${{ steps.issue-parser.outputs.issueparser_priority }}
       overwrite: ${{ steps.issue-parser.outputs.issueparser_overwrite }}
+      submission: ${{ steps.issue-parser.outputs.jsonString }}
     
     steps:
     - uses: actions/checkout@v3
@@ -25,5 +29,3 @@ jobs:
       id: issue-parser
       with:
         template-path: .github/ISSUE_TEMPLATE/standard-name.yml
-
-    - run: echo '${{ steps.issue-parser.outputs.jsonString }}' > submission.json
