@@ -29,7 +29,7 @@ jobs:
           echo "update=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_ENV
 
       - name: Validate
-        run: echo "success=$($update == '* appended to *')" >> $GITHUB_ENV
+        run: echo "success=$("$update" == '* appended to *')" >> $GITHUB_ENV
       
       - name: Remove merge label
         if: env.success
