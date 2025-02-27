@@ -15,7 +15,9 @@ def update_standardnames(standardnames_file: str, submission_file: str):
     except (NameError, KeyError, Exception) as error:
         click.echo(error)
     else:
-        click.echo(f"{standard_name.name} appended to {standardnames.filename}.")
+        click.echo(
+            f"Success: {standard_name.name} appended to {standardnames.filename}."
+        )
 
 
 @click.command()

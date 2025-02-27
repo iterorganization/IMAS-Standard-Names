@@ -16,7 +16,7 @@ def is_standard_name(name: str) -> bool:
         assert name.islower()  # Standard names are lowercase
         assert name[0].isalpha()  # Standard names start with a letter
     except AssertionError:
-        raise NameError(f"{name} is not a valid IMAS standard name.")
+        raise NameError(f"Error: {name} is not a valid IMAS standard name.")
     return name
 
 
@@ -135,7 +135,7 @@ class StandardNameFile(ParseYaml):
                 assert standard_name.name not in self.data
             except AssertionError:
                 raise KeyError(
-                    f"The proposed standard name **{standard_name.name}** "
+                    f"Error: The proposed standard name **{standard_name.name}** "
                     f"found in {self.filename}.\n\n"
                     f"{self[standard_name.name].as_yaml()}\n\n"
                     "Check the *overwrite* flag to overwrite."
@@ -145,7 +145,7 @@ class StandardNameFile(ParseYaml):
                 assert standard_name.alias in self.data
             except AssertionError:
                 raise KeyError(
-                    f"{standard_name.alias} does not exist in "
+                    f"Error: {standard_name.alias} does not exist in "
                     f"standard names file {self.filename}."
                 )
         self += standard_name.as_document()
