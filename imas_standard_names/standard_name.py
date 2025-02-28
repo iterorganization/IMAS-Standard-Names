@@ -167,15 +167,15 @@ class StandardInput(ParseJson):
         with open(self.filename, "r") as f:
             json_data = f.read()
         data = json.loads(json_data)
+        options = data.pop("options", [])
         # filter attributes to match StandardName dataclass
         data = {
             attr: data[attr]
             for attr in list(StandardName.__annotations__)
             if attr in data
         }
-
-        if not isinstance(data["overwrite"], bool):
-            data["overwrite"] = "overwrite" in data["overwrite"]
+        # set overwrite flag
+        data["overwrite"] = "overwrite" in options
         super().__post_init__(json.dumps(data))
 
 

@@ -56,16 +56,16 @@ def test_add_standard_name(tmp_path):
     assert github_input["overwrite"] is False
     with launch_cli(standardnames, github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert f"{github_input['name']} appended to" in result.output
+    assert f"**{github_input['name']}** appended to" in result.output
 
 
 def test_overwrite(tmp_path):
     _github_input = github_input.copy()
     _github_input["name"] = "plasma_current"
-    _github_input["overwrite"] = True
+    _github_input["options"] = "overwrite"
     with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert "plasma_current appended to" in result.output
+    assert "**plasma_current** appended to" in result.output
 
 
 def test_overwrite_error(tmp_path):
@@ -92,7 +92,7 @@ def test_standard_name_alias(tmp_path):
     with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
     assert 'Success' in result.output
-    assert f"{_github_input['name']} appended to" in result.output in result.output
+    assert f"**{_github_input['name']}** appended to" in result.output in result.output
 
 
 def test_standard_name_alias_error(tmp_path):
@@ -120,6 +120,16 @@ def test_is_not_standardname(tmp_path):
         write_standardnames(standardnames, temp_dir) as standardnames_file,
     ):
         result = runner.invoke(has_standardname, (standardnames_file, "PlasmaCurrent"))
+    assert result.exit_code == 0
+    assert result.output == "False\n"
+
+
+def test_standardname_whitespace(tmp_path):
+    with (
+        click_runner(tmp_path) as (runner, temp_dir),
+        write_standardnames(standardnames, temp_dir) as standardnames_file,
+    ):
+        result = runner.invoke(has_standardname, (standardnames_file, "Plasma Current"))
     assert result.exit_code == 0
     assert result.output == "False\n"
 
