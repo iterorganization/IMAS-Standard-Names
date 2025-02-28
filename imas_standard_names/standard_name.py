@@ -13,8 +13,9 @@ import yaml
 def is_standard_name(name: str) -> bool:
     """Check if name is a valid IMAS standard name."""
     try:
-        assert name.islower()  # Standard names are lowercase
+        assert name.islower()  # Standard names are all lowercase
         assert name[0].isalpha()  # Standard names start with a letter
+        assert ' ' not in name # Standard names do not contain whitespace
     except AssertionError:
         raise NameError(f"Error: The propsed standard name **{name}** is not a valid.")
     return name

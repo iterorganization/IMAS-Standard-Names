@@ -46,7 +46,10 @@ def test_standard_name():
         assert getattr(standard_name, key) == value
 
 
-@pytest.mark.parametrize("name", ["1st_plasma", "Main_ion_density", "_private"])
+@pytest.mark.parametrize(
+    "name",
+    ["1st_plasma", "Main_ion_density", "_private", "plasma current", "plasmaCurrent"],
+)
 def test_name_validator(name):
     with pytest.raises(NameError):
         StandardName(name=name, units="A", documentation="docs")
