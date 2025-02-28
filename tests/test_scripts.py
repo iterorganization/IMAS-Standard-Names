@@ -7,8 +7,26 @@ import pytest
 import strictyaml as syaml
 
 from imas_standard_names.scripts import has_standardname, update_standardnames
-from .test_standard_name import standard_name_data as github_input
-from .test_standard_name import yaml_multi as standardnames
+
+
+github_input = {
+    "name": "ion_temperature",
+    "units": "A",
+    "documentation": "multi-line\ndoc string",
+    "tags": "",
+    "alias": "",
+    "overwrite": False,
+}
+
+standardnames = syaml.as_document(
+    {
+        name: {"units": units, "documentation": "docs"}
+        for name, units in zip(
+            ["plasma_current", "plasma_current_density", "electron_temperature"],
+            ["A", "A/m^2", "eV"],
+        )
+    }
+)
 
 
 @contextmanager
