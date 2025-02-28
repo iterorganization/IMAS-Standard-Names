@@ -49,16 +49,15 @@ body:
     validations:
       required: true
 
-  - type: dropdown
+  - type: checkboxes
     id: priority
     attributes:
       label: priority
-      description: Priority given to the proposed Standard Name.
+      description: Assign a high priority to the treatment of the proposed Standard Name.
       options:
-        - low priority
         - high priority
     validations:
-      required: true
+      required: false
 
   - type: input
     id: tags
@@ -85,4 +84,4 @@ body:
       description: |
         Overwrite an existing Standard Name. Issue will be declined if the proposed standard name exists and overwrite is false.
       options:
-        - label: Overwrite
+        - label: overwrite

@@ -168,13 +168,13 @@ def test_file_update_overwrite_error(standardnames):
         standard_names.update(standard_name)
 
 
-@pytest.mark.parametrize("overwrite", ["Overwrite", []])
+@pytest.mark.parametrize("overwrite", ["overwrite", []])
 def test_json_overwrite(tmp_path, overwrite):
     filename = tmp_path / "test.json"
     with open(filename, "w") as f:
         json.dump(standard_name_data | {"overwrite": overwrite}, f)
     standard_input = StandardInput(filename)
-    assert standard_input.standard_name.overwrite is (overwrite == "Overwrite")
+    assert standard_input.standard_name.overwrite is (overwrite == "overwrite")
 
 
 def test_json_extra_priority_attr(tmp_path):

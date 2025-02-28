@@ -148,7 +148,7 @@ class StandardNameFile(ParseYaml):
             except AssertionError:
                 raise KeyError(
                     f"Error: The proposed alias **{standard_name.alias}** "
-                    f"is not present in <a href='../'>{self.filename}</a>."
+                    f"is not present in <a href=>{self.filename}</a>."
                 )
         self += standard_name.as_document()
         with open(self.filename, "w") as f:
@@ -175,7 +175,7 @@ class StandardInput(ParseJson):
         }
 
         if not isinstance(data["overwrite"], bool):
-            data["overwrite"] = "Overwrite" in data["overwrite"]
+            data["overwrite"] = "overwrite" in data["overwrite"]
         super().__post_init__(json.dumps(data))
 
 

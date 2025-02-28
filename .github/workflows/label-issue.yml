@@ -21,10 +21,11 @@ jobs:
     steps:
 
       - name: Add priority label
+        if: ${{ needs.parse-issue.outputs.priority }} == 'high priority'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
-        run: gh issue edit $ISSUE_URL --add-label "${{ needs.parse-issue.outputs.priority }}"
+        run: gh issue edit $ISSUE_URL --add-label "high priority"
 
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3

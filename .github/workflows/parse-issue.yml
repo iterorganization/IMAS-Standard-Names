@@ -29,3 +29,10 @@ jobs:
       id: issue-parser
       with:
         template-path: .github/ISSUE_TEMPLATE/standard-name.yml
+
+    - name: echo outputs
+      run: |
+        echo "standard-name=${{ steps.issue-parser.outputs.issueparser_name }}"
+        echo "priority=${{ steps.issue-parser.outputs.issueparser_priority }}"
+        echo "overwrite=${{ steps.issue-parser.outputs.issueparser_overwrite }}"
+        echo "submission=${{ steps.issue-parser.outputs.jsonString }}"
