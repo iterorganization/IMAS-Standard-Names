@@ -37,7 +37,8 @@ class StandardName(pydantic.BaseModel):
                     key: getattr(self, key)
                     for key in ["units", "documentation", "tags", "alias", "overwrite"]
                 }
-            }
+            },
+            schema=ParseYaml.schema,
         )
 
     def as_yaml(self) -> str:
@@ -46,7 +47,9 @@ class StandardName(pydantic.BaseModel):
 
     def as_json(self):
         """Return standard name as JSON string."""
-        return json.dumps(self.as_document())
+        return json.dumps(
+            self.as_document().as_marked_up()[self.name] | {"name": self.name}
+        )
 
 
 @dataclass
@@ -180,5 +183,5 @@ class StandardInput(ParseJson):
         super().__post_init__(json.dumps(data))
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     standard_names = StandardNameFile("../standardnames.yml")

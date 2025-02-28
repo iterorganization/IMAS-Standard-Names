@@ -11,7 +11,6 @@ from imas_standard_names.standard_name import (
     StandardInput,
 )
 
-
 standard_name_data = {
     "name": "ion_temperature",
     "units": "A",
@@ -115,6 +114,10 @@ def standardnames(tmp_path_factory):
     return filepath
 
 
+def test_standard_name_file_without_suffix(standardnames):
+    StandardNameFile(standardnames.with_suffix(""))
+
+
 def test_standard_name_file(standardnames):
     standard_input = ParseYaml(yaml_multi.as_yaml())
     standard_names = StandardNameFile(standardnames)
@@ -189,5 +192,12 @@ def test_json_extra_priority_attr(tmp_path):
     StandardInput(filename)
 
 
-if __name__ == "__main__":
+def test_json_roundtrip():
+    assert (
+        ParseJson(StandardName(**standard_name_data).as_json()).standard_name
+        == ParseJson(json.dumps(standard_name_data)).standard_name
+    )
+
+
+if __name__ == "__main__":  # pragma: no cover
     pytest.main([__file__])
