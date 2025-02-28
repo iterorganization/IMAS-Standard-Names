@@ -28,7 +28,7 @@ jobs:
         run: gh issue edit $ISSUE_URL --add-label "high priority"
 
       - name: Remove priority label
-        if: ${{ !contains(needs.parse-issue.outputs.options, 'high priority') }}
+        if: ${{ !contains(needs.parse-issue.outputs.options, 'high priority') && contains(github.event.issue.labels.*.name, 'high priority') }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
@@ -92,3 +92,7 @@ jobs:
       - name: Write update variable as a github output
         id: standardname-update
         run: echo "update=$update" >> $GITHUB_OUTPUT
+
+      - name: echo outputs
+        run: |
+          echo "update=${{ steps.standardname-update.outputs.update }}"
