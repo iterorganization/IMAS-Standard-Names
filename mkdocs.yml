@@ -4,6 +4,8 @@ plugins:
   - data:
       sources:
         standardnames: standardnames.yml
+  - search
+  - table-reader
 watch:
   - standardnames.yml
 theme:
@@ -13,6 +15,7 @@ theme:
 markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
+  - footnotes
 
 extra_javascript:
   - javascripts/mathjax.js
