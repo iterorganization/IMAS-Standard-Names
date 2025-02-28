@@ -70,7 +70,7 @@ jobs:
             echo '${{ needs.parse-issue.outputs.submission }}' > submission.json
             echo "update=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_ENV
 
-      - name: Remove merge label on error and add needs work label
+      - name: Handle update error
         if: contains(env.update, 'Error')
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,21 +78,8 @@ jobs:
         run: |
             gh issue edit $ISSUE_URL --remove-label "merge"
             gh issue edit $ISSUE_URL --add-label "needswork"
+            echo -e ${{ env.update }} | gh issue comment $ISSUE_URL --body-file -
     
-      - name: Update issue with error message as comment
-        if: contains(env.update, 'Error')
-        env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            ISSUE_URL: ${{ github.event.issue.html_url }}
-        run: echo -e ${{ env.update }} | gh issue comment $ISSUE_URL --body-file -
-
-      - name: Remove needswork label on success
-        if: contains(env.update, 'Success') && contains(github.event.issue.labels.*.name, 'needswork')
-        env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            ISSUE_URL: ${{ github.event.issue.html_url }}
-        run: gh issue edit $ISSUE_URL --remove-label "needswork"
-
       - name: Write update variable as a github output
         id: standardname-update
         run: echo "update=$update" >> $GITHUB_OUTPUT

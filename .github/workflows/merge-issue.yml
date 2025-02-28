@@ -32,8 +32,17 @@ jobs:
 
       # - run: git push
 
+      - name: Check labels 
+        if: ${{ contains(needs.label-issue.outputs.update, 'Success') && contains(github.event.issue.labels.*.name, 'needswork') }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          gh issue edit $ISSUE_URL --remove-label "merge"
+          gh issue comment $ISSUE_URL --body "Remove `needswork` label to merge."
+
       - name: Close issue
-        if: contains(${{ needs.label-issue.outputs.update }}, 'Success')
+        if: ${{ contains(needs.label-issue.outputs.update, 'Success')  && !contains(github.event.issue.labels.*.name, 'needswork') }}
         uses: peter-evans/close-issue@v1
         with:
           comment: Merged **${{ needs.label-issue.outputs.standard-name }}** with <a href=>standardnames.yml</a>.
