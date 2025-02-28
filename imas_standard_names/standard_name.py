@@ -15,9 +15,9 @@ def is_standard_name(name: str) -> bool:
     try:
         assert name.islower()  # Standard names are all lowercase
         assert name[0].isalpha()  # Standard names start with a letter
-        assert ' ' not in name # Standard names do not contain whitespace
+        assert " " not in name  # Standard names do not contain whitespace
     except AssertionError:
-        raise NameError(f"Error: The propsed standard name **{name}** is not a valid.")
+        raise NameError(f"Error: **{name}** is not a valid standard name.")
     return name
 
 
