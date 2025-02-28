@@ -56,7 +56,6 @@ body:
       description: Priority given to the proposed Standard Name.
       options:
         - low priority
-        - medium priority
         - high priority
     validations:
       required: true
