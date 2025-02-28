@@ -71,9 +71,10 @@ body:
     id: options
     attributes:
       label: options
-      description: Select the appropriate options.
+      description: |
+        Select the appropriate options:
+          - `overwrite`: Overwrite an existing Standard Name.
+          - `priority`: Assign a high priority to the treatment of the proposed Standard Name.
       options:
         - label: overwrite
-          description: Overwrite an existing Standard Name.
         - label: priority
-          description: Assign a high priority to the treatment of the proposed Standard Name.
