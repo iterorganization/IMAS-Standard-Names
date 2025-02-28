@@ -3,6 +3,9 @@ on:
     types: [opened,edited]
   workflow_call:
     outputs:
+        standard-name:
+            description: 'Proposed Standard Name.'
+            value: ${{ jobs.parse-issue.outputs.standard-name }}
         update:
           description: 'Output from update_standardnames script.'
           value: ${{ jobs.label-issue.outputs.update }}
@@ -16,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: parse-issue
     outputs: 
+        standard-name: ${{ needs.parse-issue.outputs.standard-name }}
         update: ${{ steps.standardname-update.outputs.update }}
 
     steps:

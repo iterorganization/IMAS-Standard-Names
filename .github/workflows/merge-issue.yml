@@ -4,16 +4,13 @@ on:
 
 jobs:
 
-  parse-issue:
-    uses: ./.github/workflows/parse-issue.yml
-
   label-issue:
     uses: ./.github/workflows/label-issue.yml
 
   merge-issue:
     if: ${{ github.event.label.name == 'merge' }}
     runs-on: ubuntu-latest
-    needs: [parse-issue, label-issue]
+    needs: label-issue
 
     steps:
 
@@ -39,4 +36,4 @@ jobs:
         if: contains(${{ needs.label-issue.outputs.update }}, 'Success')
         uses: peter-evans/close-issue@v1
         with:
-          comment: Merged **${{ needs.parse-issue.outputs.standard-name }}** with <a href="../">standardnames.yml</a>.
+          comment: Merged **${{ needs.label-issue.outputs.standard-name }}** with <a href="../">standardnames.yml</a>.
