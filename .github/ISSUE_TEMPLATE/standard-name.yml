@@ -13,7 +13,7 @@ body:
     attributes:
       label: name
       description: |
-        Standard names consist of lower-lettters, digits and underscores, 
+        Standard names consist of lower case letters, digits and underscores,
         and begin with a letter. Upper case is not used.
       placeholder: ex. poloidal_flux
     validations:
