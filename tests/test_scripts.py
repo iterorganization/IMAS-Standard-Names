@@ -7,8 +7,8 @@ import pytest
 import strictyaml as syaml
 
 from imas_standard_names.scripts import has_standardname, update_standardnames
-from tests.test_standard_name import standard_name_data as github_input
-from tests.test_standard_name import yaml_multi as standardnames
+from .test_standard_name import standard_name_data as github_input
+from .test_standard_name import yaml_multi as standardnames
 
 
 @contextmanager
