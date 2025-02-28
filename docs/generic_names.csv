@@ -1,0 +1,11 @@
+Unit,Generic Name
+`m^2`,area
+`A`,current
+`J`,energy
+`s^-1`,frequency
+`m^-3`,number_density
+`W`,power
+`Pa`,pressure
+`K` or `eV`[^1],temperature
+`m.s^-1`,velocity
+`m^3`,volume

@@ -1,0 +1,9 @@
+Rule,Units,Meaning
+change_over_time_in_X,[X],change in a quantity X over a time-interval.
+derivative_of_X_wrt_Y,[X]/[Y],"$\frac{\partial X}{\partial Y}$ (keeping any other independent variables constant, i.e. the partial derivative if appropriate)."
+integral_of_Y_wrt_X,[X]*[Y],$\int Y dX$. The data variable should have an axis for X specifying the limits of the integral as bounds.
+magnitude_of_X,[X],magnitude of a vector X.
+product_of_X_and_Y,[X]*[Y],"$X \cdot Y$. If X and Y are both scalars or both components of vectors, they are put in alphabetical order. If one of them is the component of a vector, it is put first i.e. the vector component is X, the scalar is Y."
+ratio_of_X_to_Y,[X]/[Y],$\frac{X}{Y}$.
+square_of_X,[X]*[X],$X^2$.
+tendency_of_X,[X] s-1,derivative of X with respect to time.
