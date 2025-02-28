@@ -140,7 +140,7 @@ class StandardNameFile(ParseYaml):
             except AssertionError:
                 raise KeyError(
                     f"Error: The proposed standard name **{standard_name.name}** "
-                    f"is already present in <a href=>{self.filename}</a> "
+                    f"is already present in {self.filename} "
                     "with the following content:"
                     f"\n\n{self[standard_name.name].as_yaml()}\n\n"
                     "Mark the **overwrite** checkbox to overwrite this standard name "
@@ -152,7 +152,7 @@ class StandardNameFile(ParseYaml):
             except AssertionError:
                 raise KeyError(
                     f"Error: The proposed alias **{standard_name.alias}** "
-                    f"is not present in <a href=>{self.filename}</a>."
+                    f"is not present in {self.filename}."
                 )
         self += standard_name.as_document()
         with open(self.filename, "w") as f:
