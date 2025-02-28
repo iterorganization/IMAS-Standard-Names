@@ -49,6 +49,8 @@ exclude = [ ".github" ]
 imas-python = {git = "git@github.com:iterorganization/IMAS-Python.git"}
 ipykernel = "^6.29.5"
 pandas = "^2.2.3"
+ruff = "^0.9.8"
+pre-commit = "^4.1.0"
 
 [tool.poetry.requires-plugins]
 poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }

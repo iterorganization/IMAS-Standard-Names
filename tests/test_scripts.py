@@ -73,7 +73,7 @@ def test_overwrite_error(tmp_path):
     _github_input["name"] = "plasma_current"
     with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert 'Error' in result.output
+    assert "Error" in result.output
     assert "**plasma_current** is already present" in result.output
 
 
@@ -82,7 +82,7 @@ def test_standard_name_error(tmp_path):
     _github_input["name"] = "1st_plasma_current"
     with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert 'Error' in result.output
+    assert "Error" in result.output
     assert f"**{_github_input['name']}** is not a valid" in result.output
 
 
@@ -91,7 +91,7 @@ def test_standard_name_alias(tmp_path):
     _github_input |= {"name": "second_plasma_current", "alias": "plasma_current"}
     with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert 'Success' in result.output
+    assert "Success" in result.output
     assert f"**{_github_input['name']}** appended to" in result.output in result.output
 
 
@@ -100,7 +100,7 @@ def test_standard_name_alias_error(tmp_path):
     _github_input |= {"name": "second_plasma_current", "alias": "1st_plasma_current"}
     with launch_cli(standardnames, _github_input, tmp_path) as (runner, args):
         result = runner.invoke(update_standardnames, args)
-    assert 'Error' in result.output
+    assert "Error" in result.output
     assert f"**{_github_input['alias']}** is not present" in result.output
 
 
