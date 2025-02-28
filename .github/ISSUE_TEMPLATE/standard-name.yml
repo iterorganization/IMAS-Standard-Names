@@ -57,15 +57,7 @@ body:
       placeholder: flux-coordinates, equilibrium/time_slice/profiles_2d/psi
     validations:
       required: false
-
-  - type: input
-    id: alias
-    attributes:
-      label: alias
-      description: Alias to another Standard Name.
-      placeholder: 
-    validations:
-      required: false
+      
 
   - type: checkboxes
     id: options
