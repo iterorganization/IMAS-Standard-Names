@@ -4,24 +4,21 @@ on:
       standard-name:
         description: 'Proposed Standard Name.'
         value: ${{ jobs.parse-issue.outputs.standard-name }}
-      priority:
-        description: 'Priority label to be added to the issue.'
-        value: ${{ jobs.parse-issue.outputs.priority }}
-      overwrite:
-        description: 'Overwrite checkbox status.'
-        value: ${{ jobs.parse-issue.outputs.overwrite == 'Overwrite' }}
       submission:
         description: 'Submission JSON string.'
         value: ${{ jobs.parse-issue.outputs.submission }}
+      options:
+        description: 'Issue checkbox options.'
+        value: ${{ jobs.parse-issue.outputs.options }}
+
 
 jobs:
   parse-issue:
     runs-on: ubuntu-latest
     outputs:
       standard-name: ${{ steps.issue-parser.outputs.issueparser_name }}
-      priority: ${{ steps.issue-parser.outputs.issueparser_priority }}
-      overwrite: ${{ steps.issue-parser.outputs.issueparser_overwrite }}
       submission: ${{ steps.issue-parser.outputs.jsonString }}
+      options: ${{ steps.issue-parser.outputs.issueparser_options }}
     
     steps:
     - uses: actions/checkout@v3
@@ -33,6 +30,5 @@ jobs:
     - name: echo outputs
       run: |
         echo "standard-name=${{ steps.issue-parser.outputs.issueparser_name }}"
-        echo "priority=${{ steps.issue-parser.outputs.issueparser_priority }}"
-        echo "overwrite=${{ steps.issue-parser.outputs.issueparser_overwrite }}"
         echo "submission=${{ steps.issue-parser.outputs.jsonString }}"
+        echo "options=${{ steps.issue-parser.outputs.issueparser_options }}"
