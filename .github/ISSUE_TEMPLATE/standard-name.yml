@@ -74,7 +74,7 @@ body:
       description: |
         Select the appropriate options:
           - `overwrite`: Overwrite an existing Standard Name.
-          - `priority`: Assign a high priority to the treatment of the proposed Standard Name.
+          - `high priority`: Assign a high priority to the treatment of the proposed Standard Name.
       options:
         - label: overwrite
-        - label: priority
+        - label: high priority
