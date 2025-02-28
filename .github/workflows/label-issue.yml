@@ -91,4 +91,4 @@ jobs:
 
       - name: Write update variable as a github output
         id: standardname-update
-        run: echo "update=${{ env.update }}" >> $GITHUB_OUTPUT
+        run: echo "update=$update" >> $GITHUB_OUTPUT
