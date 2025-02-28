@@ -95,4 +95,4 @@ jobs:
 
       - name: echo outputs
         run: |
-          echo "update=${{ steps.standardname-update.outputs.update }}"
+          echo ${{ steps.standardname-update.outputs.update }}
