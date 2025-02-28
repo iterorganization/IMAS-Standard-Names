@@ -45,4 +45,4 @@ jobs:
         if: ${{ contains(needs.label-issue.outputs.update, 'Success')  && !contains(github.event.issue.labels.*.name, 'needswork') }}
         uses: peter-evans/close-issue@v1
         with:
-          comment: Merged **${{ needs.label-issue.outputs.standard-name }}** with <a href=>standardnames.yml</a>.
+          comment: Merged **${{ needs.label-issue.outputs.standard-name }}** with standardnames.yml.
