@@ -137,7 +137,7 @@ class StandardNameFile(ParseYaml):
             except AssertionError:
                 raise KeyError(
                     f"Error: The proposed standard name **{standard_name.name}** "
-                    f"is already present in <a href='../'>{self.filename}</a> "
+                    f"is already present in <a href=>{self.filename}</a> "
                     "with the following content:"
                     f"\n\n{self[standard_name.name].as_yaml()}\n\n"
                     "Mark the **overwrite** checkbox to overwrite this standard name "

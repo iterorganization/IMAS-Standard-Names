@@ -36,4 +36,4 @@ jobs:
         if: contains(${{ needs.label-issue.outputs.update }}, 'Success')
         uses: peter-evans/close-issue@v1
         with:
-          comment: Merged **${{ needs.label-issue.outputs.standard-name }}** with <a href="../">standardnames.yml</a>.
+          comment: Merged **${{ needs.label-issue.outputs.standard-name }}** with <a href=>standardnames.yml</a>.
