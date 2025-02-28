@@ -1,6 +1,11 @@
 on:
   issues:
     types: [opened,edited]
+  workflow_call:
+    outputs:
+        update:
+          description: 'Output from update_standardnames script.'
+          value: ${{ jobs.label-issue.outputs.update }}
 
 jobs:
 
@@ -10,6 +15,8 @@ jobs:
   label-issue:
     runs-on: ubuntu-latest
     needs: parse-issue
+    outputs: 
+        update: ${{ steps.standardname-update.outputs.update }}
 
     steps:
 
@@ -30,11 +37,50 @@ jobs:
 
       - name: Check for existing Standard Name
         id: has-name
-        run: echo "status=$(has_standardname standardnames.yml ${{ needs.parse-issue.outputs.standard-name }})" >> $GITHUB_ENV
+        run: echo "duplicate=$(has_standardname standardnames.yml ${{ needs.parse-issue.outputs.standard-name }})" >> $GITHUB_ENV
 
       - name: Add duplicate label
-        if: contains(env.status, 'True')
+        if: contains(env.duplicate, 'True')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: gh issue edit $ISSUE_URL --add-label "duplicate"
+
+      - name: Remove dulicalte label 
+        if: contains(env.duplicate, 'False') && contains(github.event.issue.labels.*.name, 'duplicate')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: gh issue edit $ISSUE_URL --remove-label "duplicate"
+
+      - name: Update Standard Names
+        run: |
+            echo '${{ needs.parse-issue.outputs.submission }}' > submission.json
+            echo "update=$(update_standardnames standardnames.yml submission.json)" >> $GITHUB_ENV
+
+      - name: Remove merge label on error and add needs work label
+        if: contains(env.update, 'Error')
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+            gh issue edit $ISSUE_URL --remove-label "merge"
+            gh issue edit $ISSUE_URL --add-label "needswork"
+    
+      - name: Update issue with error message as comment
+        if: contains(env.update, 'Error')
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: echo -e ${{ env.update }} | gh issue comment $ISSUE_URL --body-file -
+
+      - name: Remove needswork label on success
+        if: contains(env.update, 'Success') && contains(github.event.issue.labels.*.name, 'needswork')
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: gh issue edit $ISSUE_URL --remove-label "needswork"
+
+      - name: Write update variable as a github output
+        id: standardname-update
+        run: echo "update=${{ env.update }}" >> $GITHUB_OUTPUT
