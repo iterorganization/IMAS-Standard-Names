@@ -35,4 +35,4 @@ jobs:
         version: "latest"
     - name: Test with pytest
       run: |
-        pytest
+        pytest --cov --cov-report json
