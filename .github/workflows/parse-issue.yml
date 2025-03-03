@@ -29,6 +29,6 @@ jobs:
 
     - name: echo outputs
       run: |
-        echo standard-name="${{ steps.issue-parser.outputs.issueparser_name }}"
-        echo submission="${{ steps.issue-parser.outputs.jsonString }}"
-        echo options="${{ steps.issue-parser.outputs.issueparser_options }}"
+        echo standard-name='${{ steps.issue-parser.outputs.issueparser_name }}'
+        echo submission='${{ steps.issue-parser.outputs.jsonString }}'
+        echo options='${{ steps.issue-parser.outputs.issueparser_options }}'
