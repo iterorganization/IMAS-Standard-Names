@@ -13,7 +13,7 @@ body:
     attributes:
       label: name
       description: |
-        Standard names consist of lower-lettters, digits and underscores, 
+        Standard names consist of lower case letters, digits and underscores,
         and begin with a letter. Upper case is not used.
       placeholder: ex. poloidal_flux
     validations:
@@ -26,7 +26,7 @@ body:
       description: |
         Define SI units unless an alternative is widely used in the community.
         note: e (elementary charge unit), u (Dalton / atomic mass unit),
-         and eV for electron/ion/neutral temperatures
+        and eV for electron/ion/neutral temperatures
       placeholder: Wb
     validations:
       required: true
