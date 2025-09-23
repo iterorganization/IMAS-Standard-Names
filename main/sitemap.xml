@@ -2,10 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/</loc>
-         <lastmod>2025-05-20</lastmod>
+         <lastmod>2025-09-23</lastmod>
     </url>
     <url>
          <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/guidelines/</loc>
-         <lastmod>2025-05-20</lastmod>
+         <lastmod>2025-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/provenance/</loc>
+         <lastmod>2025-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/quickstart/</loc>
+         <lastmod>2025-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/reductions/</loc>
+         <lastmod>2025-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/roadmap/</loc>
+         <lastmod>2025-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/specification/</loc>
+         <lastmod>2025-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/standard_name_generation_prompt/</loc>
+         <lastmod>2025-09-23</lastmod>
+    </url>
+    <url>
+         <loc>https://iterorganization.github.io/IMAS-Standard-Names/latest/style-guide/</loc>
+         <lastmod>2025-09-23</lastmod>
     </url>
 </urlset>

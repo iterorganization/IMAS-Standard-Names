@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://iterorganization.github.io/IMAS-Standard-Names/latest/guidelines/">
+        <link rel="canonical" href="https://iterorganization.github.io/IMAS-Standard-Names/latest/provenance/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../guidelines/">
       
       
-        <link rel="next" href="../provenance/">
+        <link rel="next" href="../quickstart/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Guidelines for Construction of IMAS Standard Names - Fusion Conventions: Standard Names</title>
+        <title>Provenance Schema Reference - Fusion Conventions: Standard Names</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#guidelines-for-construction-of-imas-standard-names" class="md-skip">
+        <a href="#provenance-schema-reference" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Guidelines for Construction of IMAS Standard Names
+              Provenance Schema Reference
             
           </span>
         </div>
@@ -188,11 +188,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../guidelines/" class="md-tabs__link">
         
   
   
@@ -209,9 +207,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../provenance/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -403,6 +403,28 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../guidelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guidelines for Construction of IMAS Standard Names
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -420,7 +442,7 @@
   
   
   <span class="md-ellipsis">
-    Guidelines for Construction of IMAS Standard Names
+    Provenance Schema Reference
     
   </span>
   
@@ -433,7 +455,7 @@
   
   
   <span class="md-ellipsis">
-    Guidelines for Construction of IMAS Standard Names
+    Provenance Schema Reference
     
   </span>
   
@@ -456,124 +478,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#characters" class="md-nav__link">
+  <a href="#modes" class="md-nav__link">
     <span class="md-ellipsis">
-      Characters
+      Modes
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#spelling" class="md-nav__link">
+  <a href="#common-fields" class="md-nav__link">
     <span class="md-ellipsis">
-      Spelling
+      Common Fields
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#qualifications" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Qualifications
+      Examples
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Qualifications">
+    <nav class="md-nav" aria-label="Examples">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#component" class="md-nav__link">
+  <a href="#operator-chain-vector-vector" class="md-nav__link">
     <span class="md-ellipsis">
-      Component
+      Operator Chain (Vector → Vector)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Component">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples-of-component-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples of Component Usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#position" class="md-nav__link">
+  <a href="#magnitude-reduction-vector-scalar" class="md-nav__link">
     <span class="md-ellipsis">
-      Position
+      Magnitude Reduction (Vector → Scalar)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Position">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples-of-position-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples of Position Usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#process" class="md-nav__link">
+  <a href="#expression-scalar-combination" class="md-nav__link">
     <span class="md-ellipsis">
-      Process
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Process">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples-of-process-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples of Process Usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transformations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transformations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Transformations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples-of-transformations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples of Transformations
+      Expression (Scalar Combination)
     </span>
   </a>
   
@@ -585,9 +538,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#generic-names" class="md-nav__link">
+  <a href="#guidelines" class="md-nav__link">
     <span class="md-ellipsis">
-      Generic names
+      Guidelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation Notes
     </span>
   </a>
   
@@ -597,28 +559,6 @@
   
 </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../provenance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Provenance Schema Reference
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -782,124 +722,55 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#characters" class="md-nav__link">
+  <a href="#modes" class="md-nav__link">
     <span class="md-ellipsis">
-      Characters
+      Modes
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#spelling" class="md-nav__link">
+  <a href="#common-fields" class="md-nav__link">
     <span class="md-ellipsis">
-      Spelling
+      Common Fields
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#qualifications" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     <span class="md-ellipsis">
-      Qualifications
+      Examples
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Qualifications">
+    <nav class="md-nav" aria-label="Examples">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#component" class="md-nav__link">
+  <a href="#operator-chain-vector-vector" class="md-nav__link">
     <span class="md-ellipsis">
-      Component
+      Operator Chain (Vector → Vector)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Component">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples-of-component-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples of Component Usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#position" class="md-nav__link">
+  <a href="#magnitude-reduction-vector-scalar" class="md-nav__link">
     <span class="md-ellipsis">
-      Position
+      Magnitude Reduction (Vector → Scalar)
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Position">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples-of-position-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples of Position Usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#process" class="md-nav__link">
+  <a href="#expression-scalar-combination" class="md-nav__link">
     <span class="md-ellipsis">
-      Process
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Process">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples-of-process-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples of Process Usage
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#transformations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Transformations
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Transformations">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#examples-of-transformations" class="md-nav__link">
-    <span class="md-ellipsis">
-      Examples of Transformations
+      Expression (Scalar Combination)
     </span>
   </a>
   
@@ -911,9 +782,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#generic-names" class="md-nav__link">
+  <a href="#guidelines" class="md-nav__link">
     <span class="md-ellipsis">
-      Generic names
+      Guidelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation Notes
     </span>
   </a>
   
@@ -935,182 +815,146 @@
 
 
 
-<h1 id="guidelines-for-construction-of-imas-standard-names">Guidelines for Construction of IMAS Standard Names</h1>
-<h2 id="characters">Characters</h2>
-<p>Standard names consist of lower-case letters, digits and underscores, and begin with
-a letter. Do not use upper case.</p>
-<h2 id="spelling">Spelling</h2>
-<p>Authors should use US spelling, e.g. analyze, center.</p>
-<h2 id="qualifications">Qualifications</h2>
-<p>Qualify standard names by adding phrases in certain standard
-forms and order. These qualifications do not change the units of the quantity.</p>
-<p>[<a href="#component">component</a>] standard_name [at <a href="#position">position</a>] [due to
-<a href="#process">process</a>]</p>
-<h3 id="component">Component</h3>
-<p>Use one of the words <code>radial</code>, <code>vertical</code>, <code>toroidal</code> or <code>poloidal</code> to specify the direction of the spatial component of a vector in the cylindrical or
-toroidal/poloidal coordinate system.</p>
-<p>Use the words <code>parallel</code> or <code>diamagnetic</code> to specify the direction of a vector relative to the local magnetic field.</p>
-<h4 id="examples-of-component-usage">Examples of Component Usage</h4>
-<ul>
-<li><code>radial_electric_field</code>: Represents the electric field in the radial direction.</li>
-<li><code>toroidal_magnetic_field</code>: Represents the magnetic field in the toroidal direction.</li>
-<li><code>parallel_heat_flux</code>: Represents the heat flux parallel to the local magnetic field.</li>
-<li><code>diamagnetic_current_density</code>: Represents the current density in the diamagnetic direction.</li>
-</ul>
-<h3 id="position">Position</h3>
-<p>Use a phrase <code>at_&lt;position&gt;</code> to specify the value of a quantity at a
-predefined position. Some examples are <code>at_boundary</code>, <code>at_magnetic_axis</code> and
-<code>at_current_center</code>.</p>
-<h4 id="examples-of-position-usage">Examples of Position Usage</h4>
-<ul>
-<li><code>temperature_at_boundary</code>: Represents the temperature at the boundary of the system.</li>
-<li><code>pressure_at_magnetic_axis</code>: Represents the pressure at the magnetic axis.</li>
-<li><code>density_at_current_center</code>: Represents the density at the current center.</li>
-</ul>
-<h3 id="process">Process</h3>
-<p>When you specify a physical process with the phrase <code>due_to_&lt;process&gt;</code>, the quantity represents a single term in a sum of terms which together
-compose the general quantity that you name by omitting the phrase. Some examples are
-<code>due_to_conduction</code>, <code>due_to_convection</code>.</p>
-<h4 id="examples-of-process-usage">Examples of Process Usage</h4>
-<ul>
-<li><code>heat_flux_due_to_conduction</code>: Represents the heat flux caused by conduction.</li>
-<li><code>momentum_transfer_due_to_convection</code>: Represents the momentum transfer caused by convection.</li>
-<li><code>energy_loss_due_to_radiation</code>: Represents the energy loss caused by radiation.</li>
-<li><code>particle_flux_due_to_diffusion</code>: Represents the particle flux caused by diffusion.</li>
-<li><code>current_density_due_to_induction</code>: Represents the current density caused by induction.</li>
-</ul>
-<h2 id="transformations">Transformations</h2>
-<p>Use transformations to derive standard names from other standard names (represented here by X,
-Y and Z) by following these rules. You can apply successive transformations.
-Transformations can alter the units as shown.</p>
+<h1 id="provenance-schema-reference">Provenance Schema Reference</h1>
+<p>This document describes the unified <code>provenance</code> block used across derived
+standard names. It replaces earlier ad hoc <code>derivation</code> / <code>parent_operation</code>
+fields and provides a single structured container for expressing how a
+quantity was produced.</p>
+<h2 id="modes">Modes</h2>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Rule</th>
-<th style="text-align: left;">Units</th>
-<th style="text-align: left;">Meaning</th>
+<th>mode</th>
+<th>Description</th>
+<th>Typical Kind</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">change_over_time_in_X</td>
-<td style="text-align: left;">[X]</td>
-<td style="text-align: left;">change in a quantity X over a time-interval.</td>
+<td>operator</td>
+<td>One or more chained operators on a base</td>
+<td>derived_scalar/vector</td>
 </tr>
 <tr>
-<td style="text-align: left;">derivative_of_X_wrt_Y</td>
-<td style="text-align: left;">[X]/[Y]</td>
-<td style="text-align: left;"><span class="arithmatex">\(\frac{\partial X}{\partial Y}\)</span> (keeping any other independent variables constant, i.e. the partial derivative if appropriate).</td>
+<td>reduction</td>
+<td>Scalar reduction over a vector expression</td>
+<td>derived_scalar</td>
 </tr>
 <tr>
-<td style="text-align: left;">integral_of_Y_wrt_X</td>
-<td style="text-align: left;">[X]*[Y]</td>
-<td style="text-align: left;"><span class="arithmatex">\(\int Y dX\)</span>. The data variable should have an axis for X specifying the limits of the integral as bounds.</td>
-</tr>
-<tr>
-<td style="text-align: left;">magnitude_of_X</td>
-<td style="text-align: left;">[X]</td>
-<td style="text-align: left;">magnitude of a vector X.</td>
-</tr>
-<tr>
-<td style="text-align: left;">product_of_X_and_Y</td>
-<td style="text-align: left;">[X]*[Y]</td>
-<td style="text-align: left;"><span class="arithmatex">\(X \cdot Y\)</span>. If X and Y are both scalars or both components of vectors, they are put in alphabetical order. If one of them is the component of a vector, it is put first i.e. the vector component is X, the scalar is Y.</td>
-</tr>
-<tr>
-<td style="text-align: left;">ratio_of_X_to_Y</td>
-<td style="text-align: left;">[X]/[Y]</td>
-<td style="text-align: left;"><span class="arithmatex">\(\frac{X}{Y}\)</span>.</td>
-</tr>
-<tr>
-<td style="text-align: left;">square_of_X</td>
-<td style="text-align: left;">[X]*[X]</td>
-<td style="text-align: left;"><span class="arithmatex">\(X^2\)</span>.</td>
-</tr>
-<tr>
-<td style="text-align: left;">tendency_of_X</td>
-<td style="text-align: left;">[X] s-1</td>
-<td style="text-align: left;">derivative of X with respect to time.</td>
+<td>expression</td>
+<td>Explicit algebraic combination</td>
+<td>derived_scalar</td>
 </tr>
 </tbody>
 </table>
-<h3 id="examples-of-transformations">Examples of Transformations</h3>
-<ul>
-<li><code>gradient_of_temperature</code>: Represents the spatial gradient of temperature.</li>
-<li><code>time_derivative_of_pressure</code>: Represents the time derivative of pressure.</li>
-<li><code>integral_of_density_over_volume</code>: Represents the integral of density over a specified volume.</li>
-<li><code>average_of_velocity_over_time</code>: Represents the time-averaged velocity.</li>
-<li><code>logarithm_of_electron_density</code>: Represents the natural logarithm of electron density.</li>
-<li><code>square_of_magnetic_field</code>: Represents the square of the magnetic field.</li>
-<li><code>normalized_temperature</code>: Represents the temperature normalized by a reference value.</li>
-<li><code>difference_between_ion_density_and_electron_density</code>: Represents the difference between ion density and electron density.</li>
-<li><code>ratio_of_thermal_pressure_to_magnetic_pressure</code>: Represents the ratio of thermal pressure to magnetic pressure (commonly referred to as beta).</li>
-<li><code>derivative_of_current_density_with_respect_to_radius</code>: Represents the radial derivative of current density.</li>
-</ul>
-<h2 id="generic-names">Generic names</h2>
-<p>The following names have consistent meanings and units as elements in
-other standard names, although they themselves are too general to serve as
-standard names. We record them here for reference. <em>These are not
-standard names</em>.</p>
+<h2 id="common-fields">Common Fields</h2>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Unit</th>
-<th style="text-align: left;">Generic Name</th>
+<th>Field</th>
+<th>Applies to</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>m^2</code></td>
-<td style="text-align: left;">area</td>
+<td><code>mode</code></td>
+<td>all</td>
+<td>One of <code>operator</code>, <code>reduction</code>, <code>expression</code>.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>A</code></td>
-<td style="text-align: left;">current</td>
+<td><code>base</code></td>
+<td>operator/reduction</td>
+<td>Root quantity the chain applies to.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>J</code></td>
-<td style="text-align: left;">energy</td>
+<td><code>operators</code></td>
+<td>operator</td>
+<td>Ordered list of operator identifiers.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>s^-1</code></td>
-<td style="text-align: left;">frequency</td>
+<td><code>operator_id</code></td>
+<td>operator</td>
+<td>Canonical id of the outermost operator.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>m^-3</code></td>
-<td style="text-align: left;">number_density</td>
+<td><code>reduction</code></td>
+<td>reduction</td>
+<td>Reduction kind (e.g. <code>magnitude</code>).</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>W</code></td>
-<td style="text-align: left;">power</td>
+<td><code>domain</code></td>
+<td>reduction</td>
+<td>Domain / qualifier for reduction (e.g. <code>none</code>).</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>Pa</code></td>
-<td style="text-align: left;">pressure</td>
+<td><code>expression</code></td>
+<td>expression</td>
+<td>Algebraic expression string.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>K</code> or <code>eV</code><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
-<td style="text-align: left;">temperature</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>m.s^-1</code></td>
-<td style="text-align: left;">velocity</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>m^3</code></td>
-<td style="text-align: left;">volume</td>
+<td><code>inputs</code></td>
+<td>expression</td>
+<td>List of input standard names referenced.</td>
 </tr>
 </tbody>
 </table>
-<div class="footnote">
+<h2 id="examples">Examples</h2>
+<h3 id="operator-chain-vector-vector">Operator Chain (Vector → Vector)</h3>
+<pre><code class="language-yaml">name: curl_of_magnetic_field
+kind: derived_vector
+frame: cylindrical_r_tor_z
+unit: T.m^-1
+provenance:
+  mode: operator
+  operators: [curl]
+  base: magnetic_field
+  operator_id: curl
+components:
+  radial: radial_component_of_curl_of_magnetic_field
+  toroidal: toroidal_component_of_curl_of_magnetic_field
+  vertical: vertical_component_of_curl_of_magnetic_field
+status: draft
+</code></pre>
+<h3 id="magnitude-reduction-vector-scalar">Magnitude Reduction (Vector → Scalar)</h3>
+<pre><code class="language-yaml">name: magnitude_of_magnetic_field
+kind: derived_scalar
+unit: T
+provenance:
+  mode: reduction
+  reduction: magnitude
+  domain: none
+  base: magnetic_field
+status: draft
+</code></pre>
+<h3 id="expression-scalar-combination">Expression (Scalar Combination)</h3>
+<pre><code class="language-yaml">name: weighted_average_electron_temperature
+kind: derived_scalar
+unit: keV
+provenance:
+  mode: expression
+  expression: (a*core_electron_temperature + b*edge_electron_temperature)/(a+b)
+  inputs:
+    - core_electron_temperature
+    - edge_electron_temperature
+status: draft
+</code></pre>
+<h2 id="guidelines">Guidelines</h2>
+<ul>
+<li>Keep <code>operators</code> list normalized (lowercase identifiers).</li>
+<li>Prefer <code>reduction: magnitude</code> over manual sqrt-of-sum-of-squares expressions.</li>
+<li>Use <code>expression</code> mode sparingly; whenever an operator or reduction form exists, prefer structured representation.</li>
+<li>Avoid nesting a scalarizing reduction inside an operator chain unless physically required.</li>
+</ul>
+<h2 id="validation-notes">Validation Notes</h2>
+<p>Current validation enforces only basic structural correctness (vector component existence and magnitude base). Future extensions will add:</p>
+<ul>
+<li>Rank checking across operator chains.</li>
+<li>Dimension/unit inference consistency.</li>
+<li>Cycle detection in <code>expression</code> inputs.</li>
+</ul>
 <hr />
-<ol>
-<li id="fn:1">
-<p>Express temperature of plasma species (e.g. <code>electron_temperature</code>) in
-<code>eV</code>, and other temperatures (e.g. <code>wall_temperature</code>) in <code>K</code>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
+<p>This reference will evolve; keep provenance blocks minimal and precise.</p>
 
 
 

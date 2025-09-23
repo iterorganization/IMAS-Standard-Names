@@ -1,0 +1,1656 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://iterorganization.github.io/IMAS-Standard-Names/latest/specification/">
+      
+      
+        <link rel="prev" href="../roadmap/">
+      
+      
+        <link rel="next" href="../standard_name_generation_prompt/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+    
+    
+      
+        <title>IMAS Standard Names Specification - Fusion Conventions: Standard Names</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#imas-standard-names-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Fusion Conventions: Standard Names" class="md-header__button md-logo" aria-label="Fusion Conventions: Standard Names" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fusion Conventions: Standard Names
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              IMAS Standard Names Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Macro Rendering Error
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../guidelines/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Guidelines for Construction of IMAS Standard Names
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../provenance/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Provenance Schema Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../reductions/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Reduction Provenance Grammar
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  IMAS Standard Names Specification
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../standard_name_generation_prompt/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Standard name generation prompt
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../style-guide/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Standard Names Style Guide
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Fusion Conventions: Standard Names" class="md-nav__button md-logo" aria-label="Fusion Conventions: Standard Names" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Fusion Conventions: Standard Names
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Macro Rendering Error
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guidelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guidelines for Construction of IMAS Standard Names
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Provenance Schema Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reductions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reduction Provenance Grammar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roadmap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    IMAS Standard Names Specification
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    IMAS Standard Names Specification
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scalar-standard-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Scalar Standard Names
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-vector-component-system-layer-on-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Vector &amp; Component System (Layer on Scalars)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Design Principles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-terminology-kinds" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Terminology &amp; Kinds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-naming-grammar-ebnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Naming Grammar (EBNF)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-operator-rank-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Operator Rank Semantics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-validation-invariants" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Validation Invariants
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-authoring-workflow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Authoring Workflow (Summary)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-antipatterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Anti‑Patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-future-extensions-tbd" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Future Extensions (TBD)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-appendix-quick-regex-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Appendix: Quick Regex Hints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-extended-scalar-author-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Extended Scalar Author Guidance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Extended Scalar Author Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-base-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 Base Scalars
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-derived-scalars-from-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 Derived Scalars from Scalars
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-derived-scalars-from-vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.3 Derived Scalars from Vectors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.4 Gradients
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115-time-derivatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.5 Time Derivatives
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116-antipatterns-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.6 Anti‑Patterns (Scalars)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117-minimal-yaml-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.7 Minimal YAML Templates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-validation-hooks-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.8 Validation Hooks (Scalars)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../standard_name_generation_prompt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Standard name generation prompt
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../style-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Standard Names Style Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-scalar-standard-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Scalar Standard Names
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-vector-component-system-layer-on-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Vector &amp; Component System (Layer on Scalars)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-design-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Design Principles
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-terminology-kinds" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Terminology &amp; Kinds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-naming-grammar-ebnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Naming Grammar (EBNF)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-operator-rank-semantics" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Operator Rank Semantics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-validation-invariants" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Validation Invariants
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-authoring-workflow-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Authoring Workflow (Summary)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-antipatterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Anti‑Patterns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-future-extensions-tbd" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Future Extensions (TBD)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-appendix-quick-regex-hints" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Appendix: Quick Regex Hints
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-extended-scalar-author-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Extended Scalar Author Guidance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Extended Scalar Author Guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-base-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 Base Scalars
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-derived-scalars-from-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 Derived Scalars from Scalars
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-derived-scalars-from-vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.3 Derived Scalars from Vectors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.4 Gradients
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115-time-derivatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.5 Time Derivatives
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#116-antipatterns-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.6 Anti‑Patterns (Scalars)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#117-minimal-yaml-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.7 Minimal YAML Templates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#118-validation-hooks-scalars" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.8 Validation Hooks (Scalars)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="imas-standard-names-specification">IMAS Standard Names Specification</h1>
+<p>Status: draft (initial skeleton)</p>
+<p>This document defines the canonical naming grammar, roles, and validation
+invariants for the emerging vector‑aware standard names catalog. Sections
+marked (TBD) can evolve after initial vectors land.</p>
+<hr />
+<h2 id="1-overview">1. Overview</h2>
+<p>This specification treats <strong>scalars as the primary, atomic carriers of physical
+meaning</strong>. Almost every quantity (temperature, density, current, flux, axis
+position, shape parameter, diagnostic reading) is a scalar standard name. Vector
+standard names are a lightweight organizational layer that <em>group existing
+scalar components</em>; they never replace or diminish scalar semantics.</p>
+<p>You should first look for (or propose) scalar names. Introduce a vector name
+only when you need to express a coherent multi‑component physical field (e.g.
+<code>magnetic_field</code>) whose components already follow a consistent axis frame.</p>
+<p>Use the IMAS MCP server (configured in <code>.vscode/mcp.json</code>) to mine existing IMAS
+Data Dictionary content before proposing new scalar or vector names so the
+catalog reflects deployed diagnostics and equilibrium reconstructions.</p>
+<p>Section 2 establishes scalar naming rules. Section 3 then layers the uniform
+vector/component system on top of those, including transformation (operator)
+chains.</p>
+<hr />
+<h2 id="2-scalar-standard-names">2. Scalar Standard Names</h2>
+<p>Scalar names represent a single physical quantity or its derived transformation
+without embedding coordinate system, measurement method, or storage shape. Core
+rules:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Guidance</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Form</td>
+<td>Lowercase words separated by underscores</td>
+<td><code>electron_temperature</code></td>
+</tr>
+<tr>
+<td>Clarity</td>
+<td>Prefer explicit words over opaque abbreviations</td>
+<td><code>ion_density</code></td>
+</tr>
+<tr>
+<td>No frame tokens</td>
+<td>Omit axis names unless intrinsic</td>
+<td><code>plasma_volume</code></td>
+</tr>
+<tr>
+<td>Derivatives</td>
+<td>Prefix operator chain</td>
+<td><code>time_derivative_of_electron_temperature</code></td>
+</tr>
+<tr>
+<td>From vector</td>
+<td>Use scalarizing operator or canonical magnitude prefix <code>magnitude_of_</code></td>
+<td><code>divergence_of_magnetic_field</code>, <code>magnitude_of_magnetic_field</code></td>
+</tr>
+</tbody>
+</table>
+<p>Common scalar patterns:</p>
+<ul>
+<li>Physical state: <code>electron_temperature</code>, <code>ion_density</code>, <code>plasma_volume</code>.</li>
+<li>Diagnostic reading (generic physical quantity).</li>
+<li>Geometry / landmark: <code>magnetic_axis_radial_position</code>, <code>magnetic_axis_vertical_position</code>.</li>
+<li>Shape parameter: <code>plasma_elongation</code>, <code>plasma_triangularity_upper</code>.</li>
+<li>Flux / field map scalar: <code>poloidal_flux</code> (grid axes defined separately).</li>
+</ul>
+<p>Scalar anti‑patterns:</p>
+<table>
+<thead>
+<tr>
+<th>Invalid</th>
+<th>Issue</th>
+<th>Correct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>electron_temperature_time_derivative</code></td>
+<td>Suffix derivative form</td>
+<td><code>time_derivative_of_electron_temperature</code></td>
+</tr>
+<tr>
+<td><code>magnetic_field_magnitude</code></td>
+<td>Deprecated suffix magnitude form</td>
+<td><code>magnitude_of_magnetic_field</code></td>
+</tr>
+<tr>
+<td><code>gradient_of_electron_temperature_radial_component</code></td>
+<td>Gradient raises rank</td>
+<td><code>radial_component_of_gradient_of_electron_temperature</code></td>
+</tr>
+<tr>
+<td><code>magnetic_probe_23_normal_field</code></td>
+<td>Embeds instrument index (device-specific)</td>
+<td><code>magnetic_probe_normal_field</code> (generic)</td>
+</tr>
+</tbody>
+</table>
+<p>Gradients, curls, divergence, and similar operators may <em>raise</em> or <em>lower</em> rank.
+When they yield scalars (e.g. divergence) they simply produce another scalar
+name. When they yield vectors (e.g. gradient of a scalar), the resulting vector
+and its components use the vector layer (next section) but the scalar inputs
+remain the foundation.</p>
+<p>For extended scalar guidance (templates, validation hooks) see Section 12 and
+the <code>style-guide.md</code>.</p>
+<p>See also <code>provenance.md</code> for the unified derivation / operator / reduction schema.</p>
+<hr />
+<h2 id="3-vector-component-system-layer-on-scalars">3. Vector &amp; Component System (Layer on Scalars)</h2>
+<p>Vectors provide structured grouping of related scalar components plus optional
+derived vectors and scalars. Every vector is defined strictly by its scalar
+components; vectors do not introduce independent physical values.</p>
+<p>Uniform component pattern:</p>
+<pre><code class="language-text">&lt;axis&gt;_component_of_&lt;vector_expression&gt;
+</code></pre>
+<p><code>&lt;vector_expression&gt;</code> may include a left‑to‑right operator chain, e.g.
+<code>time_derivative_of_curl_of_magnetic_field</code>.</p>
+<p>Each (base or derived) vector entry supplies:</p>
+<ul>
+<li>Vector standard name (e.g. <code>magnetic_field</code>).</li>
+<li>Mapping axis → component scalar names (<code>radial_component_of_magnetic_field</code>, ...).</li>
+<li>Optional magnitude scalar (<code>magnitude_of_magnetic_field</code>).</li>
+<li>Optional derived vectors (<code>curl_of_magnetic_field</code>).</li>
+</ul>
+<p>Vectors group semantics; components remain atomic scalars.</p>
+<hr />
+<h2 id="4-design-principles">4. Design Principles</h2>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Uniformity</td>
+<td>Single component pattern eliminates ambiguity.</td>
+</tr>
+<tr>
+<td>Atomicity</td>
+<td>Scalars carry direct numeric semantics; vectors reference them.</td>
+</tr>
+<tr>
+<td>Deterministic Parsing</td>
+<td>Names are machine decomposed with simple regex + operator table.</td>
+</tr>
+<tr>
+<td>Rank Safety</td>
+<td>Operators have explicit input/output ranks (vector → scalar etc.).</td>
+</tr>
+<tr>
+<td>Left‑to‑Right Composition</td>
+<td>Outermost operation first: <code>time_derivative_of_curl_of_B</code>.</td>
+</tr>
+<tr>
+<td>One Canonical Form</td>
+<td>Exactly one name per concept (no alternate alias field).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-terminology-kinds">5. Terminology &amp; Kinds</h2>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scalar</code></td>
+<td>Atomic physical scalar or base component.</td>
+</tr>
+<tr>
+<td><code>derived_scalar</code></td>
+<td>Scalar produced by an operator chain (e.g. magnitude, divergence).</td>
+</tr>
+<tr>
+<td><code>vector</code></td>
+<td>Base multi‑component quantity (e.g. <code>magnetic_field</code>).</td>
+</tr>
+<tr>
+<td><code>derived_vector</code></td>
+<td>Vector produced by applying operators (e.g. <code>curl_of_magnetic_field</code>).</td>
+</tr>
+<tr>
+<td><code>frame</code></td>
+<td>Structural definition of axes (external file in <code>frames/</code>).</td>
+</tr>
+<tr>
+<td><code>operator</code></td>
+<td>Transformation with rank signature (defined in <code>operators/operators.yml</code>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-naming-grammar-ebnf">6. Naming Grammar (EBNF)</h2>
+<p>Condensed from the detailed discussion; see <code>docs/naming-cheatsheet.md</code> (future).</p>
+<pre><code class="language-ebnf">&lt;standard_name&gt; ::= &lt;vector_name&gt;
+                  | &lt;component_name&gt;
+                  | &lt;derived_scalar_name&gt;
+                  | &lt;derived_vector_name&gt;
+
+&lt;vector_name&gt; ::= &lt;base_quantity&gt;
+&lt;base_quantity&gt; ::= &lt;word&gt; (&quot;_&quot; &lt;word&gt; )*
+&lt;word&gt; ::= [a-z][a-z0-9]*
+
+&lt;axis&gt; ::= radial|toroidal|vertical|poloidal|parallel|perpendicular1|perpendicular2|x|y|z|&lt;custom_axis&gt;
+&lt;custom_axis&gt; ::= &lt;word&gt;
+
+&lt;component_name&gt; ::= &lt;axis&gt; &quot;_component_of_&quot; &lt;vector_expression&gt;
+
+&lt;vector_expression&gt; ::= &lt;vector_name&gt;
+                      | &lt;operator_chain&gt; &quot;_of_&quot; &lt;vector_name&gt;
+
+&lt;operator_chain&gt; ::= &lt;operator_invocation&gt;
+                   | &lt;operator_invocation&gt; &quot;_of_&quot; &lt;operator_chain&gt;
+
+&lt;operator_invocation&gt; ::= curl|divergence|time_derivative|gradient|laplacian|normalized|magnitude
+                        | derivative_with_respect_to_{coord}
+                        | derivative  ; (generic; disfavoured unless qualified)
+
+; Vector results exclude scalarizing terminals at the tail.
+&lt;derived_vector_name&gt; ::= &lt;vector_producing_chain&gt; &quot;_of_&quot; &lt;vector_name&gt;
+                        | &lt;vector_producing_chain&gt; &quot;_of_&quot; &lt;derived_vector_name&gt;
+&lt;vector_producing_chain&gt; ::= (curl|time_derivative|gradient|laplacian|normalized|derivative_with_respect_to_{coord}|derivative)
+                           | (curl|time_derivative|gradient|laplacian|normalized|derivative_with_respect_to_{coord}|derivative) &quot;_of_&quot; &lt;vector_producing_chain&gt;
+
+&lt;derived_scalar_name&gt; ::= &lt;scalarizing_chain&gt; &quot;_of_&quot; &lt;vector_name&gt;
+                        | &lt;scalarizing_chain&gt; &quot;_of_&quot; &lt;derived_vector_name&gt;
+                        | &lt;vector_name&gt; &quot;_magnitude&quot;
+                        | &lt;vector_name&gt; &quot;_&quot; &lt;subset&gt; &quot;_magnitude&quot;
+
+&lt;scalarizing_chain&gt; ::= (divergence|magnitude|curl_magnitude|normalized_magnitude)
+                      | (divergence|magnitude|curl_magnitude|normalized_magnitude) &quot;_of_&quot; &lt;vector_producing_chain&gt;
+
+&lt;subset&gt; ::= poloidal|toroidal|radial|parallel|perpendicular1|perpendicular2|x|y|z|&lt;word&gt;
+</code></pre>
+<p>Enforce semantic rank rules (Section 7); grammar alone is insufficient.</p>
+<hr />
+<h2 id="7-operator-rank-semantics">7. Operator Rank Semantics</h2>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Input Rank</th>
+<th>Output Rank</th>
+<th>Components?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>curl</td>
+<td>vector</td>
+<td>vector</td>
+<td>yes</td>
+<td>3D frames only.</td>
+</tr>
+<tr>
+<td>divergence</td>
+<td>vector</td>
+<td>scalar</td>
+<td>no</td>
+<td>No components.</td>
+</tr>
+<tr>
+<td>time_derivative</td>
+<td>scalar/vector</td>
+<td>same</td>
+<td>yes</td>
+<td>Chainable.</td>
+</tr>
+<tr>
+<td>gradient</td>
+<td>scalar</td>
+<td>vector</td>
+<td>yes</td>
+<td>If input not scalar → invalid.</td>
+</tr>
+<tr>
+<td>laplacian</td>
+<td>scalar</td>
+<td>scalar</td>
+<td>no</td>
+<td>On vector → vector (component‑wise).</td>
+</tr>
+<tr>
+<td>normalized</td>
+<td>vector</td>
+<td>vector</td>
+<td>yes</td>
+<td>Requires nonzero magnitude.</td>
+</tr>
+<tr>
+<td>magnitude</td>
+<td>vector</td>
+<td>scalar</td>
+<td>no</td>
+<td>Appears at tail.</td>
+</tr>
+<tr>
+<td>derivative<em>with_respect_to</em>{coord}</td>
+<td>any</td>
+<td>same</td>
+<td>yes</td>
+<td>{coord} from dataset.</td>
+</tr>
+</tbody>
+</table>
+<p>Disallowed chains: e.g. <code>curl_of_divergence_of_...</code> (scalar → curl invalid).</p>
+<hr />
+<h2 id="8-validation-invariants">8. Validation Invariants</h2>
+<table>
+<thead>
+<tr>
+<th>Code name (for tooling)</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VEC001</td>
+<td>A vector file must list &gt;=2 distinct axes.</td>
+</tr>
+<tr>
+<td>VEC002</td>
+<td>All component names referenced exist.</td>
+</tr>
+<tr>
+<td>VEC003</td>
+<td>Each component follows uniform pattern <code>&lt;axis&gt;_component_of_...</code>.</td>
+</tr>
+<tr>
+<td>OPR001</td>
+<td>Operator chain obeys rank transitions.</td>
+</tr>
+<tr>
+<td>OPR002</td>
+<td>Scalarizing operator cannot precede a vector‑producing operator.</td>
+</tr>
+<tr>
+<td>MAG001</td>
+<td><code>&lt;vector&gt;_magnitude</code> depends on every base component once.</td>
+</tr>
+<tr>
+<td>SUB001</td>
+<td><code>&lt;subset&gt;_magnitude</code> subset ⊆ frame axes.</td>
+</tr>
+<tr>
+<td>AXS001</td>
+<td>Axis tokens must appear in frame file.</td>
+</tr>
+<tr>
+<td>DRP001</td>
+<td>No legacy suffix pattern detected.</td>
+</tr>
+<tr>
+<td>DIAG001</td>
+<td>No hard-coded instrument indices inside diagnostic quantity names.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-authoring-workflow-summary">9. Authoring Workflow (Summary)</h2>
+<ol>
+<li>Define / reuse frame (see <code>frames/</code>).</li>
+<li>Create vector file with axes + magnitude field (recommended).</li>
+<li>Create one component file per axis (uniform pattern).</li>
+<li>Add derived vectors (curl etc.) + their component sets.</li>
+<li>Add derived scalars (divergence, magnitude if not already).</li>
+<li>Run validator: <code>validate_catalog resources/standard_names</code> (or <code>python -m imas_standard_names.validation.cli validate_catalog resources/standard_names</code>).</li>
+<li>Commit on green.</li>
+</ol>
+<p>Extended quick start: see <code>quickstart.md</code>.</p>
+<hr />
+<h2 id="10-antipatterns">10. Anti‑Patterns</h2>
+<table>
+<thead>
+<tr>
+<th>Invalid</th>
+<th>Reason</th>
+<th>Correct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>magnetic_field_radial_component</code></td>
+<td>Legacy suffix style</td>
+<td><code>radial_component_of_magnetic_field</code></td>
+</tr>
+<tr>
+<td><code>curl_of_magnetic_field_radial_component</code></td>
+<td>Ambiguous (curl of scalar)</td>
+<td><code>radial_component_of_curl_of_magnetic_field</code></td>
+</tr>
+<tr>
+<td><code>gradient_of_magnetic_field</code></td>
+<td>Gradient needs scalar operand</td>
+<td>(none) or <code>gradient_of_electron_temperature</code></td>
+</tr>
+<tr>
+<td><code>magnitude_of_magnetic_field_magnitude</code></td>
+<td>Double magnitude (invalid)</td>
+<td><code>magnitude_of_magnetic_field</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-future-extensions-tbd">11. Future Extensions (TBD)</h2>
+<ul>
+<li>Tensor ranks (<code>kind: tensor</code> with index list).</li>
+<li>Frame transformations.</li>
+<li>Normalized variants with explicit dependency tracking.</li>
+</ul>
+<hr />
+<h2 id="12-appendix-quick-regex-hints">12. Appendix: Quick Regex Hints</h2>
+<p>Below are illustrative (not normative) patterns. Escape and extend as needed.</p>
+<ul>
+<li>Component:</li>
+<li><code>^(radial|toroidal|vertical|poloidal|parallel|perpendicular1|perpendicular2|x|y|z)_component_of_[a-z0-9_]+(_of_[a-z0-9_]+)*$</code></li>
+<li>Vector:</li>
+<li><code>^[a-z][a-z0-9_]*$</code></li>
+<li>Derived Vector:</li>
+<li><code>^(curl|time_derivative|laplacian|normalized|derivative_with_respect_to_[a-z0-9_]+|derivative)_of_[a-z0-9_]+(_of_[a-z0-9_]+)*$</code></li>
+<li>Magnitude:</li>
+<li><code>^[a-z0-9_]+_magnitude$</code></li>
+<li>Scalarizing Op:</li>
+<li><code>^(divergence|magnitude|curl_magnitude|normalized_magnitude)_of_.*$</code></li>
+</ul>
+<p>Always combine regex checks with semantic rank validation.</p>
+<hr />
+<p>End of initial specification skeleton.</p>
+<h2 id="13-extended-scalar-author-guidance">13. Extended Scalar Author Guidance</h2>
+<p>See also the dedicated Style Guide (<code>style-guide.md</code>) for a broader set of
+rules, anti-patterns, submission checklist, and equilibrium attribute
+conventions.</p>
+<p>While much of this specification emphasizes vectors (to pin down the
+uniform component grammar), the majority of entries will remain plain
+scalars. This section provides explicit scalar guidelines.</p>
+<h3 id="111-base-scalars">11.1 Base Scalars</h3>
+<p>Pattern: <code>&lt;descriptive_terms&gt;</code> (lowercase, underscores). Avoid:</p>
+<ul>
+<li>Frame or coordinate hints (put those in metadata or dataset coordinates).</li>
+<li>Acquisition method (prefer a future <code>method</code> tag or link).</li>
+<li>Redundant words like <code>value</code>, <code>data</code>, <code>measurement</code>.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li><code>electron_temperature</code></li>
+<li><code>ion_density</code></li>
+<li><code>total_radiated_power</code></li>
+</ul>
+<h3 id="112-derived-scalars-from-scalars">11.2 Derived Scalars from Scalars</h3>
+<p>Apply operator prefix chain: <code>time_derivative_of_</code>, <code>laplacian_of_</code>, etc.
+Example: <code>time_derivative_of_electron_temperature</code>.</p>
+<h3 id="113-derived-scalars-from-vectors">11.3 Derived Scalars from Vectors</h3>
+<p>Scalarizing operators over vectors: <code>divergence_of_&lt;vector_expression&gt;</code>,
+<code>magnitude_of_&lt;vector_expression&gt;</code> (canonical form <code>&lt;vector_expression&gt;_magnitude</code>).
+We prefer the suffix form <code>_magnitude</code> ONLY for the final tail; no <code>magnitude_of_</code> prefix variant is added.</p>
+<h3 id="114-gradients">11.4 Gradients</h3>
+<p><code>gradient_of_&lt;scalar&gt;</code> is a vector (kind: derived*vector). Do not create a
+scalar <code>gradient_of*\*</code> entry; instead generate its components.</p>
+<h3 id="115-time-derivatives">11.5 Time Derivatives</h3>
+<p>Always prefix: <code>time_derivative_of_&lt;name&gt;</code>; chainable with other operators:
+<code>time_derivative_of_divergence_of_plasma_velocity</code>.</p>
+<h3 id="116-antipatterns-scalars">11.6 Anti‑Patterns (Scalars)</h3>
+<table>
+<thead>
+<tr>
+<th>Invalid</th>
+<th>Reason</th>
+<th>Correct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>electron_temperature_time_derivative</code></td>
+<td>Suffix style conflicts with uniform grammar</td>
+<td><code>time_derivative_of_electron_temperature</code></td>
+</tr>
+<tr>
+<td><code>magnetic_field_magnitude</code></td>
+<td>Deprecated legacy magnitude suffix</td>
+<td><code>magnitude_of_magnetic_field</code></td>
+</tr>
+<tr>
+<td><code>gradient_of_electron_temperature_radial_component</code></td>
+<td>Gradient raises rank (vector)</td>
+<td><code>radial_component_of_gradient_of_electron_temperature</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="117-minimal-yaml-templates">11.7 Minimal YAML Templates</h3>
+<p>Base scalar:</p>
+<pre><code class="language-yaml">name: electron_temperature
+kind: scalar
+unit: keV
+description: Electron temperature.
+status: draft
+</code></pre>
+<p>Derived scalar (time derivative):</p>
+<pre><code class="language-yaml">name: time_derivative_of_electron_temperature
+kind: derived_scalar
+unit: keV.s^-1
+derivation:
+    operator_chain:
+        - operator: time_derivative
+            operand: electron_temperature
+dependencies:
+    - electron_temperature
+status: draft
+</code></pre>
+<p>Derived scalar (divergence of vector):</p>
+<pre><code class="language-yaml">name: divergence_of_plasma_velocity
+kind: derived_scalar
+unit: s^-1
+parent_operation:
+  operator: divergence
+  operand_vector: plasma_velocity
+dependencies:
+  - radial_component_of_plasma_velocity
+  - toroidal_component_of_plasma_velocity
+  - vertical_component_of_plasma_velocity
+status: draft
+</code></pre>
+<h3 id="118-validation-hooks-scalars">11.8 Validation Hooks (Scalars)</h3>
+<p>Future validator extensions will ensure:</p>
+<ul>
+<li>Derived scalar dependency closure.</li>
+<li>No misuse of <code>gradient_of_</code> as scalar.</li>
+<li>Consistent unit transformations where operator implies dimensions.</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1286 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://iterorganization.github.io/IMAS-Standard-Names/latest/standard_name_generation_prompt/">
+      
+      
+        <link rel="prev" href="../specification/">
+      
+      
+        <link rel="next" href="../style-guide/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+    
+    
+      
+        <title>Standard name generation prompt - Fusion Conventions: Standard Names</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#reusable-prompt-template-imas-standard-name-batch-generation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Fusion Conventions: Standard Names" class="md-header__button md-logo" aria-label="Fusion Conventions: Standard Names" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fusion Conventions: Standard Names
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Standard name generation prompt
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Macro Rendering Error
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../guidelines/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Guidelines for Construction of IMAS Standard Names
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../provenance/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Provenance Schema Reference
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quick Start
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../reductions/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Reduction Provenance Grammar
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../roadmap/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Roadmap
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../specification/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  IMAS Standard Names Specification
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Standard name generation prompt
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../style-guide/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Standard Names Style Guide
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Fusion Conventions: Standard Names" class="md-nav__button md-logo" aria-label="Fusion Conventions: Standard Names" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Fusion Conventions: Standard Names
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Macro Rendering Error
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guidelines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guidelines for Construction of IMAS Standard Names
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../provenance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Provenance Schema Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reductions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Reduction Provenance Grammar
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Roadmap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../specification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IMAS Standard Names Specification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Standard name generation prompt
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Standard name generation prompt
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reusable-prompt-template-imas-standard-name-batch-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reusable Prompt Template: IMAS Standard Name Batch Generation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reusable Prompt Template: IMAS Standard Name Batch Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-parameter-block-fill-or-leave-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Parameter Block (Fill or Leave Defaults)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-high-level-workflow-agent-should-follow-exactly" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. High-Level Workflow (Agent Should Follow Exactly)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-yaml-field-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. YAML Field Templates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-operator-rank-constraints-enforce-during-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Operator Rank Constraints (Enforce During Generation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-validation-checklist-pre-emit-for-each-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Validation Checklist (Pre-Emit for Each Entry)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-emission-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Emission Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-prompt-assembly-template-copy-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Prompt Assembly Template (Copy &amp; Use)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-example-minimal-invocation-narrative-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Example Minimal Invocation (Narrative Only)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-future-adjustments" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Future Adjustments
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../style-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Standard Names Style Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reusable-prompt-template-imas-standard-name-batch-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reusable Prompt Template: IMAS Standard Name Batch Generation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reusable Prompt Template: IMAS Standard Name Batch Generation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-parameter-block-fill-or-leave-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Parameter Block (Fill or Leave Defaults)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-high-level-workflow-agent-should-follow-exactly" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. High-Level Workflow (Agent Should Follow Exactly)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-yaml-field-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. YAML Field Templates
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-operator-rank-constraints-enforce-during-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Operator Rank Constraints (Enforce During Generation)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-validation-checklist-pre-emit-for-each-entry" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Validation Checklist (Pre-Emit for Each Entry)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-emission-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Emission Format
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-prompt-assembly-template-copy-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Prompt Assembly Template (Copy &amp; Use)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-example-minimal-invocation-narrative-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Example Minimal Invocation (Narrative Only)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-future-adjustments" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Future Adjustments
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Standard name generation prompt</h1>
+
+<h2 id="reusable-prompt-template-imas-standard-name-batch-generation">Reusable Prompt Template: IMAS Standard Name Batch Generation</h2>
+<p>Purpose: Drive an LLM (or MCP-enabled agent) to propose VALID new IMAS Standard Names (scalars, vectors, components, derived scalars/vectors) that:</p>
+<ol>
+<li>Obey repository specification (<code>docs/specification.md</code>) &amp; style guide (<code>docs/style-guide.md</code>).</li>
+<li>Pass current Pydantic model validators in <code>imas_standard_names/models.py</code> (notably the stricter magnitude naming rule).</li>
+<li>Produce per‑entry YAML conforming to existing examples in <code>standard_names/magnetic_field/</code>.</li>
+<li>Derive names from the IMAS Data Dictionary (IMAS DD) via MCP server queries when available (see <code>imas_standard_names/name_generator.py</code>).</li>
+<li>Support optional domain grouping (e.g. equilibrium, diagnostics, geometry) and IMAS IDS scoping.</li>
+</ol>
+<blockquote>
+<p>NOTE – Temporary divergence: The documentation (spec/style) treats <code>&lt;vector&gt;_magnitude</code> as canonical. The current Pydantic validator REQUIRES the magnitude scalar name form <code>magnitude_of_&lt;vector&gt;</code> (vector entry must reference this name via its <code>magnitude</code> field) and rejects <code>&lt;vector&gt;_magnitude</code>. Until harmonized, this template defaults to validator‑safe prefix form. A switch (<code>magnitude_style</code>) allows choosing either.</p>
+</blockquote>
+<hr />
+<h3 id="1-parameter-block-fill-or-leave-defaults">1. Parameter Block (Fill or Leave Defaults)</h3>
+<pre><code>{task_mode: generate|extend|refine}
+{domain_group: equilibrium|diagnostics|geometry|plasma_state|transport|generic|mixed}
+{imas_ids_scope: list of IDS names or 'auto'}
+{exclude_ids: optional list}
+{max_base_scalars: 25}
+{vector_ratio: 0.2}  # approximate fraction of total proposals that are base vectors
+{include_derived_vectors: true}
+{include_scalar_derivatives: time_derivative, divergence, magnitude, curl (if valid), gradient}
+{allowed_axes: radial,toroidal,vertical}  # extend if frame registry updated
+{frame_name: cylindrical_r_tor_z}  # or other registered frame
+{magnitude_style: prefix|suffix}  # prefix =&gt; magnitude_of_&lt;vector&gt;; suffix =&gt; &lt;vector&gt;_magnitude
+{units_policy: infer|explicit|placeholder}
+{description_length_max: 120}
+{status: draft}
+{batch_size: 10}  # number of *new* base scalars per batch before expansion
+{batches: 2}
+{novelty_check: true}  # cross-check against docs/generic_names.csv + already generated set
+{emit_validation_report: true}
+{output_format: yaml}  # one YAML block per file candidate
+{yaml_fields_min: name,kind,unit,status,description}
+{yaml_fields_full: name,kind,unit,status,description,frame,components,magnitude,axis,parent_vector,parent_operation,derivation,tags}
+{dependency_expansion: full}  # include all component dependencies for derived scalars
+{reject_patterns: [&quot;__&quot;, &quot;magnitude_of_.*_magnitude&quot;]}
+{strict_semantics: true}  # enforce operator rank rules from spec §7
+</code></pre>
+<hr />
+<h3 id="2-high-level-workflow-agent-should-follow-exactly">2. High-Level Workflow (Agent Should Follow Exactly)</h3>
+<ol>
+<li>
+<p>Harvest Domain Signals</p>
+</li>
+<li>
+<p>If <code>imas_ids_scope=auto</code>, query MCP IMAS server: "List IDS and key physical fields for {domain_group}." Collect candidate physical quantities (prefer scalars).</p>
+</li>
+<li>
+<p>Normalize raw IMAS DD field labels to lowercase underscore tokens (strip units, indices, device IDs).</p>
+</li>
+<li>
+<p>Filter &amp; Classify</p>
+</li>
+<li>
+<p>Remove generic or disallowed names (see <code>docs/generic_names.csv</code>).</p>
+</li>
+<li>Discard names violating lexical rules (style guide §2) or containing axis tokens unnecessarily.</li>
+<li>
+<p>Classify into potential base scalars vs. inherent vectors (rare – only if naturally multi-component, e.g. magnetic_field, plasma_velocity).</p>
+</li>
+<li>
+<p>Propose Base Scalars (Batch Loop)
+   For each batch (size = <code>batch_size</code>, up to <code>batches</code>):</p>
+</li>
+<li>
+<p>Select the most domain-relevant unmodeled physical quantities.</p>
+</li>
+<li>Ensure uniqueness against earlier batches.</li>
+<li>
+<p>Output YAML entries (kind: scalar, status: draft, concise description). Units: infer from physics (SI; conform to style guide §8). If unknown, choose placeholder consistent with dimension (e.g. <code>1</code> for dimensionless) ONLY if <code>units_policy != infer</code>.</p>
+</li>
+<li>
+<p>Introduce Vectors</p>
+</li>
+<li>
+<p>From chosen scalar set identify groups that represent components of a coherent physical vector (must have &gt;=2 axes from <code>allowed_axes</code>). If missing components, propose new scalar component names using pattern <code>&lt;axis&gt;_component_of_&lt;vector_expression&gt;</code> but keep them as separate scalar entries.</p>
+</li>
+<li>
+<p>Emit vector YAML with: <code>kind: vector</code>, <code>frame</code>, <code>components</code> mapping, <code>magnitude</code> (validator form: <code>magnitude_of_&lt;vector&gt;</code> if <code>magnitude_style=prefix</code>, else <code>&lt;vector&gt;_magnitude</code>). Do NOT add derived vectors yet.</p>
+</li>
+<li>
+<p>Derived Scalars (From Vectors)</p>
+</li>
+<li>
+<p>For each vector, if appropriate: propose magnitude scalar (style conditional), divergence (if frame + physics meaningful), optionally time derivatives, normalized variants (future – skip if uncertain).</p>
+</li>
+<li>
+<p>Derived scalar YAML must include either <code>parent_operation</code> (operator + operand_vector) or <code>derivation</code> with <code>expression</code> + <code>dependencies</code> (see <code>magnetic_field_magnitude.yml</code> example but ADAPT name to validator form if prefix style in effect).</p>
+</li>
+<li>
+<p>Derived Vectors</p>
+</li>
+<li>
+<p>Apply rank-valid operators (spec §7): gradient(scalar) → vector, curl(vector) → vector (only if 3D valid), time_derivative maintains rank.</p>
+</li>
+<li>Chain left-to-right: outermost first (style guide §5). Stop once scalarizing operator used.</li>
+<li>
+<p>Each derived vector: <code>kind: derived_vector</code>, <code>parent_operation</code> {operator, operand_vector}, full <code>components</code> set, optional magnitude.</p>
+</li>
+<li>
+<p>Dependency &amp; Consistency Pass</p>
+</li>
+<li>
+<p>Every component scalar lists <code>axis</code> + <code>parent_vector</code>.</p>
+</li>
+<li>Vector lists all component names (must already be defined as scalar or derived_scalar).</li>
+<li>Derived scalar with magnitude or divergence lists dependencies = ALL base component names of parent vector.</li>
+<li>
+<p>Enforce rejection: no <code>curl_of_divergence_*</code>, no double magnitude, no legacy suffix derivatives.</p>
+</li>
+<li>
+<p>Magnitude Naming Switch</p>
+</li>
+<li>
+<p>If <code>magnitude_style=prefix</code>: Use ONLY <code>magnitude_of_&lt;vector&gt;</code>; disallow <code>&lt;vector&gt;_magnitude</code>.</p>
+</li>
+<li>
+<p>If <code>magnitude_style=suffix</code>: Use ONLY <code>&lt;vector&gt;_magnitude</code>; set vector <code>magnitude</code> field to that name (NOTE: this will FAIL current Pydantic model; supply a warning comment line in output). Default is <code>prefix</code> to pass validators.</p>
+</li>
+<li>
+<p>Validation Simulation (Pre-Flight)
+   For each proposed YAML entry, conceptually check:</p>
+</li>
+<li>
+<p><code>name</code> regex: <code>^[a-z][a-z0-9_]*$</code>, no <code>__</code> (models.py &amp; style §2).</p>
+</li>
+<li>Component naming: <code>&lt;axis&gt;_component_of_...</code> with axis in allowed set.</li>
+<li>Vector magnitude reference matches chosen magnitude style.</li>
+<li>Derived kinds specify <code>derivation</code> or <code>parent_operation</code> (models.py rule).</li>
+<li>No deprecated magnitude suffix (if prefix mode active).</li>
+<li>
+<p>Operator rank transitions valid (spec §7).</p>
+</li>
+<li>
+<p>Emission Order
+    Output blocks grouped logically:</p>
+</li>
+<li>Base scalars</li>
+<li>Component scalars</li>
+<li>Vectors</li>
+<li>Derived vectors</li>
+<li>
+<p>Derived scalars (magnitude/divergence/etc.)
+    Provide an index summary at end (name → kind).</p>
+</li>
+<li>
+<p>Post-Step Guidance (Optional)
+    Suggest running locally: <code>validate_catalog resources/standard_names</code> (or <code>python -m imas_standard_names.validation.cli validate_catalog resources/standard_names</code>) and (future) loading with Pydantic models to confirm.</p>
+</li>
+</ol>
+<hr />
+<h3 id="3-yaml-field-templates">3. YAML Field Templates</h3>
+<p>Base Scalar Template:</p>
+<pre><code class="language-yaml">name: &lt;base_scalar&gt;
+kind: scalar
+unit: &lt;SI_or_1&gt;
+status: draft
+description: &lt;Concise (&lt;=120 chars) description sentence or fragment&gt;
+</code></pre>
+<p>Component Scalar Template:</p>
+<pre><code class="language-yaml">name: &lt;axis&gt;_component_of_&lt;vector_expression&gt;
+kind: scalar
+unit: &lt;same as vector&gt;
+axis: &lt;axis&gt;
+parent_vector: &lt;vector_name&gt;
+status: draft
+description: &lt;Axis capitalized&gt; component of &lt;vector_name&gt;.
+</code></pre>
+<p>Vector Template (validator-compatible magnitude):</p>
+<pre><code class="language-yaml">name: &lt;vector_name&gt;
+kind: vector
+frame: &lt;frame_name&gt;
+unit: &lt;SI&gt;
+components:
+  radial: radial_component_of_&lt;vector_name&gt;
+  toroidal: toroidal_component_of_&lt;vector_name&gt;
+  vertical: vertical_component_of_&lt;vector_name&gt;
+magnitude: magnitude_of_&lt;vector_name&gt;
+status: draft
+description: &lt;Vector description in frame&gt;.
+</code></pre>
+<p>Magnitude Scalar (prefix style – RECOMMENDED for current validators):</p>
+<pre><code class="language-yaml">name: magnitude_of_&lt;vector_name&gt;
+kind: derived_scalar
+unit: &lt;SI&gt;
+parent_vector: &lt;vector_name&gt;
+derivation:
+  expression: |
+    sqrt(&lt;radial_component&gt;^2 + &lt;toroidal_component&gt;^2 + &lt;vertical_component&gt;^2)
+  dependencies:
+    - &lt;radial_component&gt;
+    - &lt;toroidal_component&gt;
+    - &lt;vertical_component&gt;
+status: draft
+description: Magnitude of &lt;vector_name&gt;.
+</code></pre>
+<p>Derived Vector (example: time derivative):</p>
+<pre><code class="language-yaml">name: time_derivative_of_&lt;vector_name&gt;
+kind: derived_vector
+frame: &lt;frame_name&gt;
+unit: &lt;SI&gt;
+parent_operation:
+  operator: time_derivative
+  operand_vector: &lt;vector_name&gt;
+components:
+  radial: radial_component_of_time_derivative_of_&lt;vector_name&gt;
+  toroidal: toroidal_component_of_time_derivative_of_&lt;vector_name&gt;
+  vertical: vertical_component_of_time_derivative_of_&lt;vector_name&gt;
+magnitude: magnitude_of_time_derivative_of_&lt;vector_name&gt;
+status: draft
+description: Time derivative of &lt;vector_name&gt;.
+</code></pre>
+<p>Derived Scalar (divergence):</p>
+<pre><code class="language-yaml">name: divergence_of_&lt;vector_name&gt;
+kind: derived_scalar
+unit: s^-1
+parent_operation:
+  operator: divergence
+  operand_vector: &lt;vector_name&gt;
+derivation:
+  expression: &lt;leave empty or future analytic form&gt;
+  dependencies:
+    - &lt;radial_component&gt;
+    - &lt;toroidal_component&gt;
+    - &lt;vertical_component&gt;
+status: draft
+description: Divergence of &lt;vector_name&gt;.
+</code></pre>
+<p>Gradient (scalar → derived vector) example:</p>
+<pre><code class="language-yaml">name: gradient_of_&lt;scalar_name&gt;
+kind: derived_vector
+frame: &lt;frame_name&gt;
+unit: &lt;scalar_unit&gt;.m^-1 # adjust dimensionally
+parent_operation:
+  operator: gradient
+  operand_vector: &lt;scalar_name&gt; # logically a scalar operand; retained field name for consistency
+components:
+  radial: radial_component_of_gradient_of_&lt;scalar_name&gt;
+  toroidal: toroidal_component_of_gradient_of_&lt;scalar_name&gt;
+  vertical: vertical_component_of_gradient_of_&lt;scalar_name&gt;
+magnitude: magnitude_of_gradient_of_&lt;scalar_name&gt;
+status: draft
+description: Gradient of &lt;scalar_name&gt;.
+</code></pre>
+<hr />
+<h3 id="4-operator-rank-constraints-enforce-during-generation">4. Operator Rank Constraints (Enforce During Generation)</h3>
+<p>From spec §7 (summarized):</p>
+<ul>
+<li>curl(vector) → vector (3D only)</li>
+<li>divergence(vector) → scalar (terminal)</li>
+<li>gradient(scalar) → vector</li>
+<li>magnitude(vector) → scalar (terminal)</li>
+<li>time_derivative(scalar|vector) → same rank (chainable)</li>
+<li>laplacian(scalar) → scalar; laplacian(vector) → vector (component-wise)
+  Invalid chains examples: <code>curl_of_divergence_of_*</code>, double magnitude, scalar input to gradient.</li>
+</ul>
+<p>Algorithmic check pseudo‑rules:</p>
+<ol>
+<li>Parse left-to-right tokens split by <code>_of_</code> where token ∈ operator set.</li>
+<li>Track current rank (scalar|vector). Reject illegal transitions.</li>
+<li>If scalarizing operator (divergence|magnitude|curl_magnitude|normalized_magnitude) encountered, no further vector-producing operator may follow.</li>
+</ol>
+<hr />
+<h3 id="5-validation-checklist-pre-emit-for-each-entry">5. Validation Checklist (Pre-Emit for Each Entry)</h3>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Rule Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Name pattern</td>
+<td>models.py <code>validate_name</code> + style guide §2</td>
+</tr>
+<tr>
+<td>No double underscores</td>
+<td>models.py</td>
+</tr>
+<tr>
+<td>Vector has &gt;=2 components</td>
+<td>models.py structural_rules</td>
+</tr>
+<tr>
+<td>Component pattern matches axis + <code>_component_of_</code></td>
+<td>spec §3 / validator script</td>
+</tr>
+<tr>
+<td>Component scalar kind is scalar / derived_scalar</td>
+<td>models.py</td>
+</tr>
+<tr>
+<td>Derived kinds have derivation or parent_operation</td>
+<td>models.py</td>
+</tr>
+<tr>
+<td>Magnitude naming matches <code>magnitude_style</code></td>
+<td>models.py vs. spec</td>
+</tr>
+<tr>
+<td>Dependencies complete (all base components)</td>
+<td>validator script MAGNITUDE check</td>
+</tr>
+<tr>
+<td>No forbidden chains</td>
+<td>spec §7 / style guide §5</td>
+</tr>
+<tr>
+<td>Description length &lt;= limit</td>
+<td>parameter <code>description_length_max</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="6-emission-format">6. Emission Format</h3>
+<p>Return final answer as:</p>
+<pre><code>---
+# Batch 1: Base Scalars
+&lt;YAML entries&gt;
+---
+# Batch 1: Expanded (Vectors, Components, Derived)
+&lt;YAML entries&gt;
+---
+# Batch 2: ...
+...
+---
+# Index
+&lt;tabular summary or markdown list&gt;
+---
+# Validation Report
+&lt;summary of simulated passes/failures (expect all pass)&gt;
+</code></pre>
+<p>If <code>emit_validation_report=false</code>, omit last section.</p>
+<hr />
+<h3 id="7-prompt-assembly-template-copy-use">7. Prompt Assembly Template (Copy &amp; Use)</h3>
+<p>Paste the following to drive generation (fill the parameter block first):</p>
+<pre><code>SYSTEM:
+You are an IMAS Standard Name authoring assistant. You MUST emit only validator-compliant YAML proposals unless explicitly instructed to show diagnostics. Follow repository specification (docs/specification.md) &amp; style (docs/style-guide.md). Prefer prefix magnitude naming (magnitude_of_&lt;vector&gt;) unless `magnitude_style=suffix` is set.
+
+USER PARAMETERS:
+{&lt;insert filled parameter block&gt;}
+
+TASK:
+1. Execute the High-Level Workflow steps 1–11.
+2. For IMAS DD mining request concise structured data (list field → physical meaning → suggested base scalar name candidate). If unavailable, proceed with physics-informed assumptions for {domain_group}.
+3. Generate up to {max_base_scalars} new base scalars (over {batches} batch(es)).
+4. Expand into vectors, components, derived entities respecting operator rank.
+5. Provide YAML entries (one logical item per block) in required order.
+6. Include dependency lists for derived scalars using ALL component names.
+7. Produce a validation report summarizing any detected risk or uncertainty.
+8. Do NOT duplicate existing canonical examples (magnetic_field family) unless extending with new derived forms legitimately.
+
+OUTPUT STRICTLY:
+- Valid YAML blocks only (no extraneous prose inside blocks) preceded by comment headers as defined in Emission Format.
+- After YAML sections, include an Index and optional Validation Report.
+
+If any rule conflicts (e.g. spec vs. current validators on magnitude naming), prefer validator compliance and note the divergence in the Validation Report.
+</code></pre>
+<hr />
+<h3 id="8-example-minimal-invocation-narrative-only">8. Example Minimal Invocation (Narrative Only)</h3>
+<blockquote>
+<p>domain_group: equilibrium; imas_ids_scope: equilibrium; max_base_scalars: 5; vector_ratio: 0.2; include_derived_vectors: true; include_scalar_derivatives: time_derivative,magnitude,divergence; magnitude_style: prefix.</p>
+</blockquote>
+<p>Agent would: mine IDS → propose scalars like <code>plasma_current</code>, <code>poloidal_flux</code> (already exists? then skip), etc., then decide if a new vector (e.g. <code>plasma_velocity</code>) merits introduction, generate components + derived scalars.</p>
+<hr />
+<h3 id="9-future-adjustments">9. Future Adjustments</h3>
+<p>Once code &amp; docs converge on magnitude naming, remove <code>magnitude_style</code> switch and always use suffix <code>&lt;vector&gt;_magnitude</code> while updating <code>models.py</code> accordingly.</p>
+<hr />
+<p>End of reusable prompt template.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
