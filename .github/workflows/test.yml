@@ -33,7 +33,7 @@ jobs:
         python-version: ["3.12", "3.13"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/install-project
         with:
           python-version: ${{ matrix.python-version }}
@@ -65,4 +65,4 @@ jobs:
 
       - name: Upload coverage reports to Codecov
         if: matrix.python-version == env.BASE_PYTHON_VERSION
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
