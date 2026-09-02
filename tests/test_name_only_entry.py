@@ -164,6 +164,7 @@ def test_full_factory_roundtrip_unchanged():
         {
             "name": "plasma_current",
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "unit": "A",
             "description": "Total toroidal plasma current.",
             "documentation": "Positive when flowing counter-clockwise viewed from above.",

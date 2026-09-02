@@ -11,8 +11,13 @@ def _write_yaml(root: Path, model):
     """Write a standard name model to a per-domain list YAML file."""
     domain = getattr(model, "physics_domain", "general") or "general"
     domain_file = root / f"{domain}.yml"
-    data = {k: v for k, v in model.model_dump().items() if v not in (None, [], "")}
+    data = {
+        k: v
+        for k, v in model.model_dump(mode="json").items()
+        if v not in (None, [], "")
+    }
     data["name"] = model.name
+    data["physics_domain"] = str(domain)
     existing: list[dict] = []
     if domain_file.exists():
         with open(domain_file, encoding="utf-8") as fh:

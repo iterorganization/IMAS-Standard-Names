@@ -9,6 +9,7 @@ def test_sqlite_catalog_insert_search_get():
         {
             "name": "electron_temperature",
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "description": "Electron temperature.",
             "documentation": "Temperature of electrons in the plasma.",
             "unit": "eV",

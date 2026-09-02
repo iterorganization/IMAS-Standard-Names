@@ -8,6 +8,7 @@ def _entry(name: str) -> dict:
     return {
         "name": name,
         "kind": "scalar",
+        "physics_domain": "general",
         "status": "draft",
         "unit": "1",
         "description": "Unit vector component for locus-check testing.",

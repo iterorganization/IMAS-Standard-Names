@@ -8,6 +8,7 @@ def test_links_trailing_whitespace_preserved_if_duplicate():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "name": "core_density",
             "description": "Core density",
             "documentation": "Density in the plasma core.",
@@ -24,6 +25,7 @@ def test_links_external_urls():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "general",
             "name": "test_quantity",
             "description": "Test quantity",
             "documentation": "Test quantity with external links.",
@@ -40,6 +42,7 @@ def test_links_internal_references():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "general",
             "name": "test_quantity",
             "description": "Test quantity",
             "documentation": "Test quantity with internal references.",
@@ -56,6 +59,7 @@ def test_links_mixed_types():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "general",
             "name": "test_quantity",
             "description": "Test quantity",
             "documentation": "Test quantity with mixed link types.",
@@ -81,6 +85,7 @@ def test_links_invalid_internal_reference():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "general",
                 "name": "test_quantity",
                 "description": "Test",
                 "unit": "m",
@@ -96,6 +101,7 @@ def test_links_empty_internal_reference():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "general",
                 "name": "test_quantity",
                 "description": "Test",
                 "unit": "m",
@@ -111,6 +117,7 @@ def test_links_invalid_format():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "general",
                 "name": "test_quantity",
                 "description": "Test",
                 "unit": "m",

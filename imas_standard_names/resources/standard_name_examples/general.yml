@@ -52,6 +52,7 @@
     time scales with machine size and plasma current, following empirical scaling
     laws.'
   status: draft
+  physics_domain: general
   kind: scalar
   unit: s
 - name: heating_power_due_to_ohmic
@@ -106,6 +107,7 @@
     Sign convention: Positive heating power indicates energy input to the plasma,
     following standard power conventions with heating rate measured in watts.'
   status: active
+  physics_domain: general
   kind: scalar
   unit: W
 - name: plasma_current
@@ -155,5 +157,6 @@
     Sign convention: Positive indicates counter-clockwise toroidal current when viewed
     from above, same direction as toroidal magnetic field for stable operation.'
   status: active
+  physics_domain: general
   kind: scalar
   unit: A

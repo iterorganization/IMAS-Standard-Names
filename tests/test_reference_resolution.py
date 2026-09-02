@@ -19,6 +19,7 @@ def _entry(name: str, **overrides):
     base = {
         "name": name,
         "kind": "scalar",
+        "physics_domain": "general",
         "unit": "eV",
         "description": f"Description of {name}.",
         "documentation": f"Documentation of {name}.",

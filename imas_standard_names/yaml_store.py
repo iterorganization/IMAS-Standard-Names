@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 # Fields that are no longer part of the catalog entry model.
 # They are stripped from loaded YAML data to support clean schema migration.
-_STRIPPED_FIELDS = {"physics_domain", "dd_paths"}
+_STRIPPED_FIELDS = {"dd_paths"}
 
 
 def dump_catalog_yaml(entries: Sequence[Mapping[str, Any]]) -> str:

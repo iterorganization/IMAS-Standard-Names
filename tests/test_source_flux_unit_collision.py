@@ -17,6 +17,7 @@ def _entry(name: str, unit: str = "Pa", **overrides):
     base = {
         "name": name,
         "kind": "scalar",
+        "physics_domain": "general",
         "unit": unit,
         "description": f"Description of {name}.",
         "documentation": f"Documentation of {name}.",
@@ -76,6 +77,7 @@ def test_unitless_entries_are_ignored():
             {
                 "name": name,
                 "kind": "metadata",
+                "physics_domain": "general",
                 "description": f"Description of {name}.",
                 "documentation": f"Documentation of {name}.",
             }

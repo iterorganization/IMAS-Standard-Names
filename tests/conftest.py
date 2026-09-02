@@ -18,8 +18,13 @@ def _write_entry_yaml(root: Path, entry):
     """
     domain = getattr(entry, "physics_domain", "general") or "general"
     domain_file = root / f"{domain}.yml"
-    data = {k: v for k, v in entry.model_dump().items() if v not in (None, [], "")}
+    data = {
+        k: v
+        for k, v in entry.model_dump(mode="json").items()
+        if v not in (None, [], "")
+    }
     data["name"] = entry.name
+    data["physics_domain"] = str(domain)
 
     # Load existing entries if the domain file already exists
     existing: list[dict] = []
@@ -54,6 +59,7 @@ def make_valid_entry(kind="scalar", **overrides):
     defaults = {
         "kind": kind,
         "name": "test_quantity",
+        "physics_domain": "general",
         "description": "Test quantity for unit tests.",
         "documentation": "Detailed documentation for test quantity.",
         "unit": "m^-3" if kind != "metadata" else "",
@@ -108,6 +114,7 @@ def sample_scalar_entry():
     return {
         "name": "test_scalar",
         "kind": "scalar",
+        "physics_domain": "general",
         "description": "Test scalar entry.",
         "unit": "m",
         "status": "draft",
@@ -120,6 +127,7 @@ def sample_vector_entry():
     return {
         "name": "test_vector",
         "kind": "vector",
+        "physics_domain": "general",
         "description": "Test vector entry.",
         "unit": "T",
         "status": "draft",
@@ -133,12 +141,14 @@ def sample_entries_with_provenance():
         {
             "name": "base_quantity",
             "kind": "scalar",
+            "physics_domain": "general",
             "description": "Base quantity for provenance tests.",
             "unit": "m",
         },
         {
             "name": "derived_quantity",
             "kind": "scalar",
+            "physics_domain": "general",
             "description": "Derived quantity using operator.",
             "unit": "m.s^-1",
             "provenance": {

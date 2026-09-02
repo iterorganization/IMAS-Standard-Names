@@ -9,6 +9,7 @@ def test_services_validate_and_row_to_model():
         {
             "name": "electron_density",
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "description": "Electron density.",
             "documentation": "Number density of electrons in the plasma.",
             "unit": "m^-3",  # canonical single token style for test purposes

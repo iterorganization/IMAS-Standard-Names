@@ -11,6 +11,7 @@ def _make_minimal_vector(tmp_path: Path):  # now simplified to scalars
     (tmp_path / "electron_temperature.yml").write_text(
         """name: electron_temperature
 kind: scalar
+physics_domain: core_plasma_physics
 status: active
 unit: eV
 description: Electron temperature.
@@ -22,6 +23,7 @@ documentation: |
     (tmp_path / "ion_temperature.yml").write_text(
         """name: ion_temperature
 kind: scalar
+physics_domain: core_plasma_physics
 status: active
 unit: eV
 description: Ion temperature.
@@ -113,6 +115,7 @@ def test_validate_catalog_strict_fails_on_warnings(tmp_path: Path):
     (tmp_path / "short_desc.yml").write_text(
         """name: short_desc
 kind: scalar
+physics_domain: general
 status: active
 unit: '1'
 description: Short.

@@ -43,6 +43,7 @@
     [heat_flux_to_divertor](#heat_flux_to_divertor) through power deposition patterns.
     Divertor configuration affects [first_wall](#first_wall) loading and plasma performance.'
   status: draft
+  physics_domain: edge_plasma_physics
   kind: metadata
 - name: heat_flux_to_divertor
   description: Heat flux to divertor target.
@@ -114,6 +115,7 @@
     Sign convention: Positive heat flux indicates power flow toward divertor surface,
     following standard heat transfer conventions with power density measured in W/m$^2$.'
   status: draft
+  physics_domain: edge_plasma_physics
   kind: scalar
   unit: W.m^-2
 - name: scrape_off_layer
@@ -176,6 +178,7 @@
     provides boundary information. SOL analysis requires multiple diagnostic measurements
     across the edge region.'
   status: active
+  physics_domain: edge_plasma_physics
   kind: metadata
   links:
   - name:plasma_boundary

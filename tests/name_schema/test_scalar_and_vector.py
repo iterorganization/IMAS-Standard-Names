@@ -33,6 +33,7 @@ def test_dimensionless_unit_blank():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "general",
             "name": "beta_pol",
             "description": "Dimensionless plasma beta",
             "documentation": "Poloidal beta - dimensionless plasma parameter.",

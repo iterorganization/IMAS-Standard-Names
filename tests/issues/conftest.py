@@ -20,7 +20,7 @@ def base_names_data():
     with ir.as_file(files_obj) as examples_path:
         catalog = StandardNameCatalog(root=examples_path, permissive=True)
         scalars = catalog.list(kind="scalar")[:3]
-        return [entry.model_dump() for entry in scalars]
+        return [entry.model_dump(mode="json") for entry in scalars]
 
 
 @pytest.fixture
@@ -44,6 +44,7 @@ def click_runner(path: str | Path):
 
 def _write_entry(entry: dict, directory: Path):
     """Write a standard name entry by appending to a per-domain YAML file."""
+    entry.setdefault("physics_domain", "general")
     obj = models.create_standard_name_entry(entry)
     domain = getattr(obj, "physics_domain", "general") or "general"
     domain_file = directory / f"{domain}.yml"
@@ -53,7 +54,9 @@ def _write_entry(entry: dict, directory: Path):
             existing = yaml.safe_load(fh) or []
     else:
         existing = []
-    data = {k: v for k, v in obj.model_dump().items() if v not in (None, [], "")}
+    data = {
+        k: v for k, v in obj.model_dump(mode="json").items() if v not in (None, [], "")
+    }
     data["name"] = obj.name
     existing.append(data)
     with open(domain_file, "w", encoding="utf-8") as fh:
@@ -102,6 +105,7 @@ def extended_names_data(base_names_data):
         {
             "name": "a_new_standard_name",
             "kind": "scalar",
+            "physics_domain": "general",
             "status": "draft",
             "unit": "1",
             "description": "desc",

@@ -12,6 +12,7 @@ def test_structural_and_semantic_checks(tmp_path: Path):
     (tmp_path / "gradient.yml").write_text(
         """name: gradient_of_temperature
 kind: vector
+physics_domain: core_plasma_physics
 status: draft
 unit: K.m^-1
 description: Gradient of temperature.
@@ -28,6 +29,7 @@ provenance:
     (tmp_path / "radial_component_of_gradient_of_temperature.yml").write_text(
         """name: radial_component_of_gradient_of_temperature
 kind: scalar
+physics_domain: core_plasma_physics
 status: draft
 unit: K.m^-1
 description: Radial component.
@@ -44,6 +46,7 @@ provenance:
     (tmp_path / "toroidal_component_of_gradient_of_temperature.yml").write_text(
         """name: toroidal_component_of_gradient_of_temperature
 kind: scalar
+physics_domain: core_plasma_physics
 status: draft
 unit: K.m^-1
 description: Toroidal component.

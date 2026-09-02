@@ -56,6 +56,7 @@
     Sign convention: Positive density indicates particle concentration, following
     standard plasma physics conventions.'
   status: draft
+  physics_domain: core_plasma_physics
   kind: scalar
   unit: m^-3
 - name: electron_pressure
@@ -114,6 +115,7 @@
     Sign convention: Positive pressure indicates compressive force outward from plasma
     center.'
   status: draft
+  physics_domain: core_plasma_physics
   kind: scalar
   unit: Pa
 - name: electron_temperature
@@ -165,6 +167,7 @@
     On-axis values in [electron_temperature_at_magnetic_axis](#electron_temperature_at_magnetic_axis)
     typically reach 5-15 keV during auxiliary heating.'
   status: active
+  physics_domain: core_plasma_physics
   kind: scalar
   unit: eV
 - name: electron_temperature_at_magnetic_axis
@@ -212,6 +215,7 @@
     standard thermodynamic conventions with temperature measured in energy units (eV
     or keV).'
   status: active
+  physics_domain: core_plasma_physics
   kind: scalar
   unit: eV
 - name: ion_temperature
@@ -271,6 +275,7 @@
     Sign convention: Positive temperature indicates thermal energy per particle, following
     standard thermodynamic conventions.'
   status: draft
+  physics_domain: core_plasma_physics
   kind: scalar
   unit: eV
 - name: ion_temperature_at_magnetic_axis
@@ -317,6 +322,7 @@
     standard thermodynamic conventions with temperature measured in energy units (eV
     or keV).'
   status: draft
+  physics_domain: core_plasma_physics
   kind: scalar
   unit: eV
 - name: plasma_density_at_magnetic_axis
@@ -373,6 +379,7 @@
     standard plasma physics conventions with density measured in particles per cubic
     meter.'
   status: draft
+  physics_domain: core_plasma_physics
   kind: scalar
   unit: m^-3
 - name: plasma_resistivity
@@ -437,5 +444,6 @@
     Sign convention: Positive resistivity indicates resistance to current flow, following
     standard electrical resistance conventions with current flow direction.'
   status: draft
+  physics_domain: core_plasma_physics
   kind: scalar
   unit: m.ohm

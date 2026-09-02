@@ -40,6 +40,7 @@ from imas_standard_names.models import (
 
 _SCALAR_META = {
     "kind": "scalar",
+    "physics_domain": "general",
     "unit": "1",
     "description": "Regression test entry.",
     "documentation": "Regression test — no physical meaning intended.",
@@ -47,6 +48,7 @@ _SCALAR_META = {
 
 _VECTOR_META = {
     "kind": "vector",
+    "physics_domain": "general",
     "unit": "1",
     "description": "Regression test entry.",
     "documentation": "Regression test — no physical meaning intended.",

@@ -30,6 +30,7 @@ _DOMAIN_FIXTURE = [
     {
         "name": "temperature",
         "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
         "description": "Temperature of a plasma species.",
         "documentation": "Generic temperature quantity.",
         "unit": "eV",
@@ -42,6 +43,7 @@ _DOMAIN_FIXTURE = [
     {
         "name": "upper_uncertainty_of_temperature",
         "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
         "description": "Upper uncertainty of temperature.",
         "documentation": "Upper bound on temperature uncertainty.",
         "unit": "eV",
@@ -50,6 +52,7 @@ _DOMAIN_FIXTURE = [
     {
         "name": "lower_uncertainty_of_temperature",
         "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
         "description": "Lower uncertainty of temperature.",
         "documentation": "Lower bound on temperature uncertainty.",
         "unit": "eV",
@@ -58,6 +61,7 @@ _DOMAIN_FIXTURE = [
     {
         "name": "maximum_of_temperature",
         "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
         "description": "Maximum of temperature.",
         "documentation": "Peak temperature over a domain.",
         "unit": "eV",
@@ -88,7 +92,7 @@ def _write_domain_fixture(root: Path, domain: str = "transport") -> Path:
 
 
 # ---------------------------------------------------------------------------
-# §9 — ArgumentRef model validation
+# ArgumentRef model validation
 # ---------------------------------------------------------------------------
 
 
@@ -224,7 +228,7 @@ class TestArgumentRef:
 
 
 # ---------------------------------------------------------------------------
-# §9 — StandardNameEntry with arguments and error_variants
+# StandardNameEntry with arguments and error_variants
 # ---------------------------------------------------------------------------
 
 
@@ -236,6 +240,7 @@ class TestEntryWithComputedFields:
             {
                 "name": "maximum_of_temperature",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Maximum of temperature.",
                 "documentation": "Peak temperature over a domain.",
                 "unit": "eV",
@@ -257,6 +262,7 @@ class TestEntryWithComputedFields:
             {
                 "name": "temperature",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Temperature of a plasma species.",
                 "documentation": "Generic temperature quantity.",
                 "unit": "eV",
@@ -274,6 +280,7 @@ class TestEntryWithComputedFields:
             {
                 "name": "temperature",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Temperature of a plasma species.",
                 "documentation": "Generic temperature quantity.",
                 "unit": "eV",
@@ -288,6 +295,7 @@ class TestEntryWithComputedFields:
                 {
                     "name": "temperature",
                     "kind": "scalar",
+                    "physics_domain": "core_plasma_physics",
                     "description": "Temperature.",
                     "documentation": "Temperature.",
                     "unit": "eV",
@@ -299,7 +307,7 @@ class TestEntryWithComputedFields:
 
 
 # ---------------------------------------------------------------------------
-# §8 — Loader refactor: per-domain list format
+# Per-domain list loader
 # ---------------------------------------------------------------------------
 
 
@@ -321,6 +329,7 @@ class TestLoaderDomainFormat:
         (tmp_path / "plasma_current.yml").write_text(
             "name: plasma_current\n"
             "kind: scalar\n"
+            "physics_domain: core_plasma_physics\n"
             "description: Plasma current.\n"
             "documentation: Total plasma current in the tokamak.\n"
             "unit: A\n"
@@ -332,7 +341,7 @@ class TestLoaderDomainFormat:
 
 
 # ---------------------------------------------------------------------------
-# §8 — Legacy per-file YAML migration error
+# Legacy per-file YAML migration error
 # ---------------------------------------------------------------------------
 
 
@@ -378,7 +387,7 @@ class TestLegacyMigrationError:
 
 
 # ---------------------------------------------------------------------------
-# §11 — Round-trip: load → re-serialise → byte-identical
+# Round-trip: load → re-serialise → byte-identical
 # ---------------------------------------------------------------------------
 
 
@@ -418,7 +427,7 @@ class TestRoundTrip:
 
 
 # ---------------------------------------------------------------------------
-# §11 — Missing cross-reference warning
+# Missing cross-reference warning
 # ---------------------------------------------------------------------------
 
 
@@ -431,6 +440,7 @@ class TestCrossReferenceWarnings:
             {
                 "name": "maximum_of_temperature",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Maximum of temperature.",
                 "documentation": "Peak temperature over a domain.",
                 "unit": "eV",
@@ -464,6 +474,7 @@ class TestCrossReferenceWarnings:
             {
                 "name": "temperature",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Temperature.",
                 "documentation": "Temperature doc.",
                 "unit": "eV",
@@ -502,7 +513,7 @@ class TestCrossReferenceWarnings:
 
 
 # ---------------------------------------------------------------------------
-# §10 — Topological load handles arguments[].name edges
+# Topological load handles arguments[].name edges
 # ---------------------------------------------------------------------------
 
 
@@ -526,6 +537,7 @@ class TestTopologicalOrderingArguments:
             {
                 "name": "pressure",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Pressure.",
                 "documentation": "Pressure doc.",
                 "unit": "Pa",
@@ -533,6 +545,7 @@ class TestTopologicalOrderingArguments:
             {
                 "name": "density",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Density.",
                 "documentation": "Density doc.",
                 "unit": "m^-3",
@@ -540,6 +553,7 @@ class TestTopologicalOrderingArguments:
             {
                 "name": "ratio_of_pressure_to_density",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Ratio of pressure to density.",
                 "documentation": "Pressure over density.",
                 "unit": "Pa.m^3",
@@ -579,6 +593,7 @@ class TestTopologicalOrderingArguments:
             {
                 "name": "maximum_of_temperature",
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "description": "Maximum of temperature.",
                 "documentation": "Peak temperature.",
                 "unit": "eV",
@@ -610,6 +625,7 @@ class TestTopologicalOrderingArguments:
             {
                 "name": "magnetic_field",
                 "kind": "scalar",
+                "physics_domain": "equilibrium",
                 "description": "Magnetic field.",
                 "documentation": "Magnetic field doc.",
                 "unit": "T",
@@ -617,6 +633,7 @@ class TestTopologicalOrderingArguments:
             {
                 "name": "x_magnetic_field",
                 "kind": "scalar",
+                "physics_domain": "equilibrium",
                 "description": "X component of magnetic field.",
                 "documentation": "X projection of magnetic field.",
                 "unit": "T",
@@ -633,6 +650,7 @@ class TestTopologicalOrderingArguments:
             {
                 "name": "y_magnetic_field",
                 "kind": "scalar",
+                "physics_domain": "equilibrium",
                 "description": "Y component of magnetic field.",
                 "documentation": "Y projection of magnetic field.",
                 "unit": "T",

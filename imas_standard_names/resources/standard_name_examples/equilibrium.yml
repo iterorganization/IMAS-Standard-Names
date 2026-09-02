@@ -54,6 +54,7 @@
     Sign convention: Positive when $\kappa \geq 1$ indicating vertically elongated
     or circular cross-section, following standard tokamak geometry conventions.'
   status: draft
+  physics_domain: equilibrium
   kind: scalar
   unit: '1'
 - name: last_closed_flux_surface
@@ -104,6 +105,7 @@
     LCFS identification requires flux surface analysis and field line tracing. Position
     control systems maintain LCFS position during operations.'
   status: draft
+  physics_domain: equilibrium
   kind: metadata
 - name: magnetic_axis
   description: Magnetic axis location.
@@ -164,6 +166,7 @@
     Sign convention: Positive coordinates follow standard cylindrical coordinate conventions
     with R measured from machine center and Z measured from midplane.'
   status: draft
+  physics_domain: equilibrium
   kind: metadata
 - name: magnetic_separatrix
   description: Magnetic separatrix in diverted configuration.
@@ -213,6 +216,7 @@
     external coil currents. Divertor diagnostics measure strike point locations for
     separatrix mapping.'
   status: draft
+  physics_domain: equilibrium
   kind: metadata
 - name: radial_coordinate_of_plasma_boundary
   description: Radial coordinate at plasma boundary.
@@ -262,6 +266,7 @@
     Sign convention: Positive radial coordinate measured from machine center, following
     standard cylindrical coordinate conventions and tokamak geometry.'
   status: active
+  physics_domain: equilibrium
   kind: scalar
   unit: m
 - name: minor_radius_of_plasma_boundary
@@ -321,6 +326,7 @@
     Sign convention: Positive minor radius measured from magnetic axis to boundary,
     following standard tokamak geometry conventions.'
   status: draft
+  physics_domain: equilibrium
   kind: scalar
   unit: m
 - name: plasma_boundary
@@ -361,6 +367,7 @@
     stability limits. The boundary location relative to [first_wall](#first_wall)
     components determines heat flux distribution and material loading.'
   status: active
+  physics_domain: equilibrium
   kind: metadata
 - name: plasma_volume
   description: Total plasma volume.
@@ -421,6 +428,7 @@
     Sign convention: Positive volume indicates enclosed plasma region, following standard
     geometric conventions with volume measured in cubic meters.'
   status: draft
+  physics_domain: equilibrium
   kind: scalar
   unit: m^3
 - name: safety_factor
@@ -471,5 +479,6 @@
     Sign convention: Positive when toroidal current and toroidal field are in same
     direction, following右手螺旋定则 for standard tokamak operation.'
   status: draft
+  physics_domain: equilibrium
   kind: scalar
   unit: '1'

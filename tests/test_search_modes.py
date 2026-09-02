@@ -8,10 +8,10 @@ from imas_standard_names.cli import standard_names
 
 def _seed(root: Path):
     (root / "a.yml").write_text(
-        "name: electron_temperature\nkind: scalar\nstatus: active\nunit: keV\ndescription: Electron temperature.\ndocumentation: |\n  Electron temperature for search mode testing.\n"
+        "name: electron_temperature\nkind: scalar\nphysics_domain: core_plasma_physics\nstatus: active\nunit: keV\ndescription: Electron temperature.\ndocumentation: |\n  Electron temperature for search mode testing.\n"
     )
     (root / "b.yml").write_text(
-        "name: ion_temperature\nkind: scalar\nstatus: draft\nunit: keV\ndescription: Ion temperature.\ndocumentation: |\n  Ion temperature for search mode testing.\n"
+        "name: ion_temperature\nkind: scalar\nphysics_domain: core_plasma_physics\nstatus: draft\nunit: keV\ndescription: Ion temperature.\ndocumentation: |\n  Ion temperature for search mode testing.\n"
     )
 
 

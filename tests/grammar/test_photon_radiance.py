@@ -42,6 +42,7 @@ def test_photon_radiance_is_a_distinct_dimensional_base() -> None:
         {
             "name": "photon_radiance",
             "kind": "scalar",
+            "physics_domain": "radiation_measurement_diagnostics",
             "status": "draft",
             "unit": "1",
             "description": "Photon-number radiance for dimensional validation.",

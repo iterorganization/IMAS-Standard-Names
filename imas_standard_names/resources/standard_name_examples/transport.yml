@@ -56,6 +56,7 @@
     Sign convention: Positive heat flux indicates energy flow in the direction of
     decreasing temperature, following the direction of $\nabla T_e$.'
   status: draft
+  physics_domain: transport
   kind: vector
   unit: W.m^-2
 - name: electron_thermal_diffusivity
@@ -115,6 +116,7 @@
     Sign convention: Positive diffusivity indicates outward heat transport from hot
     plasma core to cooler edge regions, following standard transport theory conventions.'
   status: draft
+  physics_domain: transport
   kind: scalar
   unit: m^2.s^-1
 - name: radial_electron_heat_flux
@@ -166,5 +168,6 @@
     Sign convention: Positive indicates outward (increasing R direction) heat flow
     from plasma core to edge, following standard cylindrical coordinate conventions.'
   status: active
+  physics_domain: transport
   kind: scalar
   unit: W.m^-2

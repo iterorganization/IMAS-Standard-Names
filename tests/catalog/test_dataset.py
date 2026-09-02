@@ -819,7 +819,7 @@ class TestParseSegments:
                         "description": "Test entry that the parser cannot decompose.",
                         "documentation": "This entry exists only to exercise the unparseable fallback.",
                         "unit": "1",
-                        "physics_domain": "test_domain",
+                        "physics_domain": "general",
                     }
                 ]
             ),
@@ -1055,7 +1055,7 @@ class TestStatusFiltering:
             [
                 {
                     "name": "alpha",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "active",
@@ -1064,7 +1064,7 @@ class TestStatusFiltering:
                 },
                 {
                     "name": "beta",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "draft",
@@ -1073,7 +1073,7 @@ class TestStatusFiltering:
                 },
                 {
                     "name": "gamma",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "deprecated",
@@ -1082,7 +1082,7 @@ class TestStatusFiltering:
                 },
                 {
                     "name": "delta",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "superseded",
@@ -1111,7 +1111,7 @@ class TestStatusFiltering:
             [
                 {
                     "name": "old_name",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "superseded",
@@ -1121,7 +1121,7 @@ class TestStatusFiltering:
                 },
                 {
                     "name": "new_name",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "active",
@@ -1141,7 +1141,7 @@ class TestStatusFiltering:
             [
                 {
                     "name": "old_drafted",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "drafted",
@@ -1150,7 +1150,7 @@ class TestStatusFiltering:
                 },
                 {
                     "name": "old_accepted",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "accepted",
@@ -1159,7 +1159,7 @@ class TestStatusFiltering:
                 },
                 {
                     "name": "old_published",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "published",
@@ -1183,7 +1183,7 @@ class TestStatusFiltering:
             [
                 {
                     "name": "weird",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "not_a_real_status",
@@ -1192,7 +1192,7 @@ class TestStatusFiltering:
                 },
                 {
                     "name": "ok",
-                    "physics_domain": "x",
+                    "physics_domain": "general",
                     "kind": "scalar",
                     "unit": "1",
                     "status": "active",

@@ -65,7 +65,10 @@ from imas_standard_names.grammar.parser import (
     parse,
 )
 from imas_standard_names.grammar.terms import standard_terms
-from imas_standard_names.models import StandardNameCatalogManifest
+from imas_standard_names.models import (
+    StandardNameCatalogManifest,
+    StandardNameEntryBase,
+)
 
 _log = logging.getLogger(__name__)
 
@@ -911,7 +914,8 @@ def _build_record(entry: dict[str, Any]) -> dict[str, Any]:
     normalised by ``_normalise_status`` before this function is called.
     """
     name = str(entry.get("name") or "")
-    category = entry.get("physics_domain") or "uncategorized"
+    domain_type = StandardNameEntryBase.model_fields["physics_domain"].annotation
+    category = domain_type(entry["physics_domain"])
     facets = _derive_grammar_facets(name)
     algebra = entry.get("kind") or "scalar"
     parent = _parent_token(name, facets, entry)

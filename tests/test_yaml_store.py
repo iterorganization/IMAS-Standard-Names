@@ -15,6 +15,7 @@ def _entry_with_source(source: dict[str, str]) -> dict:
     return {
         "name": "plasma_current",
         "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
         "description": "Plasma current.",
         "documentation": "Total plasma current in the tokamak.",
         "unit": "A",
@@ -28,6 +29,7 @@ def test_yaml_store_load(tmp_path: Path):
     (tmp_path / "plasma_current.yml").write_text(
         "name: plasma_current\n"
         "kind: scalar\n"
+        "physics_domain: core_plasma_physics\n"
         "description: Plasma current.\n"
         "documentation: Total plasma current in the tokamak.\n"
         "unit: A\n"
@@ -136,6 +138,7 @@ def test_catalog_yaml_round_trips_input_structure() -> None:
             "documentation": "The angle φ is measured in radians.",
             "status": "draft",
             "kind": "scalar",
+            "physics_domain": "equilibrium",
             "unit": "1",
             "links": ["magnetic_field", "poloidal_flux"],
         },
@@ -144,6 +147,7 @@ def test_catalog_yaml_round_trips_input_structure() -> None:
             "description": "Magnetic axis position.",
             "status": "active",
             "kind": "metadata",
+            "physics_domain": "equilibrium",
         },
     ]
 

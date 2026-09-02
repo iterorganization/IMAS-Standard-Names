@@ -21,6 +21,7 @@ def _stub(**overrides) -> dict:
     base = {
         "name": "ion_temperature_core",
         "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
         "status": "deprecated",
         "unit": "eV",
         "superseded_by": "core_ion_temperature",
@@ -36,6 +37,7 @@ def _successor() -> dict:
     return {
         "name": "core_ion_temperature",
         "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
         "status": "active",
         "unit": "eV",
         "description": "Core ion temperature.",

@@ -13,6 +13,7 @@ The StandardNameEntry union type represents full catalog entries with:
 Example scalar entry:
   name: ion_temperature
   kind: scalar
+  physics_domain: core_plasma_physics
   status: active
   unit: eV
   description: Core ion temperature.
@@ -20,6 +21,7 @@ Example scalar entry:
 Example vector entry:
   name: plasma_velocity
   kind: vector
+  physics_domain: core_plasma_physics
   status: active
   unit: m/s
   description: Plasma velocity vector.
@@ -27,6 +29,7 @@ Example vector entry:
 Example metadata entry:
   name: plasma_boundary
   kind: metadata
+  physics_domain: equilibrium
   status: draft
   description: Definition of plasma boundary.
   documentation: |
@@ -82,6 +85,7 @@ from imas_standard_names.grammar.model_types import (  # noqa: F401
     Position,
     Process,
 )
+from imas_standard_names.grammar.tag_types import PhysicsDomain
 from imas_standard_names.operators import (
     enforce_operator_naming as _enforce_operator_naming,
     normalize_operator_chain as _normalize_operator_chain,
@@ -489,12 +493,29 @@ class StandardNameEntryBase(StandardNameBase):
     """Full catalog entry definition (fields common to scalar and vector kinds).
 
     Extends :class:`StandardNameBase` with the documentation and metadata fields
-    required of a published standard name: description, documentation,
-    links. This remains the class used for the full
+    required of a published standard name: physics domain, description,
+    documentation, and links. This remains the class used for the full
     catalog (serialization, JSON schema, rendering).
     """
 
     model_config = ConfigDict(extra="forbid")
+
+    physics_domain: PhysicsDomain = Field(
+        description=(
+            "Required physics-domain classification from the PhysicsDomain enum."
+        )
+    )
+
+    @field_validator("physics_domain", mode="before")
+    @classmethod
+    def validate_physics_domain(cls, value: Any) -> PhysicsDomain:
+        """Require a value declared by the PhysicsDomain enum."""
+        try:
+            return PhysicsDomain(value)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                "physics_domain must be a valid PhysicsDomain enum value"
+            ) from exc
 
     # Documentation & description
     description: Description

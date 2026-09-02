@@ -9,6 +9,7 @@ def test_valid_sign_convention():
     """Test that valid sign convention format passes."""
     entry = StandardNameScalarEntry(
         name="test_current",
+        physics_domain="general",
         description="Test current quantity.",
         documentation="""
 Test quantity description.
@@ -27,6 +28,7 @@ def test_invalid_bold_sign_convention():
     with pytest.raises(ValueError, match="plain text"):
         StandardNameScalarEntry(
             name="test_current",
+            physics_domain="general",
             description="Test current quantity.",
             documentation="**Sign convention:** Positive when current flows counter-clockwise.",
             unit="A",
@@ -38,6 +40,7 @@ def test_invalid_lowercase_sign_convention():
     with pytest.raises(ValueError, match="title case"):
         StandardNameScalarEntry(
             name="test_current",
+            physics_domain="general",
             description="Test current quantity.",
             documentation="sign convention: Positive when current flows counter-clockwise.",
             unit="A",
@@ -49,6 +52,7 @@ def test_invalid_missing_positive():
     with pytest.raises(ValueError, match="Positive"):
         StandardNameScalarEntry(
             name="test_current",
+            physics_domain="general",
             description="Test current quantity.",
             documentation="Sign convention: Current flows counter-clockwise when positive.",
             unit="A",
@@ -59,6 +63,7 @@ def test_no_sign_convention_is_ok():
     """Test that entries without sign convention pass."""
     entry = StandardNameScalarEntry(
         name="test_temperature",
+        physics_domain="general",
         description="Test temperature quantity.",
         documentation="Temperature measured in the plasma core.",
         unit="eV",
@@ -71,6 +76,7 @@ def test_sign_convention_missing_blank_line_before():
     with pytest.raises(ValueError, match="standalone paragraph.*blank line before"):
         StandardNameScalarEntry(
             name="test_current",
+            physics_domain="general",
             description="Test current quantity.",
             documentation="First paragraph text.\nSign convention: Positive when current flows counter-clockwise.",
             unit="A",
@@ -82,6 +88,7 @@ def test_sign_convention_missing_blank_line_after():
     with pytest.raises(ValueError, match="standalone paragraph.*blank line after"):
         StandardNameScalarEntry(
             name="test_current",
+            physics_domain="general",
             description="Test current quantity.",
             documentation="First paragraph.\n\nSign convention: Positive when current flows counter-clockwise.\nNext sentence immediately.",
             unit="A",
@@ -93,6 +100,7 @@ def test_sign_convention_embedded_in_paragraph():
     with pytest.raises(ValueError, match="standalone paragraph.*blank line before"):
         StandardNameScalarEntry(
             name="test_current",
+            physics_domain="general",
             description="Test current quantity.",
             documentation="Some text. Sign convention: Positive when current flows counter-clockwise. More text.",
             unit="A",
@@ -104,6 +112,7 @@ def test_sign_convention_at_start_is_rejected():
     with pytest.raises(ValueError, match="must follow the main documentation content"):
         StandardNameScalarEntry(
             name="test_current",
+            physics_domain="general",
             description="Test current quantity.",
             documentation="Sign convention: Positive when current flows counter-clockwise.\n\nAdditional text here.",
             unit="A",
@@ -114,6 +123,7 @@ def test_sign_convention_at_end_with_blank_before():
     """Test that sign convention at document end with blank line before passes."""
     entry = StandardNameScalarEntry(
         name="test_current",
+        physics_domain="general",
         description="Test current quantity.",
         documentation="First paragraph explaining the quantity.\n\nSign convention: Positive when current flows counter-clockwise.",
         unit="A",
@@ -125,6 +135,7 @@ def test_sign_convention_positive_for_format():
     """Test that 'Positive for <subject>' format is accepted."""
     entry = StandardNameScalarEntry(
         name="test_current",
+        physics_domain="general",
         description="Test current quantity.",
         documentation="Describes the plasma current.\n\nSign convention: Positive for counter-clockwise toroidal current.",
         unit="A",
@@ -136,6 +147,7 @@ def test_sign_convention_positive_quantity_format():
     """Test that 'Positive <quantity-noun-phrase>' format is accepted."""
     entry = StandardNameScalarEntry(
         name="test_current",
+        physics_domain="general",
         description="Test current quantity.",
         documentation="Describes the plasma current.\n\nSign convention: Positive outward radial direction.",
         unit="A",

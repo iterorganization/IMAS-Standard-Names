@@ -9,6 +9,7 @@ def test_component_scalar_now_minimal():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "name": "radial_component_of_plasma_velocity",
             "description": "Radial component",
             "documentation": "Radial component of plasma velocity.",
@@ -28,6 +29,7 @@ def test_invalid_component_token_rejected():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "name": "r_component_of_plasma_velocity",
                 "description": "Invalid radial component using 'r' instead of 'radial'",
                 "documentation": "Test entry for grammar validation.",
@@ -44,6 +46,7 @@ def test_invalid_component_token_rejected():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "equilibrium",
                 "name": "tor_component_of_magnetic_field",
                 "description": "Invalid toroidal component using 'tor' instead of 'toroidal'",
                 "documentation": "Test entry for grammar validation.",
@@ -59,6 +62,7 @@ def test_valid_component_tokens_accepted():
     sn1 = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "name": "radial_component_of_plasma_velocity",
             "description": "Valid radial component",
             "documentation": "Radial component of plasma velocity.",
@@ -72,6 +76,7 @@ def test_valid_component_tokens_accepted():
     sn2 = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "equilibrium",
             "name": "toroidal_component_of_magnetic_field",
             "description": "Valid toroidal component",
             "documentation": "Toroidal component of magnetic field.",
@@ -87,6 +92,7 @@ def test_vector_invalid_component_prefix():
         create_standard_name_entry(
             {
                 "kind": "vector",
+                "physics_domain": "equilibrium",
                 "name": "magnetic_field",
                 "description": "B field",
                 "documentation": "Magnetic field vector.",
@@ -106,6 +112,7 @@ def test_vector_invalid_axis_token():
         create_standard_name_entry(
             {
                 "kind": "vector",
+                "physics_domain": "general",
                 "name": "flow",
                 "description": "Flow",
                 "documentation": "Flow vector.",
@@ -124,6 +131,7 @@ def test_valid_vector_with_magnitude():
     sn = create_standard_name_entry(
         {
             "kind": "vector",
+            "physics_domain": "core_plasma_physics",
             "name": "plasma_velocity",
             "description": "Velocity",
             "documentation": "Plasma velocity vector.",

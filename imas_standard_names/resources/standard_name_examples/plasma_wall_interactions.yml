@@ -50,4 +50,5 @@
     as the adjacent region, and [divertor](#divertor) for power handling. Wall position affects plasma
     shaping and stability limits.'
   status: draft
+  physics_domain: plasma_wall_interactions
   kind: metadata

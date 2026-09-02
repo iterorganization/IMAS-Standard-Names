@@ -60,4 +60,5 @@
     Sign convention: Positive displacement indicates upward plasma motion, following
     standard coordinate conventions with Z measured from midplane.'
   status: draft
+  physics_domain: magnetohydrodynamics
   kind: metadata

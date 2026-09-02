@@ -58,6 +58,7 @@
     consistent with [flux_loop_voltage](#flux_loop_voltage) measurements and magnetic
     flux conventions.'
   status: active
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: m^2
 - name: current_density
@@ -111,6 +112,7 @@
     and profile shape. Edge values typically 1-2 orders of magnitude lower than core
     values.'
   status: draft
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: A.m^-2
 - name: flux_loop_voltage
@@ -178,6 +180,7 @@
     Sign convention: Positive when normal to loop points downward (negative Z direction),
     following Faraday''s law and standard electromagnetic conventions.'
   status: active
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: V
 - name: magnetic_field
@@ -238,6 +241,7 @@
 
     Sign convention: Positive when anti-clockwise viewed from above for toroidal component.'
   status: active
+  physics_domain: magnetic_field_diagnostics
   kind: vector
   unit: T
 - name: magnetic_flux
@@ -301,6 +305,7 @@
     Sign convention: Positive flux follows the right-hand rule for loop orientation,
     consistent with [flux_loop_voltage](#flux_loop_voltage) measurements.'
   status: draft
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: Wb
 - name: plasma_current_density
@@ -354,6 +359,7 @@
     current direction, consistent with [plasma_current](#plasma_current) measurements
     and tokamak operation conventions.'
   status: active
+  physics_domain: magnetic_field_diagnostics
   kind: vector
   unit: A.m^-2
   links:
@@ -411,6 +417,7 @@
     direction, consistent with [plasma_current](#plasma_current) measurements and
     tokamak operation conventions.'
   status: draft
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: T
 - name: poloidal_magnetic_field
@@ -477,6 +484,7 @@
     current direction, consistent with [plasma_current](#plasma_current) measurements
     and standard tokamak conventions.'
   status: draft
+  physics_domain: magnetic_field_diagnostics
   kind: vector
   unit: T
 - name: poloidal_magnetic_flux
@@ -512,6 +520,7 @@
 
     Sign convention: Positive when surface normal points upward (positive Z direction).'
   status: draft
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: Wb
 - name: radial_magnetic_field
@@ -563,6 +572,7 @@
     Sign convention: Positive outward (increasing R direction), following standard
     cylindrical coordinate conventions and consistent with tokamak geometry.'
   status: active
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: T
 - name: radial_position_of_flux_loop
@@ -624,6 +634,7 @@
     Sign convention: Positive radial position measured outward from machine center,
     following standard cylindrical coordinate conventions and tokamak geometry.'
   status: active
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: m
 - name: toroidal_magnetic_field
@@ -675,6 +686,7 @@
     tokamak conventions and consistent with [plasma_current](#plasma_current) direction
     for stable operation.'
   status: draft
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: T
 - name: vertical_magnetic_field
@@ -726,6 +738,7 @@
     Sign convention: Positive upward (positive Z direction), following standard cylindrical
     coordinate conventions and consistent with tokamak geometry.'
   status: draft
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: T
 - name: vertical_position_of_flux_loop
@@ -787,5 +800,6 @@
     Sign convention: Positive vertical position measured upward from midplane, following
     standard cylindrical coordinate conventions and tokamak geometry.'
   status: draft
+  physics_domain: magnetic_field_diagnostics
   kind: scalar
   unit: m

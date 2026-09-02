@@ -7,6 +7,7 @@ def test_unit_dimensionless_normalization():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "general",
             "name": "beta_pol",
             "description": "Dimensionless plasma beta",
             "documentation": "Poloidal beta - dimensionless plasma parameter.",
@@ -23,6 +24,7 @@ def test_unit_whitespace_rejected():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "general",
                 "name": "some_quantity",
                 "description": "whitespace unit",
                 "unit": "m / s",
@@ -37,6 +39,7 @@ def test_unit_empty_string_rejected():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "general",
                 "name": "some_quantity",
                 "description": "dimensionless quantity",
                 "unit": "",
@@ -54,6 +57,7 @@ def test_unit_none_rejected_with_dimensionless_guidance():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "general",
                 "name": "some_quantity",
                 "description": "Missing-unit quantity",
                 "documentation": "Quantitative entry without an authored unit.",
@@ -78,6 +82,7 @@ def test_formatted_unit_styles(style, expected_variants):
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "name": "acceleration",
             "description": "Acceleration",
             "documentation": "Acceleration in meters per second squared.",
@@ -95,6 +100,7 @@ def test_formatted_unit_unknown_style():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "name": "electron_density",
             "description": "Electron density",
             "documentation": "Number density of electrons in the plasma.",
@@ -110,6 +116,7 @@ def test_links_and_constraints_normalization():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "name": "ion_temperature",
             "description": "Ion T",
             "documentation": "Temperature of ions in the plasma.",
@@ -129,6 +136,7 @@ def test_deprecated_without_superseded_by_error():
         create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "general",
                 "name": "old_quantity",
                 "description": "Deprecated item",
                 "unit": "eV",
@@ -141,6 +149,7 @@ def test_deprecated_with_superseded_by_ok():
     sn = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "general",
             "name": "old_quantity2",
             "description": "Deprecated item",
             "documentation": "Old quantity superseded by new_quantity.",
@@ -158,6 +167,7 @@ def test_unit_auto_canonical_ordering():
     sn1 = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "name": "acceleration_test",
             "description": "Test acceleration",
             "documentation": "Test entry for unit ordering validation.",
@@ -171,6 +181,7 @@ def test_unit_auto_canonical_ordering():
     sn2 = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "name": "energy_gradient",
             "description": "Energy gradient",
             "documentation": "Spatial gradient of energy.",
@@ -184,6 +195,7 @@ def test_unit_auto_canonical_ordering():
     sn3 = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "general",
             "name": "complex_quantity",
             "description": "Complex quantity",
             "documentation": "Test quantity with complex unit ordering.",
@@ -197,6 +209,7 @@ def test_unit_auto_canonical_ordering():
     sn4 = create_standard_name_entry(
         {
             "kind": "scalar",
+            "physics_domain": "general",
             "name": "another_quantity",
             "description": "Another quantity",
             "documentation": "Test quantity with multiple unit tokens.",

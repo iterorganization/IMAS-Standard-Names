@@ -9,10 +9,10 @@ from imas_standard_names.validation.cli import validate_catalog_cli
 
 def _seed(root: Path):
     (root / "a.yml").write_text(
-        "name: a\nkind: scalar\nstatus: active\nunit: keV\ndescription: A desc.\ndocumentation: |\n  A description for CLI validation testing.\n"
+        "name: a\nkind: scalar\nphysics_domain: general\nstatus: active\nunit: keV\ndescription: A desc.\ndocumentation: |\n  A description for CLI validation testing.\n"
     )
     (root / "b.yml").write_text(
-        "name: b\nkind: scalar\nstatus: draft\nunit: keV\ndescription: B desc.\ndocumentation: |\n  B description for CLI validation testing.\n"
+        "name: b\nkind: scalar\nphysics_domain: general\nstatus: draft\nunit: keV\ndescription: B desc.\ndocumentation: |\n  B description for CLI validation testing.\n"
     )
 
 
@@ -52,7 +52,7 @@ def test_validate_file_mode_with_integrity_mismatch(tmp_path: Path):
     # Modify one file after build
     time.sleep(0.02)
     (tmp_path / "b.yml").write_text(
-        "name: b\nkind: scalar\nstatus: draft\nunit: keV\ndescription: B changed.\ndocumentation: |\n  B description changed for integrity mismatch testing.\n"
+        "name: b\nkind: scalar\nphysics_domain: general\nstatus: draft\nunit: keV\ndescription: B changed.\ndocumentation: |\n  B description changed for integrity mismatch testing.\n"
     )
     res = runner.invoke(
         validate_catalog_cli,

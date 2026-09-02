@@ -153,6 +153,7 @@ class TestReconciliation:
         entry = create_standard_name_entry(
             {
                 "kind": "scalar",
+                "physics_domain": "core_plasma_physics",
                 "name": "acceleration_probe",
                 "description": "probe",
                 "documentation": "Canonical-order probe entry.",

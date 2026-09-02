@@ -55,6 +55,7 @@ def test_validate_accepts_valid_scalar_entry():
     data = {
         "name": "electron_temperature",
         "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
         "unit": "eV",
         "description": "Electron temperature.",
         "documentation": "",
@@ -68,6 +69,7 @@ def test_validate_accepts_valid_vector_entry():
     data = {
         "name": "plasma_velocity",
         "kind": "vector",
+        "physics_domain": "core_plasma_physics",
         "unit": "m.s^-1",
         "description": "Plasma velocity vector.",
         "documentation": "",
@@ -81,6 +83,7 @@ def test_validate_accepts_valid_metadata_entry():
     data = {
         "name": "plasma_boundary",
         "kind": "metadata",
+        "physics_domain": "equilibrium",
         "description": "Definition of the plasma boundary.",
         "documentation": "",
     }
@@ -100,6 +103,7 @@ def test_validate_rejects_invalid_kind():
     data = {
         "name": "bad_entry",
         "kind": "imaginary",
+        "physics_domain": "general",
         "description": "Not real.",
         "documentation": "",
     }

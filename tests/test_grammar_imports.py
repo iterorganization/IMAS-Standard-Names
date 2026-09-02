@@ -129,6 +129,7 @@ def test_validate_models_with_plain_dict():
         {
             "name": "electron_temperature",
             "kind": "scalar",
+            "physics_domain": "core_plasma_physics",
             "unit": "eV",
             "description": "Electron temperature.",
             "documentation": "",
@@ -149,6 +150,7 @@ def test_validate_models_returns_issues_for_problematic_entries():
         {
             "name": "gradient_of_electron_temperature",
             "kind": "vector",
+            "physics_domain": "core_plasma_physics",
             "unit": "eV",
             "description": "Spatial gradient of electron temperature.",
             "documentation": "",

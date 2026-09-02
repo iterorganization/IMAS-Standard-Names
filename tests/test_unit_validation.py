@@ -1,4 +1,4 @@
-"""Tests for Phase 3: Dimensionless unit validation in semantic checks."""
+"""Tests for dimensionless unit validation in semantic checks."""
 
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ def _scalar(name: str, unit: str = "eV") -> StandardNameScalarEntry:
     return StandardNameScalarEntry(
         name=name,
         kind="scalar",
+        physics_domain="general",
         unit=unit,
         description="Test entry",
         documentation="Test documentation for validation.",
@@ -28,6 +29,7 @@ def _vector(name: str, unit: str = "m.s^-1") -> StandardNameVectorEntry:
     return StandardNameVectorEntry(
         name=name,
         kind="vector",
+        physics_domain="general",
         unit=unit,
         description="Test entry",
         documentation="Test documentation for validation.",
@@ -39,6 +41,7 @@ def _metadata(name: str) -> StandardNameMetadataEntry:
     return StandardNameMetadataEntry(
         name=name,
         kind="metadata",
+        physics_domain="general",
         description="Test entry",
         documentation="Test documentation for validation.",
         status="draft",
@@ -196,6 +199,7 @@ class TestNoneUnitWithQuantitativeKind:
         entry = StandardNameScalarEntry.model_construct(
             name="electron_temperature",
             kind="scalar",
+            physics_domain="core_plasma_physics",
             unit=None,
             description="Test entry",
             documentation="Test docs.",
@@ -211,6 +215,7 @@ class TestNoneUnitWithQuantitativeKind:
         entry = StandardNameVectorEntry.model_construct(
             name="magnetic_field",
             kind="vector",
+            physics_domain="equilibrium",
             unit=None,
             description="Test entry",
             documentation="Test docs.",
