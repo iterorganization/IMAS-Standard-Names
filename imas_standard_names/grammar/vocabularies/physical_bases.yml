@@ -254,7 +254,7 @@ bases:
     kind: scalar
   momentum:
     aliases: []
-    kind: scalar
+    kind: vector
     inherently_dimensional: true
   multiplicity:
     aliases: []
@@ -381,11 +381,11 @@ bases:
     kind: vector
   torque:
     aliases: []
-    kind: scalar
+    kind: vector
     inherently_dimensional: true
   torque_density:
     aliases: []
-    kind: scalar
+    kind: vector
   transit_time:
     aliases: []
     kind: scalar
