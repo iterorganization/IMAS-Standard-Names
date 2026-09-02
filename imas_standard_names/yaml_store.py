@@ -20,53 +20,160 @@ logger = logging.getLogger(__name__)
 # Fields that are no longer part of the catalog entry model.
 # They are stripped from loaded YAML data to support clean schema migration.
 _STRIPPED_FIELDS = {"dd_paths"}
-_LITERAL_BLOCK_FIELDS = {"description", "documentation"}
+_PROSE_FIELDS = {"description", "documentation"}
+
+# Reviewers read the catalog diff in a side-by-side view; prose folds at this
+# column so a paragraph edit shows as a few changed lines instead of one line.
+_PROSE_WRAP_COLUMN = 80
 
 
-class _LiteralBlockString(str):
-    """String rendered with YAML literal-block style."""
+class _FoldedBlockString(str):
+    """String rendered with YAML folded-block style."""
 
 
 class _CatalogDumper(yaml.SafeDumper):
     """Safe dumper carrying the catalog's review-oriented scalar styles."""
 
 
-def _represent_literal_block(
-    dumper: yaml.SafeDumper, value: _LiteralBlockString
+def _represent_folded_block(
+    dumper: yaml.SafeDumper, value: _FoldedBlockString
 ) -> yaml.ScalarNode:
-    return dumper.represent_scalar("tag:yaml.org,2002:str", value, style="|")
+    return dumper.represent_scalar("tag:yaml.org,2002:str", value, style=">")
 
 
-_CatalogDumper.add_representer(_LiteralBlockString, _represent_literal_block)
+_CatalogDumper.add_representer(_FoldedBlockString, _represent_folded_block)
 
 
 def _review_friendly_entry(entry: Mapping[str, Any]) -> dict[str, Any]:
     rendered = dict(entry)
-    for field in _LITERAL_BLOCK_FIELDS:
+    for field in _PROSE_FIELDS:
         value = rendered.get(field)
         if isinstance(value, str):
-            rendered[field] = _LiteralBlockString(value)
+            rendered[field] = _FoldedBlockString(value)
     return rendered
+
+
+def _is_list_item(text: str) -> bool:
+    if text.startswith(("- ", "* ", "+ ")):
+        return True
+    marker, separator, _ = text.partition(". ")
+    return bool(separator and marker.isdigit())
+
+
+def _break_positions(line: str) -> list[int]:
+    """Single spaces that fold back to exactly one space when reloaded.
+
+    A break beside another space would land a space at the start or end of an
+    emitted line, which a folded scalar reads as an indentation change rather
+    than as the space it replaced.
+    """
+    return [
+        index
+        for index, char in enumerate(line)
+        if char == " "
+        and index > 0
+        and line[index - 1] != " "
+        and index + 1 < len(line)
+        and line[index + 1] != " "
+    ]
+
+
+def _wrap_prose_line(line: str, width: int) -> list[str]:
+    """Split one folded-scalar content line into lines of at most ``width``."""
+    wrapped: list[str] = []
+    remainder = line
+    while len(remainder) > width:
+        positions = _break_positions(remainder)
+        if not positions:
+            break
+        within_width = [index for index in positions if index <= width]
+        # An unbreakable run longer than the column overflows by one word
+        # rather than being split inside the word.
+        break_at = within_width[-1] if within_width else positions[0]
+        wrapped.append(remainder[:break_at])
+        remainder = remainder[break_at + 1 :]
+    wrapped.append(remainder)
+    return wrapped
+
+
+def _wrap_prose_blocks(rendered: str) -> str:
+    """Wrap paragraph lines of folded prose fields, leaving structure alone.
+
+    Blank lines, display-equation fences and their contents, list items, and
+    more-indented lines (which a folded scalar keeps verbatim) pass through
+    untouched, so the reloaded string is identical to the authored one.
+    """
+    output: list[str] = []
+    content_indent: int | None = None
+    in_display_equation = False
+
+    for line in rendered.splitlines():
+        stripped = line.lstrip()
+        indent = len(line) - len(stripped)
+        field = stripped.partition(":")[0]
+
+        if field in _PROSE_FIELDS and stripped.startswith(f"{field}: >"):
+            content_indent = indent + 2
+            in_display_equation = False
+            output.append(line)
+            continue
+
+        if content_indent is not None and stripped and indent < content_indent:
+            content_indent = None
+            in_display_equation = False
+
+        if content_indent is None or not stripped:
+            output.append(line)
+            continue
+
+        content = line[content_indent:]
+        is_fence = content.strip() == "$$"
+        keep_as_authored = (
+            in_display_equation
+            or is_fence
+            or content.startswith(" ")
+            or content.strip().startswith("$$")
+            or _is_list_item(content)
+        )
+        if keep_as_authored:
+            output.append(line)
+        else:
+            output.extend(
+                " " * content_indent + part
+                for part in _wrap_prose_line(
+                    content, _PROSE_WRAP_COLUMN - content_indent
+                )
+            )
+        if is_fence:
+            in_display_equation = not in_display_equation
+
+    return "\n".join(output) + "\n"
 
 
 def dump_catalog_yaml(entries: Sequence[Mapping[str, Any]]) -> str:
     """Serialize catalog entries as review-friendly YAML.
 
     Each entry is emitted as one item in the same YAML sequence and separated
-    from the next by one blank line. Unicode remains literal, and PyYAML wraps
-    prose exactly as authored in literal block scalars.
+    from the next by one blank line. Unicode remains literal. Description and
+    documentation prose is emitted as folded blocks whose paragraphs wrap near
+    80 columns; equations, list items and blank lines keep their authored
+    layout, and every field reloads byte-identically.
     """
     if not entries:
         return "[]\n"
 
     rendered_entries = [
-        yaml.dump(
-            [_review_friendly_entry(entry)],
-            Dumper=_CatalogDumper,
-            sort_keys=False,
-            allow_unicode=True,
-            default_flow_style=False,
-            width=88,
+        _wrap_prose_blocks(
+            yaml.dump(
+                [_review_friendly_entry(entry)],
+                Dumper=_CatalogDumper,
+                sort_keys=False,
+                allow_unicode=True,
+                default_flow_style=False,
+                # Wrapping is applied afterwards so that structural lines can
+                # be recognised before any break is inserted.
+                width=10**9,
+            )
         ).rstrip("\n")
         for entry in entries
     ]

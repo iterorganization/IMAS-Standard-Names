@@ -99,15 +99,19 @@ def test_legacy_dd_source_binding_loads_as_generic_shape() -> None:
     ]
 
 
-def test_catalog_yaml_uses_literal_blocks_with_authored_equation_spacing() -> None:
+_LONG_PARAGRAPH = " ".join(["Poloidal flux through a reviewed magnetic surface."] * 7)
+
+
+def test_catalog_yaml_wraps_prose_and_preserves_authored_structure() -> None:
+    equation = "\\psi = " + " + ".join(f"B_{{{index}}}" for index in range(20))
+    bullet = "- " + " ".join(["Keep this review item intact."] * 4)
     entries = [
         {
             "name": "poloidal_flux",
-            "description": "Poloidal flux ψ through a magnetic surface.",
+            "description": _LONG_PARAGRAPH,
             "documentation": (
-                "The flux follows the surface convention.\n\n"
-                "$$\\psi = \\int_S \\mathbf{B} \\cdot d\\mathbf{S}$$\n\n"
-                "Positive ψ follows the chosen orientation."
+                f"{_LONG_PARAGRAPH}\n\n$$\n{equation}\n$$\n\n{bullet}\n"
+                "- Second item\n\nPositive \u03c8 follows the chosen orientation."
             ),
         },
         {
@@ -116,32 +120,67 @@ def test_catalog_yaml_uses_literal_blocks_with_authored_equation_spacing() -> No
             "documentation": (
                 "The winding ratio is dimensionless.\n\n"
                 "$$q = \\frac{d\\Phi}{d\\psi}$$\n\n"
-                "The toroidal flux is Φ."
+                "The toroidal flux is \u03a6."
             ),
         },
     ]
 
     rendered = dump_catalog_yaml(entries)
+    lines = rendered.splitlines()
 
-    assert rendered.count("description: |-") == 2
-    assert rendered.count("documentation: |-") == 2
+    assert len(_LONG_PARAGRAPH) > 300
+    assert rendered.count("description: >-") == 2
+    assert rendered.count("documentation: >-") == 2
     assert rendered.count("\n\n- name:") == 1
     assert "\n\n\n- name:" not in rendered
-    assert (
-        "    The flux follows the surface convention.\n\n"
-        "    $$\\psi = \\int_S \\mathbf{B} \\cdot d\\mathbf{S}$$\n\n"
-        "    Positive ψ follows the chosen orientation."
-    ) in rendered
-    assert (
-        "    The winding ratio is dimensionless.\n\n"
-        "    $$q = \\frac{d\\Phi}{d\\psi}$$\n\n"
-        "    The toroidal flux is Φ."
-    ) in rendered
-    assert "ψ" in rendered
-    assert "Φ" in rendered
+    # The paragraph is wrapped rather than emitted as one unreadable line.
+    assert sum(1 for line in lines if line.strip().startswith("Poloidal flux")) > 1
+    # Equations, fences and list items keep their authored layout.
+    assert f"    {equation}" in lines
+    assert f"    {bullet}" in lines
+    assert "    $$" in lines
+    assert "    $$q = \\frac{d\\Phi}{d\\psi}$$" in lines
+    assert "\u03c8" in rendered
+    assert "\u03a6" in rendered
     assert "\\u03c8" not in rendered.lower()
     assert "\\u03a6" not in rendered.lower()
     assert yaml.safe_load(rendered) == entries
+
+
+def test_wrapped_prose_lines_stay_within_the_review_width() -> None:
+    entries = [
+        {
+            "name": "poloidal_flux",
+            "description": _LONG_PARAGRAPH,
+            "documentation": _LONG_PARAGRAPH,
+        }
+    ]
+
+    rendered = dump_catalog_yaml(entries)
+
+    assert len(_LONG_PARAGRAPH) > 300
+    assert max(len(line) for line in rendered.splitlines()) <= 88
+    assert yaml.safe_load(rendered) == entries
+
+
+def test_wrapped_prose_reloads_unchanged_through_the_store(tmp_path: Path) -> None:
+    entry = {
+        "name": "plasma_current",
+        "kind": "scalar",
+        "physics_domain": "core_plasma_physics",
+        "unit": "A",
+        "description": _LONG_PARAGRAPH,
+        "documentation": (
+            f"{_LONG_PARAGRAPH}\n\n$$\nI_p = \\int_S J \\cdot dS\n$$\n\n"
+            f"{_LONG_PARAGRAPH}"
+        ),
+    }
+
+    write_catalog_yaml(tmp_path / "core_plasma_physics.yml", [entry])
+    loaded = {model.name: model for model in YamlStore(tmp_path).load()}
+
+    assert loaded["plasma_current"].description == entry["description"]
+    assert loaded["plasma_current"].documentation == entry["documentation"]
 
 
 def test_catalog_yaml_round_trips_input_structure() -> None:
