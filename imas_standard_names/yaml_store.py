@@ -20,6 +20,33 @@ logger = logging.getLogger(__name__)
 # Fields that are no longer part of the catalog entry model.
 # They are stripped from loaded YAML data to support clean schema migration.
 _STRIPPED_FIELDS = {"dd_paths"}
+_LITERAL_BLOCK_FIELDS = {"description", "documentation"}
+
+
+class _LiteralBlockString(str):
+    """String rendered with YAML literal-block style."""
+
+
+class _CatalogDumper(yaml.SafeDumper):
+    """Safe dumper carrying the catalog's review-oriented scalar styles."""
+
+
+def _represent_literal_block(
+    dumper: yaml.SafeDumper, value: _LiteralBlockString
+) -> yaml.ScalarNode:
+    return dumper.represent_scalar("tag:yaml.org,2002:str", value, style="|")
+
+
+_CatalogDumper.add_representer(_LiteralBlockString, _represent_literal_block)
+
+
+def _review_friendly_entry(entry: Mapping[str, Any]) -> dict[str, Any]:
+    rendered = dict(entry)
+    for field in _LITERAL_BLOCK_FIELDS:
+        value = rendered.get(field)
+        if isinstance(value, str):
+            rendered[field] = _LiteralBlockString(value)
+    return rendered
 
 
 def dump_catalog_yaml(entries: Sequence[Mapping[str, Any]]) -> str:
@@ -27,14 +54,15 @@ def dump_catalog_yaml(entries: Sequence[Mapping[str, Any]]) -> str:
 
     Each entry is emitted as one item in the same YAML sequence and separated
     from the next by one blank line. Unicode remains literal, and PyYAML wraps
-    prose at whitespace without using quoted-scalar continuation escapes.
+    prose exactly as authored in literal block scalars.
     """
     if not entries:
         return "[]\n"
 
     rendered_entries = [
-        yaml.safe_dump(
-            [dict(entry)],
+        yaml.dump(
+            [_review_friendly_entry(entry)],
+            Dumper=_CatalogDumper,
             sort_keys=False,
             allow_unicode=True,
             default_flow_style=False,

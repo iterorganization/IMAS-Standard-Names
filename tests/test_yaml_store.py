@@ -99,35 +99,49 @@ def test_legacy_dd_source_binding_loads_as_generic_shape() -> None:
     ]
 
 
-def test_catalog_yaml_separates_consecutive_entries() -> None:
-    rendered = dump_catalog_yaml(
-        [
-            {"name": "plasma_current", "description": "Plasma current."},
-            {"name": "electron_density", "description": "Electron density."},
-        ]
-    )
+def test_catalog_yaml_uses_literal_blocks_with_authored_equation_spacing() -> None:
+    entries = [
+        {
+            "name": "poloidal_flux",
+            "description": "Poloidal flux ψ through a magnetic surface.",
+            "documentation": (
+                "The flux follows the surface convention.\n\n"
+                "$$\\psi = \\int_S \\mathbf{B} \\cdot d\\mathbf{S}$$\n\n"
+                "Positive ψ follows the chosen orientation."
+            ),
+        },
+        {
+            "name": "safety_factor",
+            "description": "Safety factor q for a magnetic surface.",
+            "documentation": (
+                "The winding ratio is dimensionless.\n\n"
+                "$$q = \\frac{d\\Phi}{d\\psi}$$\n\n"
+                "The toroidal flux is Φ."
+            ),
+        },
+    ]
 
-    assert "description: Plasma current.\n\n- name: electron_density" in rendered
+    rendered = dump_catalog_yaml(entries)
+
+    assert rendered.count("description: |-") == 2
+    assert rendered.count("documentation: |-") == 2
+    assert rendered.count("\n\n- name:") == 1
     assert "\n\n\n- name:" not in rendered
-
-
-def test_catalog_yaml_preserves_unicode_and_wraps_prose() -> None:
-    rendered = dump_catalog_yaml(
-        [
-            {
-                "name": "toroidal_coordinate",
-                "description": (
-                    "Toroidal angle φ follows the right-handed convention and is "
-                    "reviewed as readable prose rather than an escaped byte sequence."
-                ),
-            }
-        ]
-    )
-
-    assert "φ" in rendered
-    assert "\\u03c6" not in rendered.lower()
-    assert "readable\n    prose" in rendered
-    assert "\\\n" not in rendered
+    assert (
+        "    The flux follows the surface convention.\n\n"
+        "    $$\\psi = \\int_S \\mathbf{B} \\cdot d\\mathbf{S}$$\n\n"
+        "    Positive ψ follows the chosen orientation."
+    ) in rendered
+    assert (
+        "    The winding ratio is dimensionless.\n\n"
+        "    $$q = \\frac{d\\Phi}{d\\psi}$$\n\n"
+        "    The toroidal flux is Φ."
+    ) in rendered
+    assert "ψ" in rendered
+    assert "Φ" in rendered
+    assert "\\u03c8" not in rendered.lower()
+    assert "\\u03a6" not in rendered.lower()
+    assert yaml.safe_load(rendered) == entries
 
 
 def test_catalog_yaml_round_trips_input_structure() -> None:
