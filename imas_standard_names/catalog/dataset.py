@@ -17,7 +17,7 @@ record carries:
 
 * identity: ``name``, ``category``, ``group``, ``parent``
 * algebraic ``algebra`` (``scalar | vector | tensor | complex | metadata``)
-  declared on the catalog entry
+  declared for the entry
 * physical metadata: ``unit``, ``tags``, ``axis``, ``locus``
 * prose: ``short`` (description), ``long`` (documentation minus the
   ``Sign convention:`` paragraph), ``sign`` (the extracted paragraph)
@@ -28,6 +28,15 @@ record carries:
   ``null``), ``deprecates`` (name being deprecated or ``null``)
 * ``parse`` — a list of role/text/note segments (operators, qualifiers,
   axis, base, locus, process) for the UI to render as chips.
+
+Machine-owned fields
+--------------------
+``kind``, ``status``, ``physics_domain``, ``links``, ``sources`` and
+``arguments`` are read from the per-name block of the catalog manifest
+(``catalog.yml``) when it declares one, so the reviewable entry can hold
+only ``name``, ``description``, ``documentation`` and ``unit``. A catalog
+whose entries still carry those fields inline is read unchanged, and the
+manifest block wins where both are present.
 
 Status filtering
 ----------------
@@ -1491,12 +1500,16 @@ def build_site_dataset(
         raw_entries = _load_entries(catalog_path)
         manifest = _load_manifest(catalog_path)
 
-    # Normalise status — emit every entry with a known canonical status.
+    # Overlay the manifest's per-name sidecar block, then normalise status —
+    # emit every entry with a known canonical status. The sidecar carries the
+    # machine-owned fields (kind, status, physics_domain, links, sources,
+    # arguments) that the reviewable entry no longer holds, so every read
+    # below resolves through it.
     entries: list[dict[str, Any]] = []
     for raw in raw_entries:
         if preview_names is not None and str(raw.get("name")) not in preview_names:
             continue
-        entry = dict(raw)
+        entry = manifest.resolve_entry(raw) if manifest is not None else dict(raw)
         normalised = _normalise_status(entry.get("status"))
         if normalised is None:
             # Unknown status — already logged; drop silently.

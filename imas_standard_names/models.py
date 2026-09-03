@@ -98,6 +98,11 @@ from imas_standard_names.provenance import (
 
 Status = Literal["draft", "active", "deprecated", "superseded"]
 
+# Version of the catalog manifest's edge/metadata contract. It advances
+# whenever a consumer must read the manifest differently: this value carries
+# the per-name metadata sidecar, which the previous one did not have.
+CATALOG_EDGE_MODEL_VERSION = "v2"
+
 # ---------------------------------------------------------------------------
 # vocabulary caches (lazy-loaded once per process)
 # ---------------------------------------------------------------------------
@@ -1014,37 +1019,29 @@ def _build_standard_name_models() -> dict[str, type[StandardNameEntry]]:
 STANDARD_NAME_MODELS = _build_standard_name_models()
 
 
-def create_standard_name_entry(
-    data: dict, *, name_only: bool = False
-) -> StandardNameEntry | StandardNameNameOnly:
-    """Validate data into a StandardName entry instance.
+class CatalogNameMetadata(BaseModel):
+    """Machine-owned metadata the manifest sidecar holds for one entry.
 
-    Args:
-        data: Entry dictionary. Must include ``kind`` for discrimination.
-        name_only: When ``True``, validate against the lightweight name-only
-            union (identity + unit) that omits description/documentation/tags.
-            Use this during early LLM generation passes. Defaults to ``False``
-            for full catalog-entry validation.
+    Everything a physicist does not hand-edit during catalog review lives
+    here rather than beside the prose: the algebraic ``kind`` the entry
+    union discriminates on, the lifecycle ``status``, the physics domain,
+    the source-system bindings with their pinned versions, the reference
+    links, and the structural argument edges. The reviewable entry is then
+    just ``name``, ``description``, ``documentation`` and ``unit``.
     """
-    if name_only:
-        return _NAME_ONLY_ADAPTER.validate_python(data)
-    return _STANDARD_NAME_ENTRY_ADAPTER.validate_python(data)
 
+    model_config = ConfigDict(extra="forbid")
 
-def load_standard_name_entry(data: dict) -> StandardNameEntry:
-    """Load a StandardNameEntry instance without validation (bypasses validators)."""
-    kind = data.get("kind")
-    if not kind:
-        raise ValueError("Missing required field 'kind' in data dictionary")
+    kind: Kind | None = None
+    status: Status | None = None
+    physics_domain: PhysicsDomain | None = None
+    links: Links | None = None
+    arguments: list[ArgumentRef] | None = None
+    sources: list["CatalogSourceBinding"] | None = None
 
-    kind_str = kind.value if isinstance(kind, Kind) else kind
-    model_class = STANDARD_NAME_MODELS.get(kind_str)
-
-    if not model_class:
-        valid_kinds = ", ".join(STANDARD_NAME_MODELS.keys())
-        raise ValueError(f"Unknown kind: {kind_str}. Valid kinds: {valid_kinds}")
-
-    return model_class.model_construct(**data)
+    def declared(self) -> dict[str, Any]:
+        """Return only the fields this block actually carries, JSON-shaped."""
+        return self.model_dump(mode="json", exclude_none=True)
 
 
 class StandardNameCatalogManifest(BaseModel):
@@ -1052,7 +1049,8 @@ class StandardNameCatalogManifest(BaseModel):
 
     Placed at the repository root (``catalog.yml``) and records run-level
     metadata about the export that produced the catalog. Individual entries
-    carry only editorial fields; generation provenance lives here.
+    carry only editorial fields; generation provenance and every
+    machine-owned per-entry field live here, the latter under ``names``.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -1073,7 +1071,6 @@ class StandardNameCatalogManifest(BaseModel):
     excluded_unreviewed_count: int = 0
     source_repo: str | None = None
     source_commit_sha: str | None = None
-    # Export scope and timing provenance (added in v0.7.0rc31).
     export_scope: Literal["full", "domain", "scoped", "review"] | None = None
     domains_included: list[str] = Field(default_factory=list)
     # Review-batch id-set: on a ``review`` export this holds the exact
@@ -1081,7 +1078,65 @@ class StandardNameCatalogManifest(BaseModel):
     review_batch: list[str] | None = None
     catalog_commit_sha: str | None = None
     exported_at: datetime | None = None
-    edge_model_version: str | None = None
+    edge_model_version: str = CATALOG_EDGE_MODEL_VERSION
+    # Machine-owned per-entry metadata, keyed by standard name. A catalog
+    # whose entries still carry these fields inline leaves this empty.
+    names: dict[str, CatalogNameMetadata] = Field(default_factory=dict)
+
+    def resolve_entry(self, entry: dict[str, Any]) -> dict[str, Any]:
+        """Return ``entry`` overlaid with the sidecar block for its name.
+
+        The sidecar is authoritative for the fields it declares, so a
+        reviewable entry that carries only prose still gains its ``kind``
+        before the entry union discriminates on it.
+        """
+        resolved = dict(entry)
+        block = self.names.get(str(entry.get("name") or ""))
+        if block is not None:
+            resolved.update(block.declared())
+        return resolved
+
+
+def create_standard_name_entry(
+    data: dict,
+    *,
+    name_only: bool = False,
+    manifest: StandardNameCatalogManifest | None = None,
+) -> StandardNameEntry | StandardNameNameOnly:
+    """Validate data into a StandardName entry instance.
+
+    Args:
+        data: Entry dictionary. Must include ``kind`` for discrimination,
+            either inline or through ``manifest``.
+        name_only: When ``True``, validate against the lightweight name-only
+            union (identity + unit) that omits description/documentation/tags.
+            Use this during early LLM generation passes. Defaults to ``False``
+            for full catalog-entry validation.
+        manifest: Catalog manifest whose per-name sidecar block supplies the
+            machine-owned fields — including ``kind`` — that the reviewable
+            entry no longer carries. Applied before discrimination.
+    """
+    if manifest is not None:
+        data = manifest.resolve_entry(data)
+    if name_only:
+        return _NAME_ONLY_ADAPTER.validate_python(data)
+    return _STANDARD_NAME_ENTRY_ADAPTER.validate_python(data)
+
+
+def load_standard_name_entry(data: dict) -> StandardNameEntry:
+    """Load a StandardNameEntry instance without validation (bypasses validators)."""
+    kind = data.get("kind")
+    if not kind:
+        raise ValueError("Missing required field 'kind' in data dictionary")
+
+    kind_str = kind.value if isinstance(kind, Kind) else kind
+    model_class = STANDARD_NAME_MODELS.get(kind_str)
+
+    if not model_class:
+        valid_kinds = ", ".join(STANDARD_NAME_MODELS.keys())
+        raise ValueError(f"Unknown kind: {kind_str}. Valid kinds: {valid_kinds}")
+
+    return model_class.model_construct(**data)
 
 
 __all__ = [
@@ -1105,7 +1160,10 @@ __all__ = [
     "StandardNameNameOnly",
     "Name",
     "StandardNameEntry",
+    "CatalogNameMetadata",
+    "CatalogSourceBinding",
     "StandardNameCatalogManifest",
+    "CATALOG_EDGE_MODEL_VERSION",
     "STANDARD_NAME_MODELS",
     "create_standard_name_entry",
     "load_standard_name_entry",
