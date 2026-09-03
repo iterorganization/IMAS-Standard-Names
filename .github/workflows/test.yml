@@ -47,22 +47,34 @@ jobs:
       - name: Grammar codegen drift check
         run: uv run build-grammar --check
 
-      - name: Test and coverage
+      - name: Test
+        run: uv run pytest
+
+  # Instrumented run: branch coverage costs more wall clock than the suite it
+  # measures, so it reports rather than gates. A failure here never fails the
+  # workflow, and this job is deliberately absent from the required checks.
+  coverage:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/install-project
+        with:
+          python-version: ${{ env.BASE_PYTHON_VERSION }}
+
+      - name: Test with branch coverage
         run: |
-          if [[ "${{ matrix.python-version }}" == "${{ env.BASE_PYTHON_VERSION }}" ]]; then
-            uv run pytest \
-              --cov \
-              --cov-branch \
-              --cov-report=xml \
-              --junitxml=junit.xml -o junit_family=legacy
-          else
-            uv run pytest
-          fi
+          uv run pytest \
+            --cov \
+            --cov-branch \
+            --cov-report=xml \
+            --junitxml=junit.xml -o junit_family=legacy
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
 
       - name: Upload coverage reports to Codecov
-        if: matrix.python-version == env.BASE_PYTHON_VERSION
+        if: ${{ !cancelled() }}
         uses: codecov/codecov-action@v5

@@ -633,8 +633,13 @@ class StandardNameEntryBase(StandardNameBase):
 
             # Check for standalone paragraph (must have \n\n before and after)
             # Sign convention must NOT be at document start - must follow main content
-            # Find the actual "Sign convention:" text position
-            sign_match = re.search(r"Sign convention:[^\n]+", v)
+            # Find the actual "Sign convention:" text position. The sentence may be
+            # soft-wrapped across single newlines by the catalog writer, so match
+            # through to the sentence-ending period rather than stopping at the
+            # first line break.
+            sign_match = re.search(
+                r"Sign convention:\s+Positive.*?\.(?=\s|$)", v, re.DOTALL
+            )
             if sign_match:
                 start_pos = sign_match.start()
                 end_pos = sign_match.end()

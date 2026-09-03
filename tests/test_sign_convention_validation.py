@@ -143,6 +143,42 @@ def test_sign_convention_positive_for_format():
     assert entry.name == "test_current"
 
 
+def test_sign_convention_survives_soft_line_wrap():
+    """Test that a sign convention sentence wrapped across two lines by the
+    catalog writer still validates as a standalone paragraph."""
+    entry = StandardNameScalarEntry(
+        name="test_current",
+        physics_domain="general",
+        description="Test current quantity.",
+        documentation=(
+            "Describes the plasma current.\n\n"
+            "Sign convention: Positive when current flows\n"
+            "counter-clockwise around the toroidal axis.\n\n"
+            "Additional physics explanation here."
+        ),
+        unit="A",
+    )
+    assert entry.name == "test_current"
+
+
+def test_sign_convention_wrapped_but_not_paragraph_separated_is_rejected():
+    """Test that a soft-wrapped sentence still gets rejected when the text
+    following it is genuinely not separated by a blank line."""
+    with pytest.raises(ValueError, match="standalone paragraph.*blank line after"):
+        StandardNameScalarEntry(
+            name="test_current",
+            physics_domain="general",
+            description="Test current quantity.",
+            documentation=(
+                "Describes the plasma current.\n\n"
+                "Sign convention: Positive when current flows\n"
+                "counter-clockwise around the toroidal axis.\n"
+                "This sentence continues in the same paragraph."
+            ),
+            unit="A",
+        )
+
+
 def test_sign_convention_positive_quantity_format():
     """Test that 'Positive <quantity-noun-phrase>' format is accepted."""
     entry = StandardNameScalarEntry(
