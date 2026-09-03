@@ -22,35 +22,32 @@ logger = logging.getLogger(__name__)
 _STRIPPED_FIELDS = {"dd_paths"}
 _PROSE_FIELDS = {"description", "documentation"}
 
-# Reviewers read the catalog diff in a side-by-side view; prose folds at this
-# column so a paragraph edit shows as a few changed lines instead of one line.
+# Reviewers read the catalog diff in a side-by-side view. Prose is emitted as a
+# literal block whose paragraphs are hard-wrapped at this column, so a paragraph
+# edit shows as a few changed lines instead of one, and a paragraph break costs
+# one blank line rather than the two a folded block needs to encode it.
 _PROSE_WRAP_COLUMN = 80
+# Entries are dumped as items of a sequence, so block scalar content sits two
+# indentation levels in.
+_PROSE_CONTENT_INDENT = 4
+_PROSE_CONTENT_WIDTH = _PROSE_WRAP_COLUMN - _PROSE_CONTENT_INDENT
 
 
-class _FoldedBlockString(str):
-    """String rendered with YAML folded-block style."""
+class _LiteralBlockString(str):
+    """String rendered with YAML literal-block style."""
 
 
 class _CatalogDumper(yaml.SafeDumper):
     """Safe dumper carrying the catalog's review-oriented scalar styles."""
 
 
-def _represent_folded_block(
-    dumper: yaml.SafeDumper, value: _FoldedBlockString
+def _represent_literal_block(
+    dumper: yaml.SafeDumper, value: _LiteralBlockString
 ) -> yaml.ScalarNode:
-    return dumper.represent_scalar("tag:yaml.org,2002:str", value, style=">")
+    return dumper.represent_scalar("tag:yaml.org,2002:str", value, style="|")
 
 
-_CatalogDumper.add_representer(_FoldedBlockString, _represent_folded_block)
-
-
-def _review_friendly_entry(entry: Mapping[str, Any]) -> dict[str, Any]:
-    rendered = dict(entry)
-    for field in _PROSE_FIELDS:
-        value = rendered.get(field)
-        if isinstance(value, str):
-            rendered[field] = _FoldedBlockString(value)
-    return rendered
+_CatalogDumper.add_representer(_LiteralBlockString, _represent_literal_block)
 
 
 def _is_list_item(text: str) -> bool:
@@ -61,11 +58,11 @@ def _is_list_item(text: str) -> bool:
 
 
 def _break_positions(line: str) -> list[int]:
-    """Single spaces that fold back to exactly one space when reloaded.
+    """Single spaces that rejoin to exactly one space when reloaded.
 
-    A break beside another space would land a space at the start or end of an
-    emitted line, which a folded scalar reads as an indentation change rather
-    than as the space it replaced.
+    A break beside another space would put a space at the start or end of an
+    emitted line, and rejoining inserts one space of its own, so the reloaded
+    run of spaces would not match the authored one.
     """
     return [
         index
@@ -79,7 +76,7 @@ def _break_positions(line: str) -> list[int]:
 
 
 def _wrap_prose_line(line: str, width: int) -> list[str]:
-    """Split one folded-scalar content line into lines of at most ``width``."""
+    """Split one paragraph line into soft-wrapped lines of at most ``width``."""
     wrapped: list[str] = []
     remainder = line
     while len(remainder) > width:
@@ -96,58 +93,76 @@ def _wrap_prose_line(line: str, width: int) -> list[str]:
     return wrapped
 
 
-def _wrap_prose_blocks(rendered: str) -> str:
-    """Wrap paragraph lines of folded prose fields, leaving structure alone.
+def _keeps_authored_layout(line: str, in_display_equation: bool) -> bool:
+    """Whether ``line`` is structure that must survive the round trip verbatim.
 
     Blank lines, display-equation fences and their contents, list items, and
-    more-indented lines (which a folded scalar keeps verbatim) pass through
-    untouched, so the reloaded string is identical to the authored one.
+    indented lines carry meaning in their own layout, so they are neither
+    wrapped on write nor rejoined on read.
     """
+    return (
+        in_display_equation
+        or not line.strip()
+        or line.startswith(" ")
+        or line.strip().startswith("$$")
+        or _is_list_item(line)
+    )
+
+
+def _is_display_equation_fence(line: str) -> bool:
+    return line.strip() == "$$"
+
+
+def wrap_catalog_prose(text: str, width: int = _PROSE_CONTENT_WIDTH) -> str:
+    """Soft-wrap paragraph lines of catalog prose, leaving structure alone."""
     output: list[str] = []
-    content_indent: int | None = None
     in_display_equation = False
 
-    for line in rendered.splitlines():
-        stripped = line.lstrip()
-        indent = len(line) - len(stripped)
-        field = stripped.partition(":")[0]
-
-        if field in _PROSE_FIELDS and stripped.startswith(f"{field}: >"):
-            content_indent = indent + 2
-            in_display_equation = False
-            output.append(line)
-            continue
-
-        if content_indent is not None and stripped and indent < content_indent:
-            content_indent = None
-            in_display_equation = False
-
-        if content_indent is None or not stripped:
-            output.append(line)
-            continue
-
-        content = line[content_indent:]
-        is_fence = content.strip() == "$$"
-        keep_as_authored = (
-            in_display_equation
-            or is_fence
-            or content.startswith(" ")
-            or content.strip().startswith("$$")
-            or _is_list_item(content)
-        )
-        if keep_as_authored:
+    for line in text.split("\n"):
+        if _keeps_authored_layout(line, in_display_equation):
             output.append(line)
         else:
-            output.extend(
-                " " * content_indent + part
-                for part in _wrap_prose_line(
-                    content, _PROSE_WRAP_COLUMN - content_indent
-                )
-            )
-        if is_fence:
+            output.extend(_wrap_prose_line(line, width))
+        if _is_display_equation_fence(line):
             in_display_equation = not in_display_equation
 
-    return "\n".join(output) + "\n"
+    return "\n".join(output)
+
+
+def unwrap_catalog_prose(text: str) -> str:
+    """Rejoin the soft wrap breaks :func:`wrap_catalog_prose` introduced.
+
+    Consecutive paragraph lines rejoin with the single space the break
+    replaced; structure recognised by :func:`_keeps_authored_layout` is left
+    exactly as written, so an authored string survives a write and read
+    unchanged.
+    """
+    output: list[str] = []
+    in_display_equation = False
+    joins_with_previous = False
+
+    for line in text.split("\n"):
+        if _keeps_authored_layout(line, in_display_equation):
+            output.append(line)
+            joins_with_previous = False
+        elif joins_with_previous:
+            output[-1] = f"{output[-1]} {line}"
+        else:
+            output.append(line)
+            joins_with_previous = True
+        if _is_display_equation_fence(line):
+            in_display_equation = not in_display_equation
+
+    return "\n".join(output)
+
+
+def _review_friendly_entry(entry: Mapping[str, Any]) -> dict[str, Any]:
+    rendered = dict(entry)
+    for field in _PROSE_FIELDS:
+        value = rendered.get(field)
+        if isinstance(value, str) and value:
+            rendered[field] = _LiteralBlockString(wrap_catalog_prose(value))
+    return rendered
 
 
 def dump_catalog_yaml(entries: Sequence[Mapping[str, Any]]) -> str:
@@ -155,25 +170,24 @@ def dump_catalog_yaml(entries: Sequence[Mapping[str, Any]]) -> str:
 
     Each entry is emitted as one item in the same YAML sequence and separated
     from the next by one blank line. Unicode remains literal. Description and
-    documentation prose is emitted as folded blocks whose paragraphs wrap near
-    80 columns; equations, list items and blank lines keep their authored
-    layout, and every field reloads byte-identically.
+    documentation prose is emitted as a literal block carrying hard-wrapped
+    paragraphs; equations, list items and blank lines keep their authored
+    layout, and :class:`YamlStore` rejoins the wrap breaks on load so the
+    string a reader gets back is the one that was written.
     """
     if not entries:
         return "[]\n"
 
     rendered_entries = [
-        _wrap_prose_blocks(
-            yaml.dump(
-                [_review_friendly_entry(entry)],
-                Dumper=_CatalogDumper,
-                sort_keys=False,
-                allow_unicode=True,
-                default_flow_style=False,
-                # Wrapping is applied afterwards so that structural lines can
-                # be recognised before any break is inserted.
-                width=10**9,
-            )
+        yaml.dump(
+            [_review_friendly_entry(entry)],
+            Dumper=_CatalogDumper,
+            sort_keys=False,
+            allow_unicode=True,
+            default_flow_style=False,
+            # Block scalars are wrapped before the dump, and no other field
+            # carries prose, so the emitter never breaks a line itself.
+            width=10**9,
         ).rstrip("\n")
         for entry in entries
     ]
@@ -245,6 +259,13 @@ class YamlStore:
                 # Strip fields no longer in the catalog entry model
                 for field in _STRIPPED_FIELDS:
                     entry_data.pop(field, None)
+
+                # Rejoin the soft wrap breaks the writer introduced, so the
+                # model carries the prose as it was authored.
+                for field in _PROSE_FIELDS:
+                    prose = entry_data.get(field)
+                    if isinstance(prose, str):
+                        entry_data[field] = unwrap_catalog_prose(prose)
 
                 # Handle Pydantic validation errors in permissive mode
                 try:
@@ -339,5 +360,7 @@ __all__ = [
     "CatalogMigrationError",
     "YamlStore",
     "dump_catalog_yaml",
+    "unwrap_catalog_prose",
+    "wrap_catalog_prose",
     "write_catalog_yaml",
 ]

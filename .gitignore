@@ -19,6 +19,7 @@ htmltest/
 
 # environment API keys
 .env
+.venv
 .venv/
 
 # build artifacts 
