@@ -64,6 +64,7 @@ from imas_standard_names.grammar.ir import (
     StandardNameIR,
 )
 from imas_standard_names.grammar.model_types import Component, Object, Subject
+from imas_standard_names.grammar.operator_semantics import get_operator_semantics
 from imas_standard_names.grammar.render import compose
 
 __all__ = [
@@ -1662,6 +1663,52 @@ def _strict_flux_surface_reductions(
         )
 
 
+def _temporal_change_operators() -> tuple[str, ...]:
+    """Registered operators declaring a temporal-change effect."""
+    return tuple(
+        sorted(
+            token
+            for token in vocab_loaders.load_operators().operators
+            if "temporal_change" in get_operator_semantics(token)
+        )
+    )
+
+
+def _rate_bases(v: Vocabularies) -> tuple[str, ...]:
+    """Registered bases that already name a quantity per unit time."""
+    return tuple(
+        sorted(
+            token
+            for token in v.base_universe()
+            if token == "rate" or token.endswith("_rate")
+        )
+    )
+
+
+def _strict_temporal_denominator(ir: StandardNameIR, v: Vocabularies) -> None:
+    """Reject a ratio that divides a quantity by the time base.
+
+    Dividing by elapsed time is a temporal derivative, not a ratio of two
+    quantities, so the spelling must use a temporal-change operator or a base
+    that already carries the per-time reading.
+    """
+    for operator in ir.operators:
+        if operator.kind is OperatorKind.BINARY and operator.separator == "to":
+            denominator = operator.args[1]
+            if denominator.base.token == "time" and not denominator.operators:
+                operators = ", ".join(_temporal_change_operators())
+                bases = ", ".join(_rate_bases(v))
+                raise ParseError(
+                    f"operator {operator.op!r} cannot divide "
+                    f"{compose(operator.args[0])!r} by 'time': a quantity per "
+                    "unit time is a temporal derivative, not a ratio; spell it "
+                    f"with a temporal-change operator ({operators}) or with a "
+                    f"rate base ({bases})"
+                )
+        for argument in operator.args:
+            _strict_temporal_denominator(argument, v)
+
+
 def _strict_extremum_infix(ir: StandardNameIR, v: Vocabularies) -> None:
     """Reject an extremum adjective where an operator spelling is required."""
     extremum_tokens = {
@@ -1823,6 +1870,7 @@ def _strict_validate(name: str, ir: StandardNameIR, v: Vocabularies) -> None:
     allowed_elisions: set[int] = set()
     _strict_binary_operands(ir, v, allowed_elisions)
     _strict_flux_surface_reductions(ir, v)
+    _strict_temporal_denominator(ir, v)
     _strict_extremum_infix(ir, v)
     _strict_expression_kind(ir, v, allowed_elisions)
     _strict_state_semantics(ir, v)

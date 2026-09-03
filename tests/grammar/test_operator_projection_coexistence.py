@@ -6,7 +6,7 @@ unambiguous positions in the canonical string, and the form depends on how the
 transformation renders:
 
 * an ``_of_``-form transformation renders OUTERMOST, wrapping the projected
-  base — ``tendency_of_toroidal_current_density``,
+  base — ``time_derivative_of_toroidal_current_density``,
   ``gradient_of_radial_electron_temperature``. The parser peels the leading
   ``<op>_of_`` first, then resolves the projection inside the residue.
 * a BARE-prefix transformation (``change_in``, ``volume_averaged``, ...) folds
@@ -20,7 +20,7 @@ order itself.
 
 ``change_in`` is the new operator added alongside this relaxation: a
 finite/discrete increment (Δ) that preserves the base unit (NOT a per-time
-rate like ``tendency``/``time_derivative``) and renders bare.
+rate like ``time_derivative``) and renders bare.
 
 Retained limits (must still RAISE — never drop a token):
 
@@ -32,8 +32,8 @@ Retained limits (must still RAISE — never drop a token):
 * two stacked PREFIX operators (``change_in`` of a ``volume_averaged`` base) —
   the flat model has a single transformation slot.
 * the component-OUTERMOST spelling of an ``_of_`` operator
-  (``toroidal_tendency_of_current_density``) is NOT canonical; the canonical is
-  ``tendency_of_toroidal_current_density``.
+  (``toroidal_time_derivative_of_current_density``) is NOT canonical; the canonical is
+  ``time_derivative_of_toroidal_current_density``.
 """
 
 from __future__ import annotations
@@ -49,7 +49,7 @@ from imas_standard_names.grammar.model import (
 # transformation×component exclusivity was relaxed. Every token is registered.
 COEXISTENCE_ROUND_TRIP = [
     # _of_-form transformation wraps the component (operator outermost)
-    "tendency_of_toroidal_current_density",
+    "time_derivative_of_toroidal_current_density",
     "gradient_of_radial_electron_temperature",
     "time_derivative_of_radial_magnetic_field",
     "gradient_of_parallel_electron_pressure",
@@ -70,7 +70,7 @@ CHANGE_IN_ROUND_TRIP = [
 # relaxation must not disturb a lone projection or a lone transformation).
 ALREADY_WORKING = [
     "toroidal_current_density",
-    "tendency_of_current_density",
+    "time_derivative_of_current_density",
     "time_derivative_of_electron_density",
     "volume_averaged_electron_density",
     "radial_magnetic_field",
@@ -79,7 +79,7 @@ ALREADY_WORKING = [
 # Forms that must still RAISE — never silently drop a token.
 MUST_RAISE = [
     # component-outermost spelling of an _of_ operator is NOT canonical
-    "toroidal_tendency_of_current_density",
+    "toroidal_time_derivative_of_current_density",
     "radial_gradient_of_electron_temperature",
     # two stacked PREFIX operators (single transformation slot)
     "change_in_volume_averaged_electron_density",
@@ -116,7 +116,7 @@ def test_non_canonical_or_unrepresentable_forms_raise(name: str) -> None:
 def test_change_in_renders_bare_in_transformation_slot() -> None:
     """``change_in`` sits in the transformation slot and renders bare.
 
-    Unlike ``tendency``/``time_derivative`` (``_of_`` form), ``change_in``
+    Unlike ``time_derivative`` (``_of_`` form), ``change_in``
     attaches directly to the base (``change_in_electron_density``) — it must
     NOT render ``change_in_of_...``.
     """
@@ -127,15 +127,15 @@ def test_change_in_renders_bare_in_transformation_slot() -> None:
 
 
 def test_of_form_transformation_with_component_populates_both_slots() -> None:
-    """``tendency_of_toroidal_current_density`` carries BOTH slots.
+    """``time_derivative_of_toroidal_current_density`` carries BOTH slots.
 
     The projection lives in ``component`` and the operator in
     ``transformation``; they no longer collide.
     """
-    model = parse_standard_name("tendency_of_toroidal_current_density")
+    model = parse_standard_name("time_derivative_of_toroidal_current_density")
     dump = model.model_dump_compact()
     assert dump.get("component") == "toroidal"
-    assert dump.get("transformation") == "tendency"
+    assert dump.get("transformation") == "time_derivative"
     assert dump.get("physical_base") == "current_density"
 
 

@@ -1433,13 +1433,13 @@ class StandardName(BaseModel):
     def _check_transformation_exclusivity(self) -> StandardName:
         """Transformation is exclusive with geometric_base only.
 
-        A transformation (prefix operator: ``tendency``, ``gradient``,
+        A transformation (prefix operator: ``time_derivative``, ``gradient``,
         ``change_in``, ...) DOES coexist with a component or coordinate
         projection. The two occupy structurally distinct, unambiguous
         positions in the canonical string:
 
         * an ``_of_``-form transformation renders OUTERMOST, wrapping the
-          projection — ``tendency_of_toroidal_current_density``
+          projection — ``time_derivative_of_toroidal_current_density``
           (``gradient_of_radial_electron_temperature``). The parser peels the
           leading ``<op>_of_`` first, then resolves the projected base, so the
           round-trip is deterministic.

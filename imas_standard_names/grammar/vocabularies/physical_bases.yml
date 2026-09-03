@@ -246,6 +246,14 @@ bases:
     aliases: []
     kind: scalar
     inherently_dimensional: true
+  # Mass crossing a boundary per unit time (kg.s^-1). Irreducible here: the
+  # remainder `flow_rate` is not a registered base, and the registered `flow`
+  # base carries a volumetric gas-throughput reading (Pa.m^3.s^-1), so it
+  # cannot express a mass throughput.
+  mass_flow_rate:
+    aliases: []
+    kind: scalar
+    inherently_dimensional: true
   metric_tensor:
     aliases: []
     kind: tensor

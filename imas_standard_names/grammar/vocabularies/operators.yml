@@ -187,15 +187,8 @@ operators:
     returns: scalar
     dimension_transforming: true
 
-  tendency:
-    kind: unary_prefix
-    precedence: 20
-    returns: rate
-    dimension_transforming: true
-    semantic_effects: [temporal_change]
-
   # Finite/discrete increment (Delta) of the base over an event — NOT a rate.
-  # Unlike tendency/time_derivative (which return a per-time rate and render
+  # Unlike time_derivative (which returns a per-time rate and renders
   # with _of_), change_in preserves the base unit and renders BARE
   # (change_in_electron_density). It therefore also appears in the
   # _BARE_PREFIX_TRANSFORMATIONS set in model.py. Suits discrete event-driven

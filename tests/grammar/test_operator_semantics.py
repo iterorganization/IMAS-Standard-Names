@@ -14,7 +14,7 @@ from imas_standard_names import (
 
 @pytest.mark.parametrize(
     "token",
-    ["change_in", "tendency", "time_derivative"],
+    ["change_in", "time_derivative"],
 )
 def test_temporal_change_operators_expose_the_shared_effect(token: str) -> None:
     assert get_operator_semantics(token) == frozenset({"temporal_change"})

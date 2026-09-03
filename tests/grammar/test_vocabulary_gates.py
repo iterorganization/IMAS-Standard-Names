@@ -1,4 +1,4 @@
-"""Vocabulary CI gates and round-trip regression suite (plan 41 §A6).
+"""Vocabulary CI gates and round-trip regression suite.
 
 Validates:
 1. No new qualifier/subject overlap (grandfathered originals allowed)
@@ -66,7 +66,7 @@ _ORIGINAL_19_MODIFIER_QUALS = frozenset(
 )
 
 # Tokens explicitly marked [also-subject] in qualifiers.yml — these are
-# documented dual-role tokens added during plan 41 vocabulary refactor.
+# documented dual-role tokens.
 _DOCUMENTED_ALSO_SUBJECT = frozenset(
     {
         "co_passing",
@@ -142,8 +142,8 @@ _CATALOG_NAMES = [
     "fast_particle_density",
     "poloidal_electric_field",
     "radial_electric_field",
-    "tendency_of_fast_electron_density",
-    "tendency_of_ion_state_density",
+    "time_derivative_of_fast_electron_density",
+    "time_derivative_of_ion_state_density",
     "toroidal_electric_field",
     "trapped_fast_particle_density",
     "trapped_particle_density",
@@ -179,7 +179,7 @@ _SYNTHETIC_NAMES = [
     "radial_velocity",
     "parallel_current_density",
     # Operator + base
-    "tendency_of_electron_density",
+    "time_derivative_of_electron_density",
     "time_average_of_temperature",
     "magnitude_of_magnetic_field",
     # Locus

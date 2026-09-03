@@ -7,7 +7,10 @@ from typing import Any
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
 
-from imas_standard_names.grammar.constants import SEGMENT_TOKEN_MAP
+from imas_standard_names.grammar.constants import (
+    SEGMENT_TOKEN_MAP,
+    TRANSFORMATION_TOKENS,
+)
 from imas_standard_names.grammar.support import TOKEN_PATTERN
 
 
@@ -32,6 +35,15 @@ class FrozenDict[K, V](dict[K, V]):
 
     def __deepcopy__(self, memo: dict[int, Any]) -> "FrozenDict[K, V]":
         return self
+
+
+# Aliases are keyed by grammar segment. Prefix operators are not a segment —
+# they wrap a whole expression — so the transformation vocabulary is offered
+# under its own key for retired operator spellings.
+ALIAS_VOCABULARIES: dict[str, tuple[str, ...]] = {
+    **SEGMENT_TOKEN_MAP,
+    "transformation": tuple(TRANSFORMATION_TOKENS),
+}
 
 
 class _UniqueKeyLoader(yaml.SafeLoader):
@@ -106,10 +118,10 @@ def load_advisory_aliases() -> FrozenDict[str, Any]:
 
     seen_sources: set[str] = set()
     for segment, definitions in resource.segments.items():
-        if segment not in SEGMENT_TOKEN_MAP:
+        if segment not in ALIAS_VOCABULARIES:
             msg = f"unknown advisory alias segment: {segment!r}"
             raise ValueError(msg)
-        canonical_tokens = set(SEGMENT_TOKEN_MAP[segment])
+        canonical_tokens = set(ALIAS_VOCABULARIES[segment])
         for source, definition in definitions.items():
             if not TOKEN_PATTERN.fullmatch(source):
                 msg = f"invalid advisory alias token: {source!r}"
@@ -141,4 +153,4 @@ def load_advisory_aliases() -> FrozenDict[str, Any]:
     return freeze_advisory_aliases(serializable)
 
 
-__all__ = ["freeze_advisory_aliases", "load_advisory_aliases"]
+__all__ = ["ALIAS_VOCABULARIES", "freeze_advisory_aliases", "load_advisory_aliases"]

@@ -223,7 +223,7 @@ def test_every_flux_surface_reduction_wraps_a_binary_form(reduction: str) -> Non
         # _of_-form transformations
         "logarithm_of",
         "inverse_of",
-        "tendency_of",
+        "time_derivative_of",
         "maximum_of",
         "root_mean_square_of",
     ],

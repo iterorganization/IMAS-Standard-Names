@@ -1,8 +1,7 @@
-"""Tests for populated grammar vocabularies (plan 38 W2a).
+"""Tests for populated grammar vocabularies.
 
-Asserts that the vocabulary files populated from rc20 corpus mining
-have sufficient coverage, contain key entries, and have no cross-registry
-duplicates.
+Asserts that the vocabulary files have sufficient coverage, contain key
+entries, and have no cross-registry duplicates.
 """
 
 from __future__ import annotations
@@ -68,7 +67,7 @@ class TestPhysicalBasesCorpusCoverage:
     @pytest.mark.parametrize(
         "token",
         [
-            # Irreducible dimensional bases (Plan 41 reduced vocabulary)
+            # Irreducible dimensional bases
             "current_density",
             "number_density",
             "magnetic_field",
@@ -120,7 +119,6 @@ class TestOperatorKeyEntries:
     @pytest.mark.parametrize(
         "token",
         [
-            "tendency",
             "derivative_with_respect_to",
             "reference_waveform",
             "gyroaveraged",
@@ -165,7 +163,7 @@ class TestLocusRegistryKeyEntries:
         return load_locus_registry()
 
     def test_plasma_boundary_entity(self, loci):
-        # plasma_boundary reclassified to position in the grammar (plan 38 §A5)
+        # plasma_boundary is a position in the grammar, not a region
         assert "plasma_boundary" in loci.loci
         assert loci.loci["plasma_boundary"].type == "position"
 

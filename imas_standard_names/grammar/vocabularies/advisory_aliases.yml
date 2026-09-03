@@ -11,6 +11,12 @@ segments:
     annulus_centre:
       canonical: annulus_center
       reason: British spelling of the registered annular reference point.
+  transformation:
+    tendency:
+      canonical: time_derivative
+      reason: >-
+        Retired duplicate spelling of the per-time derivative; the registered
+        operator says what it does without a meteorological reading.
   physical_base:
     strain_tensor:
       canonical: strain
