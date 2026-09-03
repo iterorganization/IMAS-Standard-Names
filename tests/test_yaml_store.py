@@ -1,6 +1,7 @@
 import importlib.resources as resources
 from pathlib import Path
 
+import pytest
 import yaml
 
 from imas_standard_names.models import create_standard_name_entry
@@ -10,6 +11,18 @@ from imas_standard_names.yaml_store import (
     unwrap_catalog_prose,
     write_catalog_yaml,
 )
+
+_MANIFEST_HEADER = """
+catalog_name: test_catalog
+cocos_convention: 11
+grammar_version: "1"
+isn_model_version: "1"
+dd_version_lineage: ["4.0.0"]
+generated_by: test-suite
+generated_at: 2026-01-01T00:00:00Z
+candidate_count: 1
+published_count: 1
+"""
 
 
 def _entry_with_source(source: dict[str, str]) -> dict:
@@ -264,3 +277,58 @@ def test_existing_catalog_rewrite_preserves_data(tmp_path: Path) -> None:
     ]
 
     assert rewritten_entries == existing
+
+
+def test_load_resolves_kind_from_valid_manifest_sidecar(tmp_path: Path) -> None:
+    entries_root = tmp_path / "standard_names"
+    entries_root.mkdir()
+    (tmp_path / "catalog.yml").write_text(
+        _MANIFEST_HEADER
+        + "names:\n"
+        + "  plasma_current:\n"
+        + "    kind: scalar\n"
+        + "    physics_domain: core_plasma_physics\n"
+    )
+    (entries_root / "plasma_current.yml").write_text(
+        "name: plasma_current\n"
+        "description: Plasma current.\n"
+        "documentation: Total plasma current in the tokamak.\n"
+        "unit: A\n"
+    )
+
+    loaded = {mm.name: mm for mm in YamlStore(entries_root).load()}
+
+    assert loaded["plasma_current"].kind == "scalar"
+
+
+def test_load_refuses_present_but_unparseable_manifest_sidecar(tmp_path: Path) -> None:
+    entries_root = tmp_path / "standard_names"
+    entries_root.mkdir()
+    manifest_path = tmp_path / "catalog.yml"
+    manifest_path.write_text("catalog_name: [unterminated\n")
+    (entries_root / "plasma_current.yml").write_text(
+        "name: plasma_current\n"
+        "kind: scalar\n"
+        "physics_domain: core_plasma_physics\n"
+        "description: Plasma current.\n"
+        "documentation: Total plasma current in the tokamak.\n"
+        "unit: A\n"
+    )
+
+    with pytest.raises(ValueError, match=str(manifest_path)):
+        YamlStore(entries_root).load()
+
+
+def test_load_without_manifest_sidecar_uses_inline_kind(tmp_path: Path) -> None:
+    (tmp_path / "plasma_current.yml").write_text(
+        "name: plasma_current\n"
+        "kind: scalar\n"
+        "physics_domain: core_plasma_physics\n"
+        "description: Plasma current.\n"
+        "documentation: Total plasma current in the tokamak.\n"
+        "unit: A\n"
+    )
+
+    loaded = {mm.name: mm for mm in YamlStore(tmp_path).load()}
+
+    assert loaded["plasma_current"].kind == "scalar"

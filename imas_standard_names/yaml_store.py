@@ -9,6 +9,7 @@ from typing import Any
 import yaml
 
 from .models import (
+    StandardNameCatalogManifest,
     StandardNameEntry,
     StandardNameScalarEntry,
     create_standard_name_entry,
@@ -213,9 +214,45 @@ class YamlStore:
     def yaml_files(self):
         return sorted(list(self.root.rglob("*.yml")) + list(self.root.rglob("*.yaml")))
 
+    def load_manifest(self) -> StandardNameCatalogManifest | None:
+        """Load the manifest sidecar (``catalog.yml``) beside the entries.
+
+        Checked first at ``root.parent/catalog.yml`` (the standard layout —
+        manifest at repo root, entries under ``standard_names/``), then at
+        ``root/catalog.yml`` (entries under the repo root directly). Returns
+        ``None`` only when no manifest file is present at either location; a
+        present-but-unparseable manifest is refused rather than treated as
+        absent, since silently ignoring it would leave entries without an
+        inline ``kind`` failing discrimination later with an opaque union
+        error that hides the real cause.
+        """
+        candidates = [self.root.parent / "catalog.yml", self.root / "catalog.yml"]
+        for candidate in candidates:
+            if not candidate.exists():
+                continue
+            try:
+                data = yaml.safe_load(candidate.read_text(encoding="utf-8"))
+            except yaml.YAMLError as e:
+                raise ValueError(
+                    f"Catalog manifest sidecar at {candidate} is not valid YAML: {e}"
+                ) from e
+            if not isinstance(data, dict):
+                raise ValueError(
+                    f"Catalog manifest sidecar at {candidate} must be a mapping, "
+                    f"got {type(data).__name__}"
+                )
+            try:
+                return StandardNameCatalogManifest(**data)
+            except Exception as e:
+                raise ValueError(
+                    f"Catalog manifest sidecar at {candidate} failed validation: {e}"
+                ) from e
+        return None
+
     # Load --------------------------------------------------------------------
     def load(self) -> list[StandardNameEntry]:
         models: list[StandardNameEntry] = []
+        manifest = self.load_manifest()
         for f in self.yaml_files():
             # Detect nested paths (legacy per-file layout)
             relative = f.relative_to(self.root)
@@ -269,7 +306,7 @@ class YamlStore:
 
                 # Handle Pydantic validation errors in permissive mode
                 try:
-                    m = create_standard_name_entry(entry_data)
+                    m = create_standard_name_entry(entry_data, manifest=manifest)
                     models.append(m)
                 except Exception as e:
                     if self.permissive:
