@@ -15,6 +15,7 @@ ACCEPTED_ALIASES = {
     ("position", "annulus_centre"): "annulus_center",
     ("physical_base", "strain_tensor"): "strain",
     ("transformation", "tendency"): "time_derivative",
+    ("transformation", "per_steradian"): "per_solid_angle",
 }
 
 CONTEXTUAL_REWRITES = {

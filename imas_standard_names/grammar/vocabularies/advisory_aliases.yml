@@ -17,6 +17,11 @@ segments:
       reason: >-
         Retired duplicate spelling of the per-time derivative; the registered
         operator says what it does without a meteorological reading.
+    per_steradian:
+      canonical: per_solid_angle
+      reason: >-
+        Names the steradian rather than the quantity it measures; the
+        registered operator reads as the physical division it performs.
   physical_base:
     strain_tensor:
       canonical: strain

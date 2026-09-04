@@ -307,6 +307,17 @@ operators:
     precedence: 10
     returns: scalar
 
+  # Division by the solid angle the quantity is emitted into, adding sr^-1 to
+  # the unit (a volumetric source rate m^-3.s^-1 becomes m^-3.s^-1.sr^-1).
+  # Postfix so the per-unit normalization reads after the quantity it divides,
+  # as it does in physics prose ("source rate per solid angle"), and one token
+  # serves every quantity rather than a base per emitted species.
+  per_solid_angle:
+    kind: unary_postfix
+    precedence: 15
+    returns: scalar_or_vector
+    dimension_transforming: true
+
   reference_waveform:
     kind: unary_postfix
     precedence: 5

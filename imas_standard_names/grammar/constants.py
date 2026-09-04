@@ -391,6 +391,7 @@ TRANSFORMATION_TOKENS: tuple[str, ...] = (
     "fourier_coefficient",
     "gyroaveraged",
     "moment",
+    "per_solid_angle",
     "reference_waveform",
     "waveform",
 )
@@ -446,6 +447,7 @@ DECOMPOSITION_TOKENS: tuple[str, ...] = (
     "fourier_coefficient",
     "gyroaveraged",
     "moment",
+    "per_solid_angle",
     "reference_waveform",
     "waveform",
 )

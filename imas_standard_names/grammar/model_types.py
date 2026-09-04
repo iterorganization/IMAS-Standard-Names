@@ -687,6 +687,7 @@ class Transformation(StrEnum):
     FOURIER_COEFFICIENT = "fourier_coefficient"
     GYROAVERAGED = "gyroaveraged"
     MOMENT = "moment"
+    PER_SOLID_ANGLE = "per_solid_angle"
     REFERENCE_WAVEFORM = "reference_waveform"
     WAVEFORM = "waveform"
 
@@ -737,6 +738,7 @@ class Decomposition(StrEnum):
     FOURIER_COEFFICIENT = "fourier_coefficient"
     GYROAVERAGED = "gyroaveraged"
     MOMENT = "moment"
+    PER_SOLID_ANGLE = "per_solid_angle"
     REFERENCE_WAVEFORM = "reference_waveform"
     WAVEFORM = "waveform"
 
