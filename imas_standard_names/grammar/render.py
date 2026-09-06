@@ -4,15 +4,19 @@ Implements :func:`compose` — a pure function that maps a
 :class:`StandardNameIR` to its single canonical string form. There are no
 fallbacks: malformed IR raises :class:`RenderError`.
 
-The renderer is deliberately isolated from vocabulary resolution. It
-consumes validated IR structures (see :mod:`imas_standard_names.grammar.ir`)
-and emits token strings; vocabulary lookups happen at parse time.
+The renderer consumes validated IR structures (see
+:mod:`imas_standard_names.grammar.ir`) and emits token strings; token
+resolution happens at parse time. The one registry fact it reads is operator
+precedence, which fixes where a bare-spelled operator sits relative to the
+projection and the trailing locus.
 
 See the rendering templates in ``vocabularies/operators.yml``.
 """
 
 from collections.abc import Iterable
+from functools import cache
 
+from imas_standard_names.grammar import vocab_loaders
 from imas_standard_names.grammar.ir import (
     BARE_PREFIX_OPERATORS,
     AxisProjection,
@@ -40,6 +44,10 @@ __all__ = [
 
 class RenderError(ValueError):
     """Raised when the generator cannot produce a canonical form."""
+
+
+# Registry precedence shared by the domain-collapsing prefix operators.
+_REDUCTION_PRECEDENCE = 30
 
 
 # ---------------------------------------------------------------------------
@@ -311,6 +319,64 @@ def _leading_bare_operators(
     return operator_qualifiers, ordinary_qualifiers
 
 
+@cache
+def _reduction_operators() -> frozenset[str]:
+    """Bare-spelled prefix operators that outrank the projection layer.
+
+    A reduction collapses its operand over a domain — a flux surface, a
+    volume, a line, the time axis — so the object being reduced is the whole
+    projected, qualified quantity rather than one axis component of it. The
+    registry marks the class by precedence: these bind looser than every
+    qualifier and projection, so they lead the spelling and wrap everything to
+    their right, the trailing locus included.
+    """
+
+    registry = vocab_loaders.load_operators().operators
+    return frozenset(
+        name
+        for name, entry in registry.items()
+        if entry.kind == OperatorKind.UNARY_PREFIX.value
+        and name in BARE_PREFIX_OPERATORS
+        and entry.precedence == _REDUCTION_PRECEDENCE
+    )
+
+
+def _hoist_leading_reductions(ir: StandardNameIR) -> StandardNameIR:
+    """Lift qualifier-held leading reductions onto the operator stack.
+
+    A bare prefix whose operand is an ordinary base is carried in the
+    qualifier chain, which renders it after the base and inside the tail. For
+    the reduction class that spelling states the wrong scope, so re-seat those
+    tokens as the outermost operators and let the operator stack place them.
+    """
+
+    operator_qualifiers, ordinary_qualifiers = _leading_bare_operators(ir)
+    reductions = [
+        qualifier
+        for qualifier in operator_qualifiers
+        if qualifier.token in _reduction_operators()
+    ]
+    if not reductions:
+        return ir
+    retained = [
+        qualifier for qualifier in operator_qualifiers if qualifier not in reductions
+    ]
+    hoisted = [
+        OperatorApplication(
+            kind=OperatorKind.UNARY_PREFIX,
+            op=qualifier.token,
+            bare_prefix=True,
+        )
+        for qualifier in reductions
+    ]
+    return ir.model_copy(
+        update={
+            "operators": [*hoisted, *ir.operators],
+            "qualifiers": [*retained, *ordinary_qualifiers],
+        }
+    )
+
+
 def _can_reposition_operators(
     ir: StandardNameIR,
     *,
@@ -338,6 +404,7 @@ def _compose(
 ) -> str:
     """Render one IR while retaining composite-operand context recursively."""
 
+    ir = _hoist_leading_reductions(ir)
     operator_qualifiers, ordinary_qualifiers = _leading_bare_operators(ir)
     can_reposition = _can_reposition_operators(
         ir, inside_composite_operand=inside_composite_operand
