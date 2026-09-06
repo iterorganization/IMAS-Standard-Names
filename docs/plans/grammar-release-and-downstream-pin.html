@@ -4,24 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="docs-project"   content="imas-standard-names">
-  <meta name="reckon-type"    content="plan">
-  <meta name="plan-slug"      content="grammar-release-and-downstream-pin">
-  <meta name="plan-title"     content="Grammar Release And Downstream Pin">
-  <meta name="plan-summary"   content="Release the tail-gated operator grammar and the vocabulary it needs, then move the consumer off its editable override">
-  <meta name="plan-status"    content="active">
-  <meta name="plan-roi"       content="high">
+  <meta name="reckon-type" content="plan">
+  <meta name="plan-slug" content="grammar-release-and-downstream-pin">
+  <meta name="plan-title" content="Grammar Release And Downstream Pin">
+  <meta name="plan-summary" content="Release the tail-gated operator grammar and the vocabulary it needs, then move the consumer off its editable override">
+  <meta name="plan-status" content="active">
+  <meta name="plan-roi" content="high">
   <meta name="plan-effort-hours" content="3.0">
   <meta name="plan-capability-version" content="1.0">
   <meta name="plan-capability-class" content="general">
   <meta name="plan-capability-reasoning" content="deep">
   <meta name="plan-capability-verification" content="strict">
   <meta name="plan-capability-risk" content="moderate">
-  <meta name="plan-sprint"    content="S1">
-  <meta name="plan-owner"     content="Simon McIntosh">
-  <meta name="plan-tags"      content="grammar,release,vocabulary">
+  <meta name="plan-sprint" content="S1">
+  <meta name="plan-owner" content="Simon McIntosh">
+  <meta name="plan-tags" content="grammar,release,vocabulary">
   <title>Grammar Release And Downstream Pin | imas-standard-names</title>
   <link rel="stylesheet" href="/_shared/foundation.css">
   <link rel="stylesheet" href="/_shared/dashboard.css">
+<meta name="plan-modified" content="2026-09-06">
+<meta name="plan-version" content="1">
 </head>
 <body>
   <main class="plan-doc">
@@ -128,31 +130,34 @@
     rest.</p>
 
     <section data-reckon="decisions" id="decisions" class="r-decisions">
-      <h2><span class="sec">§</span> Decisions</h2>
-      <div class="r-dec" data-key="release-level" data-choice="" data-by="" data-when="">
-        <p class="r-dec-q">Does this publish as a release candidate first, or straight to a stable patch?</p>
-        <p class="r-dec-opts">
-          <button class="r-opt" data-value="rc">Release candidate, then finalise</button>
-          <button class="r-opt" data-value="patch-final">Straight to a stable patch</button>
-        </p>
-        <p class="r-dec-rat"></p>
-      </div>
-      <div class="r-dec" data-key="kind-pin-shape" data-choice="named-keys" data-by="Simon McIntosh" data-when="2026-09-06">
-        <p class="r-dec-q">How should the physical-base kind contract be pinned?</p>
-        <p class="r-dec-opts">
-          <button class="r-opt" data-value="named-keys">Pin each baseline base's kind by name</button>
-          <button class="r-opt" data-value="refresh-digest">Refresh the frozen digest</button>
-        </p>
-        <p class="r-dec-rat">Refreshing the digest restores the suite and leaves the
+<h2><span class="sec">§</span> Decisions</h2>
+<div class="r-dec" data-key="release-level" data-choice="" data-by="" data-when="">
+    <p class="r-dec-q">Does this publish as a release candidate first, or straight to a stable patch?</p>
+    <p class="r-dec-opts">
+      <button class="r-opt" data-value="rc">Release candidate, then finalise</button>
+      <button class="r-opt" data-value="patch-final">Straight to a stable patch</button>
+      </p>
+    <p class="r-dec-rat"></p>
+    </div>
+<div class="r-dec" data-key="kind-pin-shape" data-choice="named-keys" data-by="Simon McIntosh" data-when="2026-09-06">
+    <p class="r-dec-q">How should the physical-base kind contract be pinned?</p>
+    <p class="r-dec-opts">
+      <button class="r-opt chosen" data-value="named-keys">Pin each baseline base&#x27;s kind by name</button>
+      <button class="r-opt" data-value="refresh-digest">Refresh the frozen digest</button>
+      </p>
+    <p class="r-dec-rat">Refreshing the digest restores the suite and leaves the
         defect in place, so the next vocabulary addition breaks it again. Pinning by
         name distinguishes an added base from a changed kind, which is what the test
         claims to measure.</p>
-      </div>
-    </section>
+    </div>
+</section>
 
-    <section data-reckon="followups" id="followups" class="r-followups">
-      <h2><span class="sec">§</span> Followups</h2>
-    </section>
-  </main>
+    
+  <section data-reckon="comments" id="comments" class="r-comments">
+<div class="r-comment" data-section="s2" data-id="c-run-r-20260906T102805767185-n-grdp-the-kind-pin-tolerates-new-bases" data-who="cx-kindpin" data-when="2026-09-06T10:46:05Z">
+    <div class="r-comment-body"><p>THE CONTRACT NOW MEASURES WHAT ITS NAME CLAIMS. A frozen SHA-256 digest over the entire physical-base vocabulary is replaced by an explicit 177-entry baseline mapping measured from the loader, projected onto only those named keys - so an existing base changing kind fails while an added base passes. 1 failed at base against 3 passed after, and the whole grammar suite is green at 2110 passed, 34 skipped, 82 xfailed, exit 0. THE WORKER DISPUTED MY SPEC AND WAS RIGHT, which is the most valuable thing here. I told it to also assert that no base outside the three vector corrections carries kind vector, reading the test name as only these are vector. The name says only these CHANGE TO vector, and the loader holds 16 established vector bases outside the corrections, so my assertion was false of this vocabulary and it stopped rather than writing something that could not pass. It also confirmed my reading of the third assertion with a proper argument rather than by agreement: the old baseline copied every current value and overrode only the corrections to scalar, so once the first assertion held, exactly those three necessarily differed and no other key could - no independent failure case existed. TWO-DIRECTION PROOF, both concrete: flipping loaded acceleration from vector to scalar must raise, and inserting a synthetic base must still pass. The census is the part a reader gains most from - 177 bases, 19 vectors, 16 of them established outside the corrections, zero missing current keys and zero stale baseline keys - because the frozen digest had hidden every one of those facts behind one opaque hash. RECEIPT, and the first codex run today to take two turns: 15m50s of a 40m fence, 65 tool calls, 2 turns, zero provider refusals, three self-corrected local retries (an unsupported patch operation, a malformed poll, an over-escaped f-string). Its named discovery was measuring and transcribing the complete base map, which is exactly the work a digest exists to avoid and exactly why the digest was the wrong instrument</p></div>
+</div>
+</section>
+</main>
 </body>
 </html>

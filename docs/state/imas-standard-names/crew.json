@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-06T12:22:55",
+  "updated": "2026-09-06T12:48:18",
   "project": "imas-standard-names",
   "doc": "crew",
   "data": {
@@ -8,14 +8,155 @@
         "id": "cx-kindpin",
         "harness": "codex",
         "role": "implement",
-        "session_id": null,
-        "session_model": null,
-        "sessions": {},
+        "session_id": "01a07642-fbe2-7d02-97de-ed56606becbb",
+        "session_model": "gpt-5.6-sol",
+        "sessions": {
+          "{\"alias\":\"sol5.6\",\"backend\":\"codex\",\"effort\":\"high\",\"launch\":\"cli\",\"model\":\"gpt-5.6-sol\",\"sandbox\":\"worktree-full\"}": "01a07642-fbe2-7d02-97de-ed56606becbb"
+        },
         "created": "2026-09-06"
       }
     ],
-    "runs": [],
+    "runs": [
+      {
+        "run_id": "r-20260906T102805767185-n-grdp-the-kind-pin-tolerates-new-bases",
+        "plan": "grammar-release-and-downstream-pin",
+        "section": "\u00a72",
+        "node": "n-grdp-the-kind-pin-tolerates-new-bases",
+        "node_definition": {
+          "coordinator": {
+            "authoring_turn": {
+              "source": "claude-code-session-transcript",
+              "status": "measured",
+              "tokens": {
+                "cache_creation_input_tokens": 338,
+                "cached_input_tokens": 489335,
+                "input_tokens": 489675,
+                "output_tokens": 2066,
+                "reasoning_output_tokens": 0,
+                "total_tokens": 491741,
+                "uncached_input_tokens": 2
+              }
+            },
+            "harness": "claude-code",
+            "runtime_session_id": "11b50f59-c77b-4356-8bb3-6dafc6d0a4c0",
+            "session_id": "ship-s10-20260905"
+          },
+          "done_when": "ONE TEST BLOCKS AN ENTIRE RELEASE CHAIN. Read tests/test_physical_base_kinds.py in full - it is under 40 lines - and nothing else beyond the vocabulary loader it calls.\n\nTHE FAILURE, from continuous integration on the open upstream pull request. build (3.12), build (3.13) and coverage all fail on test_only_momentum_and_torque_bases_change_to_vector at tests/test_physical_base_kinds.py:29, with a digest mismatch: expected 6062e5c22be7788220b390f09a5c8c1f1037ece0f8bc4422b2e6a3e3b1763956, observed 7df8c3f2f3a6ed41ce28fdbb49b0bb4045b8717966a4999244433afaf579e3c4. The fast build job passes; only the test jobs fail.\n\nWHY IT MOVED, and it is not a regression. _kind_map_digest hashes every name=kind pair returned by load_physical_bases().bases except the three names in _VECTOR_CORRECTIONS, and _BASELINE_UNCHANGED_KIND_DIGEST is frozen as a module literal. Thirty-one vocabulary tokens were deliberately added on this branch - twenty-five bare tokens and six data-dictionary-backed ones - and the beta inclination qualifier was withdrawn. So the digest moved because the vocabulary grew, not because any existing base changed kind.\n\nTHE DECISION IS ALREADY LOCKED in the plan, decision key kind-pin-shape: pin each baseline base's kind BY NAME, and do not simply refresh the frozen digest. Refreshing restores the suite and leaves the defect, so the next vocabulary addition breaks it again.\n\nREAD THE THIRD ASSERTION BEFORE YOU CHANGE ANYTHING, because it changes what you must preserve. The test makes three claims. The first, that the three named corrections carry kind vector, is real. The third builds baseline_kinds from the CURRENT kind map by overriding those same three entries to scalar, then asserts exactly those three differ - which, given the first assertion, is true by construction and can never fail. Verify that reading yourself and state your conclusion. If you agree it is vacuous, replace it rather than preserving it; if you find a case where it can fail, say what that case is and keep it. Do not delete an assertion you have not shown to be empty.\n\nTHE DELIVERABLE: an assertion that fails when an existing base's kind changes and passes when a new base is added. Record the baseline as an explicit name-to-kind mapping for the bases that exist now, compare only those keys, and let unlisted names through. Keep the first assertion exactly as it is. The test's name promises that only momentum and torque bases became vector, so also assert that NO base outside _VECTOR_CORRECTIONS carries kind vector - that is the claim the name makes and the frozen digest only approximated.\n\nPROVE BOTH DIRECTIONS, and this is the measure. Show the suite passing at the current vocabulary. Then show the new assertion FAILING when an existing base's kind is altered - do that by mutating the loaded mapping inside a test, never by editing a vocabulary file - and show it PASSING when a synthetic new base is added to the loaded mapping. A gate that only demonstrates the green case has not been shown to catch anything.\n\nRun once before your change and once after:\nuv run pytest tests/test_physical_base_kinds.py -p no:cacheprovider\nThen run the whole grammar suite once after your change as a blast-radius check and report its counts: uv run pytest tests/ -p no:cacheprovider\nReport the before and after counts for both. The baseline mapping must be MEASURED from the loader, never transcribed from anything I have told you.\n\nCONSTRAINTS. Change no vocabulary file, no parser, no renderer - this node touches the test module only. Do not edit the digest helper into something that still hashes a growing map. Do not add a date, a version, a plan name or a pull-request number anywhere in the module. This repository's environment is its own, so plain uv run is correct here.\n\nOPERATIONAL RECEIPT REQUIRED IN YOUR MANIFEST: your wall-clock from first tool call to manifest write, your number of tool calls, how many turns you used, whether any request was retried or refused and why, and one sentence naming what you had to discover versus what this brief handed you, including anything under-specified.",
+          "estimated_hours": null,
+          "goal": "The physical-base kind contract catches a changed kind while tolerating an added base",
+          "id": "n-grdp-the-kind-pin-tolerates-new-bases",
+          "manifest_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20260906T102805767185-n-grdp-the-kind-pin-tolerates-new-bases/manifest.md",
+          "plan": "grammar-release-and-downstream-pin",
+          "requires_decisions": [],
+          "role": "implement",
+          "section": "\u00a72",
+          "spec_level": "exact",
+          "time_budget": "40m",
+          "write_paths": [
+            "tests/test_physical_base_kinds.py"
+          ]
+        },
+        "role": "implement",
+        "spec_level": "exact",
+        "member": "cx-kindpin",
+        "backend": "codex",
+        "local": false,
+        "agent": {
+          "alias": "sol5.6",
+          "backend": "codex",
+          "effort": "high",
+          "launch": "cli",
+          "model": "gpt-5.6-sol",
+          "sandbox": "worktree-full"
+        },
+        "dispatched_at": "2026-09-06T10:28:15Z",
+        "completed_at": "2026-09-06T10:46:05Z",
+        "completed_at_source": "stream_mtime",
+        "worker_seconds": 1070,
+        "worker_seconds_source": "wall_fallback",
+        "wall_seconds": 1070,
+        "stalled": false,
+        "time_budget": "40m",
+        "base_sha": "c632a5316ac80aed01f1503dbf519f090adf1f32",
+        "commits": [
+          "81cc5c2761f2a5c253697a8486f3d179580a3045"
+        ],
+        "changed_lines": {
+          "added": 205,
+          "removed": 19,
+          "files": 1
+        },
+        "tests_added": 2,
+        "gate": "passed",
+        "gate_check": {
+          "command": "uv run pytest tests/test_physical_base_kinds.py -p no:cacheprovider",
+          "exit_status": 0,
+          "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20260906T102805767185-n-grdp-the-kind-pin-tolerates-new-bases/after-physical-base-kinds.log",
+          "log_digest": null
+        },
+        "suite_delta": null,
+        "failure_classification": null,
+        "outcome": "",
+        "manifest_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20260906T102805767185-n-grdp-the-kind-pin-tolerates-new-bases/manifest.md",
+        "scope_changed": false,
+        "session_id": "01a07642-fbe2-7d02-97de-ed56606becbb",
+        "budget": {
+          "headroom": "unknown",
+          "utilisation_pct": null,
+          "rate_limit_type": null,
+          "rate_limit_period_minutes": null,
+          "resets_at": null,
+          "threshold_status": null,
+          "surpassed_threshold": null,
+          "tokens": {
+            "cache_write_input_tokens": 0,
+            "cache_write_input_tokens_cumulative": 0,
+            "cached_input_tokens": 5009920,
+            "cached_input_tokens_cumulative": 5009920,
+            "input_tokens": 5065395,
+            "input_tokens_cumulative": 5065395,
+            "output_tokens": 21664,
+            "output_tokens_cumulative": 21664,
+            "reasoning_output_tokens": 6410,
+            "reasoning_output_tokens_cumulative": 6410
+          },
+          "cost_usd": null,
+          "refusal": false,
+          "detail": "backend reports token usage but no headroom"
+        },
+        "lineage": null,
+        "shadow_controlled": null,
+        "shadow_patch": "",
+        "unreconciled_override": {
+          "grace": "5m",
+          "requested": true,
+          "waived_runs": []
+        },
+        "throughput": {
+          "detail": "turn tokens recorded, but no span was supplied to rate them",
+          "generated_tokens": 28074,
+          "peak_input_tokens": 10075315
+        },
+        "attempt": 2,
+        "attempt_kind": "resume",
+        "worktree_retention": {
+          "classification": "retained-for-resume",
+          "worktree": "/home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/ship-s10-20260905/n-grdp-the-kind-pin-tolerates-new-bases",
+          "session_id": "01a07642-fbe2-7d02-97de-ed56606becbb",
+          "session_source": "pointer",
+          "retained_at": "2026-09-06T10:46:05Z"
+        },
+        "execution_fit": {
+          "allowed": true,
+          "execution_capable": true,
+          "matched_measure": "uv run pytest tests/test_physical_base_kinds.py",
+          "override": false,
+          "role": "implement",
+          "status": "compatible"
+        }
+      }
+    ],
     "holds": [],
-    "_version": 1
+    "_version": 3
   }
 }
