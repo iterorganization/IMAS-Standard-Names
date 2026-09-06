@@ -947,6 +947,65 @@ def _peel_repositioned_tail_operator(
     return OperatorApplication(kind=kind, op=match), new_s
 
 
+_REDUCTION_PRECEDENCE = 30
+
+
+def _reduction_prefix_operators(v: Vocabularies) -> frozenset[str]:
+    """Bare-spelled prefix operators that outrank the projection layer.
+
+    These operators collapse their operand over a domain — a flux surface, a
+    volume, a line, the time axis — so the reduced object is the whole
+    projected, qualified quantity rather than one axis component of it. The
+    registry marks the class by precedence: they bind looser than every
+    qualifier and projection, which is what puts them first in the spelling.
+    """
+
+    return frozenset(
+        name
+        for name, meta in v.operators.items()
+        if meta.get("kind") == OperatorKind.UNARY_PREFIX.value
+        and name in BARE_PREFIX_OPERATORS
+        and int(meta.get("precedence", 0)) == _REDUCTION_PRECEDENCE
+    )
+
+
+def _hoist_reduction_qualifiers(
+    operators: list[OperatorApplication],
+    qualifiers: list[Qualifier],
+    v: Vocabularies,
+) -> tuple[list[OperatorApplication], list[Qualifier]]:
+    """Move reduction tokens out of the qualifier chain onto the operator stack.
+
+    A reduction has one reading wherever the author spelled it: it applies to
+    the whole projected, qualified quantity. Base/qualifier matching resolves
+    the token positionally, so an authored name that puts the projection or the
+    trailing locus outside the reduction lands it in the qualifier chain, where
+    it would mean a narrower thing than the same token spelled first.
+
+    Hoisting here gives every spelling of one quantity the same representation,
+    which is what lets the renderer send them all to the canonical spelling and
+    the strict oracle reject the rest. The reduction sits closest to the base,
+    so it goes innermost — beneath any operator already peeled from the text.
+    """
+
+    reductions = _reduction_prefix_operators(v)
+    if not any(qualifier.token in reductions for qualifier in qualifiers):
+        return operators, qualifiers
+    hoisted = [
+        OperatorApplication(
+            kind=OperatorKind.UNARY_PREFIX,
+            op=qualifier.token,
+            bare_prefix=True,
+        )
+        for qualifier in qualifiers
+        if qualifier.token in reductions
+    ]
+    retained = [
+        qualifier for qualifier in qualifiers if qualifier.token not in reductions
+    ]
+    return [*operators, *hoisted], retained
+
+
 def _resolves_without_postfix(s: str, v: Vocabularies) -> bool:
     """Whether the complete spelling resolves without a postfix peel."""
     try:
@@ -2119,6 +2178,9 @@ def _parse_uncached(
         )
     base, qualifiers, projection = _match_base_with_qualifiers(s, v)
     qualifiers = [*repositioned_qualifiers, *qualifiers]
+    operator_stack, qualifiers = _hoist_reduction_qualifiers(
+        operator_stack, qualifiers, v
+    )
 
     ir = StandardNameIR(
         operators=operator_stack,

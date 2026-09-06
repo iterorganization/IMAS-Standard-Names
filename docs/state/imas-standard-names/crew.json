@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-06T12:48:18",
+  "updated": "2026-09-06T15:41:19",
   "project": "imas-standard-names",
   "doc": "crew",
   "data": {
@@ -11,7 +11,8 @@
         "session_id": "01a07642-fbe2-7d02-97de-ed56606becbb",
         "session_model": "gpt-5.6-sol",
         "sessions": {
-          "{\"alias\":\"sol5.6\",\"backend\":\"codex\",\"effort\":\"high\",\"launch\":\"cli\",\"model\":\"gpt-5.6-sol\",\"sandbox\":\"worktree-full\"}": "01a07642-fbe2-7d02-97de-ed56606becbb"
+          "{\"alias\":\"sol5.6\",\"backend\":\"codex\",\"effort\":\"high\",\"launch\":\"cli\",\"model\":\"gpt-5.6-sol\",\"sandbox\":\"worktree-full\"}": "01a07642-fbe2-7d02-97de-ed56606becbb",
+          "{\"alias\":\"opus 5\",\"backend\":\"claude-opus\",\"effort\":\"high\",\"launch\":\"cli\",\"model\":\"claude-opus-5\",\"sandbox\":\"worktree-full\"}": "451f0139-ecb1-41fc-bfc4-ff33f8bff921"
         },
         "created": "2026-09-06"
       }
@@ -154,9 +155,164 @@
           "role": "implement",
           "status": "compatible"
         }
+      },
+      {
+        "run_id": "r-20260906T114004346214-n-grdp-the-reduction-operator-leads-the-name",
+        "plan": "grammar-release-and-downstream-pin",
+        "section": "\u00a71",
+        "node": "n-grdp-the-reduction-operator-leads-the-name",
+        "node_definition": {
+          "coordinator": {
+            "authoring_turn": {
+              "source": "claude-code-session-transcript",
+              "status": "measured",
+              "tokens": {
+                "cache_creation_input_tokens": 895,
+                "cached_input_tokens": 672457,
+                "input_tokens": 673354,
+                "output_tokens": 4220,
+                "reasoning_output_tokens": 1664,
+                "total_tokens": 677574,
+                "uncached_input_tokens": 2
+              }
+            },
+            "harness": "claude-code",
+            "runtime_session_id": "11b50f59-c77b-4356-8bb3-6dafc6d0a4c0",
+            "session_id": "ship-s10-20260905"
+          },
+          "done_when": "A CLASSIFICATION DEFECT IN THE PARSER, NOT A PLACEMENT RULE. The lead has specified the correct behaviour and the evidence localises the cause. Do not change the tail-relocation rule; it is not implicated.\n\nTHE EVIDENCE, measured against the live grammar. These three spellings all parse to an IDENTICAL intermediate representation:\n  toroidal_flux_surface_averaged_lithium_velocity_at_plasma_boundary\n  flux_surface_averaged_toroidal_lithium_velocity_at_plasma_boundary\n  toroidal_lithium_velocity_flux_surface_averaged_at_plasma_boundary\nand that representation is:\n  operators: []\n  projection: {axis: toroidal, shape: component}\n  qualifiers: [{token: flux_surface_averaged}, {token: lithium}]\n  base: {token: velocity, kind: quantity}\n  locus: {relation: at, token: plasma_boundary, type: position}\n\nSo `flux_surface_averaged` is landing in QUALIFIERS with an empty operators list. Contrast the untailed, unprojected control `flux_surface_averaged_magnetic_field_magnitude`, which parses correctly with operators carrying an OperatorApplication for flux_surface_averaged with bare_prefix true, alongside the magnitude postfix. Same token, two classifications, and the difference is the presence of a projection or a locus tail.\n\nTHE CONSEQUENCE, and it is why this blocks a release rather than being cosmetic. A trailing qualifier renders after the projection and base and before the tail, which is why the composer emits toroidal_lithium_velocity_flux_surface_averaged_at_plasma_boundary. And because the token sits in qualifiers rather than operators, the representation cannot distinguish a flux-surface-averaged quantity from an unaveraged one carrying a stray qualifier - representation equality is this project's test for meaning equality, and a downstream consumer uses exactly that test to decide whether a rename preserves meaning.\n\nTHE REQUIRED BEHAVIOUR, from the lead verbatim: the flux-surface-average operator is ALWAYS FIRST - flux surface average OF the quantity. It wraps everything including the projection. So the canonical spelling for that representation is:\n  flux_surface_averaged_toroidal_lithium_velocity_at_plasma_boundary\nThe authored spelling was also wrong, for the opposite reason: it placed the projection OUTSIDE the operator. Neither the authored form nor the current canonical form is correct, so the target is a third spelling.\n\nWHERE TO LOOK FIRST, before changing anything. The operator is registered as kind unary_prefix, precedence 30, with flux_surface_reduction true, and it renders joiner-free through a bare_prefix path at grammar/render.py:196. A helper at grammar/render.py:302 named _leading_bare_operators exists to split leading bare operators from ordinary base qualifiers and is called at :341 - which is machinery built for exactly this, and it is not producing the leading form here. Establish whether the defect is that the PARSER never classifies the token as an operator when a projection or locus is present, or that it does classify it and the renderer's split fails to lead with it. Report which, with the file and line that decides it. The fix belongs wherever that answer points, and I do not want a compensating change at the other end.\n\nPRESERVE THE REDUCTION CLASS CONSISTENTLY. volume_averaged, line_integrated and root_mean_square share kind unary_prefix at precedence 30; flux_surface_averaged additionally carries flux_surface_reduction. Say whether your fix generalises to all operators at that precedence or is specific to the flux-surface reduction, and prefer the general form if the evidence supports it. Note also an existing inconsistency worth reporting but NOT fixing here: gyroaveraged is registered unary_postfix at precedence 10 while its semantic siblings are prefix at 30.\n\nWHAT MUST NOT MOVE. A downstream consumer measured 2,339 of 2,347 accepted names rendering byte-identical under the current grammar. Your change must not disturb that. The untailed control flux_surface_averaged_magnetic_field_magnitude must stay byte-identical, and so must the recursive control flux_surface_averaged_ratio_of_square_of_toroidal_flux_coordinate_gradient_magnitude_to_square_of_major_radius.\n\nEVIDENCE REQUIRED. Add tests pinning: the representation for the tailed projected name now carrying flux_surface_averaged in operators rather than qualifiers; the canonical spelling being flux_surface_averaged_toroidal_lithium_velocity_at_plasma_boundary; a strict parse of that spelling succeeding and round-tripping; a strict parse of both wrong spellings being rejected as non-canonical while still parsing to the same representation; and both controls byte-identical. Run once before your change and once after:\n  uv run pytest tests/ -p no:cacheprovider\nReport both full-suite counts. The suite is the blast radius and it must not lose a passing test; if it does, name each loss and stop rather than adjusting expectations.\n\nDo not touch the vocabulary's precedence numbers unless your diagnosis shows precedence is the cause, and say so explicitly if it is. This repository's environment is its own, so plain uv run is correct.\n\nOPERATIONAL RECEIPT IN YOUR MANIFEST: wall clock from first tool call to manifest write, tool calls, turns used, any request retried or refused and why, and one sentence naming what you had to discover versus what this brief handed you.",
+          "estimated_hours": null,
+          "goal": "A flux-surface reduction operator leads its name and wraps the projection rather than trailing as a qualifier",
+          "id": "n-grdp-the-reduction-operator-leads-the-name",
+          "manifest_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20260906T114004346214-n-grdp-the-reduction-operator-leads-the-name/manifest.md",
+          "plan": "grammar-release-and-downstream-pin",
+          "requires_decisions": [],
+          "role": "implement",
+          "section": "\u00a71",
+          "spec_level": "guided",
+          "time_budget": "55m",
+          "write_paths": [
+            "imas_standard_names/grammar/parser.py",
+            "imas_standard_names/grammar/render.py",
+            "tests/grammar/test_reduction_operator_scope.py"
+          ]
+        },
+        "role": "implement",
+        "spec_level": "guided",
+        "member": "cx-kindpin",
+        "backend": "claude-opus",
+        "local": false,
+        "agent": {
+          "alias": "opus 5",
+          "backend": "claude-opus",
+          "effort": "high",
+          "launch": "cli",
+          "model": "claude-opus-5",
+          "sandbox": "worktree-full"
+        },
+        "dispatched_at": "2026-09-06T11:40:13Z",
+        "completed_at": "2026-09-06T13:31:28.078Z",
+        "completed_at_source": "terminal_event",
+        "worker_seconds": 6667,
+        "worker_seconds_source": "stream_events",
+        "wall_seconds": 6675,
+        "stalled": true,
+        "time_budget": "55m",
+        "base_sha": "a2e4ae80605dfec68d37bfc2f52abe199978cb26",
+        "commits": [
+          "0357c9321ae4c975ca65efd69b88258f1ee1d992"
+        ],
+        "changed_lines": {
+          "added": 60,
+          "removed": 50,
+          "files": 3
+        },
+        "tests_added": 22,
+        "gate": "passed",
+        "gate_check": {
+          "command": "uv run pytest tests/ -p no:cacheprovider",
+          "exit_status": 0,
+          "log_path": "/tmp/isn-grdp/after.log",
+          "log_digest": null
+        },
+        "suite_delta": null,
+        "failure_classification": null,
+        "outcome": "",
+        "manifest_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20260906T114004346214-n-grdp-the-reduction-operator-leads-the-name/manifest.md",
+        "scope_changed": true,
+        "session_id": "451f0139-ecb1-41fc-bfc4-ff33f8bff921",
+        "budget": {
+          "headroom": "known",
+          "utilisation_pct": 67.0,
+          "rate_limit_type": "five_hour",
+          "rate_limit_period_minutes": null,
+          "resets_at": "2026-09-06T16:00:00Z",
+          "threshold_status": "allowed_warning",
+          "surpassed_threshold": 1,
+          "tokens": {
+            "cache_creation_input_tokens": 32959,
+            "cache_creation_input_tokens_cumulative": 32959,
+            "cache_read_input_tokens": 5975113,
+            "cache_read_input_tokens_cumulative": 5975113,
+            "inference_geo": "not_available",
+            "input_tokens": 54,
+            "input_tokens_cumulative": 54,
+            "output_tokens": 22456,
+            "output_tokens_cumulative": 22456,
+            "service_tier": "standard",
+            "speed": "standard"
+          },
+          "cost_usd": 3.8788165,
+          "refusal": false,
+          "detail": "backend reports utilisation and reset time",
+          "cost_usd_cumulative": 3.8788165
+        },
+        "lineage": null,
+        "shadow_controlled": null,
+        "shadow_patch": "",
+        "unreconciled_override": {
+          "grace": "5m",
+          "requested": true,
+          "waived_runs": []
+        },
+        "throughput": {
+          "detail": "generation and wall clock reported separately by the backend",
+          "elapsed_seconds": 728.43,
+          "generated_tokens": 22456,
+          "generation_seconds": 304.396,
+          "input_budget_tokens": 1000000,
+          "input_utilisation_pct": 23.6,
+          "machine_seconds": 424.034,
+          "peak_input_tokens": 235916,
+          "tokens_per_second": 73.77,
+          "wall_tokens_per_second": 30.83
+        },
+        "attempt": 3,
+        "attempt_kind": "resume",
+        "scope_acceptances": [
+          {
+            "path": "tests/grammar/test_tail_gated_operator_order.py",
+            "reason": "contract pinning the trailing spelling the lead reversed; repointing authorised by ruling"
+          }
+        ],
+        "worktree_retention": {
+          "classification": "retained-for-resume",
+          "worktree": "/home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/ship-s10-20260905/n-grdp-the-reduction-operator-leads-the-name",
+          "session_id": "451f0139-ecb1-41fc-bfc4-ff33f8bff921",
+          "session_source": "pointer",
+          "retained_at": "2026-09-06T13:31:28.078Z"
+        },
+        "execution_fit": {
+          "allowed": true,
+          "execution_capable": true,
+          "matched_measure": "uv run pytest tests/",
+          "override": false,
+          "role": "implement",
+          "status": "compatible"
+        }
       }
     ],
     "holds": [],
-    "_version": 3
+    "_version": 5
   }
 }
