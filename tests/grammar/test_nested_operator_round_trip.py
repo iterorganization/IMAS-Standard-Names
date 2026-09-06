@@ -32,14 +32,13 @@ from imas_standard_names.grammar.model import (
 # whose canonical spelling contains a bare-prefix transformation qualifier,
 # optionally with a trailing locus on the outer model.
 FLAT_MODEL_FORMS = [
-    # of-prefix outer operator + inner bare-transformation + species subject
-    "maximum_of_volume_averaged_electron_density",
-    "maximum_of_flux_surface_averaged_electron_density",
+    # of-prefix outer operator + inner bare transformation that binds tightly
+    # enough to fold into physical_base (`normalized` is a base modifier, not
+    # a domain reduction), so one transformation slot still suffices
     "gradient_of_normalized_electron_temperature",
-    # postfix outer operator + inner bare-transformation
+    # postfix outer operator + inner bare transformation: the postfix uses the
+    # `decomposition` slot, leaving `transformation` free for the reduction
     "volume_averaged_magnetic_field_magnitude",
-    # outer operator + inner bare-transformation + trailing locus
-    "electron_density_volume_averaged_maximum_at_magnetic_axis",
     # of-prefix transformation wrapping a projection axis: the projection
     # stays in `component`, no fold, so it round-trips (transformation ×
     # component coexistence).
@@ -68,6 +67,13 @@ IR_ONLY_FORMS = [
     # Higher-precedence bare prefixes canonically wrap these explicit
     # operators, and the flat model has no second transformation slot.
     "volume_averaged_time_derivative_of_electron_density",
+    # A domain reduction under an explicit outer operator is a second ordered
+    # unary application, and the flat model holds only one transformation. It
+    # cannot fold into physical_base either: the reduction's operand is the
+    # whole qualified quantity, so folding would restate its scope as the base.
+    "maximum_of_volume_averaged_electron_density",
+    "maximum_of_flux_surface_averaged_electron_density",
+    "maximum_of_volume_averaged_electron_density_at_magnetic_axis",
 ]
 
 

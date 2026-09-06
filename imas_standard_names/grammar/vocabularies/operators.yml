@@ -18,6 +18,21 @@
 #   unary_prefix   ->  <token>_of_<inner>
 #   unary_postfix  ->  <inner>_<token>
 #   binary         ->  <token>_of_<A><separator><B>
+#
+# Placement policy. A DOMAIN REDUCTION — spelled joiner-free at precedence 30,
+# collapsing its operand over a flux surface, a volume, a line or the time axis
+# — leads its name and wraps everything to its right, both the axis projection
+# and the trailing locus:
+#   flux_surface_averaged_toroidal_argon_velocity_at_plasma_boundary
+# Every other unary operator relocates to sit between its base and the tail:
+#   energy_flux_maximum_at_first_wall, pressure_time_derivative_at_pedestal
+# So two members of one precedence level can be placed differently (maximum
+# takes the _of_ joiner and relocates; volume_averaged does not and leads), and
+# two joiner-free prefixes can be placed differently (change_in modifies the
+# base and sits inside the projection, poloidal_change_in_ion_velocity). Both
+# splits are the rule, not an oversight: what a reduction reduces is the whole
+# projected, qualified quantity, so any spelling that puts the projection or
+# the tail outside it states the wrong scope.
 # A unary operator on an ordinary base with an ``of``, ``at``, or ``due_to``
 # tail renders immediately before that tail. Operators within either operand
 # of a binary expression retain the templates above at every nesting depth.
