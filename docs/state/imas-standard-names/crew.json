@@ -1,0 +1,21 @@
+{
+  "updated": "2026-09-06T12:22:55",
+  "project": "imas-standard-names",
+  "doc": "crew",
+  "data": {
+    "members": [
+      {
+        "id": "cx-kindpin",
+        "harness": "codex",
+        "role": "implement",
+        "session_id": null,
+        "session_model": null,
+        "sessions": {},
+        "created": "2026-09-06"
+      }
+    ],
+    "runs": [],
+    "holds": [],
+    "_version": 1
+  }
+}
