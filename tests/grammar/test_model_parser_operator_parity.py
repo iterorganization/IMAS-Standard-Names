@@ -48,7 +48,8 @@ def _candidate_names(op: str, meta: dict) -> list[str]:
 
     Returns an ordered list of candidates; the first that round-trips through
     both layers is the one asserted on. The variants cover the structural
-    forms: indexed-prefix (fused ``<op>_<coord>_of_<base>``), bare-vs-``_of_``
+    forms: indexed-prefix (``derivative_of_<base>_with_respect_to_<coord>``),
+    bare-vs-``_of_``
     prefix, postfix tail, and binary ``<op>_of_<A>_<sep>_<B>``.
     """
     kind = meta["kind"]
@@ -64,8 +65,8 @@ def _candidate_names(op: str, meta: dict) -> list[str]:
             # flux-surface reductions gate it out — use a surface-varying base.
             return [f"{op}_of_temperature", f"{op}_temperature"]
         if meta.get("indexed") and list(meta.get("index_params") or []) == ["coord"]:
-            # Fused indexed prefix: <op>_<coord>_of_<base>.
-            return [f"{op}_radial_coordinate_of_{_SCALAR_BASE}"]
+            operator, relation, _ = op.partition("_with_respect_to")
+            return [f"{operator}_of_{_SCALAR_BASE}{relation}_radial_coordinate"]
         # Some prefix operators render with ``_of_`` (gradient_of_pressure);
         # the bare-prefix family renders without it (normalized_pressure). Try
         # both and keep whichever round-trips.

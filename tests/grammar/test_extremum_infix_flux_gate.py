@@ -1,7 +1,7 @@
 """Gate: extremum qualifier embedded as an infix inside a flux base.
 
 An extremum of a transport flux over a spatial domain (peak/maximum value on
-a wall, a divertor target, …) is a reduction TRANSFORMATION. Its one canonical
+a wall, a divertor target, …) is a reduction transformation. Its one canonical
 spelling puts the reduction in transformation (prefix) position —
 ``maximum_of_<channel>_flux_at_<locus>`` / ``minimum_of_...``. The same token
 embedded as an infix qualifier inside the flux base (``energy_peak_flux``,
@@ -13,8 +13,6 @@ particle_flux, momentum_flux): an extremum infix on any other base (peak
 temperature, peak density) is untouched, and the extremum token in
 transformation position stays legal.
 """
-
-from __future__ import annotations
 
 import pytest
 
@@ -36,12 +34,12 @@ REJECTED = [
 ]
 
 ACCEPTED = [
-    # (a) the reduction TRANSFORMATION form is the canonical spelling
-    "maximum_of_energy_flux_at_first_wall",
-    "maximum_of_energy_flux_at_divertor_target",
-    "minimum_of_energy_flux_at_first_wall",
-    "maximum_of_heat_flux_at_divertor_target",
-    "maximum_of_particle_flux_at_first_wall",
+    # The reduction operator precedes the tail in the canonical spelling.
+    "energy_flux_maximum_at_first_wall",
+    "energy_flux_maximum_at_divertor_target",
+    "energy_flux_minimum_at_first_wall",
+    "heat_flux_maximum_at_divertor_target",
+    "particle_flux_maximum_at_first_wall",
     # (b) a plain flux base is unaffected
     "energy_flux",
     "energy_flux_at_first_wall",

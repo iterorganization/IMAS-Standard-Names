@@ -18,6 +18,9 @@
 #   unary_prefix   ->  <token>_of_<inner>
 #   unary_postfix  ->  <inner>_<token>
 #   binary         ->  <token>_of_<A><separator><B>
+# A unary operator on an ordinary base with an ``of``, ``at``, or ``due_to``
+# tail renders immediately before that tail. Operators within either operand
+# of a binary expression retain the templates above at every nesting depth.
 #
 # Unified registry of prefix, postfix, and binary operators.
 
@@ -187,7 +190,7 @@ operators:
     returns: scalar
     dimension_transforming: true
 
-  # Finite/discrete increment (Delta) of the base over an event — NOT a rate.
+  # Finite/discrete increment (Delta) of the base over an event, not a rate.
   # Unlike time_derivative (which returns a per-time rate and renders
   # with _of_), change_in preserves the base unit and renders BARE
   # (change_in_electron_density). It therefore also appears in the

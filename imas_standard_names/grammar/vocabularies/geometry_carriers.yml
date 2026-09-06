@@ -32,15 +32,25 @@ carriers:
   normalized_toroidal_flux_coordinate:
     aliases: []
     constant_on_flux_surface: true
+    definition: >
+      A dimensionless radial label equal to the square root of the normalized
+      toroidal flux, spanning the magnetic axis to the equilibrium boundary.
   offset:
     aliases: []
   position:
     aliases: []
   radial_coordinate:
     aliases: []
+    definition: >
+      The major-radius coordinate locating a geometric point or reference
+      position by perpendicular distance from the toroidal symmetry axis.
   toroidal_flux_coordinate:
     aliases: []
     constant_on_flux_surface: true
+    definition: >
+      A non-negative, radius-like label of a nested magnetic flux surface,
+      derived from enclosed toroidal magnetic flux using a positive reference
+      vacuum toroidal field.
   # === Migrated from geometric_bases.yml (carrier-type entries) ===
   contour:
     aliases: []
@@ -58,6 +68,10 @@ carriers:
   normalized_poloidal_flux_coordinate:
     aliases: []
     constant_on_flux_surface: true
+    definition: >
+      A radial label for nested magnetic flux surfaces based on poloidal
+      magnetic flux, zero at the magnetic axis and one at the last closed flux
+      surface.
   poloidal_magnetic_flux_coordinate:
     aliases: []
     constant_on_flux_surface: true

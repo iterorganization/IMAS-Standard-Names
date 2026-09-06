@@ -126,7 +126,7 @@ def test_repeated_terminal_locus_is_rejected() -> None:
 @pytest.mark.parametrize(
     "name",
     [
-        "time_derivative_of_pressure_at_magnetic_axis",
+        "pressure_time_derivative_at_magnetic_axis",
         "ratio_of_pressure_to_temperature",
         "difference_of_total_pressure_and_electron_pressure",
     ],

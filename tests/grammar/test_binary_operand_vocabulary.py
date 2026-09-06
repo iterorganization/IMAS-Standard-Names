@@ -84,8 +84,8 @@ def test_unregistered_binary_operand_is_rejected(name: str, operand: str) -> Non
 
 def test_un_normalized_poloidal_flux_coordinate_is_indexable() -> None:
     name = (
-        "derivative_with_respect_to_poloidal_magnetic_flux_coordinate"
-        "_of_poloidal_current_function"
+        "derivative_of_poloidal_current_function"
+        "_with_respect_to_poloidal_magnetic_flux_coordinate"
     )
 
     assert parse_standard_name(name).transformation == (
@@ -95,7 +95,7 @@ def test_un_normalized_poloidal_flux_coordinate_is_indexable() -> None:
 
 def test_toroidal_flux_coordinate_is_canonical_and_radius_is_rejected() -> None:
     coordinate = parse_standard_name(
-        "derivative_with_respect_to_toroidal_flux_coordinate_of_pressure"
+        "derivative_of_pressure_with_respect_to_toroidal_flux_coordinate"
     )
     assert coordinate.transformation == (
         "derivative_with_respect_to_toroidal_flux_coordinate"
@@ -103,7 +103,7 @@ def test_toroidal_flux_coordinate_is_canonical_and_radius_is_rejected() -> None:
 
     with pytest.raises(ValueError) as excinfo:
         parse_standard_name(
-            "derivative_with_respect_to_toroidal_flux_radius_of_pressure"
+            "derivative_of_pressure_with_respect_to_toroidal_flux_radius"
         )
 
     assert not isinstance(excinfo.value, NonCanonicalNameError)

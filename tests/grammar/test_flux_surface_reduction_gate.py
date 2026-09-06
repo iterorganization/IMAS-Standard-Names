@@ -8,10 +8,8 @@ applied to it: the reduction of a flux function is the value itself.
 Such names must fail both parse and compose so the pipeline can never
 mint them; the local and averaged DD leaves share one name instead.
 
-Volume/line averages of a flux function are NOT no-ops and stay legal.
+Volume/line averages of a flux function are not no-ops and stay legal.
 """
-
-from __future__ import annotations
 
 import pytest
 
@@ -36,10 +34,10 @@ REJECTED = [
 ]
 
 ACCEPTED = [
-    # surface-varying bases keep the reduction prefix
-    "flux_surface_averaged_electron_density_at_plasma_boundary",
-    "flux_surface_averaged_electron_temperature_at_plasma_boundary",
-    "toroidal_flux_surface_averaged_argon_velocity_at_plasma_boundary",
+    # Surface-varying bases keep the reduction immediately before the tail.
+    "electron_density_flux_surface_averaged_at_plasma_boundary",
+    "electron_temperature_flux_surface_averaged_at_plasma_boundary",
+    "toroidal_argon_velocity_flux_surface_averaged_at_plasma_boundary",
     "maximum_over_flux_surface_electron_temperature",
     # non-flux-surface reductions of flux functions remain legal
     "volume_averaged_plasma_pressure",

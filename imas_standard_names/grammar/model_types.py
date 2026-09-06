@@ -30,6 +30,10 @@ class Component(StrEnum):
     NORMALIZED_VERTICAL = "normalized_vertical"
     NORMALIZED_TOROIDAL = "normalized_toroidal"
     NORMALIZED_POLOIDAL = "normalized_poloidal"
+    S0 = "s0"
+    S1 = "s1"
+    S2 = "s2"
+    S3 = "s3"
 
 
 class Coordinate(StrEnum):

@@ -11,11 +11,10 @@ and emits token strings; vocabulary lookups happen at parse time.
 See the rendering templates in ``vocabularies/operators.yml``.
 """
 
-from __future__ import annotations
-
 from collections.abc import Iterable
 
 from imas_standard_names.grammar.ir import (
+    BARE_PREFIX_OPERATORS,
     AxisProjection,
     LocusRef,
     OperatorApplication,
@@ -128,8 +127,8 @@ def render_mechanism(mechanism: Process | None) -> str:
 def _render_base_with_decorators(ir: StandardNameIR) -> str:
     """Render the projection + qualifiers + base + locus + mechanism core.
 
-    This is the inner function the operator stack wraps around. It does
-    **not** include operator decoration. See :func:`render_operators`.
+    This function does not include operator decoration. The canonical composer
+    may render it whole or render a tail-free copy before inserting operators.
     """
 
     parts: list[str] = []
@@ -162,6 +161,8 @@ def _render_operator_stack(
     operators: list[OperatorApplication],
     inner: str,
     enclosing_ir: StandardNameIR,
+    *,
+    inside_composite_operand: bool,
 ) -> str:
     """Recursively apply the operator stack outer-to-inner.
 
@@ -181,9 +182,16 @@ def _render_operator_stack(
         # as the operator's operand instead of the inner stream. This is
         # how nested operator trees are represented (args: [sub_ir]).
         if op.args:
-            operand = compose(op.args[0])
+            operand = _compose(
+                op.args[0], inside_composite_operand=inside_composite_operand
+            )
         else:
-            operand = _render_operator_stack(rest, inner, enclosing_ir)
+            operand = _render_operator_stack(
+                rest,
+                inner,
+                enclosing_ir,
+                inside_composite_operand=inside_composite_operand,
+            )
             rest = []
         if op.bare_prefix:
             # Joiner-free spelling (flux_surface_averaged_ratio_of_A_to_B). The
@@ -191,18 +199,40 @@ def _render_operator_stack(
             outer = f"{op.op}_{operand}"
         else:
             assert_operator_of_form(op, registry=None)
-            outer = f"{op.op}_of_{operand}"
+            indexed_parts = op.op.partition("_with_respect_to_")
+            if indexed_parts[1] and indexed_parts[0] and indexed_parts[2]:
+                operator, _, index = indexed_parts
+                outer = f"{operator}_of_{operand}_with_respect_to_{index}"
+            else:
+                outer = f"{op.op}_of_{operand}"
         # Any remaining operators in ``rest`` still need to wrap the result.
-        return _render_operator_stack(rest, outer, enclosing_ir)
+        return _render_operator_stack(
+            rest,
+            outer,
+            enclosing_ir,
+            inside_composite_operand=inside_composite_operand,
+        )
 
     if op.kind is OperatorKind.UNARY_POSTFIX:
         if op.args:
-            operand = compose(op.args[0])
+            operand = _compose(
+                op.args[0], inside_composite_operand=inside_composite_operand
+            )
         else:
-            operand = _render_operator_stack(rest, inner, enclosing_ir)
+            operand = _render_operator_stack(
+                rest,
+                inner,
+                enclosing_ir,
+                inside_composite_operand=inside_composite_operand,
+            )
             rest = []
         outer = f"{operand}_{op.op}"
-        return _render_operator_stack(rest, outer, enclosing_ir)
+        return _render_operator_stack(
+            rest,
+            outer,
+            enclosing_ir,
+            inside_composite_operand=inside_composite_operand,
+        )
 
     if op.kind is OperatorKind.BINARY:
         assert_binary_has_separator(op, registry=None)
@@ -210,10 +240,15 @@ def _render_operator_stack(
             raise RenderError(
                 f"binary operator {op.op!r} requires 2 args, got {len(op.args)}"
             )
-        a = compose(op.args[0])
-        b = compose(op.args[1])
+        a = _compose(op.args[0], inside_composite_operand=True)
+        b = _compose(op.args[1], inside_composite_operand=True)
         outer = f"{op.op}_of_{a}_{op.separator}_{b}"
-        return _render_operator_stack(rest, outer, enclosing_ir)
+        return _render_operator_stack(
+            rest,
+            outer,
+            enclosing_ir,
+            inside_composite_operand=inside_composite_operand,
+        )
 
     raise RenderError(  # pragma: no cover - StrEnum is exhaustive
         f"unknown operator kind {op.kind!r} for operator {op.op!r}"
@@ -237,7 +272,105 @@ def render_operators(
     if enclosing_ir is None:
         # Build a trivial no-op context: we need only identity for diagnostics.
         enclosing_ir = operators[0].args[0] if operators[0].args else None  # type: ignore[assignment]
-    return _render_operator_stack(operators, inner, enclosing_ir)  # type: ignore[arg-type]
+    return _render_operator_stack(  # type: ignore[arg-type]
+        operators,
+        inner,
+        enclosing_ir,
+        inside_composite_operand=False,
+    )
+
+
+def _contains_composite_expression(ir: StandardNameIR) -> bool:
+    """Return whether ``ir`` contains a binary operand tree."""
+
+    for operator in ir.operators:
+        if operator.kind is OperatorKind.BINARY:
+            return True
+        if any(_contains_composite_expression(argument) for argument in operator.args):
+            return True
+    return False
+
+
+def _has_repositioning_tail(ir: StandardNameIR) -> bool:
+    """Return whether ``ir`` carries an ``of``, ``at``, or ``due_to`` tail."""
+
+    if ir.mechanism is not None:
+        return True
+    return ir.locus is not None and ir.locus.relation.value in {"of", "at"}
+
+
+def _leading_bare_operators(
+    ir: StandardNameIR,
+) -> tuple[list[Qualifier], list[Qualifier]]:
+    """Split leading bare operators from ordinary base qualifiers."""
+
+    operator_qualifiers: list[Qualifier] = []
+    ordinary_qualifiers = list(ir.qualifiers)
+    while ordinary_qualifiers and ordinary_qualifiers[0].token in BARE_PREFIX_OPERATORS:
+        operator_qualifiers.append(ordinary_qualifiers.pop(0))
+    return operator_qualifiers, ordinary_qualifiers
+
+
+def _can_reposition_operators(
+    ir: StandardNameIR,
+    *,
+    inside_composite_operand: bool,
+) -> bool:
+    """Return whether local unary operators may sit immediately before the tail."""
+
+    if inside_composite_operand or not _has_repositioning_tail(ir):
+        return False
+    if _contains_composite_expression(ir):
+        return False
+    return all(
+        operator.kind is not OperatorKind.BINARY
+        and not operator.args
+        and "_with_respect_to_" not in operator.op
+        and operator.op not in BARE_PREFIX_OPERATORS
+        for operator in ir.operators
+    )
+
+
+def _compose(
+    ir: StandardNameIR,
+    *,
+    inside_composite_operand: bool,
+) -> str:
+    """Render one IR while retaining composite-operand context recursively."""
+
+    operator_qualifiers, ordinary_qualifiers = _leading_bare_operators(ir)
+    can_reposition = _can_reposition_operators(
+        ir, inside_composite_operand=inside_composite_operand
+    )
+    has_local_operator = bool(ir.operators or operator_qualifiers)
+
+    if can_reposition and has_local_operator:
+        base_ir = ir.model_copy(
+            update={
+                "operators": [],
+                "qualifiers": ordinary_qualifiers,
+                "locus": None,
+                "mechanism": None,
+            }
+        )
+        rendered = _render_base_with_decorators(base_ir)
+        operator_tokens = [
+            *(operator.op for operator in ir.operators),
+            *(qualifier.token for qualifier in operator_qualifiers),
+        ]
+        for token in reversed(operator_tokens):
+            rendered += f"_{token}"
+        rendered += render_locus(ir.locus)
+        rendered += render_mechanism(ir.mechanism)
+        return rendered
+
+    inner = _render_base_with_decorators(ir)
+    return _render_operator_stack(
+        list(ir.operators),
+        inner,
+        ir,
+        inside_composite_operand=inside_composite_operand,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -267,8 +400,7 @@ def compose(ir: StandardNameIR) -> str:
         )
 
     try:
-        inner = _render_base_with_decorators(ir)
-        rendered = _render_operator_stack(list(ir.operators), inner, ir)
+        rendered = _compose(ir, inside_composite_operand=False)
     except RenderError:
         raise
     except ValueError as exc:
@@ -285,7 +417,10 @@ def compose(ir: StandardNameIR) -> str:
     # When the outermost operator pushes text after the locus suffix, the
     # resulting name violates the trailing-position invariant and must be
     # rejected rather than emitted.
-    if ir.locus is not None and not ir.operators:
+    if ir.locus is not None and (
+        not ir.operators
+        or _can_reposition_operators(ir, inside_composite_operand=False)
+    ):
         try:
             assert_locus_is_trailing(rendered, ir)
         except ValueError as exc:

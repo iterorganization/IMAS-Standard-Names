@@ -20,8 +20,6 @@ represent two structurally distinct prefix operators
 limitation and must keep raising rather than silently dropping tokens.
 """
 
-from __future__ import annotations
-
 import pytest
 
 from imas_standard_names.grammar.model import (
@@ -41,7 +39,7 @@ FLAT_MODEL_FORMS = [
     # postfix outer operator + inner bare-transformation
     "volume_averaged_magnetic_field_magnitude",
     # outer operator + inner bare-transformation + trailing locus
-    "maximum_of_volume_averaged_electron_density_at_magnetic_axis",
+    "electron_density_volume_averaged_maximum_at_magnetic_axis",
     # of-prefix transformation wrapping a projection axis: the projection
     # stays in `component`, no fold, so it round-trips (transformation ×
     # component coexistence).

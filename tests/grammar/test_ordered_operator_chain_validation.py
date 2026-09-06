@@ -212,17 +212,15 @@ def test_unprojectable_operator_chain_does_not_hide_invalid_core(core: str) -> N
 
 
 @pytest.mark.parametrize(
-    "core",
+    "name",
     [
-        "electron_density",
-        "trapped_fast_ion_density",
-        "electron_density_due_to_non_inductive_current_drive",
-        "electron_density_at_magnetic_axis",
+        "maximum_of_inverse_of_electron_density",
+        "maximum_of_inverse_of_trapped_fast_ion_density",
+        "electron_density_inverse_maximum_due_to_non_inductive_current_drive",
+        "electron_density_inverse_maximum_at_magnetic_axis",
     ],
 )
-def test_unprojectable_operator_chain_accepts_valid_core(core: str) -> None:
-    name = f"maximum_of_inverse_of_{core}"
-
+def test_unprojectable_operator_chain_accepts_valid_core(name: str) -> None:
     assert compose(parse(name, strict=True).ir) == name
 
 

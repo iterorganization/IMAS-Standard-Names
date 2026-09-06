@@ -3,7 +3,7 @@
 ``derivative_with_respect_to`` is an indexed unary-prefix operator
 (``index_params: [coord]``). The parser fuses the coordinate index into the
 operator token (``derivative_with_respect_to_<coord>``) so the canonical form
-``derivative_with_respect_to_<coord>_of_<base>`` round-trips. The downstream
+``derivative_of_<base>_with_respect_to_<coord>`` round-trips. The downstream
 composer goes through the flat ``StandardName`` model
 (``parse_standard_name`` / ``compose_standard_name``), where the fused token
 must be accepted in the ``transformation`` slot even though it is not a bare
@@ -34,7 +34,7 @@ _COORDS = [
 _BASES = ["volume", "pressure", "area"]
 
 _INDEXED_DERIVATIVE_NAMES = [
-    f"derivative_with_respect_to_{coord}_of_{base}"
+    f"derivative_of_{base}_with_respect_to_{coord}"
     for coord, base in itertools.product(_COORDS, _BASES)
 ]
 
@@ -53,7 +53,7 @@ def test_indexed_derivative_carries_fused_transformation(name: str) -> None:
     assert model.transformation is not None
     assert model.transformation.startswith("derivative_with_respect_to_")
     # The coordinate index is preserved verbatim in the fused token.
-    coord = name[len("derivative_with_respect_to_") : name.index("_of_")]
+    _, _, coord = name.partition("_with_respect_to_")
     assert model.transformation == f"derivative_with_respect_to_{coord}"
 
 

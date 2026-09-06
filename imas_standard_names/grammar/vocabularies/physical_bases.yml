@@ -43,9 +43,16 @@ bases:
   atomic_number:
     aliases: [nuclear_charge_number]
     kind: scalar
+    definition: >
+      Nuclear proton count identifying the selected element in a plasma or
+      neutral-particle species, independent of isotope and ionization state.
   beta:
     aliases: []
     kind: scalar
+    definition: >
+      Plasma beta, denoted beta, is a dimensionless measure of total plasma
+      pressure relative to a magnetic-pressure scale. The poloidal and toroidal
+      components are related to it by 1/beta = 1/beta_poloidal + 1/beta_toroidal.
   capacitance:
     aliases: []
     kind: scalar
@@ -86,6 +93,10 @@ bases:
   current_density:
     aliases: []
     kind: vector
+    definition: >
+      The vector flux density of conventional electric charge, equal to
+      electric current per unit area normal to the flow, including all
+      charged-particle contributions.
   debye_length:
     aliases: []
     kind: scalar
@@ -108,6 +119,10 @@ bases:
   coulomb_logarithm:
     aliases: []
     kind: scalar
+    definition: >
+      The Coulomb logarithm (ln Lambda) representing the magnitude of
+      small-angle collective scattering interactions, governing collision
+      frequencies.
   damping_rate:
     aliases: []
     kind: scalar
@@ -121,12 +136,20 @@ bases:
     aliases: []
     kind: vector
     inherently_dimensional: true
+    definition: >
+      The local vector electric field, equal to the force per unit charge on a
+      positive stationary test charge, including electrostatic, inductive, and
+      electromagnetic-wave contributions.
   electrical_conductivity:
     aliases: []
     kind: scalar
   electrostatic_potential:
     aliases: []
     kind: scalar
+    definition: >
+      The voltage-valued electrostatic potential giving the electric potential
+      energy per unit positive charge relative to a chosen electrical
+      reference.
   ellipticity:
     aliases: []
     kind: scalar
@@ -172,6 +195,10 @@ bases:
   flux_limiter_coefficient:
     aliases: []
     kind: scalar
+    definition: >
+      A multiplicative factor, or vector of factors, that scales a collisionless
+      free-streaming bound on a flux density while preserving the direction or
+      sign of each resolved flux component.
   force:
     aliases: []
     kind: vector
@@ -213,10 +240,16 @@ bases:
   mach_number:
     aliases: []
     kind: scalar
+    definition: >
+      Dimensionless ratio of plasma flow velocity to the local sound speed.
   magnetic_field:
     aliases: []
     kind: vector
     inherently_dimensional: true
+    definition: >
+      The local total magnetic-induction vector in the right-handed cylindrical
+      (R, phi, Z) frame, not selecting a source contribution, perturbation
+      state, component, magnitude, or evaluation locus.
   magnetic_pressure:
     aliases: []
     kind: scalar
@@ -225,6 +258,9 @@ bases:
     aliases: []
     kind: scalar
     constant_on_flux_surface: true
+    definition: >
+      The signed scalar surface integral of the magnetic field through an
+      oriented surface.
   magnetic_moment:
     aliases: []
     kind: vector
@@ -264,6 +300,10 @@ bases:
     aliases: []
     kind: vector
     inherently_dimensional: true
+    definition: >
+      The linear momentum associated with plasma motion, covering momentum
+      content in a plasma volume or momentum transported through an oriented
+      surface.
   multiplicity:
     aliases: []
     kind: scalar
@@ -316,6 +356,17 @@ bases:
   refractive_index:
     aliases: []
     kind: scalar
+    definition: >
+      Dimensionless ratio of an electromagnetic wave's phase-gradient vector to
+      its vacuum wavenumber, retaining propagation direction and signed
+      components.
+  relative_humidity:
+    # Water-vapour partial pressure relative to its saturation value. The
+    # detector-humidity DD source stores the fraction on the interval 0..1,
+    # so this is an irreducible dimensionless scalar rather than a qualifier
+    # applied to another humidity base.
+    aliases: []
+    kind: scalar
   residual:
     aliases: []
     kind: scalar
@@ -334,6 +385,10 @@ bases:
     aliases: []
     kind: scalar
     constant_on_flux_surface: true
+    definition: >
+      The signed ratio of toroidal to poloidal field-line winding on a magnetic
+      flux surface, equal to the toroidal turns made during one poloidal
+      circuit.
   shearing_rate:
     aliases: []
     kind: scalar
@@ -387,6 +442,10 @@ bases:
   toroidal_flux_coordinate_gradient:
     aliases: []
     kind: vector
+    definition: >
+      The spatial gradient family of a flux-surface label based on enclosed
+      toroidal magnetic flux, without fixing a norm, projection, component, or
+      flux-surface average.
   torque:
     aliases: []
     kind: vector
@@ -394,6 +453,9 @@ bases:
   torque_density:
     aliases: []
     kind: vector
+    definition: >
+      The local vector rate of net angular-momentum transfer per unit volume to
+      or from the plasma.
   transit_time:
     aliases: []
     kind: scalar
@@ -418,6 +480,9 @@ bases:
   vorticity:
     aliases: []
     kind: scalar
+    definition: >
+      The curl of the plasma bulk velocity field, measuring the signed local
+      angular rotation of fluid elements.
   photon_energy:
     aliases: []
     kind: scalar
@@ -520,6 +585,9 @@ bases:
     aliases: [diamagnetic_function]
     kind: scalar
     inherently_dimensional: true
+    definition: >
+      The diamagnetic function F = R B_phi, the major-radius-weighted toroidal
+      magnetic-field function used in axisymmetric equilibria.
   flux_surface_averaged_metric:
     # flux-surface-averaged geometric metric coefficient (the equilibrium
     # gm1..gm9 family: <1/R^2>, <|grad rho|^2>, ...); the specific moment is
@@ -612,6 +680,10 @@ bases:
     aliases: []
     kind: vector
     inherently_dimensional: true
+    definition: >
+      A vector field whose curl gives the magnetic induction, gauge-dependent
+      but central to canonical-momentum and gyrokinetic formulations of
+      magnetized plasmas.
   larmor_radius:
     # gyroradius of a charged particle in a magnetic field (m); enables the
     # dimensionless normalized_larmor_radius (rho*) via the normalized operator.
@@ -670,6 +742,9 @@ bases:
     # dimensionless tritium breeding ratio (TBR) of a blanket.
     aliases: []
     kind: scalar
+    definition: >
+      The blanket-level ratio of tritium atoms produced in breeding regions to
+      the incident fusion-neutron count over the same interval (TBR).
   fusion_gain:
     # dimensionless fusion energy gain Q (fusion power / input heating power).
     aliases: []
@@ -773,12 +848,18 @@ bases:
     aliases: []
     kind: vector
     inherently_dimensional: true
+    definition: >
+      A magnetic vector potential, covering the full potential, its directional
+      components, and fluctuations about an equilibrium potential.
   center_of_mass_velocity:
     # bulk velocity of the centre-of-mass frame; center_of_mass binds to
     # velocity as a single lexical quantity.
     aliases: []
     kind: vector
     inherently_dimensional: true
+    definition: >
+      The mass-weighted barycentric velocity vector of a multicomponent plasma,
+      equal to total momentum density divided by total mass density.
   angular_momentum:
     # angular momentum L (kg.m^2.s^-1); angular binds to momentum.
     aliases: []

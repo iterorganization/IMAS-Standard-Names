@@ -183,6 +183,7 @@ class PhysicalBaseDef(BaseModel, extra="forbid"):
             spatial domain (peak/maximum/minimum) is a reduction transformation
             and must be spelled maximum_of_<base>_... / minimum_of_<base>_...;
             an infix extremum qualifier inside the base is rejected.
+        definition: Normative term definition exposed to grammar consumers.
     """
 
     aliases: list[str] = []
@@ -190,6 +191,7 @@ class PhysicalBaseDef(BaseModel, extra="forbid"):
     inherently_dimensional: bool = False
     constant_on_flux_surface: bool = False
     extremum_is_transformation: bool = False
+    definition: str = ""
 
 
 class PhysicalBasesRegistry(BaseModel, extra="forbid"):

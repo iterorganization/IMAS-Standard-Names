@@ -4,10 +4,9 @@
 
    ``derivative_with_respect_to`` is declared in ``operators.yml`` as a
    ``unary_prefix`` with ``index_params: [coord]``. Its canonical prefix
-   form binds the coordinate index between the operator token and the
-   ``_of_`` separator::
+   form places the coordinate index after the complete operand::
 
-       derivative_with_respect_to_<coord>_of_<base>
+       derivative_of_<base>_with_respect_to_<coord>
 
    where ``<coord>`` is a registered coordinate / flux-coordinate token
    (geometry-carrier vocabulary, e.g. ``radial_coordinate``,
@@ -51,10 +50,10 @@ def vocabs() -> Vocabularies:
 # Coordinate tokens drawn from the registered coordinate / flux-coordinate
 # (geometry-carrier) vocabulary, paired with a registered physical base.
 _FLUX_DERIVATIVE_NAMES = [
-    "derivative_with_respect_to_radial_coordinate_of_volume",
-    "derivative_with_respect_to_toroidal_flux_coordinate_of_pressure",
-    "derivative_with_respect_to_normalized_toroidal_flux_coordinate_of_pressure",
-    "derivative_with_respect_to_normalized_poloidal_flux_coordinate_of_volume",
+    "derivative_of_volume_with_respect_to_radial_coordinate",
+    "derivative_of_pressure_with_respect_to_toroidal_flux_coordinate",
+    "derivative_of_pressure_with_respect_to_normalized_toroidal_flux_coordinate",
+    "derivative_of_volume_with_respect_to_normalized_poloidal_flux_coordinate",
 ]
 
 
@@ -78,7 +77,7 @@ def test_indexed_flux_derivative_round_trips(name: str, vocabs: Vocabularies) ->
 
 def test_indexed_flux_derivative_binds_coordinate(vocabs: Vocabularies) -> None:
     """The coordinate index is fused into the operator token; base is the inner."""
-    name = "derivative_with_respect_to_radial_coordinate_of_volume"
+    name = "derivative_of_volume_with_respect_to_radial_coordinate"
     result = parse(name, vocabs=vocabs)
     op = result.ir.operators[0]
     assert op.op == "derivative_with_respect_to_radial_coordinate"
@@ -94,14 +93,14 @@ def test_indexed_flux_derivative_rejects_unregistered_coordinate(
     its index and the residue does not resolve to a base.
     """
     with pytest.raises(ParseError):
-        parse("derivative_with_respect_to_banana_of_volume", vocabs=vocabs)
+        parse("derivative_of_volume_with_respect_to_banana", vocabs=vocabs)
 
 
 def test_indexed_flux_derivative_nested_under_maximum(
     vocabs: Vocabularies,
 ) -> None:
     """Indexed derivative nests under an outer prefix operator and round-trips."""
-    name = "maximum_of_derivative_with_respect_to_radial_coordinate_of_pressure"
+    name = "maximum_of_derivative_of_pressure_with_respect_to_radial_coordinate"
     result = parse(name, vocabs=vocabs)
     assert [op.op for op in result.ir.operators] == [
         "maximum",

@@ -14,18 +14,22 @@ inject their own :class:`Vocabularies` bundle for testing.
 
 Algorithm::
 
-    1. Strip trailing _due_to_<process>                -> mechanism
-    2. Strip trailing _of_/_at_/_over_/_along_<locus>  -> locus
+    1. Normalize operand-first indexed operators
+    2. Preserve any tail-final postfix operator for canonical diagnosis
+    3. Strip trailing _due_to_<process>                -> mechanism
+    4. Resolve a leading binary expression before locus stripping
+    5. Strip trailing _of_/_at_/_over_/_along_<locus>  -> locus
        (longest registry-backed match; only _at_ may
        fall back with a vocab_gap diagnostic — _over_
        and _along_ require a registered locus)
-    3. Peel outer operators right-to-outermost         -> operators
+    6. Peel unary operators immediately before an of/at/due_to tail
+    7. Peel outer operators right-to-outermost         -> operators
        a) unary_postfix (longest match at end)
        b) unary_prefix  (longest match `<op>_of_...`)
        c) bare prefix over a nested operator expression
        d) binary        (`<binary_op>_of_<A>_<sep>_<B>`)
        repeat until no operator peels
-    4. Match residue: carrier > base > axis+resolve > qualifier+recurse
+    8. Match residue: carrier > base > axis+resolve > qualifier+recurse
        Projection is detected inline when an axis prefix precedes
        a resolvable base (COMPONENT) or carrier (COORDINATE).
        Short form only — ``_component_of_`` and ``_coordinate_of_``
@@ -36,13 +40,12 @@ only. Unknown base residues raise :class:`ParseError` with top-3
 edit-distance suggestions. No legacy open-fallback behaviour is retained.
 """
 
-from __future__ import annotations
-
 import re
 from collections.abc import Mapping
 from contextvars import ContextVar
 from dataclasses import dataclass, field
 from difflib import get_close_matches
+from functools import cache
 from typing import Any
 
 from imas_standard_names.grammar import vocab_loaders
@@ -394,7 +397,7 @@ class _CachedParseError:
     canonical_form: str | None = None
 
     @classmethod
-    def from_exception(cls, error: ParseError) -> _CachedParseError:
+    def from_exception(cls, error: ParseError) -> "_CachedParseError":
         return cls(
             str(error),
             tuple(error.suggestions),
@@ -883,6 +886,67 @@ def _peel_trailing_postfix_operator(
     )
 
 
+def _peel_repositioned_tail_operator(
+    s: str, v: Vocabularies
+) -> tuple[OperatorApplication | Qualifier | None, str]:
+    """Peel one unary operator placed between its base and trailing locus."""
+
+    if _resolves_without_postfix(s, v):
+        return None, s
+
+    prefix_operators = {
+        name
+        for name, meta in v.operators.items()
+        if meta.get("kind") == OperatorKind.UNARY_PREFIX.value
+    }
+    if _spells_leading_operator_application(
+        s, prefix_operators, _binary_operator_tokens(v), v
+    ):
+        return None, s
+
+    unary_operators = {
+        name: meta
+        for name, meta in v.operators.items()
+        if meta.get("kind")
+        in {OperatorKind.UNARY_PREFIX.value, OperatorKind.UNARY_POSTFIX.value}
+    }
+    unary_tokens = set(unary_operators)
+    binary_operators = _binary_operator_tokens(v)
+
+    @cache
+    def resolves_operand(candidate: str) -> bool:
+        if _resolves_without_postfix(candidate, v):
+            return True
+        if _spells_leading_operator_application(
+            candidate, prefix_operators, binary_operators, v
+        ):
+            return True
+        return any(
+            resolves_operand(candidate[: -len(token) - 1])
+            for token in unary_tokens
+            if candidate.endswith(f"_{token}") and len(candidate) > len(token) + 1
+        )
+
+    match = None
+    new_s = s
+    for token in sorted(unary_tokens, key=len, reverse=True):
+        marker = f"_{token}"
+        if not s.endswith(marker) or len(s) <= len(marker):
+            continue
+        candidate = s[: -len(marker)]
+        if resolves_operand(candidate):
+            match = token
+            new_s = candidate
+            break
+    if match is None:
+        return None, s
+
+    kind = OperatorKind(unary_operators[match]["kind"])
+    if kind is OperatorKind.UNARY_PREFIX and match in BARE_PREFIX_OPERATORS:
+        return Qualifier(token=match), new_s
+    return OperatorApplication(kind=kind, op=match), new_s
+
+
 def _resolves_without_postfix(s: str, v: Vocabularies) -> bool:
     """Whether the complete spelling resolves without a postfix peel."""
     try:
@@ -922,6 +986,52 @@ def _coordinate_universe(v: Vocabularies) -> frozenset[str]:
     (``radial``, ``poloidal``, …).
     """
     return v.carriers | frozenset(v.carrier_aliases) | frozenset(v.axes)
+
+
+def _rewrite_operand_first_indexed_operator(s: str, v: Vocabularies) -> str:
+    """Rewrite an operand-first coordinate derivative to the internal form.
+
+    The lossless IR keeps a coordinate-indexed operator as one fused token.
+    Canonical surface spelling places the complete operand before that index,
+    so parsing temporarily restores the fused prefix spelling consumed by the
+    existing operator peel. The renderer converts the fused token back to the
+    canonical operand-first spelling.
+    """
+    candidates: list[tuple[str, str, str]] = []
+    for op, meta in v.operators.items():
+        fixed_operator, fixed_relation, fixed_index = op.partition("_with_respect_to_")
+        if fixed_relation and fixed_operator and fixed_index:
+            candidates.append((op, fixed_operator, fixed_index))
+        if (
+            meta.get("kind") != OperatorKind.UNARY_PREFIX.value
+            or not meta.get("indexed")
+            or list(meta.get("index_params") or []) != ["coord"]
+        ):
+            continue
+        operator, relation, _ = op.partition("_with_respect_to")
+        if not relation or not operator:
+            continue
+        for coord in _coordinate_universe(v):
+            canonical_coord = v.carrier_aliases.get(coord, coord)
+            candidates.append((f"{op}_{canonical_coord}", operator, coord))
+
+    for fused_op, operator, index in sorted(
+        candidates, key=lambda candidate: len(candidate[2]), reverse=True
+    ):
+        suffix = f"_with_respect_to_{index}"
+        if not s.endswith(suffix):
+            continue
+        operand_end = len(s) - len(suffix)
+        marker = f"{operator}_of_"
+        operator_start = s.rfind(marker, 0, operand_end)
+        if operator_start < 0:
+            continue
+        operand_start = operator_start + len(marker)
+        operand = s[operand_start:operand_end]
+        if not operand:
+            continue
+        return f"{s[:operator_start]}{fused_op}_of_{operand}"
+    return s
 
 
 def _longest_indexed_prefix_operator_match(
@@ -1896,19 +2006,13 @@ def _parse_uncached(
     """Parse one memoization-cache miss."""
     v = vocabs
     diagnostics: list[Diagnostic] = []
-    s = name
+    s = _rewrite_operand_first_indexed_operator(name, v)
 
-    # Trailing-postfix pass.
-    #
-    # A postfix decomposition operator (``magnitude``, ``moment``, ...) renders
-    # at the very END of the canonical string — AFTER any locus/mechanism
-    # suffix (``compose`` wraps ``base + locus + mechanism`` as
-    # ``{core}_{op}``). Peel these BEFORE the mechanism/locus strips so a
-    # postfix token sitting after a locus/mechanism is not greedily absorbed
-    # into the process/locus token (which would silently drop the operator,
-    # e.g. ``velocity_due_to_pellet_injection_magnitude`` fabricating a
-    # ``pellet_injection_magnitude`` process). These ops are the OUTERMOST
-    # trailing wrap, so they go to the FRONT of the operator stack.
+    # Tail-final postfix acceptance pass. Peeling a postfix token before the
+    # mechanism/locus strips prevents those strips from absorbing it into a
+    # fabricated process or locus token. Canonical composition moves this
+    # operator before the tail; lenient parsing retains the authored IR so the
+    # strict canonical check can report the unique rendering.
     trailing_postfix: list[OperatorApplication] = []
     while True:
         op_app, new_s = _peel_trailing_postfix_operator(s, v)
@@ -1945,6 +2049,27 @@ def _parse_uncached(
     locus, s, locus_diags = _strip_locus(s, v)
     diagnostics.extend(locus_diags)
 
+    # A unary operator on an ordinary base moves immediately before an
+    # ``of``/``at`` locus or ``due_to`` mechanism. Peel that suffix before
+    # resolving the base so the parser reconstructs the same outer-to-inner
+    # operator stack that the renderer consumed. Bare prefix operators retain
+    # their qualifier-held IR representation.
+    has_repositioning_tail = mechanism is not None or (
+        locus is not None and locus.relation in {LocusRelation.OF, LocusRelation.AT}
+    )
+    repositioned_operators: list[OperatorApplication] = []
+    repositioned_qualifiers: list[Qualifier] = []
+    if has_repositioning_tail:
+        while True:
+            operator, new_s = _peel_repositioned_tail_operator(s, v)
+            if operator is None:
+                break
+            if isinstance(operator, Qualifier):
+                repositioned_qualifiers.append(operator)
+            else:
+                repositioned_operators.append(operator)
+            s = new_s
+
     # Operator-peeling pass (outermost layer after locus/mechanism).
     # Trailing postfix operators peeled first are the outermost wrap and
     # precede anything peeled here (a prefix/binary operator-of form).
@@ -1961,6 +2086,8 @@ def _parse_uncached(
         operator_stack.append(op_app)
         s = new_s
 
+    operator_stack.extend(repositioned_operators)
+
     if binary_terminator is not None:
         # Binary consumed everything. Base/qualifiers/projection must be empty.
         if s:
@@ -1968,7 +2095,7 @@ def _parse_uncached(
                 f"binary operator {binary_terminator.op!r} cannot combine with "
                 "residue; got unexpected trailing content"
             )
-        # Synthesise a placeholder base so the outer IR validates. The
+        # Synthesize a placeholder base so the outer IR validates. The
         # binary operator lives on the outer IR's operators stack and its
         # args carry the real structure. The placeholder is never rendered.
         # The full operator stack — trailing postfix plus any
@@ -1991,6 +2118,7 @@ def _parse_uncached(
             "empty residue after peeling operators and decorators",
         )
     base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+    qualifiers = [*repositioned_qualifiers, *qualifiers]
 
     ir = StandardNameIR(
         operators=operator_stack,

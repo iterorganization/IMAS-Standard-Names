@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="docs-project"   content="imas-standard-names">
+  <meta name="reckon-type" content="plan">
+  <meta name="plan-slug" content="grammar-release-and-downstream-pin">
+  <meta name="plan-title" content="Grammar Release And Downstream Pin">
+  <meta name="plan-summary" content="Release the tail-gated operator grammar and the vocabulary it needs, then move the consumer off its editable override">
+  <meta name="plan-status" content="active">
+  <meta name="plan-roi" content="high">
+  <meta name="plan-effort-hours" content="3.0">
+  <meta name="plan-capability-version" content="1.0">
+  <meta name="plan-capability-class" content="general">
+  <meta name="plan-capability-reasoning" content="deep">
+  <meta name="plan-capability-verification" content="strict">
+  <meta name="plan-capability-risk" content="moderate">
+  <meta name="plan-sprint" content="S1">
+  <meta name="plan-owner" content="Simon McIntosh">
+  <meta name="plan-tags" content="grammar,release,vocabulary">
+  <title>Grammar Release And Downstream Pin | imas-standard-names</title>
+  <link rel="stylesheet" href="/_shared/foundation.css">
+  <link rel="stylesheet" href="/_shared/dashboard.css">
+<meta name="plan-modified" content="2026-09-06">
+<meta name="plan-version" content="1">
+</head>
+<body>
+  <main class="plan-doc">
+    <h2 id="s1">§1 — Why this release exists</h2>
+    <p>A downstream catalog consumer resolves this package as an <strong>editable
+    path install</strong> rather than from a released version. That arrangement was
+    convenient while the grammar was moving and is now actively harmful: the
+    consumer's own dependency declaration pins <code>0.8.9</code>, its environment
+    resolves a development tree, and the version string it reports is frozen
+    build-time metadata read from the installed distribution. So the consumer
+    records a version that does not describe the code it ran, and any release it
+    cuts would be built against a tree nobody declared.</p>
+    <p>Thirteen commits on this repository's <code>main</code> carry the work the
+    consumer needs. Unary operators now render adjacent to their base group when an
+    <code>of</code>, <code>at</code>, or <code>due_to</code> tail is present, with
+    parser symmetry and recursive placement through composite operand trees. An
+    indexed operator renders its operand before its coordinate index. Twenty-five
+    bare vocabulary tokens the closed vocabulary was missing are defined, six more
+    are added from data-dictionary evidence, and the <code>beta</code> inclination
+    qualifier is withdrawn because every data-dictionary leaf named exactly
+    <code>beta</code> is the oblique-element inclination angle and the token invited a
+    collision with plasma beta.</p>
+    <p>The grammar suite passes with zero failures at both ends — 1148 tests before
+    and 1170 after, 22 added — and a census over the consumer's live catalog recorded
+    149 renderer changes across 2974 names with zero reparse failures and zero
+    intermediate-representation mismatches.</p>
+    <p>The chain is strictly ordered, and each link is blocked by the one before it:</p>
+    <figure>
+      <svg viewBox="0 0 620 96" width="100%" role="img"
+           aria-label="Four ordered steps: continuous integration green, upstream merge, release tag, consumer pin bump">
+        <g font-family="system-ui, sans-serif" font-size="13" fill="#1a1a1c">
+          <rect x="1" y="28" width="120" height="38" fill="none" stroke="#b8262b" stroke-width="1"/>
+          <text x="61" y="45" text-anchor="middle" fill="#b8262b">CI green</text>
+          <text x="61" y="60" text-anchor="middle" fill="#b8262b" font-size="11">blocked · §2</text>
+
+          <line x1="121" y1="47" x2="163" y2="47" stroke="#8a8a8f" stroke-width="1"/>
+          <path d="M163 43 l8 4 -8 4 z" fill="#8a8a8f"/>
+
+          <rect x="172" y="28" width="120" height="38" fill="none" stroke="#8a8a8f" stroke-width="1"/>
+          <text x="232" y="45" text-anchor="middle">merge upstream</text>
+          <text x="232" y="60" text-anchor="middle" font-size="11" fill="#5a5a5f">pull request 31</text>
+
+          <line x1="292" y1="47" x2="334" y2="47" stroke="#8a8a8f" stroke-width="1"/>
+          <path d="M334 43 l8 4 -8 4 z" fill="#8a8a8f"/>
+
+          <rect x="343" y="28" width="120" height="38" fill="none" stroke="#8a8a8f" stroke-width="1"/>
+          <text x="403" y="45" text-anchor="middle">release tag</text>
+          <text x="403" y="60" text-anchor="middle" font-size="11" fill="#5a5a5f">§3</text>
+
+          <line x1="463" y1="47" x2="505" y2="47" stroke="#8a8a8f" stroke-width="1"/>
+          <path d="M505 43 l8 4 -8 4 z" fill="#8a8a8f"/>
+
+          <rect x="514" y="28" width="105" height="38" fill="none" stroke="#8a8a8f" stroke-width="1"/>
+          <text x="566" y="45" text-anchor="middle">consumer pin</text>
+          <text x="566" y="60" text-anchor="middle" font-size="11" fill="#5a5a5f">§3</text>
+        </g>
+      </svg>
+      <figcaption>The release chain. Every downstream step waits on the contract
+      test in §2, which is the only failing check.</figcaption>
+    </figure>
+
+    <h2 id="s2">§2 — A contract test pins the entire vocabulary</h2>
+    <p>The upstream pull request is mergeable and its fast build passes, but
+    <code>build (3.12)</code>, <code>build (3.13)</code> and <code>coverage</code>
+    all fail on a single test:
+    <code>tests/test_physical_base_kinds.py::test_only_momentum_and_torque_bases_change_to_vector</code>.</p>
+    <p>The failure is a digest mismatch. <code>_kind_map_digest</code> hashes every
+    <code>name=kind</code> pair in the physical-base vocabulary except three named
+    vector corrections, and the expected digest is frozen as a literal in the test
+    module. Adding <em>any</em> new base therefore changes the digest, even when no
+    existing base has changed kind. Thirty-one tokens were deliberately added, so
+    the digest moved for exactly the reason the vocabulary work intended.</p>
+    <p>Reading the test exposes a second problem worth fixing in the same pass. Its
+    three assertions do not carry equal weight. The first — that the three named
+    corrections are <code>vector</code> — is real. The third derives its own baseline
+    from the current kind map by overriding those same three entries to
+    <code>scalar</code>, then asserts that precisely those three differ; given the
+    first assertion that is true by construction and can never fail, so it is
+    vacuous. That leaves the frozen digest as the only assertion pinning anything,
+    and it pins far more than the test's name claims: the whole vocabulary rather
+    than the kinds of the bases that existed when the baseline was taken.</p>
+    <p>The repair is to assert what the test says it asserts. Pin the kind of each
+    base present in the recorded baseline <em>by name</em>, so that altering an
+    existing base's kind fails while adding a new base does not. A digest over a
+    growing map is a moving value frozen in a contract, and it will break on every
+    legitimate vocabulary addition until it is replaced.</p>
+
+    <h2 id="s3">§3 — The tag, and moving the consumer off its override</h2>
+    <p>Releases here are tag-driven through the <code>standard-names release</code>
+    command, which refuses unless the working tree is clean, the branch is
+    <code>main</code>, the local branch is synced with upstream, and continuous
+    integration has passed for <code>HEAD</code>. Those preconditions are the reason
+    §2 blocks everything downstream rather than merely being untidy. Tagging pushes
+    to upstream and triggers the publish workflow.</p>
+    <p>Once a version is published, the consumer drops the editable source override
+    from its dependency declaration and pins the released version in both places it
+    names this package. That single change also repairs the consumer's frozen
+    version stamp, because the reported version and the resolved code become the same
+    fact again rather than two facts that agreed once at install time.</p>
+    <p>The consumer's change cannot be verified from an isolated worktree: a
+    pin-changing worktree resolves the main checkout's dependency declaration through
+    a shared environment, so any concurrent command in that environment reverts the
+    install mid-measurement. It must be sequenced when the consumer's fleet is at
+    rest.</p>
+
+    <section data-reckon="decisions" id="decisions" class="r-decisions">
+<h2><span class="sec">§</span> Decisions</h2>
+<div class="r-dec" data-key="release-level" data-choice="" data-by="" data-when="">
+    <p class="r-dec-q">Does this publish as a release candidate first, or straight to a stable patch?</p>
+    <p class="r-dec-opts">
+      <button class="r-opt" data-value="rc">Release candidate, then finalise</button>
+      <button class="r-opt" data-value="patch-final">Straight to a stable patch</button>
+      </p>
+    <p class="r-dec-rat"></p>
+    </div>
+<div class="r-dec" data-key="kind-pin-shape" data-choice="named-keys" data-by="Simon McIntosh" data-when="2026-09-06">
+    <p class="r-dec-q">How should the physical-base kind contract be pinned?</p>
+    <p class="r-dec-opts">
+      <button class="r-opt chosen" data-value="named-keys">Pin each baseline base&#x27;s kind by name</button>
+      <button class="r-opt" data-value="refresh-digest">Refresh the frozen digest</button>
+      </p>
+    <p class="r-dec-rat">Refreshing the digest restores the suite and leaves the
+        defect in place, so the next vocabulary addition breaks it again. Pinning by
+        name distinguishes an added base from a changed kind, which is what the test
+        claims to measure.</p>
+    </div>
+</section>
+
+    
+  <section data-reckon="comments" id="comments" class="r-comments">
+<div class="r-comment" data-section="s2" data-id="c-run-r-20260906T102805767185-n-grdp-the-kind-pin-tolerates-new-bases" data-who="cx-kindpin" data-when="2026-09-06T10:46:05Z">
+    <div class="r-comment-body"><p>THE CONTRACT NOW MEASURES WHAT ITS NAME CLAIMS. A frozen SHA-256 digest over the entire physical-base vocabulary is replaced by an explicit 177-entry baseline mapping measured from the loader, projected onto only those named keys - so an existing base changing kind fails while an added base passes. 1 failed at base against 3 passed after, and the whole grammar suite is green at 2110 passed, 34 skipped, 82 xfailed, exit 0. THE WORKER DISPUTED MY SPEC AND WAS RIGHT, which is the most valuable thing here. I told it to also assert that no base outside the three vector corrections carries kind vector, reading the test name as only these are vector. The name says only these CHANGE TO vector, and the loader holds 16 established vector bases outside the corrections, so my assertion was false of this vocabulary and it stopped rather than writing something that could not pass. It also confirmed my reading of the third assertion with a proper argument rather than by agreement: the old baseline copied every current value and overrode only the corrections to scalar, so once the first assertion held, exactly those three necessarily differed and no other key could - no independent failure case existed. TWO-DIRECTION PROOF, both concrete: flipping loaded acceleration from vector to scalar must raise, and inserting a synthetic base must still pass. The census is the part a reader gains most from - 177 bases, 19 vectors, 16 of them established outside the corrections, zero missing current keys and zero stale baseline keys - because the frozen digest had hidden every one of those facts behind one opaque hash. RECEIPT, and the first codex run today to take two turns: 15m50s of a 40m fence, 65 tool calls, 2 turns, zero provider refusals, three self-corrected local retries (an unsupported patch operation, a malformed poll, an over-escaped f-string). Its named discovery was measuring and transcribing the complete base map, which is exactly the work a digest exists to avoid and exactly why the digest was the wrong instrument</p></div>
+</div>
+</section>
+</main>
+</body>
+</html>

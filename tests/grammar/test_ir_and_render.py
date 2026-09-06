@@ -1,4 +1,4 @@
-"""Tests for grammar IR model and canonical renderer (plan 38 W1a).
+"""Tests for the grammar IR model and canonical renderer.
 
 These tests validate the IR shape constraints and the canonical strings
 produced by :func:`imas_standard_names.grammar.render.compose`.
@@ -29,12 +29,12 @@ from imas_standard_names.grammar.ir import (
 from imas_standard_names.grammar.render import RenderError, compose
 
 # ---------------------------------------------------------------------------
-# Canonical rendering — plan §A2 / §A12 examples
+# Canonical rendering examples
 # ---------------------------------------------------------------------------
 
 
 def test_compose_simple_locus():
-    """Row 1 from §A12: ``elongation_of_plasma_boundary``."""
+    """Render ``elongation_of_plasma_boundary`` with an entity locus."""
     ir = StandardNameIR(
         base=QuantityOrCarrier(token="elongation", kind=BaseKind.QUANTITY),
         locus=LocusRef(
@@ -47,7 +47,7 @@ def test_compose_simple_locus():
 
 
 def test_compose_projection_plus_qualifier_plus_locus():
-    """§A2 example: radial component, electron qualifier, at plasma_boundary."""
+    """Render a radial component, electron qualifier, and position locus."""
     ir = StandardNameIR(
         projection=AxisProjection(axis="radial", shape=ProjectionShape.COMPONENT),
         qualifiers=[Qualifier(token="electron")],
@@ -62,7 +62,7 @@ def test_compose_projection_plus_qualifier_plus_locus():
 
 
 def test_compose_nested_prefix_operators():
-    """Row 14 from §A12: nested ``maximum_of`` / ``derivative`` + locus."""
+    """Render nested ``maximum_of`` and ``derivative`` operators with a locus."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(kind=OperatorKind.UNARY_PREFIX, op="maximum"),
@@ -80,8 +80,8 @@ def test_compose_nested_prefix_operators():
         ),
     )
     assert compose(ir) == (
-        "maximum_of_derivative_with_respect_to_normalized_poloidal_flux_of_"
-        "electron_pressure_at_pedestal"
+        "maximum_of_derivative_of_electron_pressure_at_pedestal_"
+        "with_respect_to_normalized_poloidal_flux"
     )
 
 
@@ -133,7 +133,7 @@ def test_compose_mechanism_trails_locus():
 
 
 def test_compose_coordinate_shape_on_geometry_carrier():
-    """``vertical_<geometry_carrier>`` — §A12 row 23."""
+    """Render ``vertical_<geometry_carrier>`` as a coordinate projection."""
     ir = StandardNameIR(
         projection=AxisProjection(axis="vertical", shape=ProjectionShape.COORDINATE),
         base=QuantityOrCarrier(token="position", kind=BaseKind.GEOMETRY),
@@ -243,7 +243,7 @@ def test_invalid_token_shape_rejected():
 
 
 # ---------------------------------------------------------------------------
-# §A3 assertion helpers
+# Operator-form assertion helpers
 # ---------------------------------------------------------------------------
 
 

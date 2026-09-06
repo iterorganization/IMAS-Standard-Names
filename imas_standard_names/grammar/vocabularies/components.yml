@@ -46,16 +46,25 @@
 # normalized coordinate direction is a genuine, distinct direction, so the
 # `normalized_<axis>` prefix is a real component token.
 #
-# `parallel` and `perpendicular` are deliberately ABSENT here: they are
-# field-RELATIVE directions (along / across B) with no separate "normalized"
+# `parallel` and `perpendicular` are deliberately absent here: they are
+# field-relative directions (along / across B) with no separate "normalized"
 # variant of the direction itself. In a name like
 # `normalized_parallel_momentum_flux`, `normalized` is the GyroBohm/reference
-# normalization OPERATOR applied to the parallel momentum flux, not a
+# normalization operator applied to the parallel momentum flux, not a
 # direction. Registering `normalized_parallel`/`normalized_perpendicular` as
 # component tokens shadowed that operator reading via longest-match; they are
 # removed so the operator peels and the projection resolves to
-# `parallel`/`perpendicular` (canonical-qualifier-order §3).
+# `parallel`/`perpendicular` under the qualifier-ordering rule.
 - normalized_radial          # projection onto the ρ (normalized flux radius) direction
 - normalized_vertical        # projection onto the normalized vertical (Z) direction
 - normalized_toroidal        # projection onto the φ (toroidal angle) direction
 - normalized_poloidal        # projection onto the θ (poloidal angle) direction
+
+# === Stokes-vector components ===
+# Dimensionless polarization coordinates. The FOCS DD stores the initial and
+# output Stokes vectors as eight scalar leaves whose documentation identifies
+# S0 through S3 as components of one Stokes vector.
+- s0
+- s1
+- s2
+- s3

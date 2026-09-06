@@ -1,24 +1,28 @@
-"""Canonical rendering test for grammar (plan 38 §A10, item 6).
+"""Canonical rendering tests for the grammar.
 
 Builds IR instances manually and asserts :func:`imas_standard_names.grammar.render.compose`
-produces the exact canonical string described in plan §A2.
+produces the exact canonical string required by the grammar.
 
-Canonical form rules (§A2):
+Canonical form rules:
 - Operator wrapping: ``unary_prefix`` → ``<op>_of_<inner>``;
   ``unary_postfix`` → ``<inner>_<op>``; ``binary`` → ``<op>_of_<A>_<sep>_<B>``
+- A unary operator over an ordinary base with an ``of``, ``at``, or ``due_to``
+  tail renders between the base group and that tail
+- Operators inside a binary operand tree retain their natural positions
 - Projection prefix (canonical): ``<axis>_`` before qualifiers+base
   (component shape) or ``<axis>_`` before carrier (coordinate shape)
 - Locus suffix: ``_of_<tok>`` / ``_at_<tok>`` / ``_over_<tok>``
 - Mechanism suffix: ``_due_to_<process>``
-- Order: operators(outer→inner) → projection → qualifiers → base → locus → mechanism
+- Default order: operators(outer→inner) → projection → qualifiers → base → locus
+  → mechanism
 
-Each test is labelled with the §A12 row or §A2 rule it verifies.
+Each test states the rendering rule it verifies.
 """
-
-from __future__ import annotations
 
 import pytest
 
+from imas_standard_names import parse
+from imas_standard_names.grammar import parse_standard_name
 from imas_standard_names.grammar.ir import (
     AxisProjection,
     BaseKind,
@@ -36,12 +40,12 @@ from imas_standard_names.grammar.ir import (
 from imas_standard_names.grammar.render import RenderError, compose
 
 # ---------------------------------------------------------------------------
-# §A2 rule 1: bare base (no operators, no decorators)
+# Bare base with no operators or decorators
 # ---------------------------------------------------------------------------
 
 
 def test_render_bare_quantity_base() -> None:
-    """§A2: bare quantity base → its token unchanged."""
+    """A bare quantity base renders as its token unchanged."""
     ir = StandardNameIR(
         base=QuantityOrCarrier(token="pressure", kind=BaseKind.QUANTITY)
     )
@@ -49,7 +53,7 @@ def test_render_bare_quantity_base() -> None:
 
 
 def test_render_bare_geometry_carrier() -> None:
-    """§A2: bare geometry carrier → its token unchanged."""
+    """A bare geometry carrier renders as its token unchanged."""
     ir = StandardNameIR(
         base=QuantityOrCarrier(token="normalized_minor_radius", kind=BaseKind.GEOMETRY)
     )
@@ -57,12 +61,12 @@ def test_render_bare_geometry_carrier() -> None:
 
 
 # ---------------------------------------------------------------------------
-# §A2 rule 2: unary prefix operator
+# Unary prefix operator
 # ---------------------------------------------------------------------------
 
 
 def test_render_unary_prefix_operator() -> None:
-    """§A2: ``unary_prefix`` → ``<op>_of_<inner>``."""
+    """Render ``unary_prefix`` as ``<op>_of_<inner>``."""
     ir = StandardNameIR(
         operators=[OperatorApplication(kind=OperatorKind.UNARY_PREFIX, op="maximum")],
         base=QuantityOrCarrier(token="pressure", kind=BaseKind.QUANTITY),
@@ -71,7 +75,7 @@ def test_render_unary_prefix_operator() -> None:
 
 
 def test_render_unary_prefix_derivative() -> None:
-    """§A2: ``derivative_of_X`` rendering."""
+    """Render a derivative prefix around its operand."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(kind=OperatorKind.UNARY_PREFIX, op="derivative")
@@ -95,12 +99,12 @@ def test_render_unary_prefix_flux_surface_averaged() -> None:
 
 
 # ---------------------------------------------------------------------------
-# §A2 rule 3: unary postfix operator
+# Unary postfix operator
 # ---------------------------------------------------------------------------
 
 
 def test_render_unary_postfix_magnitude() -> None:
-    """§A2: ``unary_postfix`` → ``<inner>_<op>``."""
+    """Render ``unary_postfix`` as ``<inner>_<op>``."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(kind=OperatorKind.UNARY_POSTFIX, op="magnitude")
@@ -111,7 +115,7 @@ def test_render_unary_postfix_magnitude() -> None:
 
 
 def test_render_unary_postfix_gyroaveraged() -> None:
-    """``gyroaveraged`` postfix operator (§A12 row 15 fragment)."""
+    """Render the ``gyroaveraged`` postfix operator."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(kind=OperatorKind.UNARY_POSTFIX, op="gyroaveraged")
@@ -131,12 +135,12 @@ def test_render_unary_postfix_moment() -> None:
 
 
 # ---------------------------------------------------------------------------
-# §A2 rule 4: binary operators
+# Binary operators
 # ---------------------------------------------------------------------------
 
 
 def test_render_binary_ratio() -> None:
-    """§A2 binary: ``ratio_of_A_to_B``."""
+    """Render a binary ratio with the ``to`` separator."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(
@@ -161,7 +165,7 @@ def test_render_binary_ratio() -> None:
 
 
 def test_render_binary_product() -> None:
-    """§A2 binary: ``product_of_A_and_B``."""
+    """Render a binary product with the ``and`` separator."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(
@@ -186,12 +190,12 @@ def test_render_binary_product() -> None:
 
 
 # ---------------------------------------------------------------------------
-# §A2 rule 5: axis projection prefix (canonical form)
+# Axis projection prefix
 # ---------------------------------------------------------------------------
 
 
 def test_render_projection_component_prefix() -> None:
-    """§A2: component projection → ``<axis>_<base>``."""
+    """Render a component projection as ``<axis>_<base>``."""
     ir = StandardNameIR(
         projection=AxisProjection(axis="radial", shape=ProjectionShape.COMPONENT),
         base=QuantityOrCarrier(token="pressure", kind=BaseKind.QUANTITY),
@@ -200,7 +204,7 @@ def test_render_projection_component_prefix() -> None:
 
 
 def test_render_projection_toroidal_component() -> None:
-    """Toroidal component projection (§A12 row 24)."""
+    """Render a toroidal component projection."""
     ir = StandardNameIR(
         projection=AxisProjection(axis="toroidal", shape=ProjectionShape.COMPONENT),
         base=QuantityOrCarrier(token="magnetic_field", kind=BaseKind.QUANTITY),
@@ -209,7 +213,7 @@ def test_render_projection_toroidal_component() -> None:
 
 
 def test_render_projection_coordinate_prefix() -> None:
-    """§A2: coordinate projection → short form ``<axis>_<carrier>``."""
+    """Render a coordinate projection as short form ``<axis>_<carrier>``."""
     ir = StandardNameIR(
         projection=AxisProjection(axis="vertical", shape=ProjectionShape.COORDINATE),
         base=QuantityOrCarrier(token="normalized_minor_radius", kind=BaseKind.GEOMETRY),
@@ -218,7 +222,7 @@ def test_render_projection_coordinate_prefix() -> None:
 
 
 def test_render_projection_normalized_toroidal_coordinate() -> None:
-    """§A12 row 17: ``normalized_toroidal_flux_coordinate`` with axis projection."""
+    """Render ``normalized_toroidal_flux_coordinate`` with an axis projection."""
     ir = StandardNameIR(
         projection=AxisProjection(
             axis="normalized_toroidal", shape=ProjectionShape.COORDINATE
@@ -233,12 +237,12 @@ def test_render_projection_normalized_toroidal_coordinate() -> None:
 
 
 # ---------------------------------------------------------------------------
-# §A2 rule 6: locus suffix
+# Locus suffix
 # ---------------------------------------------------------------------------
 
 
 def test_render_locus_of_entity() -> None:
-    """§A12 row 1: ``elongation_of_plasma_boundary`` — entity locus with _of_."""
+    """Render ``elongation_of_plasma_boundary`` with an entity locus."""
     ir = StandardNameIR(
         base=QuantityOrCarrier(token="elongation", kind=BaseKind.QUANTITY),
         locus=LocusRef(
@@ -264,7 +268,7 @@ def test_render_locus_at_position() -> None:
 
 
 def test_render_locus_of_position() -> None:
-    """§A12 row 3: position locus with ``_of_`` relation."""
+    """Render a position locus with the ``_of_`` relation."""
     ir = StandardNameIR(
         base=QuantityOrCarrier(token="major_radius", kind=BaseKind.QUANTITY),
         locus=LocusRef(
@@ -277,7 +281,7 @@ def test_render_locus_of_position() -> None:
 
 
 def test_render_locus_entity_of() -> None:
-    """Entity locus uses ``_of_`` relation (§A5)."""
+    """Render an entity locus with the ``_of_`` relation."""
     ir = StandardNameIR(
         base=QuantityOrCarrier(token="pressure", kind=BaseKind.QUANTITY),
         locus=LocusRef(
@@ -290,7 +294,7 @@ def test_render_locus_entity_of() -> None:
 
 
 # ---------------------------------------------------------------------------
-# §A2 rule 7: mechanism suffix
+# Mechanism suffix
 # ---------------------------------------------------------------------------
 
 
@@ -318,12 +322,12 @@ def test_render_mechanism_with_locus() -> None:
 
 
 # ---------------------------------------------------------------------------
-# §A2 combined: operator + projection + locus + mechanism ordering
+# Combined operator, projection, locus, and mechanism ordering
 # ---------------------------------------------------------------------------
 
 
-def test_render_full_a2_example() -> None:
-    """§A2 canonical template: ``<op>_of_<axis>_<qual>_<base>_<locus>``."""
+def test_render_operator_between_projected_base_and_locus() -> None:
+    """Render ``<axis>_<qual>_<base>_<op>_<locus>`` canonically."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(kind=OperatorKind.UNARY_PREFIX, op="root_mean_square")
@@ -338,12 +342,12 @@ def test_render_full_a2_example() -> None:
         ),
     )
     assert compose(ir) == (
-        "root_mean_square_of_radial_electron_pressure_at_plasma_boundary"
+        "radial_electron_pressure_root_mean_square_at_plasma_boundary"
     )
 
 
 def test_render_nested_operators_outer_first() -> None:
-    """§A2: outer operator applied first → outermost op prefix appears leftmost."""
+    """Render the outermost operator nearest the trailing locus."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(kind=OperatorKind.UNARY_PREFIX, op="maximum"),
@@ -356,12 +360,12 @@ def test_render_nested_operators_outer_first() -> None:
             type=LocusType.POSITION,
         ),
     )
-    # maximum is outer → leftmost; derivative is inner → immediately around base
-    assert compose(ir) == "maximum_of_derivative_of_pressure_at_pedestal"
+    # The derivative is inner and nearest the base; maximum remains outer.
+    assert compose(ir) == "pressure_derivative_maximum_at_pedestal"
 
 
-def test_render_a12_row_14_nested_operators() -> None:
-    """§A12 row 14 exact example: maximum_of_derivative_of_... at pedestal."""
+def test_render_nested_indexed_operator_at_pedestal() -> None:
+    """Render a nested maximum and indexed derivative at the pedestal."""
     ir = StandardNameIR(
         operators=[
             OperatorApplication(kind=OperatorKind.UNARY_PREFIX, op="maximum"),
@@ -379,27 +383,37 @@ def test_render_a12_row_14_nested_operators() -> None:
         ),
     )
     assert compose(ir) == (
-        "maximum_of_derivative_with_respect_to_normalized_poloidal_flux_of_"
-        "electron_pressure_at_pedestal"
+        "maximum_of_derivative_of_electron_pressure_at_pedestal_"
+        "with_respect_to_normalized_poloidal_flux"
     )
 
 
-def test_render_a12_row_22_maximum_power_flux_density() -> None:
-    """§A12 row 22: ``maximum_of_power_flux_density_at_inner_divertor_target``."""
+def test_render_maximum_energy_flux_at_target() -> None:
+    """Render the peak deposited-energy surface load at a divertor target."""
     ir = StandardNameIR(
         operators=[OperatorApplication(kind=OperatorKind.UNARY_PREFIX, op="maximum")],
-        base=QuantityOrCarrier(token="power_flux_density", kind=BaseKind.QUANTITY),
+        qualifiers=[Qualifier(token="energy")],
+        base=QuantityOrCarrier(token="flux", kind=BaseKind.QUANTITY),
         locus=LocusRef(
             relation=LocusRelation.AT,
             token="inner_divertor_target",
             type=LocusType.POSITION,
         ),
     )
-    assert compose(ir) == "maximum_of_power_flux_density_at_inner_divertor_target"
+    rendered = compose(ir)
+    assert rendered == "energy_flux_maximum_at_inner_divertor_target"
+
+    parsed = parse(rendered, strict=True)
+    assert compose(parsed.ir) == rendered
+
+    flat = parse_standard_name(rendered)
+    assert flat.physical_base == "flux"
+    assert flat.channel is not None
+    assert flat.channel.value == "energy"
 
 
 # ---------------------------------------------------------------------------
-# §A2 qualifier rendering
+# Qualifier rendering
 # ---------------------------------------------------------------------------
 
 
