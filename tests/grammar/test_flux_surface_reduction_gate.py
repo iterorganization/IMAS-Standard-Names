@@ -34,10 +34,11 @@ REJECTED = [
 ]
 
 ACCEPTED = [
-    # Surface-varying bases keep the reduction immediately before the tail.
-    "electron_density_flux_surface_averaged_at_plasma_boundary",
-    "electron_temperature_flux_surface_averaged_at_plasma_boundary",
-    "toroidal_argon_velocity_flux_surface_averaged_at_plasma_boundary",
+    # Surface-varying bases take the reduction, which leads the name and wraps
+    # the projection and the tail.
+    "flux_surface_averaged_electron_density_at_plasma_boundary",
+    "flux_surface_averaged_electron_temperature_at_plasma_boundary",
+    "flux_surface_averaged_toroidal_argon_velocity_at_plasma_boundary",
     "maximum_over_flux_surface_electron_temperature",
     # non-flux-surface reductions of flux functions remain legal
     "volume_averaged_plasma_pressure",

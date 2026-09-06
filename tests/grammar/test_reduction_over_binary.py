@@ -327,14 +327,17 @@ def test_separator_inside_an_operand_does_not_mis_split(vocabs: Vocabularies) ->
     assert compose(binary.args[1]) == "square_of_major_radius"
 
 
-def test_bare_reduction_prefix_over_a_plain_base_uses_qualifier_shape(
+def test_bare_reduction_prefix_over_a_plain_base_is_an_operator(
     vocabs: Vocabularies,
 ) -> None:
-    """A bare reduction over a plain base uses the qualifier reading.
+    """A bare reduction over a plain base is still an operator application.
 
     ``flux_surface_averaged_electron_density`` has no binary form after the
-    prefix, so the reduction stays a qualifier.
+    prefix, but the reduction applies to the whole qualified quantity, so it
+    reaches the operator stack rather than the qualifier chain. One reading of
+    the token, whatever its operand looks like.
     """
     ir = parse("flux_surface_averaged_electron_density", vocabs=vocabs).ir
-    assert not ir.operators
-    assert [q.token for q in ir.qualifiers] == ["flux_surface_averaged", "electron"]
+    assert [op.op for op in ir.operators] == ["flux_surface_averaged"]
+    assert ir.operators[0].bare_prefix is True
+    assert [q.token for q in ir.qualifiers] == ["electron"]

@@ -146,12 +146,15 @@ BINARY_SEPARATORS: frozenset[str] = frozenset({"and", "to"})
 
 # Unary-prefix operators that spell WITHOUT the ``_of_`` joiner
 # (``flux_surface_averaged_electron_density``, not
-# ``flux_surface_averaged_of_electron_density``). These normally reach the IR as
-# qualifiers on the base, because a bare prefix is indistinguishable from a
-# qualifier when the operand is an ordinary base. They reach the operator stack
-# only when the operand has no base to hang off — an operator application, e.g.
-# a binary form — and there they must carry ``bare_prefix`` so the renderer
-# reproduces the joiner-free spelling.
+# ``flux_surface_averaged_of_electron_density``). The domain reductions among
+# them — the precedence-30 members, see the placement policy in
+# ``vocabularies/operators.yml`` — lead their name and their operand runs to
+# the end of the string, projection and trailing locus included, so they reach
+# the IR on the operator stack carrying ``bare_prefix``. Never as a qualifier:
+# a qualifier renders after the base and inside the tail, which states a
+# narrower scope than the reduction has, and one token with two readings makes
+# two names for one quantity. The lower-precedence members modify the base
+# rather than reducing it, so they do reach the IR as qualifiers on the base.
 BARE_PREFIX_OPERATORS: frozenset[str] = frozenset(
     {
         "accumulated",

@@ -76,6 +76,7 @@ from imas_standard_names.grammar.support import (
     value_of as _value_of,
 )
 from imas_standard_names.grammar.vocab_loaders import (
+    load_operators as _load_operators,
     load_qualifier_categories as _load_qualifier_categories,
     load_scoping_qualifiers as _load_scoping_qualifiers,
 )
@@ -259,6 +260,28 @@ _LOCUS_QUALIFIER_ORDER: tuple[str, ...] = (
 # also consults — one list, so the model's transformation slot and the rendered
 # spelling cannot drift apart.
 _BARE_PREFIX_TRANSFORMATIONS: frozenset[str] = BARE_PREFIX_OPERATORS
+
+# A domain reduction collapses its operand over a flux surface, a volume, a
+# line or the time axis, so the reduced object is the whole projected,
+# qualified quantity and the token leads the name. The registry marks the class
+# by precedence: these bind looser than every qualifier and projection. Lower
+# bare prefixes (normalized, perturbed, change_in) modify the base itself and
+# keep their place inside the projection. Derived from the registry so the set
+# cannot drift from the precedence the parser reads.
+_REDUCTION_PRECEDENCE = 30
+
+
+@cache
+def _leading_transformations() -> frozenset[str]:
+    """Bare transformations that wrap the projection and the trailing locus."""
+
+    return frozenset(
+        name
+        for name, entry in _load_operators().operators.items()
+        if entry.kind == "unary_prefix"
+        and name in _BARE_PREFIX_TRANSFORMATIONS
+        and entry.precedence == _REDUCTION_PRECEDENCE
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -885,19 +908,27 @@ def _model_to_ir(model: StandardName) -> StandardNameIR:
         # Binary uses a placeholder base
         base = QuantityOrCarrier(token="placeholder", kind=BaseKind.QUANTITY)
     else:
-        # Transformation (unary prefix)
+        # Transformation (unary prefix). A domain reduction wraps everything to
+        # its right — the projection and the trailing locus included — so it
+        # belongs on the operator stack, outermost, where the renderer's
+        # bare-prefix path spells it first. Seating it in the qualifier chain
+        # instead would render it after the base and inside the tail, which
+        # states a narrower scope than the operator has. A lower bare prefix
+        # does modify the base, so it stays a qualifier and folds into it.
         transformation_qualifier: Qualifier | None = None
         if model.transformation:
             tf_token = _value_of(model.transformation)
-            if tf_token in _BARE_PREFIX_TRANSFORMATIONS:
-                # Bare-prefix transformations render as qualifiers
-                # (will be prepended to base by the renderer)
+            if (
+                tf_token in _BARE_PREFIX_TRANSFORMATIONS
+                and tf_token not in _leading_transformations()
+            ):
                 transformation_qualifier = Qualifier(token=tf_token)
             else:
                 operators.append(
                     OperatorApplication(
                         kind=OperatorKind.UNARY_PREFIX,
                         op=tf_token,
+                        bare_prefix=tf_token in _BARE_PREFIX_TRANSFORMATIONS,
                     )
                 )
 
@@ -948,8 +979,8 @@ def _model_to_ir(model: StandardName) -> StandardNameIR:
                 model.qualifier,
                 model.state,
             )
-            # Insert bare-prefix transformation qualifier at the front
-            # (transformation is outermost: <transform>_<subject>_<base>)
+            # A base-modifying bare prefix is outermost within the base
+            # expression: <transform>_<subject>_<base>.
             if transformation_qualifier is not None:
                 qualifiers.insert(0, transformation_qualifier)
         else:

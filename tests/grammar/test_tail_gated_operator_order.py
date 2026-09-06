@@ -42,22 +42,6 @@ from imas_standard_names.grammar.render import compose
             "particle_flux_maximum_at_first_wall",
         ),
         (
-            "flux_surface_averaged_electron_density_at_plasma_boundary",
-            "electron_density_flux_surface_averaged_at_plasma_boundary",
-        ),
-        (
-            "flux_surface_averaged_electron_temperature_at_plasma_boundary",
-            "electron_temperature_flux_surface_averaged_at_plasma_boundary",
-        ),
-        (
-            "toroidal_flux_surface_averaged_argon_velocity_at_plasma_boundary",
-            "toroidal_argon_velocity_flux_surface_averaged_at_plasma_boundary",
-        ),
-        (
-            "maximum_of_volume_averaged_electron_density_at_magnetic_axis",
-            "electron_density_volume_averaged_maximum_at_magnetic_axis",
-        ),
-        (
             "magnetic_field_of_iron_core_segment_magnitude",
             "magnetic_field_magnitude_of_iron_core_segment",
         ),
@@ -94,6 +78,48 @@ def test_tailed_operator_moves_between_base_and_locus(
 
     assert compose(ir) == canonical
     assert parse(canonical, strict=True).ir == ir
+
+
+# A bare, joiner-free operator is exempt from the relocation above: it leads
+# its name and its operand runs to the end of the string, tail included. The
+# spelling on the left of each pair states the narrower scope and is rejected.
+@pytest.mark.parametrize(
+    ("misplaced", "canonical"),
+    [
+        (
+            "electron_density_flux_surface_averaged_at_plasma_boundary",
+            "flux_surface_averaged_electron_density_at_plasma_boundary",
+        ),
+        (
+            "electron_temperature_flux_surface_averaged_at_plasma_boundary",
+            "flux_surface_averaged_electron_temperature_at_plasma_boundary",
+        ),
+        (
+            "toroidal_argon_velocity_flux_surface_averaged_at_plasma_boundary",
+            "flux_surface_averaged_toroidal_argon_velocity_at_plasma_boundary",
+        ),
+    ],
+)
+def test_bare_operator_leads_instead_of_moving_before_the_locus(
+    misplaced: str, canonical: str
+) -> None:
+    assert compose(parse(canonical, strict=True).ir) == canonical
+    with pytest.raises(ValueError, match="not canonical") as rejection:
+        parse(misplaced, strict=True)
+    assert canonical in str(rejection.value)
+
+
+def test_an_outer_operator_cannot_move_past_a_leading_reduction() -> None:
+    """A joiner-taking operator stays put when a bare one leads its operand.
+
+    Relocating ``maximum`` before the tail would leave the reduction spelled
+    inside the base, and reading that spelling back drops its tokens, so the
+    trailing form is ungrammatical rather than merely non-canonical.
+    """
+    canonical = "maximum_of_volume_averaged_electron_density_at_magnetic_axis"
+    assert compose(parse(canonical, strict=True).ir) == canonical
+    with pytest.raises(ValueError, match="ungrammatical"):
+        parse("electron_density_volume_averaged_maximum_at_magnetic_axis", strict=True)
 
 
 @pytest.mark.parametrize(

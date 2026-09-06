@@ -58,12 +58,6 @@ def test_misplaced_reduction_names_the_canonical_spelling(name):
     assert CANONICAL in str(excinfo.value)
 
 
-@pytest.mark.parametrize("name", [PROJECTION_OUTSIDE, OPERATOR_TRAILING])
-def test_misplaced_reduction_denotes_the_canonical_quantity(name):
-    """A misspelled name still means the canonical one: same rendered form."""
-    assert compose(parse(name).ir) == CANONICAL
-
-
 @pytest.mark.parametrize("name", [UNTAILED_CONTROL, RECURSIVE_CONTROL])
 def test_controls_are_byte_identical(name):
     assert compose(parse(name, strict=True).ir) == name
