@@ -652,25 +652,6 @@ def _peel_outer_operator(
     (a binary operator has no further prefix/postfix beyond its args).
     """
 
-    # A leading reduction collapses its operand over a domain, so it applies to
-    # the projected, qualified quantity as a whole rather than binding tighter
-    # than the axis projection. It therefore leads the canonical spelling and
-    # wraps everything to its right, including the projection and the trailing
-    # locus. Peel it before the base/qualifier priority below, which would
-    # otherwise absorb the token into the qualifier chain and let the
-    # projection and the tail render outside the reduction.
-    reduction_match = _longest_reduction_prefix_match(s, v)
-    if reduction_match is not None:
-        return (
-            OperatorApplication(
-                kind=OperatorKind.UNARY_PREFIX,
-                op=reduction_match,
-                bare_prefix=True,
-            ),
-            s[len(reduction_match) + 1 :],
-            [],
-        )
-
     # A complete registered base/qualifier/projection expression has priority
     # over every operator-shaped substring inside it. This protects atomic
     # suffixes such as magnetic_moment and compound axes such as
@@ -988,33 +969,41 @@ def _reduction_prefix_operators(v: Vocabularies) -> frozenset[str]:
     )
 
 
-def _longest_reduction_prefix_match(s: str, v: Vocabularies) -> str | None:
-    """Return the leading reduction operator of ``s`` whose operand resolves.
+def _hoist_reduction_qualifiers(
+    operators: list[OperatorApplication],
+    qualifiers: list[Qualifier],
+    v: Vocabularies,
+) -> tuple[list[OperatorApplication], list[Qualifier]]:
+    """Move reduction tokens out of the qualifier chain onto the operator stack.
 
-    Returns ``None`` when the token is part of the base rather than applied to
-    it (``flux_surface_averaged_metric`` is one registered base token), or when
-    the residue after the token is not a complete base expression — an operator
-    application residue is peeled by the bare-prefix-over-operator step instead.
+    A reduction has one reading wherever the author spelled it: it applies to
+    the whole projected, qualified quantity. Base/qualifier matching resolves
+    the token positionally, so an authored name that puts the projection or the
+    trailing locus outside the reduction lands it in the qualifier chain, where
+    it would mean a narrower thing than the same token spelled first.
+
+    Hoisting here gives every spelling of one quantity the same representation,
+    which is what lets the renderer send them all to the canonical spelling and
+    the strict oracle reject the rest. The reduction sits closest to the base,
+    so it goes innermost — beneath any operator already peeled from the text.
     """
 
-    best: str | None = None
-    for token in _reduction_prefix_operators(v):
-        marker = f"{token}_"
-        if not s.startswith(marker) or len(s) <= len(marker):
-            continue
-        if best is not None and len(token) <= len(best):
-            continue
-        if not _resolves_without_postfix(s[len(marker) :], v):
-            continue
-        try:
-            owner, _, _ = _match_base_with_qualifiers(s, v)
-        except ParseError:
-            owner = None
-        if owner is not None and owner.token.startswith(marker):
-            # The token spells part of a registered base; the base owns it.
-            continue
-        best = token
-    return best
+    reductions = _reduction_prefix_operators(v)
+    if not any(qualifier.token in reductions for qualifier in qualifiers):
+        return operators, qualifiers
+    hoisted = [
+        OperatorApplication(
+            kind=OperatorKind.UNARY_PREFIX,
+            op=qualifier.token,
+            bare_prefix=True,
+        )
+        for qualifier in qualifiers
+        if qualifier.token in reductions
+    ]
+    retained = [
+        qualifier for qualifier in qualifiers if qualifier.token not in reductions
+    ]
+    return [*operators, *hoisted], retained
 
 
 def _resolves_without_postfix(s: str, v: Vocabularies) -> bool:
@@ -2189,6 +2178,9 @@ def _parse_uncached(
         )
     base, qualifiers, projection = _match_base_with_qualifiers(s, v)
     qualifiers = [*repositioned_qualifiers, *qualifiers]
+    operator_stack, qualifiers = _hoist_reduction_qualifiers(
+        operator_stack, qualifiers, v
+    )
 
     ir = StandardNameIR(
         operators=operator_stack,

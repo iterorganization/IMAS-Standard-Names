@@ -52,6 +52,18 @@ def test_misplaced_reduction_is_rejected_as_non_canonical(name):
 
 
 @pytest.mark.parametrize("name", [PROJECTION_OUTSIDE, OPERATOR_TRAILING])
+def test_every_spelling_of_one_quantity_shares_one_representation(name):
+    """Representation equality is the meaning test, so a rename between these
+    spellings must read as meaning-preserving rather than meaning-changing."""
+    assert parse(name).ir == parse(CANONICAL).ir
+
+
+@pytest.mark.parametrize("name", [PROJECTION_OUTSIDE, OPERATOR_TRAILING])
+def test_a_misplaced_reduction_composes_to_the_canonical_spelling(name):
+    assert compose(parse(name).ir) == CANONICAL
+
+
+@pytest.mark.parametrize("name", [PROJECTION_OUTSIDE, OPERATOR_TRAILING])
 def test_misplaced_reduction_names_the_canonical_spelling(name):
     with pytest.raises(ValueError) as excinfo:
         parse(name, strict=True)

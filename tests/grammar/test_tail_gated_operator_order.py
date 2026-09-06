@@ -104,22 +104,28 @@ def test_bare_operator_leads_instead_of_moving_before_the_locus(
     misplaced: str, canonical: str
 ) -> None:
     assert compose(parse(canonical, strict=True).ir) == canonical
+    assert parse(misplaced).ir == parse(canonical).ir
+    assert compose(parse(misplaced).ir) == canonical
     with pytest.raises(ValueError, match="not canonical") as rejection:
         parse(misplaced, strict=True)
     assert canonical in str(rejection.value)
 
 
 def test_an_outer_operator_cannot_move_past_a_leading_reduction() -> None:
-    """A joiner-taking operator stays put when a bare one leads its operand.
+    """A joiner-taking operator stays put when a reduction leads its operand.
 
-    Relocating ``maximum`` before the tail would leave the reduction spelled
-    inside the base, and reading that spelling back drops its tokens, so the
-    trailing form is ungrammatical rather than merely non-canonical.
+    The reduction is innermost either way, so the trailing spelling denotes the
+    same quantity and converges on its representation; only the spelling is
+    refused, and the rejection names the form to migrate to.
     """
     canonical = "maximum_of_volume_averaged_electron_density_at_magnetic_axis"
+    misplaced = "electron_density_volume_averaged_maximum_at_magnetic_axis"
     assert compose(parse(canonical, strict=True).ir) == canonical
-    with pytest.raises(ValueError, match="ungrammatical"):
-        parse("electron_density_volume_averaged_maximum_at_magnetic_axis", strict=True)
+    assert parse(misplaced).ir == parse(canonical).ir
+    assert compose(parse(misplaced).ir) == canonical
+    with pytest.raises(ValueError, match="not canonical") as rejection:
+        parse(misplaced, strict=True)
+    assert canonical in str(rejection.value)
 
 
 @pytest.mark.parametrize(
