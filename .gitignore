@@ -33,3 +33,10 @@ htmltest/
 
 # expert-review reply PDF (rendered artifact, not version-controlled)
 docs/expert-review-reply.pdf
+
+# Reckon writes each project's crew ledger under its own repository. A
+# subdirectory named for a different project is a cross-repository write, not
+# content this repository owns.
+docs/state/imas-codex/
+# Lock files are runtime state for the duration of one operation.
+docs/.reckon/locks/
