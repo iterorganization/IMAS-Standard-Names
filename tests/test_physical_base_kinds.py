@@ -1,33 +1,219 @@
-import hashlib
+import pytest
 
 from imas_standard_names.grammar.vocab_loaders import load_physical_bases
 
 _VECTOR_CORRECTIONS = {"momentum", "torque", "torque_density"}
-_BASELINE_UNCHANGED_KIND_DIGEST = (
-    "6062e5c22be7788220b390f09a5c8c1f1037ece0f8bc4422b2e6a3e3b1763956"
-)
+_BASELINE_KINDS = {
+    "absorptivity": "scalar",
+    "acceleration": "vector",
+    "angle": "scalar",
+    "angular_frequency": "scalar",
+    "angular_momentum": "scalar",
+    "angular_velocity": "vector",
+    "angular_width": "scalar",
+    "area": "scalar",
+    "aspect_ratio": "scalar",
+    "atomic_number": "scalar",
+    "bandwidth": "scalar",
+    "beta": "scalar",
+    "brightness": "scalar",
+    "capacitance": "scalar",
+    "center_of_mass_velocity": "vector",
+    "charge": "scalar",
+    "charge_number": "scalar",
+    "coefficient": "scalar",
+    "collisionality": "scalar",
+    "conductivity": "scalar",
+    "confinement_enhancement_factor": "scalar",
+    "confinement_time": "scalar",
+    "connection_length": "scalar",
+    "convection_velocity": "vector",
+    "coulomb_logarithm": "scalar",
+    "count": "scalar",
+    "current": "scalar",
+    "current_density": "vector",
+    "curvature": "scalar",
+    "damping_rate": "scalar",
+    "dead_time": "scalar",
+    "debye_length": "scalar",
+    "decay_length": "scalar",
+    "decay_time": "scalar",
+    "delay": "scalar",
+    "density": "scalar",
+    "diameter": "scalar",
+    "diffusion_coefficient": "scalar",
+    "diffusivity": "scalar",
+    "distance": "scalar",
+    "distribution": "scalar",
+    "duration": "scalar",
+    "efficiency": "scalar",
+    "electric_field": "vector",
+    "electrical_conductivity": "scalar",
+    "electrostatic_potential": "scalar",
+    "ellipticity": "scalar",
+    "elongation": "scalar",
+    "emissivity": "scalar",
+    "energy": "scalar",
+    "etendue": "scalar",
+    "exposure_time": "scalar",
+    "factor": "scalar",
+    "fall_time": "scalar",
+    "field_current_coupling_coefficient": "scalar",
+    "field_strength": "scalar",
+    "flag": "scalar",
+    "flow": "scalar",
+    "fluence": "scalar",
+    "flux": "scalar",
+    "flux_limiter_coefficient": "scalar",
+    "flux_surface_averaged_metric": "scalar",
+    "focal_length": "scalar",
+    "force": "vector",
+    "fraction": "scalar",
+    "frequency": "scalar",
+    "fusion_gain": "scalar",
+    "gap": "scalar",
+    "grating_line_density": "scalar",
+    "growth_rate": "scalar",
+    "half_width": "scalar",
+    "heating_power": "scalar",
+    "height": "scalar",
+    "impedance": "scalar",
+    "index": "scalar",
+    "inductance": "scalar",
+    "instrument_function": "scalar",
+    "intensity": "scalar",
+    "internal_energy": "scalar",
+    "internal_inductance": "scalar",
+    "ionisation_potential": "scalar",
+    "kinetic_energy": "scalar",
+    "kurtosis": "scalar",
+    "larmor_radius": "scalar",
+    "length": "scalar",
+    "li": "scalar",
+    "loop_voltage": "scalar",
+    "mach_number": "scalar",
+    "magnetic_field": "vector",
+    "magnetic_flux": "scalar",
+    "magnetic_moment": "vector",
+    "magnetic_pressure": "scalar",
+    "magnetic_shear": "scalar",
+    "magnetic_vector_potential": "vector",
+    "magnetization": "scalar",
+    "mass": "scalar",
+    "mass_density": "scalar",
+    "mass_flow_rate": "scalar",
+    "mass_number": "scalar",
+    "metric_tensor": "tensor",
+    "mode_number": "scalar",
+    "momentum": "vector",
+    "multiplicity": "scalar",
+    "number_density": "scalar",
+    "opacity": "scalar",
+    "orbit_integral": "scalar",
+    "parameter": "scalar",
+    "parity": "scalar",
+    "peaking_factor": "scalar",
+    "period": "scalar",
+    "permeability": "scalar",
+    "phase": "scalar",
+    "photon_energy": "scalar",
+    "photon_radiance": "scalar",
+    "pitch_angle": "scalar",
+    "polarization_vector": "vector",
+    "poloidal_current_function": "scalar",
+    "potential": "scalar",
+    "power": "scalar",
+    "power_density": "scalar",
+    "pressure": "scalar",
+    "probability": "scalar",
+    "psi_star": "scalar",
+    "q_profile": "scalar",
+    "radiance": "scalar",
+    "radius": "scalar",
+    "rate": "scalar",
+    "reflectivity": "scalar",
+    "refractive_index": "scalar",
+    "relative_humidity": "scalar",
+    "residual": "scalar",
+    "resistance": "scalar",
+    "resistive_diffusion_time": "scalar",
+    "resistivity": "scalar",
+    "response_function": "scalar",
+    "rise_time": "scalar",
+    "rotation_frequency": "scalar",
+    "rotational_transform": "scalar",
+    "roughness": "scalar",
+    "safety_factor": "scalar",
+    "sensitivity": "scalar",
+    "shearing_rate": "scalar",
+    "signal_to_noise_ratio": "scalar",
+    "size": "scalar",
+    "skewness": "scalar",
+    "solid_angle": "scalar",
+    "source": "scalar",
+    "source_rate": "scalar",
+    "speed": "scalar",
+    "squareness": "scalar",
+    "stokes_parameter": "scalar",
+    "stokes_vector": "vector",
+    "strain": "tensor",
+    "temperature": "scalar",
+    "thickness": "scalar",
+    "tilt_angle": "scalar",
+    "time": "scalar",
+    "toroidal_flux_coordinate_gradient": "vector",
+    "torque": "vector",
+    "torque_density": "vector",
+    "transit_time": "scalar",
+    "transmissivity": "scalar",
+    "triangularity": "scalar",
+    "tritium_breeding_ratio": "scalar",
+    "turn_count": "scalar",
+    "turns_per_metre": "scalar",
+    "vector_potential": "vector",
+    "velocity": "vector",
+    "verdet_constant": "scalar",
+    "vibrational_level": "scalar",
+    "voltage": "scalar",
+    "volume": "scalar",
+    "vorticity": "scalar",
+    "wave_vector": "vector",
+    "wavelength": "scalar",
+    "weight": "scalar",
+    "width": "scalar",
+}
 
 
-def _kind_map_digest(kind_map: dict[str, str]) -> str:
-    payload = "".join(
-        f"{name}={kind}\n"
-        for name, kind in sorted(kind_map.items())
-        if name not in _VECTOR_CORRECTIONS
-    )
-    return hashlib.sha256(payload.encode()).hexdigest()
-
-
-def test_only_momentum_and_torque_bases_change_to_vector() -> None:
-    kinds = {
+def _load_kinds() -> dict[str, str]:
+    return {
         name: definition.kind
         for name, definition in load_physical_bases().bases.items()
     }
 
+
+def _assert_baseline_kinds(kinds: dict[str, str]) -> None:
+    assert {name: kinds[name] for name in _BASELINE_KINDS} == _BASELINE_KINDS
+
+
+def test_only_momentum_and_torque_bases_change_to_vector() -> None:
+    kinds = _load_kinds()
+
     assert {name: kinds[name] for name in _VECTOR_CORRECTIONS} == dict.fromkeys(
         _VECTOR_CORRECTIONS, "vector"
     )
-    assert _kind_map_digest(kinds) == _BASELINE_UNCHANGED_KIND_DIGEST
+    _assert_baseline_kinds(kinds)
 
-    baseline_kinds = kinds | dict.fromkeys(_VECTOR_CORRECTIONS, "scalar")
-    changed = {name for name, kind in kinds.items() if kind != baseline_kinds.get(name)}
-    assert changed == _VECTOR_CORRECTIONS
+
+def test_baseline_kind_contract_rejects_changed_existing_base() -> None:
+    kinds = _load_kinds()
+    kinds["acceleration"] = "scalar"
+
+    with pytest.raises(AssertionError):
+        _assert_baseline_kinds(kinds)
+
+
+def test_baseline_kind_contract_accepts_added_base() -> None:
+    kinds = _load_kinds()
+    kinds["synthetic_base"] = "scalar"
+
+    _assert_baseline_kinds(kinds)
