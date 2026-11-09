@@ -1,0 +1,42 @@
+<section id="dgv-accepted-vocabulary-scope-blocker">
+  <h3>Accepted representations require a wider grammar change</h3>
+  <p>The 34 accepted worklist tokens and their definitions were inventoried against
+    revision <code>d88e5bee0db310bb311de9aa20f46c63dd4eded9</code>. No vocabulary or
+    test changes were made: the required representation support exceeds this
+    worker's write scope.</p>
+  <p>The existing flat-model validator in
+    <code>imas_standard_names/grammar/model.py:1358</code> rejects every
+    <code>geometry_representation</code> other than <code>local_circle</code>,
+    and restricts that representation to an owner-qualified, unprojected radius.
+    A probe of that validator, using constructed models to isolate the semantic
+    guard from enum membership, recorded:</p>
+  <table>
+    <thead><tr><th>Representation</th><th>Physical base</th><th>Result with owner</th></tr></thead>
+    <tbody>
+      <tr><td>local_circle</td><td>radius</td><td>Accepted control</td></tr>
+      <tr><td>arc_of_circle</td><td>radius</td><td>Rejected: local_circle-only guard</td></tr>
+      <tr><td>oblique</td><td>angle</td><td>Rejected: local_circle-only guard</td></tr>
+      <tr><td>thick_line</td><td>length</td><td>Rejected: local_circle-only guard</td></tr>
+    </tbody>
+  </table>
+  <p>The same module rejects non-plane qualifiers on geometric carriers
+    (<code>model.py:541</code>), affecting the worklist's projected arc vertices
+    and oblique positions. The existing public-context test in
+    <code>tests/grammar/test_geometry_section_and_arc.py:155</code> also asserts
+    the exact singleton representation list <code>["local_circle"]</code>.
+    Both files require a scope extension or a companion implementation before
+    the accepted representation examples and the grammar suite can pass.</p>
+  <p>Strict parsing reproduced the vocabulary gap:
+    <code>voltage_of_power_convertor</code> raises <code>ParseError</code>, while
+    <code>voltage_of_flux_loop</code> parses and round-trips. The intended
+    <code>power_convertor</code> means equipment converting and regulating power
+    delivered to a load; the rejected <code>poloidal_field_power_supply</code>
+    would reintroduce the equipment spelling the ruling excludes.
+    The source binding is <code>pf_active/supply/voltage</code>.</p>
+  <p>The baseline code-generation check passed. The grammar baseline reached
+    its 600-second wrapper bound without a summary and is incomplete; no
+    passing suite or failure-delta claim is made. The two remaining processes
+    belonging to that baseline were stopped and their absence verified.
+    The planted-removal and rejected-token controls were not run because no
+    vocabulary implementation was applied.</p>
+</section>
