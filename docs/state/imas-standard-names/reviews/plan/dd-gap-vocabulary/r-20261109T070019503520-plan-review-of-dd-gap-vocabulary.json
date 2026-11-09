@@ -1,0 +1,84 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-09T07:10:23.365Z",
+  "dispatched_at": "2026-11-09T07:00:37Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html#s3",
+      "id": "wiring-1",
+      "reason": "without a consumer, a green \u00a73 closes the plan while `species`, `breakdown_candidate_grid_point`, `breakdown_candidate_field_line`, `current_alignment`, `plateau` and `green_function` remain absent from the grammar, which is the release's stated purpose for their sources.",
+      "text": "\u00a73's only outputs are `doubtful-rework.json` and a summary HTML, and `plan-section-depends-on` makes \u00a74 depend on \u00a72 alone, so after this plan completes the six doubtful DD sources are still unnamed and there is no node, followup or dependency that lands the reworked spellings",
+      "type": "wiring",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html#s3",
+      "id": "done_when-1",
+      "reason": "the guard the section needs is a parse probe on each reworked spelling (round-trip through `parse()` with the reused tokens once \u00a72 has landed, or a recorded unparseable-with-reason), and without it the doubtful six are handed to the lead as reworked while possibly not composing with anything.",
+      "text": "the node states \"No grammar file changes in this section\" and its done-when asks only that each row carry a reworked spelling, so a row proposing a spelling that no longer parses with the existing tokens passes",
+      "type": "done_when",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html#s2",
+      "id": "reasoning-1",
+      "reason": "a node following \u00a72 literally would know how to add a YAML token but not where the coordinate-unit rule goes, and the done-when \"a name formed with `argmax` carries the coordinate's unit\" would be unachievable or would tempt the hand-editing of generated files that the same section forbids.",
+      "text": "\u00a72 says both `argmax` and `threshold_crossing` need \"their unit and rendering rules carried by the grammar\", but the named mechanism is only \"editing the vocabulary YAMLs and `grammar/specification.yml` and regenerating with `build-grammar`\"; `operators.yml` declares `kind`, `precedence`, `returns`, `arg_types`, `separator`, `indexed`, `index_params`, `semantic_effects` and rendering templates \u2014 no unit field \u2014 while unit and rendering behaviour for names is produced by `grammar_codegen/generate.py` and consumed by the model/renderer, none of which the section names",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html#s2",
+      "id": "anchors_resolve-1",
+      "reason": "the segment a node writes to and the form it round-trips (`of_power_convertor` versus a deprecated `power_convertor_<base>` prefix) both depend on this, and the section's representative-name test would otherwise be authored in the deprecated form.",
+      "text": "the plan places six tokens in \"(devices)\", which is not a vocabulary: the worklist's `device` rows all carry `yaml_path: imas_standard_names/grammar/vocabularies/locus_registry.yml`, and `specification.yml` declares `- id: device` with `vocabulary: objects` and the authoring note \"Retained for parse compatibility only \u2014 NOT the preferred authoring form \u2026 the postfix-locus convention \u2026 is the form enforced by compose tooling\"",
+      "type": "anchors_resolve",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html#s3",
+      "id": "reasoning-2",
+      "reason": "following the stated substitution would name the intact-pellet density with the shattered-pellet subject, conflating two different DD quantities; the section needs to record that the vocabulary has no intact-pellet species subject and that `species` may be a genuine new token here.",
+      "text": "\u00a73 asserts \"A generic `species` subject is replaced by the named pellet species already in the vocabulary\", but the add row's source path is `pellets/time_slice/pellet/species/density` (intact pellet) and the only pellet-species subject in `subjects.yml` is `shattered_pellet_species`, which the worklist already binds to the distinct `shattered_pellet_species_density` reject row",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html#s2",
+      "id": "single_goal-1",
+      "reason": "the 35 plain vocabulary tokens are releasable on their own, and separating the two operator semantics lets \u00a74 land the vocabulary while the unit rule is still being worked, instead of holding the whole release on it.",
+      "text": "\u00a72 bundles a 36-token vocabulary addition with new grammar-level semantics for two operators (`argmax`'s coordinate unit, `threshold_crossing`'s canonical rendering), so one verdict has to close both and \u00a74's release rides on the harder half",
+      "type": "single_goal",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "a5da4c274d068f422159e1c94b7f3e9e3efe9c56",
+  "plan_fingerprint": "8b713966f339ef7823c50f7af4151a41b06fd355a76b2794122b23c11532b537",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261109T070019503520-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "65ed9bdd8f4ae13eaa109a74420af6c21c567a00",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "a finding \u2014 \"(devices)\" names no vocabulary file; the worklist's six `device` rows write to `locus_registry.yml` under the `device` segment whose vocabulary is `objects`, which `specification.yml` marks parse-compatibility-only.",
+    "done_when": "a finding \u2014 \u00a73's done-when certifies that a JSON holds one row per doubtful token and that no grammar file changed, but never that a reworked spelling actually composes; \u00a72 and \u00a74 each carry a real measure (\u00a72 additionally carries a planted-removal control).",
+    "evidence_paths": "pass \u2014 \u00a73's evidence lands at `docs/evidence/fragments/dd-gap-vocabulary/` inside the repository, beside the existing `docs/evidence/fragments/concept-and-notation-registry`, and \u00a74's measure is the upstream tag, publish workflow and PyPI listing rather than a session artifact.",
+    "naming": "pass \u2014 the 36 tokens are mechanism words in the repository's own vocabulary (no plan labels, stage names, ticket numbers or version tags), and no section names a symbol after a plan item.",
+    "reasoning": "a finding \u2014 \u00a72's named mechanism (edit vocabulary YAMLs and `specification.yml`, regenerate with `build-grammar`) cannot deliver the done-when's unit rule for `argmax`, because the operator vocabulary carries kind/precedence/rendering but no unit field and the unit semantics live in code the section never names.",
+    "single_goal": "a finding \u2014 \u00a72 carries two deliverables: 36 vocabulary tokens, and new grammar-level unit/rendering semantics for `argmax` and `threshold_crossing`.",
+    "wiring": "a finding \u2014 \u00a73 produces the reworked spellings and any new tokens \"for the lead's ruling\", but no section, followup or dependency consumes that output; `plan-section-depends-on` declares only `s4 \u2190 s2`."
+  },
+  "section_digests": {
+    "_document": "15dfa1d58417e42ae0b33a0ecc63a3878a5cbce5e7f569bcefc603b5584970ea",
+    "s1": "48d85cfdf145b42da4947c95601cdb9dd48836e0587ca0c0523defba209038f5",
+    "s2": "6cfa89d0465a2a803a6e967608a3c45fc746bfcb653eba8a69ae46f2fe93a19e",
+    "s3": "bbb5e7e1986a1ca816d0840d6b1a4010d675efb32ad80c41ab7e5f2a45cabcdc",
+    "s4": "09e9b0c10d4bffca7a9e01d76af11266d3d1b35deb52fda480b560d23d8000a0"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-09T07:15:41.452872+00:00",
+  "total": null
+}
