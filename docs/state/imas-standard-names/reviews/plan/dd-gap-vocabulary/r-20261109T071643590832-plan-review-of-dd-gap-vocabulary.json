@@ -1,0 +1,70 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-09T07:22:21.359Z",
+  "dispatched_at": "2026-11-09T07:17:00Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:73",
+      "id": "reasoning-1",
+      "reason": "the node would ship a declaration nothing acts on and its gate cannot distinguish that from a working rule, so the argmax name still carries whatever unit its catalog row asserts.",
+      "text": "\u00a75 claims \"the quantity it names has the dimension of that coordinate\" and that \"the rule for argmax is a declared effect a composer reads\", naming `operators.yml`'s `dimension_transforming` flag, `OperatorSemanticEffect`, and `context.py`'s publication as the mechanism; but the only production consumer of `dimension_transforming` is `validation/semantic.py:483` `_load_dimension_transforming_operators()`, used at `:551` solely to exempt such operators from `_check_dimensionless_physical_quantity`'s base-implies-unit warning \u2014 no consumer derives a unit, and `context.py:920` only lists `semantic_effects` in the published vocabulary block, which no composer turns into a dimension. The mechanism as described produces \"exempt from a warning\", not \"takes the coordinate's dimension\", so \u00a75's done-when (declare the effect, publish it in the context, round-trip the names) passes while the stated property remains absent",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:58",
+      "id": "reasoning-2",
+      "reason": "a reader of \u00a71 takes the species reuse as accepted while \u00a73 forbids it; the plan must state that ten rejections stand and `species` is carved out into \u00a73.",
+      "text": "\u00a73 says `shattered_pellet_species` \"names a different DD quantity and must not be reused\" for `pellets/time_slice/pellet/species/density`, which contradicts \u00a71's ruling that \"the eleven rejections are accepted as listed\": the worklist records `qualifier:species` as disposition `reject` (reusing `shattered_pellet_species` for `spi/injector/pellet/core/species/density`), so `species` is one of those eleven, and its rejection is exactly the reuse \u00a73 forbids",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:50",
+      "id": "done_when-1",
+      "reason": "a node encoding this control tests two spellings it happens to pass and leaves the rejected composite `poloidal_field_power_supply` untested, so the guard against the lead's \"never a power supply\" ruling never fires.",
+      "text": "\u00a72 requires that \"`poloidal_field_circuit`, `power_supply` and the other ten rejected spellings stay unparseable as new tokens, by test\"; the worklist's disposition `reject` set is eleven rows (`toroidal_placeholder`, `coordinate_placeholder`, `fit_offset`, `s0`, `s1`, `s2`, `s3`, `species`, `spun`, `outside_last_closed_flux_surface`, `poloidal_field_circuit`), `power_supply` is not among them \u2014 the row from `poloidal_field_power_supply` is disposition `add` and its composite spelling is `poloidal_field_power_supply` \u2014 and `species` is reworked by \u00a73 rather than kept unparseable, so \"the other ten\" names a set that does not exist",
+      "type": "done_when",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:83",
+      "id": "wiring-1",
+      "reason": "without `dd-gap-vocabulary#s4` in \u00a76's depends-on, \u00a76 can dispatch as soon as \u00a73 lands, before \u00a75 is even started, and its patch tag fixes a version sequence the plan's release section does not describe.",
+      "text": "`plan-section-depends-on` gives \u00a76 only `dd-gap-vocabulary#s3`, yet \u00a76's done-when requires \"a patch tag carrying them \u2026 pushed to upstream and published\" released \"the way \u00a72 adds its own\": a patch cut from `main` before \u00a74's minor would publish \u00a72's 34-token vocabulary in a patch release, and \u00a74's own text calls that vocabulary a minor release",
+      "type": "wiring",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "6a061a324b4d7fbbb1bc61fc4ef97ded0a2c1406",
+  "plan_fingerprint": "8bebdac16f741f6bb6039e946da84069662e52c757495a262a4e68f0ee2a5429",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261109T071643590832-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "70fd073147e518657f8b1354c35b786c65762faf",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 the worklist at `/home/ITER/mcintos/Code/imas-codex/docs/evidence/fragments/sn-integrity-backlog/sib-vocab-worklist.json` exists (68 rows, 86 sources), v0.10.1 resolves to 4c59393, `objects: !include vocabularies/locus_registry.yml` is at `specification.yml:494`, the `device` segment at `specification.yml:283` carries the \"parse compatibility only \u2026 compose new names with the of_<entity> postfix locus\" text \u00a72 quotes, `id: position` is at `specification.yml:397`, `OperatorSemanticEffect` is at `vocab_loaders.py:120`, `context.py:920` publishes `semantic_effects`, and positions render through `render_locus` in `grammar/render.py:90`.",
+    "done_when": "a finding \u2014 \u00a72's rejected-spelling control names `power_supply`, which the cited worklist never proposes, and its \"other ten\" arithmetic disagrees with the worklist's eleven rejects.",
+    "evidence_paths": "pass \u2014 \u00a73 and \u00a76 write `docs/evidence/fragments/dd-gap-vocabulary/` under the repository, which survives the run; no gate names a scratchpad or node-local path.",
+    "naming": "pass \u2014 no plan labels, stage names or ticket numbers appear in the vocabulary tokens, files or definitions the plan names.",
+    "reasoning": "a finding \u2014 \u00a75's mechanism (declare `dimension_transforming` + a `semantic_effects` member, publish it in `context.py`) is not what any consumer does, and \u00a73's species rework contradicts \u00a71's blanket acceptance of the eleven worklist rejections.",
+    "single_goal": "pass \u2014 the vocabulary words and the operator machinery now sit in \u00a72 and \u00a75 respectively, so each node closes on one verdict.",
+    "wiring": "a finding \u2014 \u00a76 (`/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html`, `plan-section-depends-on`) declares only `dd-gap-vocabulary#s3`, but \u00a76 cuts the patch release that must follow \u00a74's minor release."
+  },
+  "section_digests": {
+    "_document": "b39409e9f3e23b3c530d0b14a6e67c8e7aa5fdffb5d6dd92c817d07c627e6be2",
+    "s1": "48d85cfdf145b42da4947c95601cdb9dd48836e0587ca0c0523defba209038f5",
+    "s2": "7d4123ff8227d3607c4e1178898c43b5215cd56b00a2efe7024f7c07f856b01c",
+    "s3": "873108c0858d6858d5ff52ce7000fb6b83d337ef6e9469f3fcd4625f030af555",
+    "s4": "f7c2f479906c612a6804f1f614ab8a00c80a0e4e4c6caa7005f3f053cb9f3dca",
+    "s5": "dbcc20b94adec0d80ac30092c56ed7695809390894fc615e6a40db404ff45e7c",
+    "s6": "8eb177421906548169b55a4c8fccb670df6669c3a9e417bbb6f92283b441d4c7"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-09T09:54:51.633691+00:00",
+  "total": null
+}
