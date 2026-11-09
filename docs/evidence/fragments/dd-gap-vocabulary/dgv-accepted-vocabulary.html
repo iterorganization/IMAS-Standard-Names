@@ -94,3 +94,41 @@
     The original 600-second baseline remains incomplete. No full-suite
     zero-added-failure claim is made, and this record does not close the node.</p>
 </section>
+
+<section id="dgv-accepted-vocabulary-serial-verification">
+  <h3>Serial full-suite verification completed with one added failure</h3>
+  <p>The serial verification instruction superseded the parallel-plugin
+    prerequisite recorded above. Both grammar suites ran to their summaries
+    on the assigned compute node, each in the foreground under
+    <code>timeout 2400</code>, with <code>-p no:cacheprovider</code> and no
+    parallel workers. The completed baseline receipt was written into the
+    manifest before the head suite started.</p>
+  <table>
+    <thead><tr><th>Arm</th><th>Revision</th><th>Passed</th><th>Skipped</th><th>Failed</th><th>Exit</th></tr></thead>
+    <tbody>
+      <tr><td>Base</td><td>d88e5bee0db310bb311de9aa20f46c63dd4eded9</td><td>1285</td><td>32</td><td>0</td><td>0</td></tr>
+      <tr><td>Head</td><td>7884ab2e5522b718dc97c3df9dcb958fe4618847</td><td>1381</td><td>32</td><td>1</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <p>The baseline summary is
+    <code>1285 passed, 32 skipped in 682.69s (0:11:22)</code>; the head summary
+    is <code>1 failed, 1381 passed, 32 skipped in 1478.06s (0:24:38)</code>.
+    Both logs end with their observed exit status. The baseline ran from an
+    isolated extraction of its exact revision; its log names the imported
+    module and working directory. The head log confirms imports from the
+    assigned worktree.</p>
+  <p>Comparing completed failure-ID sets gives <strong>one added failure</strong>
+    and no removed failures. The reported assertion finds ten newly accepted
+    qualifier tokens without their required category registrations:
+    <code>bounce</code>, <code>chemical</code>, <code>compressive</code>,
+    <code>cosine</code>, <code>helical</code>, <code>ripple</code>,
+    <code>rotational</code>, <code>second_inclination</code>, <code>sine</code>
+    and <code>tangency</code>. The exact failure identity and the ungranted
+    metadata path are recorded in the manifest's <code>outside_scope</code>
+    field. That file was not modified, and no zero-added-failure claim is made.</p>
+  <p>The failure-ID instrument detected both expected planted-control failures
+    in the red control log before either zero-failure result was interpreted.
+    The earlier 108 passing focused tests, 17/17 added executable model lines
+    covered, restored source bytes and clean code-generation check remain
+    valid. The node remains blocked on the category metadata scope extension.</p>
+</section>
