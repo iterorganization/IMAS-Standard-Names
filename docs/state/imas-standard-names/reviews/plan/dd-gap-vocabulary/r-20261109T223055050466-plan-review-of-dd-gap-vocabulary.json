@@ -1,0 +1,54 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-09T22:40:13.228Z",
+  "dispatched_at": "2026-11-09T22:31:43Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:57",
+      "id": "reasoning-1",
+      "reason": "the plan states a guard exists that does not, so \u00a73's justification and any test written against it would assert a refusal the grammar never performs, when the real guard is \u00a72's membership assertion.",
+      "text": "\u00a73 says `source` \"collides with the physical base `source` that the grammar's uniqueness test forbids in a second segment\", but the only cross-registry uniqueness test, `_no_duplicate_names_across_registries` (`imas_standard_names/grammar/vocab_loaders.py:536`), validates five pools only \u2014 `coordinate_axes`, `locus_registry`, `operators`, `physical_bases`, `geometry_carriers` \u2014 and `qualifiers.yml` is not one of them; there is no other qualifier-versus-base duplicate guard in the package. The carve-out is still right (a `source` qualifier would compete with the bases `source` and `source_rate` at `physical_bases.yml:423`), and the enforcement \u00a72 actually specifies is its explicit membership test \u2014 so the cited mechanism is the wrong one and a worker checking it would find no such test firing",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:75",
+      "id": "reasoning-2",
+      "reason": "\u00a75's third done-when arm (an absent-target issue when the coordinate has no entry) has no mechanism behind it, so the worker would add a parse-to-index reference path or discover the reuse claim false mid-build, which is exactly the mechanism the plan says it is reusing.",
+      "text": "\u00a75 says \"the absent-target report of `_check_referential_integrity` covers a coordinate with no catalog entry\", but that check resolves only `links`, `deprecates`, `superseded_by`, `arguments` names, `error_variants` and inline markdown references (`validation/semantic.py:149`); an indexed operator's coordinate is fused into the operator token, not carried as an argument \u2014 I parsed `derivative_of_deposited_power_with_respect_to_normalized_toroidal_flux_coordinate` at `d88e5be` and the IR is `operators[0].op='derivative_with_respect_to_normalized_toroidal_flux_coordinate'` with `args=[]` \u2014 so nothing in the existing check walks the index",
+      "type": "reasoning",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "c328f4b1a618a78149639ba7efa73851bd4e63e0",
+  "plan_fingerprint": "5dbe2b277277434d84db7b043fb48ffa71b325df482464dbcbb279b911d6bdf9",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261109T223055050466-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "e274da8713b03c7d57070854e36f5aa1f8fd6eb2",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 every file, symbol and section the changed units cite resolves at `d88e5be` (`geometry_carriers.yml`, `locus_registry.yml` `loci:`, `specification.yml` `device`, `operators.yml`, `vocab_loaders.py`, `semantic.py`, `derivative_with_respect_to`'s `_with_respect_to_` render form at `render.py:205`); the earlier `(devices)`/`(geometry)` anchor findings are answered by \u00a72 naming the vocabulary file and the `loci:` mapping explicitly; the two unresolvable-in-principle anchors are the deliverable paths \u00a73 will create.",
+    "done_when": "pass \u2014 every node's done-when is measurable and carries a control that can fail: \u00a72 plants a token removal and a rejected-spelling planting, \u00a75 plants a removal of the dimension effect, \u00a73 records a `parse()` round-trip per row rather than a spelling's presence. \u00a72's rejected-spelling bullet now names explicit membership assertions (and I confirmed each named token's current registration, so the assertions can fail), replacing the earlier unparseable-name test that could not fail.",
+    "evidence_paths": "pass \u2014 \u00a73's artifact lands at `docs/evidence/fragments/dd-gap-vocabulary/`, inside the repository and durable; \u00a72 and \u00a75's evidence is test assertions in the suite rather than a scratchpad path.",
+    "naming": "pass \u2014 the tokens are physics and equipment words, and no plan label, stage name, ticket number or changelog prose reaches a symbol, comment or filename in the changed units.",
+    "reasoning": "a finding \u2014 \u00a73 justifies carving out `source` with a uniqueness test that does not cover qualifiers, and \u00a75 attributes a coordinate-with-no-entry report to `_check_referential_integrity`, which has no path to an operator's index parameter.",
+    "single_goal": "pass \u2014 \u00a72 is one vocabulary addition, \u00a73 one rework pass, \u00a75 one operator's dimension semantics end to end; the earlier bundling of `threshold_crossing` into \u00a75 is gone and `argmax`'s machinery is the only deliverable left there.",
+    "wiring": "pass \u2014 `plan-section-depends-on` gives s3\u2190s2, s4\u2190{s2,s5}, s6\u2190{s3,s4}, matching each section's text (\"Once \u00a72 and \u00a75 land\" in \u00a74, \"It waits for \u00a72\" in \u00a73), and \u00a76 now exists as the landing place for \u00a73's outputs that the earlier review found missing."
+  },
+  "section_digests": {
+    "_document": "46531338359dd453f3e67f97e7b074f8d754c6e9c5756ae9ee6091e40967f615",
+    "s1": "b55eeb0aa4a599e093121d07e4f0ce2dbdcd085089f7cfcb02c4180f625924d6",
+    "s2": "f16f29ef4896c9a178762833652ed10f5dd59fe94ba97c61b929a3f875b585a1",
+    "s3": "a8092e3b60bbc8613940bccb5ed5d0dca02261ce834c627e08c77cb45bf85293",
+    "s4": "f7c2f479906c612a6804f1f614ab8a00c80a0e4e4c6caa7005f3f053cb9f3dca",
+    "s5": "afa940fcfd1efa351cfe8bf673e9e0e472f3ced968b0c1d22eb3a7c2ddc8ab43",
+    "s6": "8eb177421906548169b55a4c8fccb670df6669c3a9e417bbb6f92283b441d4c7"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-09T22:48:07.140413+00:00",
+  "total": null
+}
