@@ -462,8 +462,7 @@ vocabularies:
   section_planes: !include vocabularies/section_planes.yml
   subjects: !include vocabularies/subjects.yml
   states: !include vocabularies/states.yml
-  # rc32 subject-vocabulary decomposition: orthogonal single-token modifier
-  # segments split out of the old compound subjects.
+  # Orthogonal single-token modifiers compose independently of the subject.
   populations: !include vocabularies/populations.yml
   orbits: !include vocabularies/orbits.yml
   # aggregation: population/species/contribution reduction (total, net),

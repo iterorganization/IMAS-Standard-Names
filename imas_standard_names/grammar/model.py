@@ -81,7 +81,7 @@ from imas_standard_names.grammar.vocab_loaders import (
     load_scoping_qualifiers as _load_scoping_qualifiers,
 )
 
-# BaseToken: pattern for physical_base segment (closed vocabulary since rc56)
+# BaseToken: pattern for the closed physical_base vocabulary
 TOKEN_PATTERN_STR = r"^[a-z][a-z0-9_]*$"
 BaseToken = Annotated[
     str,
@@ -105,9 +105,8 @@ _POSITION_VALUES: frozenset[str] = frozenset(p.value for p in Position)
 _REGION_VALUES: frozenset[str] = frozenset(r.value for r in Region)
 _GEOMETRY_VALUES: frozenset[str] = frozenset(g.value for g in GeometricBase)
 
-# Aggregation, population, and orbit: orthogonal single-token modifier segments
-# split out of the old compound subject tokens (rc32 decomposition) plus the
-# aggregation segment. Each contributes at most one token (no intra-segment
+# Aggregation, population, and orbit are orthogonal single-token modifier
+# segments. Each contributes at most one token (no intra-segment
 # stacking — a second same-segment token is a hard error, see
 # ``_ir_to_model_dict``). Aggregation (total/net) is a distinct dimension that
 # legitimately STACKS with population (energy-state); orbit is the transit class.
