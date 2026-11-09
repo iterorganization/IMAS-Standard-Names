@@ -19,7 +19,7 @@
   <meta name="plan-owner" content="Simon McIntosh">
   <meta name="plan-tags" content="grammar,vocabulary,release">
   <meta name="plan-blocks" content="imas-codex:sn-integrity-backlog">
-  <meta name="plan-section-depends-on" content="{&quot;s3&quot;: [&quot;dd-gap-vocabulary#s2&quot;], &quot;s4&quot;: [&quot;dd-gap-vocabulary#s2&quot;, &quot;dd-gap-vocabulary#s5&quot;], &quot;s6&quot;: [&quot;dd-gap-vocabulary#s3&quot;]}">
+  <meta name="plan-section-depends-on" content="{&quot;s3&quot;: [&quot;dd-gap-vocabulary#s2&quot;], &quot;s4&quot;: [&quot;dd-gap-vocabulary#s2&quot;, &quot;dd-gap-vocabulary#s5&quot;], &quot;s6&quot;: [&quot;dd-gap-vocabulary#s3&quot;, &quot;dd-gap-vocabulary#s4&quot;]}">
   <meta name="plan-section-declarations" content="{&quot;s1&quot;:&quot;done&quot;,&quot;s2&quot;:&quot;implementable&quot;,&quot;s3&quot;:&quot;implementable&quot;,&quot;s4&quot;:&quot;implementable&quot;,&quot;s5&quot;:&quot;implementable&quot;,&quot;s6&quot;:&quot;implementable&quot;}">
   <title>The Vocabulary The DD's Unnamed Sources Need | imas-standard-names</title>
   <link rel="stylesheet" href="/_shared/foundation.css">
@@ -32,7 +32,7 @@
     <p>The lead ruled on it on 2026-11-09:</p>
     <ul>
       <li>Composites are split into their parts. The coil equipment is <code>poloidal_field_coil</code>, never a "circuit". Power equipment is <code>power_convertor</code>, never a "power supply".</li>
-      <li>The clean physics additions and the eleven rejections are accepted as listed.</li>
+      <li>The clean physics additions are accepted as listed, and so are ten of the eleven rejections. The eleventh, which reused <code>shattered_pellet_species</code> for a pellet species, is carved out into the rework below.</li>
       <li>The <code>argmax</code> operator and the <code>threshold_crossing</code> state are accepted now, with the grammar machinery they need.</li>
       <li>Six doubtful additions are reworked once more before any of them enters the grammar: <code>species</code> (subject), <code>breakdown_candidate_grid_point</code>, <code>breakdown_candidate_field_line</code>, <code>current_alignment</code>, <code>plateau</code> and <code>green_function</code>.</li>
     </ul>
@@ -47,7 +47,7 @@
     <ul>
       <li>every one of the 34 tokens is present in its declared vocabulary with the worklist's definition, and <code>build-grammar</code> leaves the generated files without drift;</li>
       <li>a test parses and round-trips one representative name per token, in canonical form and taken from the worklist row that needs it, and a planted removal of any one token fails that test;</li>
-      <li><code>poloidal_field_circuit</code>, <code>power_supply</code> and the other ten rejected spellings stay unparseable as new tokens, by test;</li>
+      <li>the ten rejected spellings stay unparseable as new tokens, by test: <code>poloidal_field_circuit</code>, <code>outside_last_closed_flux_surface</code>, <code>toroidal_placeholder</code>, <code>coordinate_placeholder</code>, <code>fit_offset</code>, <code>spun</code> and <code>s0</code> to <code>s3</code> as new qualifiers; so does the composite <code>poloidal_field_power_supply</code>, whose quantity is named with <code>power_convertor</code>;</li>
       <li>the grammar test suite adds no failure id against the stated base.</li>
     </ul>
 
@@ -70,10 +70,10 @@
     <h2 id="s5">§5 — A name can locate a profile's maximum and a threshold crossing</h2>
     <section data-reckon="section" data-id="s5" data-effort-hours="2.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="elevated" data-status="implementable"></section>
     <p>Two of the accepted additions are grammar machinery, not words. <code>argmax</code> is an operator returning the coordinate at which its operand profile is maximal, so the quantity it names has the dimension of that coordinate, not of the operand. <code>threshold_crossing</code> is a position naming the event at which an observable first crosses a stated threshold.</p>
-    <p>A name carries no unit itself. An operator's effect on dimension is declared in <code>operators.yml</code> by <code>dimension_transforming</code> and its <code>semantic_effects</code>. <code>OperatorSemanticEffect</code> in <code>grammar/vocab_loaders.py</code>, which is hand-written, enumerates those effects, and <code>grammar/context.py</code> publishes them to composers. So the rule for <code>argmax</code> is a declared effect a composer reads. Positions are declared under <code>id: position</code> in <code>specification.yml</code> and rendered by <code>grammar/render.py</code>.</p>
+    <p>A name carries no unit itself; a catalog entry pairs a name with a unit, and <code>validation/semantic.py</code> checks that pairing. Today an operator's <code>dimension_transforming</code> flag in <code>operators.yml</code> is read only by <code>_load_dimension_transforming_operators()</code> in that module, to exempt such operators from the base-implies-unit warning; nothing derives a dimension from it. So <code>argmax</code> needs a check that acts: an entry whose name applies <code>argmax</code> over a coordinate must carry that coordinate's dimension, not the operand's. Its semantic effect is declared in <code>operators.yml</code>, enumerated by <code>OperatorSemanticEffect</code> in the hand-written <code>grammar/vocab_loaders.py</code>, and enforced in <code>validation/semantic.py</code>. Positions are declared under <code>id: position</code> in <code>specification.yml</code> and rendered by <code>render_locus</code> in <code>grammar/render.py</code>.</p>
     <p><strong>Done when:</strong></p>
     <ul>
-      <li><code>argmax</code> is declared dimension-transforming with a named semantic effect stating that the result takes its coordinate's dimension, and the composer context <code>context.py</code> publishes carries that effect, by test;</li>
+      <li><code>argmax</code> carries a named semantic effect stating that the result takes its coordinate's dimension, and <code>validation/semantic.py</code> accepts an <code>argmax</code> entry whose unit is the coordinate's and reports one that carries the operand's unit, each by test;</li>
       <li>the worklist's representative names for both tokens (the power-deposition peak location and the current-quench threshold time) parse, render canonically and round-trip, by test, and a planted removal of the effect fails its test;</li>
       <li>the grammar test suite adds no failure id against the stated base.</li>
     </ul>
