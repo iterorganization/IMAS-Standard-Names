@@ -1,0 +1,62 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-09T10:02:56.220Z",
+  "dispatched_at": "2026-11-09T09:55:45Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:50",
+      "id": "done_when-1",
+      "reason": "the node would ship a guard that passes on the unfixed tree; the assertion has to become a vocabulary-membership check (`\"fit_offset\" not in load_qualifiers()`, and no duplicate `toroidal` component registered), and the two placeholder rows need their real spellings named.",
+      "text": "the third done-when bullet asks that ten rejected spellings \"stay unparseable as new tokens, by test\", but a bare qualifier, region or placeholder token is never a valid standard name, so `parse(\"s0\")`, `parse(\"fit_offset\")` and the rest fail whether or not the forbidden token is added; and two of the ten are not spellings at all \u2014 the worklist's rejected additions for `component:toroidal_placeholder` and `physical_base:coordinate_placeholder` are the existing tokens `toroidal` and `coordinate` (final_spelling), while the plan names the placeholder gap keys. The bullet therefore certifies a rejection it never observes",
+      "type": "done_when",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:76",
+      "id": "reasoning-1",
+      "reason": "without a named dimension source the measure cannot be met as written, and the likely outcome is a check hardcoded to `normalized_toroidal_flux_coordinate` that only appears to generalise.",
+      "text": "\u00a75's first done-when requires `validation/semantic.py` to accept an `argmax` entry \"whose unit is the coordinate's\" and report one \"that carries the operand's unit\", but no grammar source states a coordinate's dimension: `physical_bases.yml` entries carry `kind`/`aliases`/`inherently_dimensional` and no unit, `geometry_carriers.yml` carries only `aliases` and `constant_on_flux_surface`, `locus_registry.yml` carries only `type`/`allowed_relations`/`definition`, and `coordinate_axes.yml` carries `aliases` alone \u2014 a search of every file under `grammar/vocabularies/` finds no `unit:` field at all. The declared mechanism (a semantic effect declared in `operators.yml`, enumerated by `OperatorSemanticEffect`, enforced in `semantic.py`) says what the rule is but not where the expected dimension comes from, so the node must either hardcode the one representative name or invent an unstated units table",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:70",
+      "id": "single_goal-1",
+      "reason": "`threshold_crossing` could have returned to \u00a72's 34 as a plain token (making it 35), leaving \u00a75 as one atomic semantics deliverable that can be reviewed and, if it fails, rejected on its own.",
+      "text": "\u00a75 combines `argmax`'s dimension-transforming semantics (new `OperatorSemanticEffect` member, `operators.yml` change, a new check in `validation/semantic.py`, elevated risk) with `threshold_crossing`, which needs nothing beyond a position entry in `locus_registry.yml` and renders through the existing `render_locus` \u2014 so one verdict has to close a semantics change and a vocabulary addition together",
+      "type": "single_goal",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "26c9deed2591ef3d4747ed8e27721a601b2076be",
+  "plan_fingerprint": "8373f0f567c876b0a1f359e785e0431d927593bb3d55a71f10d170d46c4d91d6",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261109T095524777614-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "932804b7c0a77827ef74dd92a2741aac07b0d25e",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 every cited target resolves: `validation/semantic.py` (`_load_dimension_transforming_operators`, used at line 551), `operators.yml`, `grammar/vocab_loaders.py`'s `OperatorSemanticEffect`, `specification.yml`'s `id: position`, `render.py`'s `render_locus`; `objects` is a real vocabulary slice of `locus_registry.yml` (`grammar_codegen/spec.py:246`), and the postfix-locus example composes as written (`parse(\"voltage_of_flux_loop\")` \u2192 `voltage_of_flux_loop`).",
+    "done_when": "a finding \u2014 \u00a72's rejection bullet (docs/plans/dd-gap-vocabulary.html:50) states a guard that cannot fire: none of the ten named strings parses as a standard name even after the forbidden token is added.",
+    "evidence_paths": "pass \u2014 \u00a73's rework writes `docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json` and its summary HTML inside the repository, and \u00a72/\u00a75 gate on tests rather than a scratch path.",
+    "naming": "pass \u2014 \u00a72 and \u00a75 name only real symbols and mechanisms; no plan labels, stage names, ticket numbers or changelog prose.",
+    "reasoning": "a finding \u2014 \u00a75's root cause is right (verified: `dimension_transforming` is read only to exempt, semantic.py:483-496 and 551), but the enforcement it promises has no source for the coordinate's dimension, so the mechanism cannot produce its own done-when.",
+    "single_goal": "a finding \u2014 \u00a75 (docs/plans/dd-gap-vocabulary.html:70) bundles a dimension-semantics change for `argmax` with a plain `threshold_crossing` position-token addition, so one verdict must close both and its gate proves neither.",
+    "wiring": "pass \u2014 `plan-section-depends-on` gives \u00a73\u2192\u00a72, \u00a74\u2192{\u00a72,\u00a75}, \u00a76\u2192{\u00a73,\u00a74}, so the reworked spellings now wait on the release they ship with, and `plan-blocks` names the imas-codex handoff."
+  },
+  "section_digests": {
+    "_document": "b39409e9f3e23b3c530d0b14a6e67c8e7aa5fdffb5d6dd92c817d07c627e6be2",
+    "s1": "b55eeb0aa4a599e093121d07e4f0ce2dbdcd085089f7cfcb02c4180f625924d6",
+    "s2": "b695cf0052bd34f21afc8f662cb4efcac96d6461febaff27a66cac3c5715f232",
+    "s3": "873108c0858d6858d5ff52ce7000fb6b83d337ef6e9469f3fcd4625f030af555",
+    "s4": "f7c2f479906c612a6804f1f614ab8a00c80a0e4e4c6caa7005f3f053cb9f3dca",
+    "s5": "c3e1e4fdd5fc5b5219e55638b7cbad18458fc94a241a49c1c8805a2ec1b22adf",
+    "s6": "8eb177421906548169b55a4c8fccb670df6669c3a9e417bbb6f92283b441d4c7"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-09T11:37:54.491197+00:00",
+  "total": null
+}
