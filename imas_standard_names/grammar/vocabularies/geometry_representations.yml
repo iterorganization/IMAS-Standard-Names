@@ -3,3 +3,7 @@
 # These tokens describe the frame and primitive in which a quantity is stored.
 # They do not name a machine-global coordinate axis.
 - local_circle
+
+- arc_of_circle  # A contour represented by circular arc segments, each specified by an endpoint and a curvature radius.
+- oblique  # A planar cross-section represented by inclined edges and reference coordinates rather than an axis-aligned rectangle.
+- thick_line  # A cross-section represented by a central line segment together with its finite transverse thickness.

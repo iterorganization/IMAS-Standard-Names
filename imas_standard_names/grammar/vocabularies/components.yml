@@ -68,3 +68,5 @@
 - s1
 - s2
 - s3
+
+- horizontal  # Selects the horizontal transverse direction of a beam cross-section, perpendicular to its vertical transverse direction and beam propagation axis.

@@ -139,3 +139,7 @@
 - line_radiation               # bound-bound atomic line radiation (distinct from impurity_radiation / radiation)
 - synchrotron_radiation        # synchrotron / electron-cyclotron radiation losses
 - pumping                      # active removal or transfer of gas by a pumping system
+
+- tritium_decay  # Radioactive beta decay of tritium whose emitted electrons supply a runaway-electron seed population.
+- fragmentation  # Breakup of a solid pellet into smaller fragments, including the gas released during that breakup.
+- sublimation  # The direct phase transition of a solid into a gas, whose energy here is given per atom.

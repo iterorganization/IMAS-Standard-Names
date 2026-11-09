@@ -152,10 +152,53 @@ def test_public_context_exposes_plane_and_representation_vocabularies() -> None:
     templates = context["grammar"]["canonical_templates"]
 
     assert vocabularies["section_planes"] == ["poloidal"]
-    assert vocabularies["geometry_representations"] == ["local_circle"]
+    assert vocabularies["geometry_representations"] == [
+        "arc_of_circle",
+        "local_circle",
+        "oblique",
+        "thick_line",
+    ]
     assert templates["section_plane"] == "<plane>_plane_<cross_sectional_quantity>"
     assert (
         templates["geometry_representation"] == "<representation>_<quantity>_of_<owner>"
     )
     assert "section_plane" in context["segment_order"]
     assert "geometry_representation" in context["segment_order"]
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "arc_of_circle_radius_of_antenna_strap",
+        "radial_arc_of_circle_vertex_of_antenna_strap",
+        "vertical_oblique_position_of_iron_core_segment",
+        "second_inclination_oblique_angle_of_iron_core_segment",
+        "radial_thick_line_vertex_of_plasma_filament",
+    ],
+)
+def test_declared_representation_bases_keep_their_canonical_identity(name: str) -> None:
+    ir = parse(name, strict=True).ir
+    model = parse_standard_name(name)
+    assert compose(ir) == name
+    assert compose_standard_name(model) == name
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "arc_of_circle_area_of_antenna_strap",
+        "oblique_radius_of_iron_core_segment",
+        "thick_line_length_of_plasma_filament",
+        "arc_of_circle_vertex",
+        "oblique_position",
+        "thick_line_vertex",
+        "radial_arc_of_circle_radius_of_antenna_strap",
+        "arc_of_circle_oblique_position_of_iron_core_segment",
+        "arc_of_circle_local_circle_radius_of_antenna_strap",
+    ],
+)
+def test_representation_rejects_undeclared_bases_and_incompatible_context(
+    name: str,
+) -> None:
+    with pytest.raises(ParseError):
+        parse(name, strict=True)

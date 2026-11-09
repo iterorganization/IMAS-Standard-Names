@@ -932,3 +932,17 @@ bases:
   # qualifier (surface_temperature, surface_roughness) and qualifies `area`
   # the same way, symmetric with wetted_area / effective_area /
   # cross_sectional_area.
+  ballooning_parameter:
+    aliases: []
+    kind: scalar
+    definition: The normalized pressure-gradient parameter that measures ballooning-mode drive in the adopted equilibrium convention.
+  delta_prime:
+    aliases: []
+    kind: scalar
+    inherently_dimensional: true
+    definition: The tearing-stability contribution with inverse-length units entering the modified Rutherford equation for magnetic-island width evolution.
+  stress:
+    aliases: []
+    kind: tensor
+    inherently_dimensional: true
+    definition: A rank-two tensor whose contraction with a surface normal gives force per unit area transmitted across that surface.

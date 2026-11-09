@@ -338,11 +338,12 @@ segments:
     vocabulary: geometry_representations
     description: >
       Object-local construction representation for a geometry quantity.
-      local_circle identifies a radius belonging to a circular-arc
-      representation in the owner's local geometry; it is distinct from the
-      global cylindrical radial_coordinate and from an outline coordinate.
-      The representation renders immediately before the physical base and
-      requires an explicit owner locus.
+      local_circle identifies an unprojected radius in the owner's local
+      geometry. arc_of_circle represents arc vertices and curvature radii;
+      oblique represents section positions and edge angles; thick_line
+      represents finite-thickness line vertices. The representation renders
+      immediately before its physical base or geometry carrier and requires
+      an explicit owner locus.
   - id: geometric_base
     optional: true
     vocabulary: geometric_bases
