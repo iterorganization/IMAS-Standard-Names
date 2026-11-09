@@ -1,0 +1,62 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-09T11:53:26.398Z",
+  "dispatched_at": "2026-11-09T11:49:21Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:50",
+      "id": "done_when-1",
+      "reason": "without naming `operators.yml` as excluded, the gate is either red on correct work or the worker silently narrows it, and a narrowed check stops detecting a stray token in the segment it dropped.",
+      "text": "\u00a72's third bullet requires the tokens added since `v0.10.1`, compared vocabulary by vocabulary, to be \"exactly the 35 above\", but \u00a75 adds `argmax` to `operators.yml` and both sections land in the same release (\u00a74 releases \"once \u00a72 and \u00a75 land\"), so the check fails on an addition the plan itself mandates; `operators.yml` carries no `argmax` today, so a worker running \u00a72's check at a head that also holds \u00a75 sees 36 additions, not 35",
+      "type": "done_when",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:44",
+      "id": "anchors_resolve-1",
+      "reason": "a worker taking \"(geometry)\" as the `geometry` segment lands two entity/position-style loci in `locus_registry.yml` instead of shape carriers, and neither spelling then serves the DD sources the worklist rows name; the plan fixed exactly this class of label-to-file mismatch for the equipment objects and left the `image`/`grid` instance standing.",
+      "text": "\u00a72 lists `image` and `grid` as \"(geometry)\" and instructs the worker to add each token \"in the segment and vocabulary file the worklist row names\", but for these two the two disagree: `specification.yml` declares `- id: geometry` with `vocabulary: positions`, which includes `vocabularies/locus_registry.yml`, while the worklist row's `yaml_path` is `imas_standard_names/grammar/vocabularies/geometry_carriers.yml`, the `geometric_bases` vocabulary (`specification.yml:496`) that holds shape carriers such as `normalized_toroidal_flux_coordinate`; no `image` or `grid` entry exists in either file today",
+      "type": "anchors_resolve",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:72",
+      "id": "reasoning-1",
+      "reason": "the section's own gate demands that exact spelling parse canonically, so the worker must either fail its gate or invent a second indexed rendering convention that \u00a75 never scopes and \u00a74 would ship unreviewed; the canonical analogue is `argmax_of_deposited_power_with_respect_to_normalized_toroidal_flux_coordinate`.",
+      "text": "\u00a75 says `argmax` is \"like `derivative_with_respect_to`\", \"an indexed unary-prefix operator whose index parameter is the coordinate, so the name carries the coordinate\", and pins `argmax_with_respect_to_normalized_toroidal_flux_coordinate_of_deposited_power` as the spelling that must parse and round-trip (line 77); but the existing indexed form renders the operand first and the coordinate last \u2014 `derivative_of_pressure_with_respect_to_normalized_toroidal_flux_coordinate` round-trips strictly, while the inverted order `derivative_with_respect_to_normalized_toroidal_flux_coordinate_of_pressure` fails strict parsing with \"_NonCanonicalParseError name is not canonical: flat segment order renders as 'derivative_of_pressure_with_respect_to_\u2026'\", and the plan's `argmax` example fails the same way (\"residue \u2026 does not match any physical_base\")",
+      "type": "reasoning",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "18615350b4b2a2e4e0d7205e912913bfc6c2c718",
+  "plan_fingerprint": "a65cfe5294e560469c8c0d94a766984363db68547ed4a8c155a2dc321cbcd248",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261109T114904557441-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "ced37422a59374f4794a2e082cc1c253ae250f22",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "a finding \u2014 \u00a72's `(geometry)` label for `image` and `grid` (line 44) does not resolve to the vocabulary the worklist row names, because the `geometry` segment's vocabulary is `positions` while the row's `yaml_path` is `geometry_carriers.yml`.",
+    "done_when": "a finding \u2014 \u00a72's third bullet (line 50) requires the tokens added since `v0.10.1`, compared vocabulary by vocabulary, to be \"exactly the 35 above\", which the parallel build of \u00a75 contradicts by adding `argmax` to `operators.yml`.",
+    "evidence_paths": "pass \u2014 neither section names a scratchpad or node-local path; \u00a72 and \u00a75 gate on the in-tree grammar suite, and the only evidence files named (`docs/evidence/fragments/dd-gap-vocabulary/*`) belong to \u00a73 and sit in the repository.",
+    "naming": "pass \u2014 no plan labels, stage names, ticket numbers or version tags reach a symbol, file or comment; `v0.10.1` appears only as a comparison base in a gate description, which is the data the check compares against.",
+    "reasoning": "a finding \u2014 the stated root cause matches its evidence (the `dimension_transforming` flag really is read only by `_load_dimension_transforming_operators()` at `validation/semantic.py:483`, and `OperatorSemanticEffect` really is the hand-written `Literal[\"temporal_change\"]` at `grammar/vocab_loaders.py:120`), but the mechanism does not produce the done-when: the worked `argmax` spelling inverts the flat segment order the cited derivative uses.",
+    "single_goal": "pass \u2014 \u00a72 is now one vocabulary addition with `argmax` removed, and \u00a75 is one operator's semantics plus its validator check; the earlier bundling of the two is resolved by the split.",
+    "wiring": "pass \u2014 `plan-section-depends-on` gives \u00a74 both `dd-gap-vocabulary#s2` and `#s5` and \u00a73 `#s2`, so every section's upstream resolves; \u00a75's `argmax` no longer sits inside \u00a72, and \u00a75 needs no upstream of its own."
+  },
+  "section_digests": {
+    "_document": "b39409e9f3e23b3c530d0b14a6e67c8e7aa5fdffb5d6dd92c817d07c627e6be2",
+    "s1": "b55eeb0aa4a599e093121d07e4f0ce2dbdcd085089f7cfcb02c4180f625924d6",
+    "s2": "d96933d59002b0b3a9d390d10fa49ba026da8319c1823de9687f57282c663b98",
+    "s3": "873108c0858d6858d5ff52ce7000fb6b83d337ef6e9469f3fcd4625f030af555",
+    "s4": "f7c2f479906c612a6804f1f614ab8a00c80a0e4e4c6caa7005f3f053cb9f3dca",
+    "s5": "b4bfa3f83cde83414b501a01bcb0a0b9a7a4ff48ff21ecb992f4372e8fab1a1a",
+    "s6": "8eb177421906548169b55a4c8fccb670df6669c3a9e417bbb6f92283b441d4c7"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-09T12:00:10.542865+00:00",
+  "total": null
+}
