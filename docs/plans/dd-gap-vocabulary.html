@@ -10,7 +10,7 @@
   <meta name="plan-summary" content="Add the lead-accepted vocabulary that 86 DD sources lack, rework six doubtful additions, and release the grammar for imas-codex to pin.">
   <meta name="plan-status" content="active">
   <meta name="plan-roi" content="high">
-  <meta name="plan-effort-hours" content="5.0">
+  <meta name="plan-effort-hours" content="8.5">
   <meta name="plan-capability-version" content="1.0">
   <meta name="plan-capability-class" content="orchestrator">
   <meta name="plan-capability-reasoning" content="deep">
@@ -19,8 +19,8 @@
   <meta name="plan-owner" content="Simon McIntosh">
   <meta name="plan-tags" content="grammar,vocabulary,release">
   <meta name="plan-blocks" content="imas-codex:sn-integrity-backlog">
-  <meta name="plan-section-depends-on" content="{&quot;s4&quot;: [&quot;dd-gap-vocabulary#s2&quot;]}">
-  <meta name="plan-section-declarations" content="{&quot;s1&quot;:&quot;done&quot;,&quot;s2&quot;:&quot;implementable&quot;,&quot;s3&quot;:&quot;implementable&quot;,&quot;s4&quot;:&quot;implementable&quot;}">
+  <meta name="plan-section-depends-on" content="{&quot;s3&quot;: [&quot;dd-gap-vocabulary#s2&quot;], &quot;s4&quot;: [&quot;dd-gap-vocabulary#s2&quot;, &quot;dd-gap-vocabulary#s5&quot;], &quot;s6&quot;: [&quot;dd-gap-vocabulary#s3&quot;]}">
+  <meta name="plan-section-declarations" content="{&quot;s1&quot;:&quot;done&quot;,&quot;s2&quot;:&quot;implementable&quot;,&quot;s3&quot;:&quot;implementable&quot;,&quot;s4&quot;:&quot;implementable&quot;,&quot;s5&quot;:&quot;implementable&quot;,&quot;s6&quot;:&quot;implementable&quot;}">
   <title>The Vocabulary The DD's Unnamed Sources Need | imas-standard-names</title>
   <link rel="stylesheet" href="/_shared/foundation.css">
   <link rel="stylesheet" href="/_shared/dashboard.css">
@@ -39,28 +39,49 @@
     <p>This repository owns the vocabulary and its release; imas-codex owns the pin bump, the graph grammar snapshot and the rerun of the sources, under its own plan <code>sn-integrity-backlog</code> §51.</p>
 
     <h2 id="s2">§2 — The accepted vocabulary enters the grammar</h2>
-    <section data-reckon="section" data-id="s2" data-effort-hours="2.5" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable"></section>
-    <p>Add these 36 tokens, in the segment the worklist assigns and with its one-sentence definition, by editing the vocabulary YAMLs and <code>grammar/specification.yml</code> and regenerating with <code>build-grammar</code>. Never hand-edit the generated files.</p>
-    <p><code>source</code> (qualifier), <code>horizontal</code> (component), <code>pipe</code>, <code>ion_source</code>, <code>optical_fibre</code>, <code>power_convertor</code>, <code>slit</code>, <code>thermal_shield</code> (devices), <code>image_surface</code>, <code>magnetic_field_line</code>, <code>pre_sawtooth_crash</code>, <code>threshold_crossing</code> (positions), <code>arc_of_circle</code>, <code>oblique</code>, <code>thick_line</code> (geometry representations), <code>image</code>, <code>grid</code> (geometry), <code>ballooning_parameter</code>, <code>delta_prime</code>, <code>stress</code> (physical bases), <code>helical</code>, <code>ripple</code>, <code>sine</code>, <code>cosine</code>, <code>chemical</code>, <code>bounce</code>, <code>compressive</code>, <code>second_inclination</code>, <code>rotational</code>, <code>tangency</code> (qualifiers), <code>argmax</code> (operator), <code>tritium_decay</code>, <code>fragmentation</code>, <code>sublimation</code> (processes), <code>lithium_6</code> (subject), <code>side</code> (zone).</p>
-    <p><code>argmax</code> returns the coordinate at which its operand profile is maximal, so the name it forms has the unit of that coordinate, not of the operand. <code>threshold_crossing</code> names the event at which an observable first crosses a stated threshold. Both need their unit and rendering rules carried by the grammar rather than by one name.</p>
+    <section data-reckon="section" data-id="s2" data-effort-hours="2.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable"></section>
+    <p>Add these 34 tokens, in the segment and vocabulary file the worklist row names and with its one-sentence definition, by editing the vocabulary YAMLs and <code>grammar/specification.yml</code> and regenerating with <code>build-grammar</code>. Never hand-edit the generated files.</p>
+    <p><code>source</code> (qualifier), <code>horizontal</code> (component), <code>pipe</code>, <code>ion_source</code>, <code>optical_fibre</code>, <code>power_convertor</code>, <code>slit</code>, <code>thermal_shield</code> (equipment objects), <code>image_surface</code>, <code>magnetic_field_line</code>, <code>pre_sawtooth_crash</code> (positions), <code>arc_of_circle</code>, <code>oblique</code>, <code>thick_line</code> (geometry representations), <code>image</code>, <code>grid</code> (geometry), <code>ballooning_parameter</code>, <code>delta_prime</code>, <code>stress</code> (physical bases), <code>helical</code>, <code>ripple</code>, <code>sine</code>, <code>cosine</code>, <code>chemical</code>, <code>bounce</code>, <code>compressive</code>, <code>second_inclination</code>, <code>rotational</code>, <code>tangency</code> (qualifiers), <code>tritium_decay</code>, <code>fragmentation</code>, <code>sublimation</code> (processes), <code>lithium_6</code> (subject), <code>side</code> (zone).</p>
+    <p>The six equipment objects go to the <code>objects</code> vocabulary in <code>locus_registry.yml</code>. <code>specification.yml</code> keeps the prefix <code>device</code> segment for parse compatibility only, so every representative name uses the postfix locus form that compose tooling enforces, for example <code>voltage_of_power_convertor</code>, never <code>power_convertor_voltage</code>.</p>
     <p><strong>Done when:</strong></p>
     <ul>
-      <li>every one of the 36 tokens is present in its declared segment with the worklist's definition, and <code>build-grammar</code> leaves the generated files without drift;</li>
-      <li>a test parses and round-trips one representative name per token, taken from the worklist row that needs it, and a planted removal of any one token fails that test;</li>
+      <li>every one of the 34 tokens is present in its declared vocabulary with the worklist's definition, and <code>build-grammar</code> leaves the generated files without drift;</li>
+      <li>a test parses and round-trips one representative name per token, in canonical form and taken from the worklist row that needs it, and a planted removal of any one token fails that test;</li>
       <li><code>poloidal_field_circuit</code>, <code>power_supply</code> and the other ten rejected spellings stay unparseable as new tokens, by test;</li>
-      <li>a name formed with <code>argmax</code> carries the coordinate's unit, and one formed with <code>threshold_crossing</code> renders and parses canonically, each by test;</li>
       <li>the grammar test suite adds no failure id against the stated base.</li>
     </ul>
 
     <h2 id="s3">§3 — The six doubtful additions are reworked</h2>
     <section data-reckon="section" data-id="s3" data-effort-hours="1.5" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable"></section>
-    <p>The lead judged six proposed tokens too generic or too composite. Each is reworked against the DD documentation of the sources that need it. A generic <code>species</code> subject is replaced by the named pellet species already in the vocabulary. The two <code>breakdown_candidate_*</code> words are split into their parts. Each of <code>current_alignment</code>, <code>plateau</code> and <code>green_function</code> is expressed with existing tokens or as one named physical quantity whose definition stands on its own.</p>
-    <p><strong>Done when:</strong> <code>docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json</code> holds one row per doubtful token with every DD source path it blocks, the reworked spelling or parts, the existing token each part reuses, and the DD documentation that justifies it; any genuinely new token is listed separately with its definition for the lead's ruling; <code>doubtful-rework.html</code> beside it summarises the result. No grammar file changes in this section.</p>
+    <p>The lead judged six proposed tokens too generic or too composite. Each is reworked against the DD documentation of the sources that need it.</p>
+    <ul>
+      <li><code>species</code> serves <code>pellets/time_slice/pellet/species/density</code>, an intact pellet. The vocabulary's only pellet species subject is <code>shattered_pellet_species</code>, which names a different DD quantity and must not be reused for it. The rework states whether an intact-pellet species subject is a genuine new token and, if so, its spelling and definition.</li>
+      <li>The two <code>breakdown_candidate_*</code> words are split into their parts.</li>
+      <li>Each of <code>current_alignment</code>, <code>plateau</code> and <code>green_function</code> is expressed with existing tokens or as one named physical quantity whose definition stands on its own.</li>
+    </ul>
+    <p>It waits for §2 so that its spellings are probed against the grammar they will be released into.</p>
+    <p><strong>Done when:</strong> <code>docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json</code> holds one row per doubtful token with every DD source path it blocks, the reworked spelling or parts, the existing token each part reuses, and the DD documentation that justifies it; each reworked spelling built only from existing tokens round-trips through <code>parse()</code> at §2's head, recorded per row; each row that needs a genuinely new token lists it separately with its definition for the lead's ruling; <code>doubtful-rework.html</code> beside it summarises the result. No grammar file changes in this section.</p>
 
     <h2 id="s4">§4 — The grammar is released and handed to imas-codex</h2>
     <section data-reckon="section" data-id="s4" data-effort-hours="1.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="standard" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable"></section>
-    <p>Once §2 lands, cut a minor release from <code>main</code> with the release CLI. The CLI refuses a detached worktree, so the coordinator cuts it from the main checkout after CI is green on upstream. imas-codex then bumps both pins in its <code>pyproject.toml</code> and syncs its graph grammar snapshot under its own plan.</p>
-    <p><strong>Done when:</strong> a tag above <code>v0.10.1</code> carrying §2 is pushed to upstream, its publish workflow is green, and PyPI reports that version as latest.</p>
+    <p>Once §2 and §5 land, cut a minor release from <code>main</code> with the release CLI. The CLI refuses a detached worktree, so the coordinator cuts it from the main checkout after CI is green on upstream. imas-codex then bumps both pins in its <code>pyproject.toml</code> and syncs its graph grammar snapshot under its own plan.</p>
+    <p><strong>Done when:</strong> a tag above <code>v0.10.1</code> carrying §2 and §5 is pushed to upstream, its publish workflow is green, and PyPI reports that version as latest.</p>
+
+    <h2 id="s5">§5 — A name can locate a profile's maximum and a threshold crossing</h2>
+    <section data-reckon="section" data-id="s5" data-effort-hours="2.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="elevated" data-status="implementable"></section>
+    <p>Two of the accepted additions are grammar machinery, not words. <code>argmax</code> is an operator returning the coordinate at which its operand profile is maximal, so the quantity it names has the dimension of that coordinate, not of the operand. <code>threshold_crossing</code> is a position naming the event at which an observable first crosses a stated threshold.</p>
+    <p>A name carries no unit itself. An operator's effect on dimension is declared in <code>operators.yml</code> by <code>dimension_transforming</code> and its <code>semantic_effects</code>. <code>OperatorSemanticEffect</code> in <code>grammar/vocab_loaders.py</code>, which is hand-written, enumerates those effects, and <code>grammar/context.py</code> publishes them to composers. So the rule for <code>argmax</code> is a declared effect a composer reads. Positions are declared under <code>id: position</code> in <code>specification.yml</code> and rendered by <code>grammar/render.py</code>.</p>
+    <p><strong>Done when:</strong></p>
+    <ul>
+      <li><code>argmax</code> is declared dimension-transforming with a named semantic effect stating that the result takes its coordinate's dimension, and the composer context <code>context.py</code> publishes carries that effect, by test;</li>
+      <li>the worklist's representative names for both tokens (the power-deposition peak location and the current-quench threshold time) parse, render canonically and round-trip, by test, and a planted removal of the effect fails its test;</li>
+      <li>the grammar test suite adds no failure id against the stated base.</li>
+    </ul>
+
+    <h2 id="s6">§6 — The reworked spellings the lead accepts enter the grammar</h2>
+    <section data-reckon="section" data-id="s6" data-effort-hours="1.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="standard" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable"></section>
+    <p>Once §3 lands and the lead rules on its new-token list, the accepted tokens are added the way §2 adds its own and released in a patch release. Sources whose rework needs no new token are named by imas-codex directly after the §4 release.</p>
+    <p><strong>Done when:</strong> every token the lead accepts from <code>doubtful-rework.json</code> is in its vocabulary with a parse and round-trip test of the row's spelling and a planted-removal control, and a patch tag carrying them is pushed to upstream and published.</p>
 
     <section data-reckon="decisions" id="decisions" class="r-decisions">
       <h2><span class="sec">§</span> Decisions</h2>
@@ -70,7 +91,7 @@
       <h2><span class="sec">§</span> Followups</h2>
       <article class="r-fu" data-id="f-dgv-001" data-status="open" data-capability-version="1.0" data-capability-class="orchestrator" data-written-by="reckon-create" data-written-at="2026-11-09">
         <h4 class="r-fu-title">Add the accepted vocabulary, rework the doubtful six, release</h4>
-        <div class="r-fu-body"><p>Build §2 and §3 in parallel; §4 follows §2.</p></div>
+        <div class="r-fu-body"><p>Build §2 and §5 in parallel. §3 follows §2, §4 follows §2 and §5, and §6 follows §3 and the lead’s ruling.</p></div>
         <pre class="r-fu-prompt">/reckon-build dd-gap-vocabulary</pre>
       </article>
     </section>
