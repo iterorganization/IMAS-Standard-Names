@@ -1,0 +1,46 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-09T12:06:42.534Z",
+  "dispatched_at": "2026-11-09T12:01:11Z",
+  "findings": [
+    {
+      "anchor": "docs/plans/dd-gap-vocabulary.html:72",
+      "id": "reasoning-1",
+      "reason": "the node's done-when (same section, :77) requires the pinned spelling to parse, render canonically and round-trip, so as written the node either fails or silently ships a spelling the plan does not name, and the plan must say which it wants (name the operator `argmax_with_respect_to` like the derivative, or accept the fused-prefix spelling).",
+      "text": "\u00a75 says `argmax` is \"like `derivative_with_respect_to`\" and that the name \"carries the coordinate in the same canonical order, operand first and coordinate last\", pinning `argmax_of_deposited_power_with_respect_to_normalized_toroidal_flux_coordinate`, but the operand-first form is emitted only for an operator whose fused token literally contains `_with_respect_to_`: `render.py:200-207` partitions `op.op` on `_with_respect_to_` and otherwise falls through to `f\"{op.op}_of_{operand}\"`, and `parser.py:1078-1084` skips any operator whose `partition(\"_with_respect_to\")` yields an empty relation, so a bare `argmax` indexed operator renders and parses as `argmax_normalized_toroidal_flux_coordinate_of_deposited_power` and the pinned spelling raises ParseError",
+      "type": "reasoning",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "ed3a3f76dfae9ff7bf4d827544df4d5fe4aee047",
+  "plan_fingerprint": "ace8ec63c87dff83e91670c3edf36ac7cab2b46feb6375494a76f8c2a9ecc1d4",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261109T120052501055-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "1ebdfdaabe305134ae8db18e3839776c11017e0a",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 for the changed units every anchor resolves: `geometry_carriers.yml` exists and `specification.yml` binds `geometric_bases: !include vocabularies/geometry_carriers.yml`; `locus_registry.yml` is the file bound to both `objects` and `positions` (specification.yml:492-495), so \u00a72's \"objects vocabulary in `locus_registry.yml`\" and its equipment-object placement are correct and each of the six carries `yaml_path: .../locus_registry.yml` in the worklist; `specification.yml` does retain the prefix `device` segment \"for parse compatibility only\" (specification.yml:56-60, 283-287); `build-grammar` is a declared console entrypoint (specification.yml:11-13); tags `v0.10.1` exists in this tree; and the worklist file \u00a71 cites exists at the stated path.",
+    "done_when": "pass \u2014 \u00a72's third bullet is a real negative control that compares the tree against `v0.10.1` (verified empty of vocabulary drift: `git diff --stat v0.10.1 HEAD -- grammar/vocabularies/ specification.yml` prints nothing, so \"exactly the 35\" is achievable), it names a planted-extra-token arm as well as a planted-removal arm, and \u00a75's second bullet names a planted-removal control on the semantic effect; the s5 spelling defect that bullet 2 measures is scored under `reasoning` because the measure is sound and will fail as written, which is how the defect surfaces.",
+    "evidence_paths": "pass \u2014 neither changed unit writes an evidence file; \u00a72's and \u00a75's measures are suite tests and the drift/planted-token checks, whose logs land on the run's own evidence path.",
+    "naming": "pass \u2014 no plan labels, gate ids, ticket numbers or version tags enter the vocabulary or the semantic-effect member \u00a75 proposes; `argmax`, `OperatorSemanticEffect` and `dimension_transforming` are mechanism names that already exist in the tree.",
+    "reasoning": "a finding \u2014 \u00a75's stated canonical order is not the order the indexed-operator machinery renders for a bare operator token, so the spelling its done-when pins does not parse.",
+    "single_goal": "pass \u2014 \u00a75 now carries one deliverable, `argmax`'s dimension semantics, with `threshold_crossing` moved to \u00a72, so the earlier bundling of two mechanics belongs to no section; \u00a72 is 35 vocabulary registrations plus the tests that police them.",
+    "wiring": "pass \u2014 \u00a72 feeds \u00a73, and \u00a74's `plan-section-depends-on` names both \u00a72 and \u00a75, which is exactly the pair \u00a74 releases (\"Once \u00a72 and \u00a75 land\"); \u00a75's section block sits at the head of \u00a75 and its `data-id` matches the dependency key."
+  },
+  "section_digests": {
+    "_document": "b39409e9f3e23b3c530d0b14a6e67c8e7aa5fdffb5d6dd92c817d07c627e6be2",
+    "s1": "b55eeb0aa4a599e093121d07e4f0ce2dbdcd085089f7cfcb02c4180f625924d6",
+    "s2": "b39fca198ccb7a4cef1f1c2d5f590ba5bc6d0d91bf945ca5b9431ef143a97a2c",
+    "s3": "873108c0858d6858d5ff52ce7000fb6b83d337ef6e9469f3fcd4625f030af555",
+    "s4": "f7c2f479906c612a6804f1f614ab8a00c80a0e4e4c6caa7005f3f053cb9f3dca",
+    "s5": "a296d04c8c8c37bfb34cc6134f0c09b265c54af407598d146427bd44c16de040",
+    "s6": "8eb177421906548169b55a4c8fccb670df6669c3a9e417bbb6f92283b441d4c7"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-09T12:14:01.701503+00:00",
+  "total": null
+}
