@@ -1,0 +1,92 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-09T12:18:02.024Z",
+  "dispatched_at": "2026-11-09T12:14:51Z",
+  "findings": [
+    {
+      "anchor": "imas_standard_names/grammar/vocabularies/physical_bases.yml:423",
+      "id": "reuse_search-1",
+      "reason": "the first node to run \u00a72 hits a red gate the plan does not mention, and must either pick a different spelling or add a documented dual-role exception.",
+      "text": "\u00a72 adds `source` as a qualifier, but `source` is already a registered physical base here and in generic_physical_bases.yml:71, and tests/grammar/test_vocab_uniqueness.py:96 forbids a token in two segments with no qualifiers\u2194physical_bases whitelist, so the addition as written fails that gate; the section's own list of tokens that \"the tag already holds\" omits `source`, so neither the collision nor the segment that must win is settled",
+      "type": "reuse_search",
+      "would_change": true
+    },
+    {
+      "anchor": "imas_standard_names/grammar/vocabularies/operators.yml:72",
+      "id": "reuse_search-2",
+      "reason": "a done-when with no named instrument is either skipped or hand-rolled ad hoc, and the plan should name the command or commit a baseline snapshot.",
+      "text": "\u00a75 states the indexed-operator machinery exists for the derivative (true: parser.py:1071, render.py:202, tests/grammar/test_indexed_derivative_and_over_locus.py), but \u00a72's third done-when asks for a vocabulary-by-vocabulary diff against tag v0.10.1 and no instrument for that exists anywhere in the tree (no snapshot, no tag-comparison script, tests/ carry only current-state assertions), so the check the section calls for has no owner and no command",
+      "type": "reuse_search",
+      "would_change": true
+    },
+    {
+      "anchor": "imas_standard_names/grammar/vocab_loaders.py:138",
+      "id": "thin_wrapper-1",
+      "reason": "one typed field (`dimension_transforming: operand|index|ratio`) is the smaller surface and would also let derivative and integral be derived rather than exempted; a second field leaves two owners of the same fact.",
+      "text": "\u00a75 introduces a new semantic effect to express \"the result takes the index coordinate's dimension\", sitting beside `dimension_transforming` on the same OperatorDefinition, which validation/semantic.py:483 already loads and which already exists precisely to say an operator changes its argument's dimension; the plan states that flag is read only for the base-implies-unit exemption but never says why it cannot carry the target of the transform (operand, index, ratio) instead of a second parallel field",
+      "type": "thin_wrapper",
+      "would_change": true
+    },
+    {
+      "anchor": "imas_standard_names/validation/semantic.py:114",
+      "id": "duplicate_owner-1",
+      "reason": "the honest change is to generalise the sibling-unit comparison into a named-pair check plus a reusable absent-target verdict, not to add a third catalog-reading check beside the two that own it.",
+      "text": "\u00a75's new argmax check (compare the entry's unit with the coordinate's catalog entry, report an unknown when absent) duplicates two mechanisms in this file: `_check_source_flux_unit_collision` (line 114) already looks up a sibling entry in `entries` and compares units, and `_check_referential_integrity` (line 149) already resolves a name reference against `known_names` and reports when the target is absent; `run_semantic_checks` (line 71) already hands every check the entries map, so the \"catalog fixture\" the plan asks for is the existing entries dict",
+      "type": "duplicate_owner",
+      "would_change": true
+    },
+    {
+      "anchor": "imas_standard_names/grammar/vocabularies/locus_registry.yml:30",
+      "id": "duplicate_owner-2",
+      "reason": "a worker reading \"the objects vocabulary\" literally may add a parallel top-level section rather than an `loci:` entity entry, which is exactly the fork this item exists to prevent.",
+      "text": "\u00a72 says the six equipment objects go to \"the `objects` vocabulary in locus_registry.yml\", but that file has no `objects:` key: the owning mechanism is the `loci:` mapping (line 30) and hardware objects are entries with `type: entity` (antenna_strap at line 38, conductor at line 437, coil_conductor at line 443)",
+      "type": "duplicate_owner",
+      "would_change": true
+    },
+    {
+      "anchor": "dd-gap-vocabulary#s2",
+      "id": "interface_budget-1",
+      "reason": "the plan must either account for the added surface in its own text or record the budget exception for the week, and the \"unknown\" verdict in \u00a75 is an unowned refusal family that will read as a pass in any consumer expecting a boolean.",
+      "text": "\u00a72 adds 35 vocabulary definitions to the public grammar (each becoming a StrEnum member in the generated model_types.py and a public filter token), \u00a75 adds an `OperatorSemanticEffect` member (vocab_loaders.py:120) and a new third validation verdict (\"unknown\", alongside the existing WARNING/ERROR string families in run_semantic_checks), and \u00a76 adds a further unknown number of tokens; against public_definitions 0, cli_options 0, mcp_views 0, refusal_families 0 no section names a single definition it retires or merges, or states why nothing can be",
+      "type": "interface_budget",
+      "would_change": true
+    },
+    {
+      "anchor": "dd-gap-vocabulary#s5",
+      "id": "interface_budget-2",
+      "reason": "unless the plan names the return shape (a distinct sentinel issue string, or a severity value), the unknown will be implemented as no issue and silently report a pass.",
+      "text": "\u00a75's \"reports an unknown, never a pass, when the catalog holds no entry for the coordinate\" adds a third outcome to a validation API whose every existing check returns zero or more issue strings (semantic.py:71-98), and the plan does not say how a caller distinguishes unknown from clean, which is the same shape as the fail-open guard this repository has already been burned by",
+      "type": "interface_budget",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "cca75cd8bed7dc69977beeca17977262b5d736b3",
+  "plan_fingerprint": "83edbef680db9ef8a2f50983c7ec1a0dcc048320b4b3989d5cdc354c79bd2556",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261109T121433587360-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "3f266f05b07ee11e4fa45d006b356a644d8c787d",
+  "rubric": "design",
+  "rubric_items": {
+    "deep_module": "pass \u2014 no new module; \u00a75's argmax behaviour lands inside the four existing homes it already has (operators.yml, vocab_loaders.py, operator_semantics.py, validation/semantic.py) and \u00a72/\u00a73/\u00a76 are vocabulary-data edits.",
+    "duplicate_owner": "a finding \u2014 \u00a75's coordinate-unit check re-implements two checks that validation/semantic.py already owns, and \u00a72 names an `objects` vocabulary that locus_registry.yml does not have.",
+    "interface_budget": "a finding \u2014 public_definitions 0, cli_options 0, mcp_views 0, refusal_families 0; \u00a72 adds 35 vocabulary definitions and \u00a75 adds an OperatorSemanticEffect member plus a third validation verdict, and no section names anything it retires or merges, or why nothing can be.",
+    "reuse_search": "a finding \u2014 \u00a72 adds `source` as a qualifier although the same token is already a registered physical base, and the plan cites the codegen and indexed-operator machinery correctly but not the cross-segment uniqueness gate that the addition trips.",
+    "thin_wrapper": "a finding \u2014 \u00a75 adds a second dimension-carrying field to the operator definition beside `dimension_transforming`, without saying why that flag cannot be extended."
+  },
+  "section_digests": {
+    "_document": "b39409e9f3e23b3c530d0b14a6e67c8e7aa5fdffb5d6dd92c817d07c627e6be2",
+    "s1": "b55eeb0aa4a599e093121d07e4f0ce2dbdcd085089f7cfcb02c4180f625924d6",
+    "s2": "b39fca198ccb7a4cef1f1c2d5f590ba5bc6d0d91bf945ca5b9431ef143a97a2c",
+    "s3": "873108c0858d6858d5ff52ce7000fb6b83d337ef6e9469f3fcd4625f030af555",
+    "s4": "f7c2f479906c612a6804f1f614ab8a00c80a0e4e4c6caa7005f3f053cb9f3dca",
+    "s5": "467fcba757e56b166b3404d9f754503ff055ae54c88aaaed03e9bac07e93aad3",
+    "s6": "8eb177421906548169b55a4c8fccb670df6669c3a9e417bbb6f92283b441d4c7"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-09T22:15:44.553741+00:00",
+  "total": null
+}
