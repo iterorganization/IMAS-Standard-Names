@@ -1,0 +1,54 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-09T11:42:43.072Z",
+  "dispatched_at": "2026-11-09T11:38:43Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:50",
+      "id": "done_when-1",
+      "reason": "the done-when is unsatisfiable without either a false green or a destructive deletion, so the node needs the check restated as \"not added as a new token in the reported segment\" with the pre-existing registrations named.",
+      "text": "\u00a72's \"no rejected addition enters the vocabulary\" bullet asserts that \"`fit_offset`, `spun` and `s0` to `s3` are not qualifiers\" and that \"`toroidal` and `coordinate` are not registered a second time in another segment\", but `spun` is already a registered qualifier (`grammar/vocabularies/qualifiers.yml:296`) and `toroidal` is already registered in two vocabularies (`components.yml:21` and `coordinate_axes.yml:32`); a node that implements the membership check as written fails at the unchanged head, and the obvious repair \u2014 deleting `spun` \u2014 breaks the same worklist's reuse target `spun_period_of_fiber_optic_current_sensor`",
+      "type": "done_when",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:73",
+      "id": "reasoning-1",
+      "reason": "without the coordinate carried in the name (or an indexed parameter such as `derivative_with_respect_to` uses), the new semantic check has no input to compare and the second done-when bullet's parse test has no name to parse, so the node would invent both.",
+      "text": "\u00a75 says \"the coordinate an argmax ranges over is itself a standard name, so its dimension comes from that coordinate's own catalog entry\" and that the check \"compares the argmax entry's unit with the coordinate entry's unit\", but its worked name `argmax_of_deposited_power` is a bare `unary_prefix` rendering (`argmax_of_<operand>`) that names no coordinate, and the worklist row it cites (`position:power_deposition_peak`) carries `final_spelling: null` and no composed spelling anywhere, so the implementing node has neither a released spelling to parse-test nor a rule for deriving which catalog entry is \"the coordinate\"",
+      "type": "reasoning",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "cbfe09e496ccdfdd8fc50997c9c094ed4f17b298",
+  "plan_fingerprint": "e43b9005d1a56b29b6542339cf98fd597833ebd2be62fa61705555d4b762d95b",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261109T113825735314-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "155c9b837441cbd16bb42e9ff5b33f9ddc3a638c",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 `locus_registry.yml`'s `objects` vocabulary (`specification.yml:494`), the `device` segment retained for parse compatibility (`specification.yml:283-296`), the `object` segment's `of_{token}` template (`specification.yml:368-378`), `_load_dimension_transforming_operators()` (`validation/semantic.py:483`), `OperatorSemanticEffect` (`grammar/vocab_loaders.py:120`) and `operators.yml` all resolve; `run_semantic_checks` has production callers at `services.py:62` and `validation/cli.py:87`.",
+    "done_when": "a finding \u2014 \u00a72's reject bullet asserts two vocabulary-membership facts that are false in the current tree (`spun` is already a qualifier; `toroidal` already sits in two segments), so the check it names cannot pass.",
+    "evidence_paths": "pass \u2014 neither reviewed unit writes a gate or evidence log to a transient path; \u00a73's `docs/evidence/fragments/dd-gap-vocabulary/` target is durable.",
+    "naming": "pass \u2014 no plan labels, stage names, ticket numbers or version tags reach a symbol, file or comment in these units, and no changelog prose.",
+    "reasoning": "a finding \u2014 \u00a75's check is specified to compare an argmax entry's unit with \"the coordinate entry's unit\", but the only spelling it gives, `argmax_of_deposited_power`, carries no coordinate, so no code can locate the entry to compare against.",
+    "single_goal": "pass \u2014 \u00a72 is now pure vocabulary (35 tokens) and \u00a75 carries argmax alone, so the earlier node that bundled both deliverables is resolved.",
+    "wiring": "pass \u2014 `plan-section-depends-on` gives \u00a73\u2192\u00a72, \u00a74\u2192\u00a72+\u00a75 and \u00a76\u2192\u00a73+\u00a74, \u00a75 needs no upstream, and the earlier gap where \u00a76 depended only on \u00a73 is closed."
+  },
+  "section_digests": {
+    "_document": "b39409e9f3e23b3c530d0b14a6e67c8e7aa5fdffb5d6dd92c817d07c627e6be2",
+    "s1": "b55eeb0aa4a599e093121d07e4f0ce2dbdcd085089f7cfcb02c4180f625924d6",
+    "s2": "0255adbcecf4630bcbb13c6a7bd04ee4a8170d8cf50a295e7b301fc19125c77a",
+    "s3": "873108c0858d6858d5ff52ce7000fb6b83d337ef6e9469f3fcd4625f030af555",
+    "s4": "f7c2f479906c612a6804f1f614ab8a00c80a0e4e4c6caa7005f3f053cb9f3dca",
+    "s5": "8240c1abb3495cc757d4790cb4ac876401860c30d7b416a248ce32f77ad4aeb5",
+    "s6": "8eb177421906548169b55a4c8fccb670df6669c3a9e417bbb6f92283b441d4c7"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-09T11:48:21.553457+00:00",
+  "total": null
+}
