@@ -41,7 +41,24 @@
   "plan_slug": "dd-gap-vocabulary",
   "plan_version": 3,
   "project": "imas-standard-names",
-  "responses": {},
+  "response_events": [
+    {
+      "action": "noted",
+      "by": "plan-review-reflex",
+      "finding": "reasoning-4",
+      "reason": "the following sentence supplies the extraction mechanism, so a worker can implement the check from the done-when without the missing clause.",
+      "when": "2026-11-10T14:35:14.024309+00:00"
+    }
+  ],
+  "responses": {
+    "reasoning-4": {
+      "action": "noted",
+      "by": "plan-review-reflex",
+      "reason": "the following sentence supplies the extraction mechanism, so a worker can implement the check from the done-when without the missing clause.",
+      "when": "2026-11-10T14:35:14.024309+00:00"
+    }
+  },
+  "review_path": "/home/ITER/mcintos/Code/imas-standard-names/docs/state/imas-standard-names/reviews/plan/dd-gap-vocabulary/r-20261110T012217864170-plan-review-of-dd-gap-vocabulary.json",
   "review_run_id": "r-20261110T012217864170-plan-review-of-dd-gap-vocabulary",
   "reviewed_blob_sha": "f9d3c00d58d8ed180e26aa6c7d1d675d9c0a36e6",
   "rubric": "content",
