@@ -1,0 +1,145 @@
+{
+  "absent": [],
+  "absent_items": [],
+  "added_failure_count": 0,
+  "added_failure_ids": [],
+  "assertion_independence": "No assertion merely echoes an injected result: parsing is checked against independently required grammar structure; unit diagnostics require an issue on a deliberately mismatched entries map, and the expected coordinate and operand units are separate entries. Round-trip equality checks the parser/renderer inverse contract.",
+  "assertion_review": [
+    {
+      "assertions": "operator count/kind/op/args, base, qualifiers, composition and round trip",
+      "fails_if": "The operator is removed, coordinate binding changes, the operand is split incorrectly, or rendering loses canonical spelling.",
+      "path": "tests/grammar/test_argmax_operator.py:32-42"
+    },
+    {
+      "assertions": "flat transformation and canonical recomposition",
+      "fails_if": "The flat facade loses the fused coordinate or changes canonical rendering.",
+      "path": "tests/grammar/test_argmax_operator.py:45-48"
+    },
+    {
+      "assertions": "ParseError for missing or unregistered index",
+      "fails_if": "The strict parser accepts an omitted index or banana as an index.",
+      "path": "tests/grammar/test_argmax_operator.py:55-57"
+    },
+    {
+      "assertions": "kind/indexed/index_params/index dimension/not dimensionless/no semantic effects",
+      "fails_if": "Any declaration differs from the independent required argmax schema.",
+      "path": "tests/grammar/test_argmax_operator.py:60-67"
+    },
+    {
+      "assertions": "reject bool and arbitrary dimension effects; default None",
+      "fails_if": "The field reverts to boolean/unconstrained values or gives preserving operators a transformation.",
+      "path": "tests/grammar/test_argmax_operator.py:71-79"
+    },
+    {
+      "assertions": "matching dimensionless coordinate has no issues",
+      "fails_if": "Correct index units trigger a mismatch or base-implies-unit warning.",
+      "path": "tests/grammar/test_argmax_operator.py:82-88"
+    },
+    {
+      "assertions": "one issue names result, coordinate, W, 1 and WARNING",
+      "fails_if": "The index effect is operand or absent, unit comparison is bypassed, or diagnostic loses either independently stored unit or identity; the effect mutation produced this failure.",
+      "path": "tests/grammar/test_argmax_operator.py:91-103"
+    },
+    {
+      "assertions": "one missing-target warning names result and coordinate",
+      "fails_if": "The absent-target branch is removed or the index effect is lost; both mutations fail this case.",
+      "path": "tests/grammar/test_argmax_operator.py:106-112"
+    },
+    {
+      "assertions": "invalid spelling defers to structural validation",
+      "fails_if": "ParseError escapes or this semantic check invents an issue for structurally invalid input.",
+      "path": "tests/grammar/test_argmax_operator.py:115-118"
+    },
+    {
+      "assertions": "Wb coordinate with Wb result has no issues; outer square avoids inner-coordinate comparison",
+      "fails_if": "Argmax is hard-coded as dimensionless or the validator compares the inner argmax coordinate against the square result unit.",
+      "path": "tests/grammar/test_argmax_operator.py:121-135"
+    },
+    {
+      "assertions": "complete literal set of 16 operand operators, each operand effect, strict parse and no warning",
+      "fails_if": "Any prior transformation loses its exemption or typed registration, including fused indexed derivatives and postfix per_solid_angle.",
+      "path": "tests/test_unit_validation.py:36-54"
+    },
+    {
+      "assertions": "dimension_transforming is None",
+      "fails_if": "A dimension-preserving flux-surface reduction is assigned a transformation or retains an obsolete boolean.",
+      "path": "tests/grammar/test_reduction_over_binary.py:189"
+    },
+    {
+      "assertions": "dimension_transforming equals operand",
+      "fails_if": "The solid-angle transformation is absent, index-derived or still boolean.",
+      "path": "tests/grammar/test_solid_angle_normalization.py:46"
+    }
+  ],
+  "call_site_count": 5,
+  "call_sites": [
+    "imas_standard_names/validation/cli.py:87 validate_catalog_cli",
+    "imas_standard_names/validation/semantic.py:98 run_semantic_checks",
+    "imas_standard_names/validation/semantic.py:199 _check_source_flux_unit_collision",
+    "imas_standard_names/grammar/parser.py:1061 _rewrite_operand_first_indexed_operator",
+    "imas_standard_names/grammar/render.py:202 _render_operator_stack"
+  ],
+  "completed_at": "2026-11-10T02:05:44Z",
+  "dispatched_at": "2026-11-10T01:58:35Z",
+  "failure_reader_positive_control": [
+    "tests/grammar/test_argmax_operator.py::test_argmax_rejects_operand_unit",
+    "tests/grammar/test_argmax_operator.py::test_argmax_reports_missing_coordinate_entry"
+  ],
+  "findings": [],
+  "gate_evidence": {
+    "after_suite": {
+      "command": "UV_PROJECT_ENVIRONMENT=/home/ITER/mcintos/Code/imas-standard-names/.venv PYTHONPATH=/home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator PYTHONDONTWRITEBYTECODE=1 timeout 2400 uv run --no-sync pytest -p no:cacheprovider -q /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/grammar /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/name_schema /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_unit_validation.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_validation_checks.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_description_validation.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_sign_convention_validation.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_semantic_path_qualification.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_semantic_unit_vector_locus.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_source_flux_unit_collision.py",
+      "completed": true,
+      "exit_status": 0,
+      "failure_count": 0,
+      "failure_ids": [],
+      "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/head.log",
+      "revision": "d060f97941997978d4d1c6378c660d885f6686b1"
+    },
+    "baseline_suite": {
+      "command": "UV_PROJECT_ENVIRONMENT=/home/ITER/mcintos/Code/imas-standard-names/.venv PYTHONPATH=/home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator PYTHONDONTWRITEBYTECODE=1 timeout 2400 uv run --no-sync pytest -p no:cacheprovider -q /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/grammar /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/name_schema /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_unit_validation.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_validation_checks.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_description_validation.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_sign_convention_validation.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_semantic_path_qualification.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_semantic_unit_vector_locus.py /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-argmax-operator/tests/test_source_flux_unit_collision.py",
+      "completed": true,
+      "exit_status": 0,
+      "failure_count": 0,
+      "failure_ids": [],
+      "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/base.log",
+      "revision": "8bead18ed4015da2a7410e1072a5a76091c5b168"
+    }
+  },
+  "head_gate_provenance": "The after_suite ran at product commit d060f97941997978d4d1c6378c660d885f6686b1; reviewed head adds only the 35-line evidence fragment.",
+  "item_aggregate": 6,
+  "item_verdicts": {
+    "call_sites": "verified 5 production call site(s)",
+    "diff": "read d060f97941997978d4d1c6378c660d885f6686b1 and 8508571f937f82d8f0f6c443803cbb8414b6e3cf separately; the first implements and tests the operator and the second records measured evidence without further product changes.",
+    "done_when": "prompt.txt:112 requires round-tripping, three catalog-unit cases and zero added failures; tests/grammar/test_argmax_operator.py and completed base.log/head.log cover each measure.",
+    "goal": "prompt.txt:38 requires indexed argmax with typed dimensions and reuse; operators.yml:55 and semantic.py:141 implement that contract.",
+    "manifest": "manifest.md records both commits, completed serial suites and planted failures; base.log and head.log independently confirm 1576 and 1610 passes with EXIT=0.",
+    "write_paths": "prompt.txt:80 declares the exclusive scope; all ten changed paths in 8bead18ed4015da2a7410e1072a5a76091c5b168..8508571f937f82d8f0f6c443803cbb8414b6e3cf fall within it."
+  },
+  "justifications": {
+    "durability": "tests/grammar/test_argmax_operator.py:91-112 fails when the index effect or absent-target branch is removed, as negative-control.log demonstrates, and tests/test_unit_validation.py:36-54 independently checks all 16 preserved exemptions.",
+    "evidence": "tests/grammar/test_argmax_operator.py:32-135 covers parsing and all unit cases, while the reviewed run's base.log/head.log end in completed 1576/1610-pass summaries and EXIT=0 with no added failure IDs.",
+    "fit": "grammar/vocab_loaders.py:119 extends the existing literal schema, operators.yml:55 follows the derivative declaration, and validation/semantic.py:115 retains the existing string-issue convention without forbidden source names.",
+    "goal_fidelity": "grammar/vocabularies/operators.yml:55 and validation/semantic.py:141 implement the required indexed coordinate result and visible unit or absent-target issues using the typed field in grammar/vocab_loaders.py:137.",
+    "reuse": "capability searches for unit equality, coordinate-token splitting and indexed dimension checks found the owners in validation/semantic.py:173, grammar/render.py:202 and grammar/parser.py:1061; the addition generalises the first and consumes the other two rather than implementing a second parser or renderer.",
+    "scope_discipline": "the ten paths changed by d060f97941997978d4d1c6378c660d885f6686b1 and 8508571f937f82d8f0f6c443803cbb8414b6e3cf are explicitly granted in prompt.txt:80-93, including the evidence fragment and adjacent typed-field assertions."
+  },
+  "project": "imas-standard-names",
+  "raw_text": "VERDICT goal: prompt.txt:38 requires indexed argmax with typed dimensions and reuse; operators.yml:55 and semantic.py:141 implement that contract.\nVERDICT done_when: prompt.txt:112 requires round-tripping, three catalog-unit cases and zero added failures; tests/grammar/test_argmax_operator.py and completed base.log/head.log cover each measure.\nVERDICT write_paths: prompt.txt:80 declares the exclusive scope; all ten changed paths in 8bead18ed4015da2a7410e1072a5a76091c5b168..8508571f937f82d8f0f6c443803cbb8414b6e3cf fall within it.\nVERDICT manifest: manifest.md records both commits, completed serial suites and planted failures; base.log and head.log independently confirm 1576 and 1610 passes with EXIT=0.\nVERDICT diff: read d060f97941997978d4d1c6378c660d885f6686b1 and 8508571f937f82d8f0f6c443803cbb8414b6e3cf separately; the first implements and tests the operator and the second records measured evidence without further product changes.\nCALL_SITES: imas_standard_names/validation/cli.py:87 validate_catalog_cli, imas_standard_names/validation/semantic.py:98 run_semantic_checks, imas_standard_names/validation/semantic.py:199 _check_source_flux_unit_collision, imas_standard_names/grammar/parser.py:1061 _rewrite_operand_first_indexed_operator, imas_standard_names/grammar/render.py:202 _render_operator_stack\nSCORE goal_fidelity: 20\nJUSTIFICATION goal_fidelity: grammar/vocabularies/operators.yml:55 and validation/semantic.py:141 implement the required indexed coordinate result and visible unit or absent-target issues using the typed field in grammar/vocab_loaders.py:137.\nSCORE evidence: 20\nJUSTIFICATION evidence: tests/grammar/test_argmax_operator.py:32-135 covers parsing and all unit cases, while the reviewed run's base.log/head.log end in completed 1576/1610-pass summaries and EXIT=0 with no added failure IDs.\nSCORE scope_discipline: 20\nJUSTIFICATION scope_discipline: the ten paths changed by d060f97941997978d4d1c6378c660d885f6686b1 and 8508571f937f82d8f0f6c443803cbb8414b6e3cf are explicitly granted in prompt.txt:80-93, including the evidence fragment and adjacent typed-field assertions.\nSCORE durability: 20\nJUSTIFICATION durability: tests/grammar/test_argmax_operator.py:91-112 fails when the index effect or absent-target branch is removed, as negative-control.log demonstrates, and tests/test_unit_validation.py:36-54 independently checks all 16 preserved exemptions.\nSCORE fit: 20\nJUSTIFICATION fit: grammar/vocab_loaders.py:119 extends the existing literal schema, operators.yml:55 follows the derivative declaration, and validation/semantic.py:115 retains the existing string-issue convention without forbidden source names.\nSCORE reuse: 20\nJUSTIFICATION reuse: capability searches for unit equality, coordinate-token splitting and indexed dimension checks found the owners in validation/semantic.py:173, grammar/render.py:202 and grammar/parser.py:1061; the addition generalises the first and consumes the other two rather than implementing a second parser or renderer.\n",
+  "review_run_id": "r-20261110T015807301087-review-of-dgv-argmax-operator-8508571f937f",
+  "reviewed_base_sha": "8bead18ed4015da2a7410e1072a5a76091c5b168",
+  "reviewed_head_sha": "8508571f937f82d8f0f6c443803cbb8414b6e3cf",
+  "reviewed_run_id": "r-20261110T010501610495-dgv-argmax-operator",
+  "scores": {
+    "durability": 20,
+    "evidence": 20,
+    "fit": 20,
+    "goal_fidelity": 20,
+    "reuse": 20,
+    "scope_discipline": 20
+  },
+  "status": "parsed",
+  "times_source": "run-record",
+  "timestamp": "2026-11-10T02:12:21.321128+00:00",
+  "total": 120
+}
