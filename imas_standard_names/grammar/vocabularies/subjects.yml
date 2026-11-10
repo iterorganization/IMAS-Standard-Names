@@ -102,3 +102,5 @@
 - ammonia_deuterated
 - methane_carbon_13
 - deuterated_methane
+
+- lithium_6  # The lithium isotope with mass number six, whose abundance is measured relative to total lithium in the blanket.

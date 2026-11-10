@@ -61,3 +61,5 @@ scrape_off_layer:
 front_surface:
 back_surface:
 wetted:
+side:
+  side: Selects a lateral face of a component, excluding its upper and lower end faces.

@@ -308,3 +308,14 @@
 - deuterium_tritium
 - deuterium_deuterium
 - tritium_tritium
+
+- helical  # Selects a variation following a helical path around a toroidal confinement system.
+- ripple  # Selects the modulation of magnetic-field magnitude, with the particular ripple measure defined by its physical convention.
+- sine  # Selects the sine basis functions in a Fourier expansion of a periodic quantity.
+- chemical  # Selects material removal mediated by chemical reaction and volatile-product formation.
+- bounce  # Selects the periodic bounce or transit motion along a particle orbit used as the angular variable of an orbit Fourier expansion.
+- compressive  # Selects a structural force component defined as positive when it compresses the loaded component.
+- cosine  # Selects the cosine basis functions in a Fourier expansion of a periodic quantity.
+- second_inclination  # Selects the second edge-orientation angle in a two-angle oblique cross-section parameterization.
+- rotational  # Selects the pressure contribution R0² ρ ω²/2 associated with toroidal bulk plasma rotation.
+- tangency  # Selects the closest-approach geometry where a beam centreline is tangent to a toroidal circle.

@@ -34,6 +34,30 @@ loci:
   # Hardware, diagnostic systems, and physical objects
   # ====================================================================
 
+  pipe:
+    type: entity
+    allowed_relations: [of]
+    definition: A bounded tubular conduit transporting a fluid between inlet and outlet.
+  ion_source:
+    type: entity
+    allowed_relations: [of]
+    definition: The emitting source that creates and extracts ions to form an injected particle beam.
+  optical_fibre:
+    type: entity
+    allowed_relations: [of]
+    definition: An individual dielectric optical waveguide fibre that transports light, distinct from a bundle of fibres.
+  power_convertor:
+    type: entity
+    allowed_relations: [of]
+    definition: Electrical equipment that converts and regulates power delivered to a load.
+  slit:
+    type: entity
+    allowed_relations: [of]
+    definition: A narrow optical aperture that limits the admitted light in one transverse direction.
+  thermal_shield:
+    type: entity
+    allowed_relations: [of]
+    definition: A shielding structure that intercepts thermal radiation and reduces heat transfer to colder equipment.
   antenna_strap:
     type: entity
     allowed_relations: [of]
@@ -638,6 +662,22 @@ loci:
       plasma evaluation point is not specified. For the separatrix-limiter
       contact point use active_limiter_point; for a quantity distributed along
       the limiter surface use along_limiter.
+  image_surface:
+    type: position
+    allowed_relations: [at, of]
+    definition: The optical surface on which an optical system forms a focused image.
+  magnetic_field_line:
+    type: position
+    allowed_relations: [at, of, along]
+    definition: A curve whose tangent is everywhere parallel to the magnetic-field vector.
+  pre_sawtooth_crash:
+    type: position
+    allowed_relations: [at, of]
+    definition: The evaluation state immediately before a sawtooth crash.
+  threshold_crossing:
+    type: position
+    allowed_relations: [at, of]
+    definition: The event at which a specified observable first crosses a prescribed threshold in a specified direction.
   magnetic_axis:
     type: position
     allowed_relations: [at, of]

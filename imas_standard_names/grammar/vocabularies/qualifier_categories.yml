@@ -13,6 +13,7 @@
 qualifier_categories:
   # Transport channel, regime, and flow type
   transport:
+    - bounce
     - classical
     - fast_wave
     - linear
@@ -27,6 +28,7 @@ qualifier_categories:
     - alpha
     - beam
     - bremsstrahlung
+    - chemical
     - ferritic
     - gas
     - inductive
@@ -49,10 +51,14 @@ qualifier_categories:
     - e_cross_b
     - field_aligned
     - field_line
+    - helical
     - major
     - minor
     - non_axisymmetric
+    - ripple
+    - second_inclination
     - surface
+    - tangency
     - volumetric
 
   # State, condition, mode, and named-physics qualifiers
@@ -96,6 +102,7 @@ qualifier_categories:
     - launched
     - lost
     - radiated
+    - rotational
     - stored
 
   # Measurement, diagnostic method, and signal qualifiers
@@ -103,6 +110,7 @@ qualifier_categories:
     - beat
     - bragg
     - calibration
+    - cosine
     - doppler
     - extraordinary_mode
     - faraday
@@ -117,6 +125,7 @@ qualifier_categories:
     - reference
     - reflected
     - simulated
+    - sine
     - soft_xray
     - spectral
     - spun
@@ -164,6 +173,7 @@ qualifier_categories:
 
   # Engineering subsystem and numerical-split qualifiers
   engineering:
+    - compressive
     - coolant
     - explicit
     - implicit

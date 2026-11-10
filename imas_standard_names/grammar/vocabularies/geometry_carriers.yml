@@ -149,3 +149,9 @@ carriers:
     aliases: []
   second_measurement_direction_unit_vector:  # a strain-rosette gauge's second measurement-axis unit vector — N=3 (operational_instrumentation sensor/direction_second/{x,y,z})
     aliases: []
+  image:
+    aliases: []
+    definition: The spatial image of an object formed by an optical system.
+  grid:
+    aliases: []
+    definition: A set of spatial sampling points on which a physical field or distribution is represented, with coordinates and connectivity specified independently.

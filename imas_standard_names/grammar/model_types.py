@@ -34,6 +34,7 @@ class Component(StrEnum):
     S1 = "s1"
     S2 = "s2"
     S3 = "s3"
+    HORIZONTAL = "horizontal"
 
 
 class Coordinate(StrEnum):
@@ -113,6 +114,7 @@ class Subject(StrEnum):
     AMMONIA_DEUTERATED = "ammonia_deuterated"
     METHANE_CARBON_13 = "methane_carbon_13"
     DEUTERATED_METHANE = "deuterated_methane"
+    LITHIUM_6 = "lithium_6"
 
 
 class State(StrEnum):
@@ -167,6 +169,7 @@ class Zone(StrEnum):
     FRONT_SURFACE = "front_surface"
     BACK_SURFACE = "back_surface"
     WETTED = "wetted"
+    SIDE = "side"
 
 
 class Qualifier(StrEnum):
@@ -284,6 +287,16 @@ class Qualifier(StrEnum):
     DEUTERIUM_TRITIUM = "deuterium_tritium"
     DEUTERIUM_DEUTERIUM = "deuterium_deuterium"
     TRITIUM_TRITIUM = "tritium_tritium"
+    HELICAL = "helical"
+    RIPPLE = "ripple"
+    SINE = "sine"
+    CHEMICAL = "chemical"
+    BOUNCE = "bounce"
+    COMPRESSIVE = "compressive"
+    COSINE = "cosine"
+    SECOND_INCLINATION = "second_inclination"
+    ROTATIONAL = "rotational"
+    TANGENCY = "tangency"
 
 
 class ChannelQualifier(StrEnum):
@@ -301,6 +314,9 @@ class Channel(StrEnum):
 
 class GeometryRepresentation(StrEnum):
     LOCAL_CIRCLE = "local_circle"
+    ARC_OF_CIRCLE = "arc_of_circle"
+    OBLIQUE = "oblique"
+    THICK_LINE = "thick_line"
 
 
 class Process(StrEnum):
@@ -386,6 +402,9 @@ class Process(StrEnum):
     LINE_RADIATION = "line_radiation"
     SYNCHROTRON_RADIATION = "synchrotron_radiation"
     PUMPING = "pumping"
+    TRITIUM_DECAY = "tritium_decay"
+    FRAGMENTATION = "fragmentation"
+    SUBLIMATION = "sublimation"
 
 
 class GenericPhysicalBase(StrEnum):
@@ -426,6 +445,12 @@ class BinaryOperator(StrEnum):
 
 
 class Object(StrEnum):
+    PIPE = "pipe"
+    ION_SOURCE = "ion_source"
+    OPTICAL_FIBRE = "optical_fibre"
+    POWER_CONVERTOR = "power_convertor"
+    SLIT = "slit"
+    THERMAL_SHIELD = "thermal_shield"
     ANTENNA_STRAP = "antenna_strap"
     BEAM_TRACING_BEAM = "beam_tracing_beam"
     BEAM_TRACING_RAY = "beam_tracing_ray"
@@ -564,6 +589,10 @@ class Position(StrEnum):
     LAST_CLOSED_FLUX_SURFACE = "last_closed_flux_surface"
     LAUNCHING_POSITION = "launching_position"
     LIMITER = "limiter"
+    IMAGE_SURFACE = "image_surface"
+    MAGNETIC_FIELD_LINE = "magnetic_field_line"
+    PRE_SAWTOOTH_CRASH = "pre_sawtooth_crash"
+    THRESHOLD_CROSSING = "threshold_crossing"
     MAGNETIC_AXIS = "magnetic_axis"
     MEASUREMENT_POSITION = "measurement_position"
     MIDPLANE = "midplane"
@@ -649,6 +678,8 @@ class GeometricBase(StrEnum):
     SECOND_MEASUREMENT_DIRECTION_UNIT_VECTOR = (
         "second_measurement_direction_unit_vector"
     )
+    IMAGE = "image"
+    GRID = "grid"
 
 
 class Transformation(StrEnum):

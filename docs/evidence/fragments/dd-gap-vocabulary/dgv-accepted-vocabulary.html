@@ -1,0 +1,180 @@
+<section id="dgv-accepted-vocabulary-scope-blocker">
+  <h3>Accepted representations require a wider grammar change</h3>
+  <p>The 34 accepted worklist tokens and their definitions were inventoried against
+    revision <code>d88e5bee0db310bb311de9aa20f46c63dd4eded9</code>. No vocabulary or
+    test changes were made: the required representation support exceeds this
+    worker's write scope.</p>
+  <p>The existing flat-model validator in
+    <code>imas_standard_names/grammar/model.py:1358</code> rejects every
+    <code>geometry_representation</code> other than <code>local_circle</code>,
+    and restricts that representation to an owner-qualified, unprojected radius.
+    A probe of that validator, using constructed models to isolate the semantic
+    guard from enum membership, recorded:</p>
+  <table>
+    <thead><tr><th>Representation</th><th>Physical base</th><th>Result with owner</th></tr></thead>
+    <tbody>
+      <tr><td>local_circle</td><td>radius</td><td>Accepted control</td></tr>
+      <tr><td>arc_of_circle</td><td>radius</td><td>Rejected: local_circle-only guard</td></tr>
+      <tr><td>oblique</td><td>angle</td><td>Rejected: local_circle-only guard</td></tr>
+      <tr><td>thick_line</td><td>length</td><td>Rejected: local_circle-only guard</td></tr>
+    </tbody>
+  </table>
+  <p>The same module rejects non-plane qualifiers on geometric carriers
+    (<code>model.py:541</code>), affecting the worklist's projected arc vertices
+    and oblique positions. The existing public-context test in
+    <code>tests/grammar/test_geometry_section_and_arc.py:155</code> also asserts
+    the exact singleton representation list <code>["local_circle"]</code>.
+    Both files require a scope extension or a companion implementation before
+    the accepted representation examples and the grammar suite can pass.</p>
+  <p>Strict parsing reproduced the vocabulary gap:
+    <code>voltage_of_power_convertor</code> raises <code>ParseError</code>, while
+    <code>voltage_of_flux_loop</code> parses and round-trips. The intended
+    <code>power_convertor</code> means equipment converting and regulating power
+    delivered to a load; the rejected <code>poloidal_field_power_supply</code>
+    would reintroduce the equipment spelling the ruling excludes.
+    The source binding is <code>pf_active/supply/voltage</code>.</p>
+  <p>The baseline code-generation check passed. The grammar baseline reached
+    its 600-second wrapper bound without a summary and is incomplete; no
+    passing suite or failure-delta claim is made. The two remaining processes
+    belonging to that baseline were stopped and their absence verified.
+    The planted-removal and rejected-token controls were not run because no
+    vocabulary implementation was applied.</p>
+</section>
+
+<section id="dgv-accepted-vocabulary-implementation">
+  <h3>Accepted vocabulary and representation support implemented</h3>
+  <p>The model and geometry-test scope extension resolved the semantic blocker
+    recorded above. Product commit
+    <code>8c4eb067e7f1cd0e8d64ffba8e5abf7ff0ec4123</code> adds all 34 accepted
+    tokens with the worklist definitions: 1 component, 6 equipment entities, 4 positions,
+    3 geometry representations, 2 geometry carriers, 3 physical bases,
+    10 qualifiers, 3 processes, 1 subject and 1 zone. Generated enums were
+    regenerated; the restored-head code-generation drift check passes.</p>
+  <p>Each representation declares its admitted bases. <code>local_circle</code>
+    retains its unprojected owner-qualified radius restriction;
+    <code>arc_of_circle</code> admits radius and vertex;
+    <code>oblique</code> admits angle and position; <code>thick_line</code>
+    admits vertex. Carrier representations survive flat-model composition,
+    and kind-forming qualifiers retain canonical order before representations.</p>
+  <table>
+    <thead><tr><th>Canonical identity</th><th>DD source binding</th></tr></thead>
+    <tbody>
+      <tr><td>voltage_of_power_convertor</td><td>pf_active/supply/voltage</td></tr>
+      <tr><td>horizontal_width</td><td>nbi/unit/beamlets_group/width_horizontal</td></tr>
+      <tr><td>radial_arc_of_circle_vertex_of_antenna_strap</td><td>ic_antennas/antenna/module/strap/geometry/arcs_of_circle/r</td></tr>
+      <tr><td>vertical_oblique_position_of_iron_core_segment</td><td>iron_core/segment/geometry/oblique/z</td></tr>
+      <tr><td>second_inclination_oblique_angle_of_iron_core_segment</td><td>iron_core/segment/geometry/oblique/beta</td></tr>
+      <tr><td>radial_thick_line_vertex_of_plasma_filament</td><td>pf_plasma/element/geometry/thick_line/first_point/r</td></tr>
+    </tbody>
+  </table>
+  <p>The focused gate reports <strong>108 passed</strong>: 34 strict parse and
+    round-trip cases, 34 definition checks, 10 rejected-registration checks,
+    3 exact reused-registration checks and 27 geometry contracts. The focused
+    coverage gate reports <code>108 passed in 14.14s</code>; all 17 executable
+    lines added to the semantic model were exercised, with no added executable
+    line missing. Coverage data was preserved and its JSON report recovered
+    through the Python module after the shared console script was found to
+    reference an absent worktree interpreter.</p>
+  <p>Both declared negative controls fail. Removing <code>power_convertor</code>
+    from the locus registry and regenerating fails
+    <code>test_source_quantity_round_trips[power_convertor]</code> with a
+    <code>ParseError</code>. Planting <code>fit_offset</code> in qualifiers and
+    regenerating fails
+    <code>test_rejected_spelling_is_not_registered[qualifier-fit_offset]</code>.
+    Both pytest arms exit 1. All authored source and generated bytes were
+    restored exactly, followed by the passing focused coverage gate and clean
+    code-generation check.</p>
+  <p><strong>Remaining gate blocker:</strong> the requested parallel grammar
+    baseline and head suite cannot yet start. The shared environment lacks
+    <code>pytest-xdist</code> and <code>pytest-timeout</code>; a collection-only
+    availability probe exits 4 with unrecognized <code>-n</code> and
+    <code>--timeout=900</code> options. Dependency declarations in
+    <code>pyproject.toml</code> and <code>uv.lock</code> and a main-checkout
+    environment sync require a further scope grant or coordinator action.
+    The original 600-second baseline remains incomplete. No full-suite
+    zero-added-failure claim is made, and this record does not close the node.</p>
+</section>
+
+<section id="dgv-accepted-vocabulary-serial-verification">
+  <h3>Serial full-suite verification completed with one added failure</h3>
+  <p>The serial verification instruction superseded the parallel-plugin
+    prerequisite recorded above. Both grammar suites ran to their summaries
+    on the assigned compute node, each in the foreground under
+    <code>timeout 2400</code>, with <code>-p no:cacheprovider</code> and no
+    parallel workers. The completed baseline receipt was written into the
+    manifest before the head suite started.</p>
+  <table>
+    <thead><tr><th>Arm</th><th>Revision</th><th>Passed</th><th>Skipped</th><th>Failed</th><th>Exit</th></tr></thead>
+    <tbody>
+      <tr><td>Base</td><td>d88e5bee0db310bb311de9aa20f46c63dd4eded9</td><td>1285</td><td>32</td><td>0</td><td>0</td></tr>
+      <tr><td>Head</td><td>7884ab2e5522b718dc97c3df9dcb958fe4618847</td><td>1381</td><td>32</td><td>1</td><td>1</td></tr>
+    </tbody>
+  </table>
+  <p>The baseline summary is
+    <code>1285 passed, 32 skipped in 682.69s (0:11:22)</code>; the head summary
+    is <code>1 failed, 1381 passed, 32 skipped in 1478.06s (0:24:38)</code>.
+    Both logs end with their observed exit status. The baseline ran from an
+    isolated extraction of its exact revision; its log names the imported
+    module and working directory. The head log confirms imports from the
+    assigned worktree.</p>
+  <p>Comparing completed failure-ID sets gives <strong>one added failure</strong>
+    and no removed failures. The reported assertion finds ten newly accepted
+    qualifier tokens without their required category registrations:
+    <code>bounce</code>, <code>chemical</code>, <code>compressive</code>,
+    <code>cosine</code>, <code>helical</code>, <code>ripple</code>,
+    <code>rotational</code>, <code>second_inclination</code>, <code>sine</code>
+    and <code>tangency</code>. The exact failure identity and the ungranted
+    metadata path are recorded in the manifest's <code>outside_scope</code>
+    field. That file was not modified, and no zero-added-failure claim is made.</p>
+  <p>The failure-ID instrument detected both expected planted-control failures
+    in the red control log before either zero-failure result was interpreted.
+    The earlier 108 passing focused tests, 17/17 added executable model lines
+    covered, restored source bytes and clean code-generation check remain
+    valid. The node remains blocked on the category metadata scope extension.</p>
+</section>
+
+<section id="dgv-accepted-vocabulary-completion">
+  <h3>Accepted vocabulary and full grammar verification complete</h3>
+  <p>The granted qualifier-category file now registers all ten added qualifiers.
+    The previously failing coverage check and the vocabulary regression file
+    pass together: <code>82 passed in 4.97s</code>. Regeneration leaves the
+    generated files unchanged, and the code-generation drift check is clean.
+    Category commit <code>f06af0a3f19bccc62a953c7449d4f40d60ebc94c</code>
+    contains exactly ten registration lines.</p>
+  <table>
+    <thead><tr><th>Category</th><th>Added qualifiers</th><th>Definition fit</th></tr></thead>
+    <tbody>
+      <tr><td>transport</td><td>bounce</td><td>Periodic particle-orbit motion.</td></tr>
+      <tr><td>source</td><td>chemical</td><td>Material removal through a chemical mechanism.</td></tr>
+      <tr><td>geometry</td><td>helical, ripple, second_inclination, tangency</td><td>Spatial variation, orientation or closest-approach geometry.</td></tr>
+      <tr><td>energy</td><td>rotational</td><td>The pressure contribution associated with bulk rotational energy.</td></tr>
+      <tr><td>diagnostic</td><td>sine, cosine</td><td>Fourier basis forms, grouped with the existing spectral qualifiers.</td></tr>
+      <tr><td>engineering</td><td>compressive</td><td>A structural force defined positive in compression.</td></tr>
+    </tbody>
+  </table>
+  <p>The completed base arm stands unchanged. The final head suite ran serially
+    in the assigned worktree under <code>timeout 2400</code> and reached its
+    terminal summary:</p>
+  <table>
+    <thead><tr><th>Arm</th><th>Passed</th><th>Skipped</th><th>Failing IDs</th><th>Exit</th></tr></thead>
+    <tbody>
+      <tr><td>Standing base</td><td>1285</td><td>32</td><td>0</td><td>0</td></tr>
+      <tr><td>Final head</td><td>1382</td><td>32</td><td>0</td><td>0</td></tr>
+    </tbody>
+  </table>
+  <p>The final head summary is
+    <code>1382 passed, 32 skipped in 1514.75s (0:25:14)</code>.
+    Both suite receipts declare completion and both logs end with
+    <code>EXIT=0</code>. Their completed failure-ID sets are empty:
+    <strong>zero added failure IDs</strong>. The category-coverage failure in
+    the preceding record is resolved. This result completes this node's
+    verification without closing the plan section.</p>
+  <p>All 34 accepted tokens retain their worklist definitions and source-bound
+    strict parse and round-trip cases. For example,
+    <code>voltage_of_power_convertor</code> binds
+    <code>pf_active/supply/voltage</code>; <code>power_convertor</code> denotes
+    equipment converting and regulating delivered power. The rejected-token
+    membership checks and exact reused registrations pass. Both planted
+    controls still provide the recorded expected failing IDs, and the model
+    change has 17/17 added executable lines covered.</p>
+</section>

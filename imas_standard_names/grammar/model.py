@@ -81,7 +81,7 @@ from imas_standard_names.grammar.vocab_loaders import (
     load_scoping_qualifiers as _load_scoping_qualifiers,
 )
 
-# BaseToken: pattern for physical_base segment (closed vocabulary since rc56)
+# BaseToken: pattern for the closed physical_base vocabulary
 TOKEN_PATTERN_STR = r"^[a-z][a-z0-9_]*$"
 BaseToken = Annotated[
     str,
@@ -104,10 +104,18 @@ _OBJECT_VALUES: frozenset[str] = frozenset(o.value for o in Object)
 _POSITION_VALUES: frozenset[str] = frozenset(p.value for p in Position)
 _REGION_VALUES: frozenset[str] = frozenset(r.value for r in Region)
 _GEOMETRY_VALUES: frozenset[str] = frozenset(g.value for g in GeometricBase)
+_GEOMETRY_REPRESENTATION_VALUES: frozenset[str] = frozenset(
+    representation.value for representation in GeometryRepresentation
+)
+_GEOMETRY_REPRESENTATION_BASES: dict[str, frozenset[str]] = {
+    "local_circle": frozenset({"radius"}),
+    "arc_of_circle": frozenset({"radius", "vertex"}),
+    "oblique": frozenset({"angle", "position"}),
+    "thick_line": frozenset({"vertex"}),
+}
 
-# Aggregation, population, and orbit: orthogonal single-token modifier segments
-# split out of the old compound subject tokens (rc32 decomposition) plus the
-# aggregation segment. Each contributes at most one token (no intra-segment
+# Aggregation, population, and orbit are orthogonal single-token modifier
+# segments. Each contributes at most one token (no intra-segment
 # stacking — a second same-segment token is a hard error, see
 # ``_ir_to_model_dict``). Aggregation (total/net) is a distinct dimension that
 # legitimately STACKS with population (energy-state); orbit is the transit class.
@@ -526,15 +534,27 @@ def _ir_to_model_dict(ir: StandardNameIR) -> dict[str, str]:
                 for qualifier in ir.qualifiers
                 if qualifier.token in _SECTION_PLANE_VALUES
             ]
+            representation_tokens = [
+                qualifier.token
+                for qualifier in ir.qualifiers
+                if qualifier.token in _GEOMETRY_REPRESENTATION_VALUES
+            ]
             other_tokens = [
                 qualifier.token
                 for qualifier in ir.qualifiers
-                if qualifier.token not in _SECTION_PLANE_VALUES
+                if qualifier.token
+                not in _SECTION_PLANE_VALUES | _GEOMETRY_REPRESENTATION_VALUES
             ]
             if len(plane_tokens) > 1:
                 raise ValueError(
                     "Two 'section_plane' tokens cannot stack in a single name; "
                     "the section_plane segment admits at most one token."
+                )
+            if len(representation_tokens) > 1:
+                raise ValueError(
+                    "Two 'geometry_representation' tokens cannot stack in a "
+                    "single name; the geometry_representation segment admits "
+                    "at most one token."
                 )
             if other_tokens:
                 raise ValueError(
@@ -543,6 +563,8 @@ def _ir_to_model_dict(ir: StandardNameIR) -> dict[str, str]:
                 )
             if plane_tokens:
                 d["section_plane"] = plane_tokens[0]
+            if representation_tokens:
+                d["geometry_representation"] = representation_tokens[0]
         else:
             # physical_base: fold uncategorized qualifiers back as prefix
             subject = None
@@ -962,6 +984,10 @@ def _model_to_ir(model: StandardName) -> StandardNameIR:
                         token=_value_of(model.section_plane), category="section_plane"
                     )
                 )
+            if model.geometry_representation:
+                qualifiers.append(
+                    Qualifier(token=_value_of(model.geometry_representation))
+                )
         elif model.physical_base:
             # Re-parse the physical_base to decompose qualifiers + base
             base, qualifiers = _decompose_physical_base(
@@ -1154,9 +1180,9 @@ def _decompose_physical_base(
             qualifiers.append(channel_qualifier_q)
         if channel_q is not None:
             qualifiers.append(channel_q)
+        qualifiers.extend(result.ir.qualifiers)
         if geometry_representation is not None:
             qualifiers.append(Qualifier(token=_value_of(geometry_representation)))
-        qualifiers.extend(result.ir.qualifiers)
         return result.ir.base, qualifiers
     except (ParseError, ValueError):
         # Can't decompose: use the whole string as base. The channel-qualifier
@@ -1358,22 +1384,30 @@ class StandardName(BaseModel):
     def _check_geometry_representation_semantics(self) -> StandardName:
         if self.geometry_representation is None:
             return self
-        if (
-            _value_of(self.geometry_representation) != "local_circle"
-            or self.physical_base != "radius"
-        ):
+        representation = _value_of(self.geometry_representation)
+        base = (
+            _value_of(self.geometric_base)
+            if self.geometric_base is not None
+            else self.physical_base
+        )
+        if representation != "local_circle" and self.physical_base is not None:
+            base = _parse_ir(self.physical_base).ir.base.token
+        allowed_bases = _GEOMETRY_REPRESENTATION_BASES[representation]
+        if base not in allowed_bases:
             raise ValueError(
-                "geometry_representation 'local_circle' is valid only with "
-                "physical_base 'radius'"
+                f"geometry_representation '{representation}' admits only bases "
+                f"{sorted(allowed_bases)}; got '{base}'"
             )
         if self.object is None:
             raise ValueError(
-                "geometry_representation 'local_circle' requires an explicit "
+                f"geometry_representation '{representation}' requires an explicit "
                 "owner in the object locus"
             )
-        if self.component is not None or self.coordinate is not None:
+        if self.physical_base is not None and (
+            self.component is not None or self.coordinate is not None
+        ):
             raise ValueError(
-                "a local-circle radius is not a component or coordinate projection"
+                f"a {representation} {base} is not a component or coordinate projection"
             )
         return self
 
