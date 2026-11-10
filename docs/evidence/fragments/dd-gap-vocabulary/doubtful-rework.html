@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="docs-project" content="imas-standard-names">
+  <meta name="reckon-type" content="evidence">
+  <title>Reworking the doubtful vocabulary additions</title>
+  <link rel="stylesheet" href="/_shared/foundation.css">
+  <link rel="stylesheet" href="/_shared/dashboard.css">
+</head>
+<body>
+<main class="plan-doc">
+<h1 id="dgv-doubtful-rework-proposal">Reworking the doubtful vocabulary additions</h1>
+<p>Seven worklist proposals map to seven DD source paths. Three distinct tokens are proposed for ruling: <code>pellet_species</code>, <code>current_profile_alignment</code> and <code>plateau_factor</code>. The other four rows compose existing quantities and retain explicit source bindings. No vocabulary is admitted and no source is promoted by this proposal.</p>
+<p>Strict parsing and composition at main revision <code>d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9</code> pass for all six existing-token spellings probed. Four positive parser controls and two known-present worklist controls pass. Nine earlier spellings or attempted decompositions still fail, with the refusals recorded in the companion JSON. Grammar files are unchanged.</p>
+<p><strong>The binding decisions are substantive.</strong> The grid-point subset, along-line subset and source-current contribution cannot be identified completely by their flat quantity names. Their recorded predicates, sample domains and source identities must remain part of the downstream binding identity. Accepting these splits requires the lead to accept that division of responsibility; a passing parser check does not settle it.</p>
+<p>The <a href="/imas-standard-names/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json">machine-readable proposal</a> contains every source path, exact worklist leaf and parent documentation, units, reused-token registration, required binding and parser result. The <a href="/imas-standard-names/evidence/fragments/dd-gap-vocabulary/dgv-doubtful-rework.html">landing record</a> records the measure.</p>
+<h2 id="dgv-doubtful-rework-comparison">Proposed identities</h2>
+<table>
+<thead><tr><th>Rejected proposal</th><th>Reworked quantity or parts</th><th>Current strict parser</th><th>Decision still required</th></tr></thead>
+<tbody>
+<tr><td><code>species</code></td><td><code>pellet_species_number_density_of_pellet</code></td><td>Refuses: proposed token is not registered</td><td>New subject definition</td></tr>
+<tr><td><code>breakdown_candidate_grid_point</code></td><td><code>vertical_grid</code></td><td>Parses and round-trips</td><td>Quantity plus identity-bearing selection binding</td></tr>
+<tr><td><code>breakdown_candidate_field_line</code></td><td><code>vertical_position_of_magnetic_field_line</code></td><td>Parses and round-trips</td><td>Quantity plus identity-bearing selection binding</td></tr>
+<tr><td><code>current_alignment</code></td><td><code>current_profile_alignment</code></td><td>Refuses: proposed token is not registered</td><td>Named physical quantity; normative formula still to verify</td></tr>
+<tr><td><code>plateau</code></td><td><code>plateau_factor</code></td><td>Refuses: proposed token is not registered</td><td>Named physical quantity; normative formula still to verify</td></tr>
+<tr><td><code>green_function</code></td><td><code>ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count</code></td><td>Parses and round-trips</td><td>Unit-impulse response binding</td></tr>
+<tr><td><code>source</code></td><td><code>current_density</code></td><td>Parses and round-trips</td><td>Source contribution identity; external only when established</td></tr>
+</tbody>
+</table>
+<section id="dgv-doubtful-rework-species">
+<h2><code>species</code> → <code>pellet_species_number_density_of_pellet</code></h2>
+<p>Number density of one chemically or isotopically identified constituent of an intact pellet.</p>
+<table><thead><tr><th>DD source path</th><th>Leaf documentation</th><th>Parent documentation</th><th>Unit</th></tr></thead><tbody>
+<tr><td><code>pellets/time_slice/pellet/species/density</code></td><td>Material density of the species in the pellet</td><td>Set of species included in the pellet composition</td><td><code>m^-3</code></td></tr>
+</tbody></table>
+<p>Documentation is preserved from the assigned worklist, recorded against DD <code>4.1.0</code>; the <a href="https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/pellets.html">published DD reference</a> cross-checks the quantity. Fresh DD-only MCP results confirm the source identity, but their enriched descriptions do not override the worklist documentation.</p>
+<table><thead><tr><th>Existing token</th><th>Registry</th><th>Role in the rework</th></tr></thead><tbody>
+<tr><td><code>number_density</code></td><td><code>physical_base</code></td><td>number per volume, not mass density</td></tr>
+<tr><td><code>pellet</code></td><td><code>locus</code></td><td>intact pellet owner</td></tr>
+</tbody></table>
+<p><strong>Proposed subject:</strong> <code>pellet_species</code>. A chemically or isotopically identified constituent population in the material composition of an intact injected pellet, resolved by the pellet species coordinate; distinct from a shattered-pellet constituent. This token is not registered.</p>
+<p>The valid existing core <code>number_density_of_pellet</code> omits the constituent axis. The intended complete identity uses the proposed <code>pellet_species</code> subject. Although <code>shattered_pellet_species_number_density</code> also passes the parser, it names a different constituent population and is not reused for <code>pellets/time_slice/pellet/species/density</code>. Retain the species element/isotope, molecular stoichiometry and source array element; the unit <code>m^-3</code> identifies number density.</p>
+<p><strong>Ruling requested:</strong> Admit pellet_species as a subject, with number_density and the existing pellet owner composed separately.</p>
+<ul>
+<li><code>species</code>: Generic across unrelated species axes; the requested subject specifically resolves intact-pellet composition.</li>
+<li><code>shattered_pellet_species_number_density</code>: Names a shattered-pellet constituent, a different population and source family.</li>
+<li><code>number_density_of_pellet</code>: Valid existing core only: omits the constituent axis and is not the proposed complete identity.</li>
+</ul>
+</section>
+<section id="dgv-doubtful-rework-breakdown-candidate-grid-point">
+<h2><code>breakdown_candidate_grid_point</code> → <code>vertical_grid</code></h2>
+<p>Vertical coordinate of tracing-grid points containing selected magnetic field lines.</p>
+<table><thead><tr><th>DD source path</th><th>Leaf documentation</th><th>Parent documentation</th><th>Unit</th></tr></thead><tbody>
+<tr><td><code>plasma_initiation/b_field_lines/townsend_or_closed_grid_positions/z</code></td><td>Height</td><td>List of all R, Z grid positions (from ../grid) containing field lines encoutering Townsend condition or being closed field lines</td><td><code>m</code></td></tr>
+</tbody></table>
+<p>Documentation is preserved from the assigned worklist, recorded against DD <code>4.1.0</code>; the <a href="https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/plasma_initiation.html">published DD reference</a> cross-checks the quantity. Fresh DD-only MCP results confirm the source identity, but their enriched descriptions do not override the worklist documentation.</p>
+<table><thead><tr><th>Existing token</th><th>Registry</th><th>Role in the rework</th></tr></thead><tbody>
+<tr><td><code>vertical</code></td><td><code>coordinate_axis</code></td><td>Z coordinate</td></tr>
+<tr><td><code>grid</code></td><td><code>geometry_carrier</code></td><td>sampling carrier</td></tr>
+<tr><td><code>townsend</code></td><td><code>qualifier</code></td><td>existing vocabulary for one branch of the binding predicate; not inserted into the flat geometry name</td></tr>
+<tr><td><code>breakdown</code></td><td><code>qualifier</code></td><td>existing discharge-phase context only; not a synonym for the selection</td></tr>
+</tbody></table>
+<p><strong>Binding contract:</strong> Keep a grid point exactly when it contains at least one magnetic field line satisfying the union criterion. The selection is <code>encounters_townsend_condition OR is_closed_magnetic_field_line</code>. The sample domain is <code>tracing_grid_points</code>, and the tracing grid is <code>plasma_initiation/b_field_lines/grid</code>. Selection predicate and sampling domain are mandatory identity-bearing binding fields. The flat spelling alone is not equivalent to the DD selected subset.</p>
+<p>There is no existing Boolean-OR selector in the flat grammar, and the current geometry guard rejects non-plane prefix qualifiers. The reproduced <code>breakdown_vertical_grid</code> refusal is <code>geometry carriers cannot carry non-plane prefix qualifiers; got [&#x27;breakdown&#x27;]</code>. The split therefore preserves the predicate explicitly in the binding rather than claiming that concatenating qualifiers expresses it.</p>
+<p><strong>Ruling requested:</strong> Accept the carrier/selection split only if the downstream source binding retains the explicit OR predicate and sample domain as identity. This is not an unconditional standalone-name replacement. If flat names must encode the selection, a reusable selection construct is needed; do not silently admit an opaque composite locus.</p>
+<ul>
+<li><code>breakdown_candidate_grid_point</code>: Composite locus combines the selected-set predicate and the sampling carrier.</li>
+<li><code>townsend_field_line</code>: Conjoins words but cannot preserve the Townsend OR closed-line union.</li>
+<li><code>breakdown_vertical_grid</code>: breakdown selects a discharge phase, not the union predicate, and non-plane geometry prefix qualifiers are refused.</li>
+</ul>
+</section>
+<section id="dgv-doubtful-rework-breakdown-candidate-field-line">
+<h2><code>breakdown_candidate_field_line</code> → <code>vertical_position_of_magnetic_field_line</code></h2>
+<p>Vertical coordinate of samples along selected magnetic field lines.</p>
+<table><thead><tr><th>DD source path</th><th>Leaf documentation</th><th>Parent documentation</th><th>Unit</th></tr></thead><tbody>
+<tr><td><code>plasma_initiation/b_field_lines/townsend_or_closed_positions/z</code></td><td>Height</td><td>List of all R, Z positions along all field lines encoutering Townsend condition or being closed field lines</td><td><code>m</code></td></tr>
+</tbody></table>
+<p>Documentation is preserved from the assigned worklist, recorded against DD <code>4.1.0</code>; the <a href="https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/plasma_initiation.html">published DD reference</a> cross-checks the quantity. Fresh DD-only MCP results confirm the source identity, but their enriched descriptions do not override the worklist documentation.</p>
+<table><thead><tr><th>Existing token</th><th>Registry</th><th>Role in the rework</th></tr></thead><tbody>
+<tr><td><code>vertical</code></td><td><code>coordinate_axis</code></td><td>Z coordinate</td></tr>
+<tr><td><code>position</code></td><td><code>geometry_carrier</code></td><td>sampling carrier</td></tr>
+<tr><td><code>magnetic_field_line</code></td><td><code>locus</code></td><td>curve carrying along-line sample positions</td></tr>
+<tr><td><code>townsend</code></td><td><code>qualifier</code></td><td>existing vocabulary for one branch of the binding predicate; not inserted into the flat geometry name</td></tr>
+<tr><td><code>breakdown</code></td><td><code>qualifier</code></td><td>existing discharge-phase context only; not a synonym for the selection</td></tr>
+</tbody></table>
+<p><strong>Binding contract:</strong> Keep the sampled positions along every magnetic field line satisfying the union criterion; do not substitute grid nodes. The selection is <code>encounters_townsend_condition OR is_closed_magnetic_field_line</code>. The sample domain is <code>samples_along_selected_lines</code>, and the tracing grid is <code>plasma_initiation/b_field_lines/grid</code>. Selection predicate and sampling domain are mandatory identity-bearing binding fields. The flat spelling alone is not equivalent to the DD selected subset.</p>
+<p>There is no existing Boolean-OR selector in the flat grammar, and the current geometry guard rejects non-plane prefix qualifiers. The reproduced <code>breakdown_vertical_position_of_magnetic_field_line</code> refusal is <code>geometry carriers cannot carry non-plane prefix qualifiers; got [&#x27;breakdown&#x27;]</code>. The split therefore preserves the predicate explicitly in the binding rather than claiming that concatenating qualifiers expresses it.</p>
+<p><strong>Ruling requested:</strong> Accept the carrier/selection split only if the downstream source binding retains the explicit OR predicate and sample domain as identity. This is not an unconditional standalone-name replacement. If flat names must encode the selection, a reusable selection construct is needed; do not silently admit an opaque composite locus.</p>
+<ul>
+<li><code>breakdown_candidate_field_line</code>: Composite locus combines the selected-set predicate and the sampling carrier.</li>
+<li><code>townsend_field_line</code>: Conjoins words but cannot preserve the Townsend OR closed-line union.</li>
+<li><code>breakdown_vertical_position_of_magnetic_field_line</code>: breakdown selects a discharge phase, not the union predicate, and non-plane geometry prefix qualifiers are refused.</li>
+</ul>
+</section>
+<section id="dgv-doubtful-rework-current-alignment">
+<h2><code>current_alignment</code> → <code>current_profile_alignment</code></h2>
+<p>Current-valued figure of merit comparing the spatial profiles of sources supplying the plasma current.</p>
+<table><thead><tr><th>DD source path</th><th>Leaf documentation</th><th>Parent documentation</th><th>Unit</th></tr></thead><tbody>
+<tr><td><code>summary/global_quantities/current_alignment/value</code></td><td>Value</td><td>Figure of merit of the alignment of the current profile sources, defined in the following reference: http://iopscience.iop.org/article/10.1088/0029-5515/43/7/318</td><td><code>A</code></td></tr>
+</tbody></table>
+<p>Documentation is preserved from the assigned worklist, recorded against DD <code>4.1.0</code>; the <a href="https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/summary.html">published DD reference</a> cross-checks the quantity. Fresh DD-only MCP results confirm the source identity, but their enriched descriptions do not override the worklist documentation.</p>
+<p><strong>Proposed physical_base:</strong> <code>current_profile_alignment</code>. A global, current-valued figure of merit measuring spatial agreement among the current-density profiles supplying the plasma current, evaluated with the source-profile comparison and weighting prescribed by the DD-cited Wade et al. convention; it is not an angle, a current-density vector component, or an assumed dimensionless factor. Unit: <code>A</code>. This token is not registered.</p>
+<p>The DD unit is <code>A</code>. Retain the <a href="https://doi.org/10.1088/0029-5515/43/7/318">Wade et al. current-profile convention</a> with its weighting and normalization. Its DOI suffix is not a page number: the paper is Nuclear Fusion 43, 634–646. The cited full formula was not recovered; the proposal does not invent an integral, a monotonicity convention or a dimensionless normalization. Formula verification remains necessary before admission.</p>
+<p><strong>Ruling requested:</strong> Consider one named physical base current_profile_alignment rather than the qualifier current_alignment plus generic factor. Keep the cited convention normative and verify its full mathematical definition before vocabulary admission.</p>
+<ul>
+<li><code>current_alignment_factor</code>: Neither current nor alignment is an existing qualifier; generic factor does not establish this current-valued comparison or its weighting.</li>
+<li><code>current</code>: A total or component electric current does not describe agreement between source profiles.</li>
+</ul>
+</section>
+<section id="dgv-doubtful-rework-plateau">
+<h2><code>plateau</code> → <code>plateau_factor</code></h2>
+<p>Dimensionless magnetic-configuration measure associated with plateau-regime neoclassical transport.</p>
+<table><thead><tr><th>DD source path</th><th>Leaf documentation</th><th>Parent documentation</th><th>Unit</th></tr></thead><tbody>
+<tr><td><code>summary/local/r_eff_norm_2_3/plateau_factor/value</code></td><td>Value</td><td>Plateau factor, as defined in equation (25) of reference [Stroth U. et al 1998 Plasma Phys. Control. Fusion 40 1551]</td><td><code>1</code></td></tr>
+</tbody></table>
+<p>Documentation is preserved from the assigned worklist, recorded against DD <code>4.1.0</code>; the <a href="https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/summary.html">published DD reference</a> cross-checks the quantity. Fresh DD-only MCP results confirm the source identity, but their enriched descriptions do not override the worklist documentation.</p>
+<p><strong>Proposed physical_base:</strong> <code>plateau_factor</code>. The dimensionless magnetic-configuration factor for plateau-regime neoclassical transport, sensitive to toroidal and helical magnetic-field harmonics and designated by the DD as the plateau factor of Stroth et al., equation (25); it characterizes magnetic geometry, not flattening of a density or temperature profile. Unit: <code>1</code>. This token is not registered.</p>
+<p>The named plateau factor belongs to magnetic-configuration and neoclassical transport characterization. The worklist inference that it is a profile-flattening measure is not adopted. Primary <a href="https://www.ipfn.tecnico.ulisboa.pt/cfn/20IAEAConf/presentations/T2/2T/EX_1_5/Talk_EX_1_5.pdf">stellarator-confinement work</a> discusses a geometrical factor for plateau flux, and the <a href="https://wx1.ans.org/pubs/journals/fst/a_38980">TJ-II study</a> treats plateau factor as a neoclassical figure of merit. Neither is substituted for the precise normalization of the DD-cited Stroth equation, whose full text was not recovered. Keep <code>r_eff/r_eff_LCFS = 2/3</code> as a stellarator effective-radius binding, not an assumed tokamak minor-radius coordinate.</p>
+<p><strong>Ruling requested:</strong> Consider the lexical physical base plateau_factor with its named neoclassical meaning, not a generic plateau qualifier. Recover and verify the cited equation before admission; keep the effective-radius convention in the binding.</p>
+<ul>
+<li><code>plateau</code>: A generic plateau qualifier does not define the named neoclassical magnetic-configuration measure.</li>
+<li><code>peaking_factor</code>: Describes profile shape, whereas this plateau factor describes magnetic configuration and neoclassical transport.</li>
+</ul>
+</section>
+<section id="dgv-doubtful-rework-green-function">
+<h2><code>green_function</code> → <code>ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count</code></h2>
+<p>Grouped detector neutron fluence per neutron emitted from one source voxel and energy bin toward the detector.</p>
+<table><thead><tr><th>DD source path</th><th>Leaf documentation</th><th>Parent documentation</th><th>Unit</th></tr></thead><tbody>
+<tr><td><code>neutron_diagnostic/detector/green_functions/neutron_flux</code></td><td>Grouped neutron flux in the detector from one neutron energy bin emitted by the current plasma voxel towards the detector</td><td>Green function coefficients used to represent the detector response based on its field of view</td><td><code>m^-2</code></td></tr>
+</tbody></table>
+<p>Documentation is preserved from the assigned worklist, recorded against DD <code>4.1.0</code>; the <a href="https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/neutron_diagnostic.html">published DD reference</a> cross-checks the quantity. Fresh DD-only MCP results confirm the source identity, but their enriched descriptions do not override the worklist documentation.</p>
+<table><thead><tr><th>Existing token</th><th>Registry</th><th>Role in the rework</th></tr></thead><tbody>
+<tr><td><code>ratio_of</code></td><td><code>binary_operator</code></td><td>response per emitted neutron</td></tr>
+<tr><td><code>neutron</code></td><td><code>subject</code></td><td>particle species in both operands</td></tr>
+<tr><td><code>fluence</code></td><td><code>physical_base</code></td><td>detector areal neutron count, unit m^-2</td></tr>
+<tr><td><code>neutron_detector</code></td><td><code>locus</code></td><td>response location for numerator only</td></tr>
+<tr><td><code>count</code></td><td><code>physical_base</code></td><td>input neutron count, dimensionless</td></tr>
+</tbody></table>
+<p>The numerator is detector neutron fluence; the denominator is one neutron emitted from the selected plasma voxel and source-energy bin towards the detector. Thus the response coefficient has unit <code>m^-2</code>, without an invented inverse-time dimension. Apply the ratio to a unit emission impulse, not two unrelated measured quantities. Retain the three voxel coordinates, source energy, detector-event grouping and integrated-axis flags. The parsed detector locus binds only to the fluence numerator.</p>
+<p>The generic <code>neutron_response_function_of_neutron_detector</code> also parses, but fails to distinguish this areal-fluence response from the dimensionless detector-event response sibling. The explicit ratio makes the output and input quantities separate grammar operands; it needs no <code>green_function</code> qualifier.</p>
+<p><strong>Ruling requested:</strong> Accept the ratio of existing fluence and count quantities, with the unit-emission impulse and full source/output coordinates retained. No green_function vocabulary token is needed.</p>
+<ul>
+<li><code>green_function_neutron_flux_coefficient</code>: Combines the response role, particle species and dimensional output into one opaque base.</li>
+<li><code>neutron_response_function_of_neutron_detector</code>: Valid but too broad to distinguish this m^-2 fluence kernel from the dimensionless detector-event response sibling.</li>
+<li><code>neutron_flux_of_neutron_detector</code>: A rate flux would add an inverse-time dimension absent from the DD coefficient.</li>
+</ul>
+</section>
+<section id="dgv-doubtful-rework-source">
+<h2><code>source</code> → <code>current_density</code></h2>
+<p>Current-density contribution from the identified edge source, evaluated on its GGD subset.</p>
+<table><thead><tr><th>DD source path</th><th>Leaf documentation</th><th>Parent documentation</th><th>Unit</th></tr></thead><tbody>
+<tr><td><code>edge_sources/source/ggd/current/values</code></td><td>One scalar value is provided per element in the grid subset.</td><td>Current density source</td><td><code>A.m^-2</code></td></tr>
+</tbody></table>
+<p>Documentation is preserved from the assigned worklist, recorded against DD <code>4.1.0</code>; the <a href="https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/edge_sources.html">published DD reference</a> cross-checks the quantity. Fresh DD-only MCP results confirm the source identity, but their enriched descriptions do not override the worklist documentation.</p>
+<table><thead><tr><th>Existing token</th><th>Registry</th><th>Role in the rework</th></tr></thead><tbody>
+<tr><td><code>current_density</code></td><td><code>physical_base</code></td><td>charge-current density, A.m^-2</td></tr>
+<tr><td><code>external</code></td><td><code>qualifier</code></td><td>optional only when source identity establishes an external contribution; not applied to every source</td></tr>
+<tr><td><code>source</code></td><td><code>physical_base</code></td><td>existing registration retained; not re-registered as a qualifier</td></tr>
+</tbody></table>
+<p>Use <code>current_density</code> for the quantity and retain <code>term_role=source_contribution</code>, <code>edge_sources/source/identifier</code>, the source array element, grid index and grid-subset index in its binding. It must not be attached as the total current-density profile. The path alone does not establish that every contribution is external; <code>external_current_density</code> is a passing conditional spelling for a documented external source, and a registered <code>_due_to_</code> mechanism may be used when the actual source identifier establishes it.</p>
+<p>The existing physical base <code>source</code> remains registered and is not added to qualifiers. The current cross-registry duplicate check does not include qualifiers, so no claim is made that it would prevent such a duplicate registration. A temporal <code>source_rate</code> would change the supplied <code>A.m^-2</code> quantity.</p>
+<p><strong>Ruling requested:</strong> Keep current_density and the explicit source-contribution binding; accept external_current_density only for a documented external source. Do not add source as a qualifier.</p>
+<ul>
+<li><code>source_current_density</code>: Would overload the already registered physical base source with a qualifier of the same spelling.</li>
+<li><code>current_density_source_rate</code>: Would imply a temporal rate and does not match the DD A.m^-2 unit.</li>
+<li><code>external_current_density</code>: Parses, but is not an unconditional replacement: the DD source collection can contain mechanisms not established as external by the path.</li>
+</ul>
+</section>
+<h2 id="dgv-doubtful-rework-measure">Measure and limits</h2>
+<p>The artifact gate checks seven unique token rows and every assigned worklist source path; exact leaf and parent documentation; membership of each reused token; strict parse/compose equality and recorded IR; the three proposed-token absences; all nine recorded refusals; distinct grid/line domains and their OR predicate; intact versus shattered pellet identity; current-source role; DD units; and binary operand locus scope. It uses four known-valid parser names and two known-present worklist paths before interpreting absence.</p>
+<p>The gate runs against the main checkout parser at the recorded revision, using the repository’s shared environment. No grammar or test files are changed. No mutation control applies to this proposal-only node; the per-row parser probe is the declared check. The companion record contains proposed names, not a claim that source bindings have already been implemented in imas-codex.</p>
+</main>
+</body>
+</html>

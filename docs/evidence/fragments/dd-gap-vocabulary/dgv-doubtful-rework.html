@@ -1,0 +1,32 @@
+<section id="dgv-doubtful-rework-result">
+  <h3>Seven doubtful additions reworked for ruling</h3>
+  <p>The <a href="/imas-standard-names/evidence/fragments/dd-gap-vocabulary/doubtful-rework.html">proposal summary</a>
+    and <a href="/imas-standard-names/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json">machine-readable rows</a>
+    cover all seven additions and their seven exact worklist source paths. Six existing-token
+    spellings strictly parse and round-trip at main revision
+    <code>d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9</code>; four positive parser controls and two known-present worklist controls
+    pass, and nine recorded rejected spellings or decompositions still reproduce their refusals.
+    No grammar or test files changed.</p>
+  <table>
+    <thead><tr><th>Proposal</th><th>Representative identity</th><th>Binding or definition</th></tr></thead>
+    <tbody>
+      <tr><td>Intact-pellet constituent</td><td><code>pellet_species_number_density_of_pellet</code></td><td>Proposed subject <code>pellet_species</code>; never reuse shattered-pellet species.</td></tr>
+      <tr><td>Breakdown grid subset</td><td><code>vertical_grid</code></td><td>Grid points containing a line meeting Townsend OR closed-line selection.</td></tr>
+      <tr><td>Breakdown line samples</td><td><code>vertical_position_of_magnetic_field_line</code></td><td>Samples along selected lines; a different set from grid nodes.</td></tr>
+      <tr><td>Current alignment</td><td><code>current_profile_alignment</code></td><td>Proposed physical quantity; retain the DD unit A and cited weighting.</td></tr>
+      <tr><td>Plateau factor</td><td><code>plateau_factor</code></td><td>Proposed neoclassical magnetic-configuration quantity, unit 1; not profile flattening.</td></tr>
+      <tr><td>Green function</td><td><code>ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count</code></td><td>Unit emitted-neutron impulse from one voxel/energy bin; m^-2 response.</td></tr>
+      <tr><td>Current source</td><td><code>current_density</code></td><td>Source-contribution role and source identity retained; A.m^-2, with no temporal rate.</td></tr>
+    </tbody>
+  </table>
+  <p>The three proposed tokens are defined separately and remain unregistered. The two selection
+    splits and current-source split require the lead to accept identity-bearing binding metadata;
+    their flat names alone do not preserve every DD distinction. The exact mathematical weighting
+    of the current-alignment convention and normalization of the cited plateau-factor equation
+    were not recovered in full text and must be verified before admission. This proposal does not
+    admit tokens, implement downstream bindings, promote sources or close the plan section.</p>
+  <p>The declared negative control is <code>none: a proposal document with no product or test path;
+    the per-row parse() probe is the check</code>. Gate receipt: seven rows, seven source paths,
+    six of six existing-only round-trips, three proposed new tokens, nine reproduced refusals,
+    four of four positive parser controls and zero grammar changes.</p>
+</section>
