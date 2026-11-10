@@ -1,0 +1,114 @@
+{
+  "absent": [],
+  "absent_items": [],
+  "added_failure_count": 0,
+  "added_failure_ids": [],
+  "assertion_review": [
+    {
+      "analysis": "The canonical name is a fixed source-bound literal independent of parser output: losing a token, misordering qualifiers or losing a locus prevents strict parsing or changes composition; SEGMENT_TOKEN_MAP membership separately fails on removal even if a name could be reinterpreted. The reparse equality at line 311 is supplemental self-consistency only and is not used as independent proof.",
+      "path": "tests/grammar/test_dd_gap_vocabulary.py:308-313"
+    },
+    {
+      "analysis": "Literal definitions are independent of loaded YAML; changing a definition or token, entity/position type, or the specified allowed relations fails these assertions. The review cross-checked all 34 expected definitions and source paths against accepted-rows.json.",
+      "path": "tests/grammar/test_dd_gap_vocabulary.py:316-340"
+    },
+    {
+      "analysis": "The forbidden literal list fails if any rejected spelling enters its proposed segment; exact expected segment sets fail if spun, toroidal or coordinate changes or gains a registration. Planting fit_offset already produced the expected failure.",
+      "path": "tests/grammar/test_dd_gap_vocabulary.py:343-373"
+    },
+    {
+      "analysis": "The exact context list fails on omitted/extra representations. Reinstating local_circle-only validation, dropping representation qualifiers from either model direction or restoring the wrong qualifier order fails canonical example assertions. Removing allowed-base, owner, projection or stacking refusals fails the corresponding pytest.raises cases.",
+      "path": "tests/grammar/test_geometry_section_and_arc.py:155-204"
+    }
+  ],
+  "call_site_count": 6,
+  "call_sites": [
+    "imas_standard_names/grammar/parser.py:load_default_vocabularies",
+    "imas_standard_names/grammar/parser.py:_strict_flat_segment_semantics",
+    "imas_standard_names/grammar/parser.py:_strict_operator_free_core",
+    "imas_standard_names/grammar/model.py:parse_standard_name",
+    "imas_standard_names/grammar/model.py:compose_standard_name",
+    "imas_standard_names/grammar/context.py:get_grammar_context"
+  ],
+  "completed_at": "2026-11-10T00:54:15Z",
+  "dispatched_at": "2026-11-10T00:47:33Z",
+  "findings": [],
+  "gate_evidence": {
+    "after_suite": {
+      "command": "UV_PROJECT_ENVIRONMENT=/home/ITER/mcintos/Code/imas-standard-names/.venv PYTHONPATH=/home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-accepted-vocabulary TMPDIR=/tmp/reckon-crew-scratch/r-20261109T221648884690-dgv-accepted-vocabulary timeout 2400 uv run --no-sync pytest /home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-accepted-vocabulary/tests/grammar -p no:cacheprovider",
+      "completed": true,
+      "exit_status": 0,
+      "failure_count": 0,
+      "failure_ids": [],
+      "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261109T221648884690-dgv-accepted-vocabulary/categorized-head-grammar.log",
+      "observed_failure_ids": [],
+      "observed_summary": "================ 1382 passed, 32 skipped in 1514.75s (0:25:14) =================",
+      "revision": "f06af0a3f19bccc62a953c7449d4f40d60ebc94c"
+    },
+    "baseline_suite": {
+      "command": "UV_PROJECT_ENVIRONMENT=/home/ITER/mcintos/Code/imas-standard-names/.venv PYTHONPATH=/tmp/reckon-crew-scratch/r-20261109T221648884690-dgv-accepted-vocabulary/serial-baseline-oza1l6wd TMPDIR=/tmp/reckon-crew-scratch/r-20261109T221648884690-dgv-accepted-vocabulary timeout 2400 uv run --no-sync pytest /tmp/reckon-crew-scratch/r-20261109T221648884690-dgv-accepted-vocabulary/serial-baseline-oza1l6wd/tests/grammar -p no:cacheprovider",
+      "completed": true,
+      "exit_status": 0,
+      "failure_count": 0,
+      "failure_ids": [],
+      "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261109T221648884690-dgv-accepted-vocabulary/serial-base-grammar.log",
+      "observed_failure_ids": [],
+      "observed_summary": "================= 1285 passed, 32 skipped in 682.69s (0:11:22) =================",
+      "revision": "d88e5bee0db310bb311de9aa20f46c63dd4eded9"
+    }
+  },
+  "item_aggregate": 6,
+  "item_verdicts": {
+    "call_sites": "verified 6 production call site(s)",
+    "diff": "pass \u2014 all seven commits from d88e5bee to 2a2a3ccae705 were read; 16 paths contain vocabulary additions, generated enums, necessary representation handling, focused tests, comment cleanup and cumulative evidence.",
+    "done_when": "pass \u2014 dd-gap-vocabulary \u00a72 requires canonical examples, exact registrations, codegen stability and no added grammar failures; serial-base-grammar.log and categorized-head-grammar.log end EXIT=0 with 1285 and 1382 passed respectively, category-codegen-check.log reports no drift, and negative-control.log names both intended failing tests.",
+    "goal": "pass \u2014 prompt.txt states 34 accepted tokens with worklist definitions; the reviewed vocabulary diffs and tests/grammar/test_dd_gap_vocabulary.py:23-298 supply all 34 with matching source bindings and definitions.",
+    "manifest": "pass \u2014 manifest.md names seven existing commits, both completed suite receipts, the negative-control log and the final category repair; the after_suite revision f06af0a3 differs from reviewed head only by the appended evidence fragment.",
+    "write_paths": "pass \u2014 manifest.md and resume-1-advice.txt/resume-3-advice.txt authorize all 16 changed paths, including model.py, test_geometry_section_and_arc.py and qualifier_categories.yml."
+  },
+  "justifications": {
+    "durability": "tests/grammar/test_dd_gap_vocabulary.py:308-373 fails on token removal, definition drift, planted rejected membership or altered reused registrations, and test_geometry_section_and_arc.py:179-204 fails when representation round trips or semantic refusals regress, with both declared mutations evidenced in negative-control.log.",
+    "evidence": "serial-base-grammar.log and categorized-head-grammar.log record complete zero-failure arms with 1285/1382 passed and 32 skipped each, while negative-control.log records removal and rejected-registration failures and category-codegen-check.log records generated-file synchronization.",
+    "fit": "model.py:104-115 and :1384 extend the existing typed-enum and model-validator idioms, vocabulary additions use their existing registry forms, and the test cases use descriptive capability names in the explicitly assigned test path.",
+    "goal_fidelity": "tests/grammar/test_dd_gap_vocabulary.py:23-298 binds all 34 tokens to their declared vocabulary, exact accepted definition and a source path independently checked against accepted-rows.json, including voltage_of_power_convertor for pf_active/supply/voltage.",
+    "reuse": "capability searches for representation/base semantics, vocabulary loading and round-trip testing found model.py:_check_geometry_representation_semantics, vocab_loaders.py:356 and test_grammar_stabilisation_vocab.py:78 as the owners, and the change extends the first while reusing the public parser/renderer and resource loader rather than adding a second implementation.",
+    "scope_discipline": "manifest.md:3 and resume-1-advice.txt/resume-3-advice.txt cover every changed path, and model.py:1384 extends representation validation only as needed by the accepted worklist examples."
+  },
+  "project": "imas-standard-names",
+  "raw_text": "VERDICT goal: pass \u2014 prompt.txt states 34 accepted tokens with worklist definitions; the reviewed vocabulary diffs and tests/grammar/test_dd_gap_vocabulary.py:23-298 supply all 34 with matching source bindings and definitions.\nVERDICT done_when: pass \u2014 dd-gap-vocabulary \u00a72 requires canonical examples, exact registrations, codegen stability and no added grammar failures; serial-base-grammar.log and categorized-head-grammar.log end EXIT=0 with 1285 and 1382 passed respectively, category-codegen-check.log reports no drift, and negative-control.log names both intended failing tests.\nVERDICT write_paths: pass \u2014 manifest.md and resume-1-advice.txt/resume-3-advice.txt authorize all 16 changed paths, including model.py, test_geometry_section_and_arc.py and qualifier_categories.yml.\nVERDICT manifest: pass \u2014 manifest.md names seven existing commits, both completed suite receipts, the negative-control log and the final category repair; the after_suite revision f06af0a3 differs from reviewed head only by the appended evidence fragment.\nVERDICT diff: pass \u2014 all seven commits from d88e5bee to 2a2a3ccae705 were read; 16 paths contain vocabulary additions, generated enums, necessary representation handling, focused tests, comment cleanup and cumulative evidence.\nCALL_SITES: imas_standard_names/grammar/parser.py:load_default_vocabularies, imas_standard_names/grammar/parser.py:_strict_flat_segment_semantics, imas_standard_names/grammar/parser.py:_strict_operator_free_core, imas_standard_names/grammar/model.py:parse_standard_name, imas_standard_names/grammar/model.py:compose_standard_name, imas_standard_names/grammar/context.py:get_grammar_context\nSCORE goal_fidelity: 20\nJUSTIFICATION goal_fidelity: tests/grammar/test_dd_gap_vocabulary.py:23-298 binds all 34 tokens to their declared vocabulary, exact accepted definition and a source path independently checked against accepted-rows.json, including voltage_of_power_convertor for pf_active/supply/voltage.\nSCORE evidence: 20\nJUSTIFICATION evidence: serial-base-grammar.log and categorized-head-grammar.log record complete zero-failure arms with 1285/1382 passed and 32 skipped each, while negative-control.log records removal and rejected-registration failures and category-codegen-check.log records generated-file synchronization.\nSCORE scope_discipline: 20\nJUSTIFICATION scope_discipline: manifest.md:3 and resume-1-advice.txt/resume-3-advice.txt cover every changed path, and model.py:1384 extends representation validation only as needed by the accepted worklist examples.\nSCORE durability: 20\nJUSTIFICATION durability: tests/grammar/test_dd_gap_vocabulary.py:308-373 fails on token removal, definition drift, planted rejected membership or altered reused registrations, and test_geometry_section_and_arc.py:179-204 fails when representation round trips or semantic refusals regress, with both declared mutations evidenced in negative-control.log.\nSCORE fit: 20\nJUSTIFICATION fit: model.py:104-115 and :1384 extend the existing typed-enum and model-validator idioms, vocabulary additions use their existing registry forms, and the test cases use descriptive capability names in the explicitly assigned test path.\nSCORE reuse: 20\nJUSTIFICATION reuse: capability searches for representation/base semantics, vocabulary loading and round-trip testing found model.py:_check_geometry_representation_semantics, vocab_loaders.py:356 and test_grammar_stabilisation_vocab.py:78 as the owners, and the change extends the first while reusing the public parser/renderer and resource loader rather than adding a second implementation.\n",
+  "reuse_search": {
+    "assessment": "Product definitions extend existing owners; VocabularyCase and vocabulary_sources only organize these source-bound test expectations and resource reads, with no parallel production mechanism.",
+    "capabilities": [
+      "representation base compatibility and cardinality",
+      "vocabulary registry loading",
+      "source-bound vocabulary round-trip and definition fixtures"
+    ],
+    "owners_opened": [
+      "imas_standard_names/grammar/model.py:_check_geometry_representation_semantics",
+      "imas_standard_names/grammar/vocab_loaders.py:load_geometry_representations",
+      "imas_standard_names/grammar/render.py:compose",
+      "tests/grammar/test_grammar_stabilisation_vocab.py:test_grammar_stabilisation_vocab_round_trips"
+    ]
+  },
+  "review_limitations": [
+    "No suite rerun: review relies on completed source-run logs as instructed.",
+    "Review tree HEAD f6f46858ed3da9cee588f2233e15b2587c61d6cc is not the review subject; all subject code and call-site reads use git show/grep at requested head.",
+    "Final tested revision f06af0a3f19bccc62a953c7449d4f40d60ebc94c differs from requested head only in the cumulative evidence HTML."
+  ],
+  "review_run_id": "r-20261110T004701279563-review-of-dgv-accepted-vocabulary-2a2a3ccae705",
+  "reviewed_base_sha": "d88e5bee0db310bb311de9aa20f46c63dd4eded9",
+  "reviewed_head_sha": "2a2a3ccae7050650f4627f7ea108a7899a3a2894",
+  "reviewed_run_id": "r-20261109T221648884690-dgv-accepted-vocabulary",
+  "scores": {
+    "durability": 20,
+    "evidence": 20,
+    "fit": 20,
+    "goal_fidelity": 20,
+    "reuse": 20,
+    "scope_discipline": 20
+  },
+  "status": "parsed",
+  "times_source": "run-record",
+  "timestamp": "2026-11-10T01:05:05.218673+00:00",
+  "total": 120
+}
