@@ -20,11 +20,11 @@
   <meta name="plan-tags" content="grammar,vocabulary,release">
   <meta name="plan-blocks" content="imas-codex:sn-integrity-backlog">
   <meta name="plan-section-depends-on" content="{&quot;s3&quot;: [&quot;dd-gap-vocabulary#s2&quot;], &quot;s4&quot;: [&quot;dd-gap-vocabulary#s2&quot;, &quot;dd-gap-vocabulary#s5&quot;], &quot;s6&quot;: [&quot;dd-gap-vocabulary#s3&quot;, &quot;dd-gap-vocabulary#s4&quot;]}">
-  <meta name="plan-section-declarations" content="{&quot;s1&quot;:&quot;done&quot;,&quot;s2&quot;:&quot;implementable&quot;,&quot;s3&quot;:&quot;implementable&quot;,&quot;s4&quot;:&quot;implementable&quot;,&quot;s5&quot;:&quot;implementable&quot;,&quot;s6&quot;:&quot;implementable&quot;}">
+  <meta name="plan-section-declarations" content="{&quot;s1&quot;:&quot;done&quot;,&quot;s2&quot;:&quot;done&quot;,&quot;s3&quot;:&quot;implementable&quot;,&quot;s4&quot;:&quot;implementable&quot;,&quot;s5&quot;:&quot;implementable&quot;,&quot;s6&quot;:&quot;implementable&quot;}">
   <title>The Vocabulary The DD's Unnamed Sources Need | imas-standard-names</title>
   <link rel="stylesheet" href="/_shared/foundation.css">
   <link rel="stylesheet" href="/_shared/dashboard.css">
-<meta name="plan-version" content="2">
+<meta name="plan-version" content="3">
 <meta name="plan-modified" content="2026-11-10">
 </head>
 <body>
@@ -41,7 +41,7 @@
     <p>This repository owns the vocabulary and its release; imas-codex owns the pin bump, the graph grammar snapshot and the rerun of the sources, under its own plan <code>sn-integrity-backlog</code> §51.</p>
 
     <h2 id="s2">§2 — The accepted vocabulary enters the grammar</h2>
-    <section data-reckon="section" data-id="s2" data-effort-hours="2.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable" data-links=""></section>
+    <section data-reckon="section" data-id="s2" data-effort-hours="2.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="done" data-links=""></section>
     <p>Add these 34 tokens, in the segment and vocabulary file the worklist row names and with its one-sentence definition, by editing the vocabulary YAMLs and <code>grammar/specification.yml</code> and regenerating with <code>build-grammar</code>. Never hand-edit the generated files.</p>
     <p><code>horizontal</code> (component), <code>pipe</code>, <code>ion_source</code>, <code>optical_fibre</code>, <code>power_convertor</code>, <code>slit</code>, <code>thermal_shield</code> (equipment objects), <code>image_surface</code>, <code>magnetic_field_line</code>, <code>pre_sawtooth_crash</code>, <code>threshold_crossing</code> (positions), <code>arc_of_circle</code>, <code>oblique</code>, <code>thick_line</code> (geometry representations), <code>image</code>, <code>grid</code> (geometric bases, in <code>geometry_carriers.yml</code>, the vocabulary the worklist rows name; not the <code>geometry</code> segment's positions), <code>ballooning_parameter</code>, <code>delta_prime</code>, <code>stress</code> (physical bases), <code>helical</code>, <code>ripple</code>, <code>sine</code>, <code>cosine</code>, <code>chemical</code>, <code>bounce</code>, <code>compressive</code>, <code>second_inclination</code>, <code>rotational</code>, <code>tangency</code> (qualifiers), <code>tritium_decay</code>, <code>fragmentation</code>, <code>sublimation</code> (processes), <code>lithium_6</code> (subject), <code>side</code> (zone).</p>
     <p>The six equipment objects are entries of the <code>loci:</code> mapping in <code>locus_registry.yml</code> with <code>type: entity</code>, beside <code>antenna_strap</code> and <code>coil_conductor</code>; no new top-level section is added. <code>specification.yml</code> keeps the prefix <code>device</code> segment for parse compatibility only, so every representative name uses the postfix locus form that compose tooling enforces, for example <code>voltage_of_power_convertor</code>, never <code>power_convertor_voltage</code>.</p>
@@ -103,6 +103,9 @@
 </div>
 <div class="r-comment" data-section="s2" data-id="c-run-r-20261110T004701279563-review-of-dgv-accepted-vocabulary-2a2a3ccae705" data-who="reckon-build" data-when="2026-11-10T00:54:15Z">
     <div class="r-comment-body"><p>Independent review of d88e5bee0db310bb311de9aa20f46c63dd4eded9..2a2a3ccae7050650f4627f7ea108a7899a3a2894 is parsed with all six dimensions 20/20, zero findings and zero added failure IDs derived from completed source gate logs.</p></div>
+</div>
+<div class="r-comment" data-section="_top" data-id="c-close-s2" data-who="reckon-build" data-when="2026-11-10T01:10:00Z">
+    <div class="r-comment-body"><p>§2 landed (merge <code>4df7cf3</code>, review 120/120). All 34 accepted tokens are in their vocabularies with the worklist definitions; geometry representations now declare the physical bases they admit, so <code>arc_of_circle</code>, <code>oblique</code> and <code>thick_line</code> round-trip beside <code>local_circle</code>; the ten new qualifiers are registered in <code>qualifier_categories.yml</code>. The grammar suite ran serially: 1,285 passed at base, 1,382 at head, no added failure; a planted token removal and a planted rejected spelling each fail their test.</p></div>
 </div>
 </section>
 </main>
