@@ -319,3 +319,5 @@
 - second_inclination  # Selects the second edge-orientation angle in a two-angle oblique cross-section parameterization.
 - rotational  # Selects the pressure contribution R0² ρ ω²/2 associated with toroidal bulk plasma rotation.
 - tangency  # Selects the closest-approach geometry where a beam centreline is tangent to a toroidal circle.
+
+- sourced  # Selects the additive contribution supplied by a source term to the named physical quantity, rather than the total quantity. It does not assert a particular mechanism or external origin, and it preserves the dimensions of the named quantity rather than introducing a temporal derivative.

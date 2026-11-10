@@ -97,6 +97,11 @@ bases:
       The vector flux density of conventional electric charge, equal to
       electric current per unit area normal to the flow, including all
       charged-particle contributions.
+  current_profile_alignment:
+    aliases: []
+    kind: scalar
+    inherently_dimensional: true
+    definition: A global, current-valued figure of merit measuring spatial agreement among the current-density profiles supplying the plasma current, evaluated with the source-profile comparison and weighting prescribed by the DD-cited Wade et al. convention; it is not an angle, a current-density vector component, or an assumed dimensionless factor.
   debye_length:
     aliases: []
     kind: scalar
@@ -333,6 +338,10 @@ bases:
   pitch_angle:
     aliases: []
     kind: scalar
+  plateau_factor:
+    aliases: []
+    kind: scalar
+    definition: The dimensionless magnetic-configuration factor for plateau-regime neoclassical transport, sensitive to toroidal and helical magnetic-field harmonics and designated by the DD as the plateau factor of Stroth et al., equation (25); it characterizes magnetic geometry, not flattening of a density or temperature profile.
   potential:
     aliases: []
     kind: scalar
