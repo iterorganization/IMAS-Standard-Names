@@ -1,0 +1,70 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-10T01:32:13.546Z",
+  "dispatched_at": "2026-11-10T01:23:41Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:61",
+      "id": "reasoning-1",
+      "reason": "under the current text the SPI source keeps a recorded refusal with no route through \u00a72 (not among the 34), \u00a73 (intact pellet only) or \u00a76 (lands only what \u00a73 produces), so one of the sources the release exists to name stays unnamed.",
+      "text": "\u00a73 assigns `species` to `pellets/time_slice/pellet/species/density` only, while \u00a71 carves out \"the eleventh [rejection], which reused `shattered_pellet_species` for a pellet species\"; that rejection is the separate worklist row `qualifier:species` whose source is `spi/injector/pellet/core/species/density` (recorded refusal: missing qualifier token 'species'), so the reworked row covers the ADD row and drops the rejected row's DD source",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:77",
+      "id": "reasoning-2",
+      "reason": "the value written into sixteen definitions would state something false about them, and any check honouring that stated meaning (result unit equals the operand's) would flag every integral and derivative.",
+      "text": "\u00a75 says the typed field \"states what the result's dimension follows, `operand` for the operators that carry `true` today\", but the sixteen such operators include `square`, `inverse`, `gradient`, `time_derivative` (declared `returns: rate` in operators.yml:225), `volume_integrated` and `per_solid_angle`, none of whose results carry the operand's dimension \u2014 `_load_dimension_transforming_operators()`'s own docstring says these \"change the dimensions of their argument\" and that `volume_integrated_<density>` is a dimensionless count",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:59",
+      "id": "reasoning-3",
+      "reason": "a worker reading \u00a71 believes the rework set is six and may treat the `source` bullet as out of scope or as an unruled addition, and the two lists cannot both be the plan's record of what was decided.",
+      "text": "\u00a73 reworks \"a seventh, `source` as a qualifier\", but \u00a71's recorded 2026-11-09 ruling enumerates exactly six rework tokens (`species`, `breakdown_candidate_grid_point`, `breakdown_candidate_field_line`, `current_alignment`, `plateau`, `green_function`) and does not include `source`, so the plan's authority for the seventh token is its own judgement rather than a recorded ruling",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/dd-gap-vocabulary.html:77",
+      "id": "reasoning-4",
+      "reason": "the following sentence supplies the extraction mechanism, so a worker can implement the check from the done-when without the missing clause.",
+      "text": "the sentence \"the sibling-entry unit comparison in `_check_source_flux_unit_collision` is generalised into a named-pair unit check, An indexed operator's coordinate is fused into its token\" loses its clause at the comma, so the plan states what the check is derived from but not how the named-pair comparison is applied to an argmax entry",
+      "type": "reasoning",
+      "would_change": false
+    }
+  ],
+  "plan_commit": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+  "plan_fingerprint": "74cd70665e5a76a48d283ffe16c1fa8195fd9830b9fe78de6a991a88f6f415df",
+  "plan_slug": "dd-gap-vocabulary",
+  "plan_version": 3,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261110T012217864170-plan-review-of-dd-gap-vocabulary",
+  "reviewed_blob_sha": "f9d3c00d58d8ed180e26aa6c7d1d675d9c0a36e6",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 `_no_duplicate_names_across_registries` (vocab_loaders.py:536, five registries: axes, loci, operators, bases, carriers), `dimension_transforming` (vocab_loaders.py:138, operators.yml), `_load_dimension_transforming_operators()` (semantic.py:483), `_check_source_flux_unit_collision` (semantic.py:114), `_check_referential_integrity` (semantic.py:149), `OperatorSemanticEffect` (vocab_loaders.py:120), `Operators.yml`/`render.py:202`/`derivative_with_respect_to` and the worklist rows all resolve.",
+    "done_when": "pass \u2014 \u00a73 now requires each existing-token spelling to round-trip through `parse()` at \u00a72's head and records it per row, and \u00a75 declares a planted-removal control for the effect; both are falsifiable.",
+    "evidence_paths": "pass \u2014 \u00a73 writes `docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json` and `.html`, a durable repository path; \u00a75's evidence is test ids in the grammar suite.",
+    "naming": "pass \u2014 \u00a73 and \u00a75 carry no plan labels, ticket numbers or version tags into symbols or comments.",
+    "reasoning": "a finding \u2014 \u00a75 types `dimension_transforming` with a value that misdescribes the sixteen operators it rewrites, and \u00a73's `species` bullet addresses the intact-pellet row while \u00a71's carve-out is the SPI (shattered-pellet) row.",
+    "single_goal": "pass \u2014 \u00a73 is one evidence deliverable (`doubtful-rework.json` + summary HTML), \u00a75 is the argmax spelling together with the unit check that makes its dimension honest.",
+    "wiring": "pass \u2014 `plan-section-depends-on` gives s3 `[dd-gap-vocabulary#s2]`, s4 `[#s2,#s5]`, s6 `[#s3,#s4]`; \u00a73's new \"It waits for \u00a72\" matches its declared edge, and \u00a75 has no upstream need."
+  },
+  "section_digests": {
+    "_document": "46531338359dd453f3e67f97e7b074f8d754c6e9c5756ae9ee6091e40967f615",
+    "s1": "b55eeb0aa4a599e093121d07e4f0ce2dbdcd085089f7cfcb02c4180f625924d6",
+    "s2": "f16f29ef4896c9a178762833652ed10f5dd59fe94ba97c61b929a3f875b585a1",
+    "s3": "23d7bc56ff59a3577c016aeefbfc9aad825bce927ba9555c7712d62256c54550",
+    "s4": "f7c2f479906c612a6804f1f614ab8a00c80a0e4e4c6caa7005f3f053cb9f3dca",
+    "s5": "fd4c00485f8d8df9a085aacc231dea78913865938e508561ba721216a7e3ab5a",
+    "s6": "8eb177421906548169b55a4c8fccb670df6669c3a9e417bbb6f92283b441d4c7"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-10T14:34:39.687814+00:00",
+  "total": null
+}
