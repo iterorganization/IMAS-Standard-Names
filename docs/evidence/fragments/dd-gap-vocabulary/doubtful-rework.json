@@ -1,0 +1,1185 @@
+{
+  "authority": "Proposal for the lead ruling; no token is admitted or source promoted by this evidence.",
+  "plan_read": {
+    "project": "imas-standard-names",
+    "slug": "dd-gap-vocabulary",
+    "version": 3,
+    "section": "s3"
+  },
+  "worklist": {
+    "path": "/home/ITER/mcintos/Code/imas-codex/docs/evidence/fragments/sn-integrity-backlog/sib-vocab-worklist.json",
+    "sha256": "559f1a55385c403ab872d0620917b7122ed67bb88f0ddd1eff4a5e0f380b513f"
+  },
+  "grammar_measurement": {
+    "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+    "main_checkout": "/home/ITER/mcintos/Code/imas-standard-names",
+    "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+    "strict": true,
+    "positive_controls": [
+      {
+        "name": "electron_temperature",
+        "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "strict": true,
+        "accepted": true,
+        "composed": "electron_temperature",
+        "round_trip": true,
+        "ir": {
+          "operators": [],
+          "qualifiers": [
+            {
+              "token": "electron"
+            }
+          ],
+          "base": {
+            "token": "temperature",
+            "kind": "quantity"
+          }
+        }
+      },
+      {
+        "name": "vertical_grid",
+        "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "strict": true,
+        "accepted": true,
+        "composed": "vertical_grid",
+        "round_trip": true,
+        "ir": {
+          "operators": [],
+          "projection": {
+            "axis": "vertical",
+            "shape": "coordinate"
+          },
+          "qualifiers": [],
+          "base": {
+            "token": "grid",
+            "kind": "geometry"
+          }
+        }
+      },
+      {
+        "name": "vertical_position_of_magnetic_field_line",
+        "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "strict": true,
+        "accepted": true,
+        "composed": "vertical_position_of_magnetic_field_line",
+        "round_trip": true,
+        "ir": {
+          "operators": [],
+          "projection": {
+            "axis": "vertical",
+            "shape": "coordinate"
+          },
+          "qualifiers": [],
+          "base": {
+            "token": "position",
+            "kind": "geometry"
+          },
+          "locus": {
+            "relation": "of",
+            "token": "magnetic_field_line",
+            "qualifiers": [],
+            "type": "position"
+          }
+        }
+      },
+      {
+        "name": "shattered_pellet_species_number_density",
+        "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "strict": true,
+        "accepted": true,
+        "composed": "shattered_pellet_species_number_density",
+        "round_trip": true,
+        "ir": {
+          "operators": [],
+          "qualifiers": [
+            {
+              "token": "shattered_pellet_species"
+            }
+          ],
+          "base": {
+            "token": "number_density",
+            "kind": "quantity"
+          }
+        }
+      }
+    ]
+  },
+  "summary": {
+    "rows": 7,
+    "source_paths": 7,
+    "existing_only_probes": 6,
+    "new_tokens_proposed": 3,
+    "existing_quantity_binding_rows": 4,
+    "named_quantity_rows": 2,
+    "new_subject_rows": 1,
+    "grammar_files_changed": 0
+  },
+  "decision_boundary": "Existing-only spellings are parser-valid quantity cores or explicit response ratios. Valid syntax is not proof that a flat spelling alone preserves a source predicate. The two selected sets and current source require the recorded identity-bearing bindings. Those binding contracts and three proposed tokens remain for ruling; no unblocking claim is made.",
+  "evidence_quality": "Exact leaf/parent documentation and units are copied from the assigned worklist. Fresh DD-only MCP fetches confirm source identities, but their enriched prose is not substituted for DD documentation. Published DD reference pages cross-check the records. The two cited normative formulae were not available in full text; their weighting/normalization is not invented.",
+  "rows": [
+    {
+      "token": "species",
+      "worklist_gap_keys": [
+        "qualifier:pellet_species"
+      ],
+      "source_paths": [
+        "pellets/time_slice/pellet/species/density"
+      ],
+      "dd_evidence": [
+        {
+          "source_path": "pellets/time_slice/pellet/species/density",
+          "cohort": "full_run",
+          "dd_version": "4.1.0",
+          "documentation": "Material density of the species in the pellet",
+          "parent_path": "pellets/time_slice/pellet/species",
+          "parent_documentation": "Set of species included in the pellet composition",
+          "unit": "m^-3",
+          "recorded_refusal": "missing qualifier vocabulary token 'pellet_species': 'pellet_species' is in no grammar class and does not decompose into registered tokens; naming this needs a new qualifier token in imas-standard-names. Its words 'pellet' are already registered \u2014 request only 'species', and compose the rest.",
+          "live_status": "extracted",
+          "dd_reference_url": "https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/pellets.html"
+        }
+      ],
+      "parts": [
+        {
+          "segment": "physical_base",
+          "spelling": "number_density",
+          "action": "reuse",
+          "existing_token": "number_density",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/physical_bases.yml",
+          "role": "number per volume, not mass density"
+        },
+        {
+          "segment": "locus",
+          "spelling": "pellet",
+          "action": "reuse",
+          "existing_token": "pellet",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/locus_registry.yml",
+          "role": "intact pellet owner"
+        }
+      ],
+      "existing_only_spellings": [
+        "number_density_of_pellet"
+      ],
+      "new_tokens": [
+        {
+          "segment": "subject",
+          "spelling": "pellet_species",
+          "definition": "A chemically or isotopically identified constituent population in the material composition of an intact injected pellet, resolved by the pellet species coordinate; distinct from a shattered-pellet constituent.",
+          "unit": null,
+          "state": "proposed_for_ruling_not_registered"
+        }
+      ],
+      "rejected_alternatives": [
+        {
+          "spelling": "species",
+          "reason": "Generic across unrelated species axes; the requested subject specifically resolves intact-pellet composition."
+        },
+        {
+          "spelling": "shattered_pellet_species_number_density",
+          "reason": "Names a shattered-pellet constituent, a different population and source family."
+        },
+        {
+          "spelling": "number_density_of_pellet",
+          "reason": "Valid existing core only: omits the constituent axis and is not the proposed complete identity."
+        }
+      ],
+      "required_binding": {
+        "owner_path": "pellets/time_slice/pellet",
+        "species_axis": "pellets/time_slice/pellet/species",
+        "unit": "m^-3",
+        "species_identity": "Retain each species element/isotope and molecular stoichiometry; do not sum the species axis."
+      },
+      "lead_ruling": "Admit pellet_species as a subject, with number_density and the existing pellet owner composed separately.",
+      "disposition": "new_subject",
+      "reworked_spelling": "pellet_species_number_density_of_pellet",
+      "description": "Number density of one chemically or isotopically identified constituent of an intact pellet.",
+      "parse_measurement": {
+        "main_head": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "existing_only": [
+          {
+            "name": "number_density_of_pellet",
+            "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+            "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+            "strict": true,
+            "accepted": true,
+            "composed": "number_density_of_pellet",
+            "round_trip": true,
+            "ir": {
+              "operators": [],
+              "qualifiers": [],
+              "base": {
+                "token": "number_density",
+                "kind": "quantity"
+              },
+              "locus": {
+                "relation": "of",
+                "token": "pellet",
+                "qualifiers": [],
+                "type": "entity"
+              }
+            }
+          }
+        ],
+        "proposed_complete_identity": {
+          "name": "pellet_species_number_density_of_pellet",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'pellet_species_number_density' does not match any physical_base or geometry_carrier; nearest candidates: ['number_density']"
+        },
+        "new_token_count": 1
+      },
+      "original_proposal_probe": [
+        {
+          "name": "species_number_density_of_pellet",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'species_number_density' does not match any physical_base or geometry_carrier; nearest candidates: ['number_density', 'power_density']"
+        }
+      ]
+    },
+    {
+      "token": "breakdown_candidate_grid_point",
+      "worklist_gap_keys": [
+        "position:townsend_condition_or_closed_field_line_grid_position"
+      ],
+      "source_paths": [
+        "plasma_initiation/b_field_lines/townsend_or_closed_grid_positions/z"
+      ],
+      "dd_evidence": [
+        {
+          "source_path": "plasma_initiation/b_field_lines/townsend_or_closed_grid_positions/z",
+          "cohort": "full_run",
+          "dd_version": "4.1.0",
+          "documentation": "Height",
+          "parent_path": "plasma_initiation/b_field_lines/townsend_or_closed_grid_positions",
+          "parent_documentation": "List of all R, Z grid positions (from ../grid) containing field lines encoutering Townsend condition or being closed field lines",
+          "unit": "m",
+          "recorded_refusal": "missing position vocabulary token 'townsend_condition_or_closed_field_line_grid_position': The quantity is the vertical (Z) coordinate of grid points of the field-line tracing grid that contain field lines reaching the Townsend condition or closed field lines. The grammar has no registered locus for a tracing grid nor for grid points selected by a Townsend/closed field-line criterion, and the storage-shaped spellings previously proposed were rejected. The grid-selected-by-criterion meaning is a distinguishing axis that cannot be dropped, so a reusable carrier token is needed.",
+          "live_status": "extracted",
+          "dd_reference_url": "https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/plasma_initiation.html"
+        }
+      ],
+      "parts": [
+        {
+          "segment": "coordinate_axis",
+          "spelling": "vertical",
+          "action": "reuse",
+          "existing_token": "vertical",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/coordinate_axes.yml",
+          "role": "Z coordinate"
+        },
+        {
+          "segment": "geometry_carrier",
+          "spelling": "grid",
+          "action": "reuse",
+          "existing_token": "grid",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/geometry_carriers.yml",
+          "role": "sampling carrier"
+        },
+        {
+          "segment": "qualifier",
+          "spelling": "townsend",
+          "action": "reuse",
+          "existing_token": "townsend",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/qualifiers.yml",
+          "role": "existing vocabulary for one branch of the binding predicate; not inserted into the flat geometry name"
+        },
+        {
+          "segment": "qualifier",
+          "spelling": "breakdown",
+          "action": "reuse",
+          "existing_token": "breakdown",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/qualifiers.yml",
+          "role": "existing discharge-phase context only; not a synonym for the selection"
+        }
+      ],
+      "existing_only_spellings": [
+        "vertical_grid"
+      ],
+      "new_tokens": [],
+      "rejected_alternatives": [
+        {
+          "spelling": "breakdown_candidate_grid_point",
+          "reason": "Composite locus combines the selected-set predicate and the sampling carrier."
+        },
+        {
+          "spelling": "townsend_field_line",
+          "reason": "Conjoins words but cannot preserve the Townsend OR closed-line union."
+        },
+        {
+          "spelling": "breakdown_vertical_grid",
+          "reason": "breakdown selects a discharge phase, not the union predicate, and non-plane geometry prefix qualifiers are refused."
+        }
+      ],
+      "required_binding": {
+        "unit": "m",
+        "sample_domain": "tracing_grid_points",
+        "grid_definition": "plasma_initiation/b_field_lines/grid",
+        "line_carrier": "magnetic_field_line",
+        "selection": {
+          "any_of": [
+            "encounters_townsend_condition",
+            "is_closed_magnetic_field_line"
+          ]
+        },
+        "membership": "Keep a grid point exactly when it contains at least one magnetic field line satisfying the union criterion.",
+        "identity_policy": "Selection predicate and sampling domain are mandatory identity-bearing binding fields. The flat spelling alone is not equivalent to the DD selected subset."
+      },
+      "lead_ruling": "Accept the carrier/selection split only if the downstream source binding retains the explicit OR predicate and sample domain as identity. This is not an unconditional standalone-name replacement. If flat names must encode the selection, a reusable selection construct is needed; do not silently admit an opaque composite locus.",
+      "disposition": "existing_quantity_plus_explicit_selection_binding",
+      "reworked_spelling": "vertical_grid",
+      "description": "Vertical coordinate of tracing-grid points containing selected magnetic field lines.",
+      "parse_measurement": {
+        "main_head": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "existing_only": [
+          {
+            "name": "vertical_grid",
+            "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+            "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+            "strict": true,
+            "accepted": true,
+            "composed": "vertical_grid",
+            "round_trip": true,
+            "ir": {
+              "operators": [],
+              "projection": {
+                "axis": "vertical",
+                "shape": "coordinate"
+              },
+              "qualifiers": [],
+              "base": {
+                "token": "grid",
+                "kind": "geometry"
+              }
+            }
+          }
+        ],
+        "proposed_complete_identity": {
+          "name": "vertical_grid",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": true,
+          "composed": "vertical_grid",
+          "round_trip": true,
+          "ir": {
+            "operators": [],
+            "projection": {
+              "axis": "vertical",
+              "shape": "coordinate"
+            },
+            "qualifiers": [],
+            "base": {
+              "token": "grid",
+              "kind": "geometry"
+            }
+          }
+        },
+        "new_token_count": 0
+      },
+      "original_proposal_probe": [
+        {
+          "name": "vertical_position_at_breakdown_candidate_grid_point",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "locus token 'breakdown_candidate_grid_point' (relation 'at') is not a registered 'position' segment token; cannot project onto the model without dropping the locus"
+        },
+        {
+          "name": "breakdown_vertical_grid",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "geometry carriers cannot carry non-plane prefix qualifiers; got ['breakdown']"
+        }
+      ]
+    },
+    {
+      "token": "breakdown_candidate_field_line",
+      "worklist_gap_keys": [
+        "position:townsend_or_closed_positions"
+      ],
+      "source_paths": [
+        "plasma_initiation/b_field_lines/townsend_or_closed_positions/z"
+      ],
+      "dd_evidence": [
+        {
+          "source_path": "plasma_initiation/b_field_lines/townsend_or_closed_positions/z",
+          "cohort": "full_run",
+          "dd_version": "4.1.0",
+          "documentation": "Height",
+          "parent_path": "plasma_initiation/b_field_lines/townsend_or_closed_positions",
+          "parent_documentation": "List of all R, Z positions along all field lines encoutering Townsend condition or being closed field lines",
+          "unit": "m",
+          "recorded_refusal": "missing position vocabulary token 'townsend_or_closed_positions': The quantity is the vertical (Z) coordinate of the discrete set of positions along traced field lines that either satisfy the Townsend breakdown condition or belong to closed field lines. No registered locus/position token denotes this set, and no combination of registered qualifiers (field_line, townsend, breakdown) preserves the 'Townsend condition OR closed field line' distinction; using a bare field-line or generic measurement-position locus would erase the source-stated differentiator, so the exact carrier token is required.",
+          "live_status": "extracted",
+          "dd_reference_url": "https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/plasma_initiation.html"
+        }
+      ],
+      "parts": [
+        {
+          "segment": "coordinate_axis",
+          "spelling": "vertical",
+          "action": "reuse",
+          "existing_token": "vertical",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/coordinate_axes.yml",
+          "role": "Z coordinate"
+        },
+        {
+          "segment": "geometry_carrier",
+          "spelling": "position",
+          "action": "reuse",
+          "existing_token": "position",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/geometry_carriers.yml",
+          "role": "sampling carrier"
+        },
+        {
+          "segment": "locus",
+          "spelling": "magnetic_field_line",
+          "action": "reuse",
+          "existing_token": "magnetic_field_line",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/locus_registry.yml",
+          "role": "curve carrying along-line sample positions"
+        },
+        {
+          "segment": "qualifier",
+          "spelling": "townsend",
+          "action": "reuse",
+          "existing_token": "townsend",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/qualifiers.yml",
+          "role": "existing vocabulary for one branch of the binding predicate; not inserted into the flat geometry name"
+        },
+        {
+          "segment": "qualifier",
+          "spelling": "breakdown",
+          "action": "reuse",
+          "existing_token": "breakdown",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/qualifiers.yml",
+          "role": "existing discharge-phase context only; not a synonym for the selection"
+        }
+      ],
+      "existing_only_spellings": [
+        "vertical_position_of_magnetic_field_line"
+      ],
+      "new_tokens": [],
+      "rejected_alternatives": [
+        {
+          "spelling": "breakdown_candidate_field_line",
+          "reason": "Composite locus combines the selected-set predicate and the sampling carrier."
+        },
+        {
+          "spelling": "townsend_field_line",
+          "reason": "Conjoins words but cannot preserve the Townsend OR closed-line union."
+        },
+        {
+          "spelling": "breakdown_vertical_position_of_magnetic_field_line",
+          "reason": "breakdown selects a discharge phase, not the union predicate, and non-plane geometry prefix qualifiers are refused."
+        }
+      ],
+      "required_binding": {
+        "unit": "m",
+        "sample_domain": "samples_along_selected_lines",
+        "grid_definition": "plasma_initiation/b_field_lines/grid",
+        "line_carrier": "magnetic_field_line",
+        "selection": {
+          "any_of": [
+            "encounters_townsend_condition",
+            "is_closed_magnetic_field_line"
+          ]
+        },
+        "membership": "Keep the sampled positions along every magnetic field line satisfying the union criterion; do not substitute grid nodes.",
+        "identity_policy": "Selection predicate and sampling domain are mandatory identity-bearing binding fields. The flat spelling alone is not equivalent to the DD selected subset."
+      },
+      "lead_ruling": "Accept the carrier/selection split only if the downstream source binding retains the explicit OR predicate and sample domain as identity. This is not an unconditional standalone-name replacement. If flat names must encode the selection, a reusable selection construct is needed; do not silently admit an opaque composite locus.",
+      "disposition": "existing_quantity_plus_explicit_selection_binding",
+      "reworked_spelling": "vertical_position_of_magnetic_field_line",
+      "description": "Vertical coordinate of samples along selected magnetic field lines.",
+      "parse_measurement": {
+        "main_head": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "existing_only": [
+          {
+            "name": "vertical_position_of_magnetic_field_line",
+            "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+            "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+            "strict": true,
+            "accepted": true,
+            "composed": "vertical_position_of_magnetic_field_line",
+            "round_trip": true,
+            "ir": {
+              "operators": [],
+              "projection": {
+                "axis": "vertical",
+                "shape": "coordinate"
+              },
+              "qualifiers": [],
+              "base": {
+                "token": "position",
+                "kind": "geometry"
+              },
+              "locus": {
+                "relation": "of",
+                "token": "magnetic_field_line",
+                "qualifiers": [],
+                "type": "position"
+              }
+            }
+          }
+        ],
+        "proposed_complete_identity": {
+          "name": "vertical_position_of_magnetic_field_line",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": true,
+          "composed": "vertical_position_of_magnetic_field_line",
+          "round_trip": true,
+          "ir": {
+            "operators": [],
+            "projection": {
+              "axis": "vertical",
+              "shape": "coordinate"
+            },
+            "qualifiers": [],
+            "base": {
+              "token": "position",
+              "kind": "geometry"
+            },
+            "locus": {
+              "relation": "of",
+              "token": "magnetic_field_line",
+              "qualifiers": [],
+              "type": "position"
+            }
+          }
+        },
+        "new_token_count": 0
+      },
+      "original_proposal_probe": [
+        {
+          "name": "vertical_position_of_breakdown_candidate_field_line",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'vertical_position_of_breakdown_candidate_field_line' does not match any physical_base or geometry_carrier; nearest candidates: (none)"
+        },
+        {
+          "name": "breakdown_vertical_position_of_magnetic_field_line",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "geometry carriers cannot carry non-plane prefix qualifiers; got ['breakdown']"
+        }
+      ]
+    },
+    {
+      "token": "current_alignment",
+      "worklist_gap_keys": [
+        "physical_base:current_alignment_factor"
+      ],
+      "source_paths": [
+        "summary/global_quantities/current_alignment/value"
+      ],
+      "dd_evidence": [
+        {
+          "source_path": "summary/global_quantities/current_alignment/value",
+          "cohort": "second_pass",
+          "dd_version": "4.1.0",
+          "documentation": "Value",
+          "parent_path": "summary/global_quantities/current_alignment",
+          "parent_documentation": "Figure of merit of the alignment of the current profile sources, defined in the following reference: http://iopscience.iop.org/article/10.1088/0029-5515/43/7/318",
+          "unit": "A",
+          "recorded_refusal": "missing physical_base vocabulary token 'current_alignment_factor': The quantity is a named figure of merit for the spatial alignment of ohmic, bootstrap and non-inductive current-drive source profiles (Nucl. Fusion 43 (2003) 318). No registered base expresses a 'current-alignment figure of merit', and neither 'current' nor 'alignment' exists as a qualifier token, so the identity cannot be composed without inventing vocabulary.",
+          "live_status": "vocab_gap",
+          "dd_reference_url": "https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/summary.html"
+        }
+      ],
+      "parts": [],
+      "existing_only_spellings": [],
+      "new_tokens": [
+        {
+          "segment": "physical_base",
+          "spelling": "current_profile_alignment",
+          "definition": "A global, current-valued figure of merit measuring spatial agreement among the current-density profiles supplying the plasma current, evaluated with the source-profile comparison and weighting prescribed by the DD-cited Wade et al. convention; it is not an angle, a current-density vector component, or an assumed dimensionless factor.",
+          "unit": "A",
+          "state": "proposed_for_ruling_not_registered"
+        }
+      ],
+      "rejected_alternatives": [
+        {
+          "spelling": "current_alignment_factor",
+          "reason": "Neither current nor alignment is an existing qualifier; generic factor does not establish this current-valued comparison or its weighting."
+        },
+        {
+          "spelling": "current",
+          "reason": "A total or component electric current does not describe agreement between source profiles."
+        }
+      ],
+      "required_binding": {
+        "unit": "A",
+        "normative_definition": "https://doi.org/10.1088/0029-5515/43/7/318",
+        "preserve": [
+          "comparison of current profile sources",
+          "weighting",
+          "normalization",
+          "time coordinate"
+        ],
+        "definition_limit": "The DD identifies the observable by the cited convention and reports A. Full-text weighting/formula was not recovered, so no formula, monotonicity, or correction of the DD unit is inferred."
+      },
+      "lead_ruling": "Consider one named physical base current_profile_alignment rather than the qualifier current_alignment plus generic factor. Keep the cited convention normative and verify its full mathematical definition before vocabulary admission.",
+      "disposition": "named_physical_quantity",
+      "reworked_spelling": "current_profile_alignment",
+      "description": "Current-valued figure of merit comparing the spatial profiles of sources supplying the plasma current.",
+      "parse_measurement": {
+        "main_head": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "existing_only": [],
+        "proposed_complete_identity": {
+          "name": "current_profile_alignment",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'current_profile_alignment' does not match any physical_base or geometry_carrier; nearest candidates: (none)"
+        },
+        "new_token_count": 1
+      },
+      "original_proposal_probe": [
+        {
+          "name": "current_alignment_factor",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'current_alignment_factor' does not match any physical_base or geometry_carrier; nearest candidates: ['confinement_enhancement_factor']"
+        }
+      ]
+    },
+    {
+      "token": "plateau",
+      "worklist_gap_keys": [
+        "physical_base:plateau_factor"
+      ],
+      "source_paths": [
+        "summary/local/r_eff_norm_2_3/plateau_factor/value"
+      ],
+      "dd_evidence": [
+        {
+          "source_path": "summary/local/r_eff_norm_2_3/plateau_factor/value",
+          "cohort": "full_run",
+          "dd_version": "4.1.0",
+          "documentation": "Value",
+          "parent_path": "summary/local/r_eff_norm_2_3/plateau_factor",
+          "parent_documentation": "Plateau factor, as defined in equation (25) of reference [Stroth U. et al 1998 Plasma Phys. Control. Fusion 40 1551]",
+          "unit": "1",
+          "recorded_refusal": "missing physical_base vocabulary token 'plateau_factor': The quantity is the dimensionless 'plateau factor' defined by Stroth et al. (1998) equation (25), a flattening measure of the local profile at the stellarator effective minor radius r_eff_norm = 2/3. The needed base token is not registered: the only generic candidates (bare `factor`, `parameter`) are contentless whole bases that the audit rejects, and the registered `peaking_factor` denotes the opposite profile shape, so it cannot be substituted without changing the observable. The distinguishing qualifier `plateau` is also not (and will not be) a registered qualifier. The stellarator r_eff_norm locus likewise has no registered token (`normalized_minor_radius` is a tokamak minor-radius normalization, not the effective minor radius normalized to its last-closed-flux-surface value). A faithful standard name therefore requires a new base vocabulary entry rather than a near-synonym; the referenced definition should be retained as metadata.",
+          "live_status": "extracted",
+          "dd_reference_url": "https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/summary.html"
+        }
+      ],
+      "parts": [],
+      "existing_only_spellings": [],
+      "new_tokens": [
+        {
+          "segment": "physical_base",
+          "spelling": "plateau_factor",
+          "definition": "The dimensionless magnetic-configuration factor for plateau-regime neoclassical transport, sensitive to toroidal and helical magnetic-field harmonics and designated by the DD as the plateau factor of Stroth et al., equation (25); it characterizes magnetic geometry, not flattening of a density or temperature profile.",
+          "unit": "1",
+          "state": "proposed_for_ruling_not_registered"
+        }
+      ],
+      "rejected_alternatives": [
+        {
+          "spelling": "plateau",
+          "reason": "A generic plateau qualifier does not define the named neoclassical magnetic-configuration measure."
+        },
+        {
+          "spelling": "peaking_factor",
+          "reason": "Describes profile shape, whereas this plateau factor describes magnetic configuration and neoclassical transport."
+        }
+      ],
+      "required_binding": {
+        "unit": "1",
+        "effective_minor_radius_fraction": "2/3",
+        "radius_definition": "stellarator effective minor radius divided by its value at the last closed flux surface",
+        "normative_definition": "Stroth U. et al. (1998), Plasma Physics and Controlled Fusion 40, 1551, equation (25)",
+        "definition_limit": "The cited equation was not recovered. Independent primary literature supports the magnetic-geometry meaning, but its normalized stellarator/tokamak flux ratio is not assumed identical to the DD convention."
+      },
+      "lead_ruling": "Consider the lexical physical base plateau_factor with its named neoclassical meaning, not a generic plateau qualifier. Recover and verify the cited equation before admission; keep the effective-radius convention in the binding.",
+      "disposition": "named_physical_quantity",
+      "reworked_spelling": "plateau_factor",
+      "description": "Dimensionless magnetic-configuration measure associated with plateau-regime neoclassical transport.",
+      "supporting_references": [
+        {
+          "title": "Confinement Study of Net-Current Free Toroidal Plasmas Based on Extended International Stellarator Database, plateau-factor slide",
+          "url": "https://www.ipfn.tecnico.ulisboa.pt/cfn/20IAEAConf/presentations/T2/2T/EX_1_5/Talk_EX_1_5.pdf",
+          "supports": "A geometrical factor for plateau neoclassical flux; the presentation discusses a stellarator/tokamak flux ratio."
+        },
+        {
+          "title": "Neoclassical Transport and Iota Scaling in the TJ-II Stellarator",
+          "url": "https://wx1.ans.org/pubs/journals/fst/a_38980",
+          "supports": "Plateau factor is a neoclassical-transport figure of merit."
+        }
+      ],
+      "parse_measurement": {
+        "main_head": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "existing_only": [],
+        "proposed_complete_identity": {
+          "name": "plateau_factor",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'plateau_factor' does not match any physical_base or geometry_carrier; nearest candidates: ['peaking_factor', 'safety_factor', 'factor']"
+        },
+        "new_token_count": 1
+      },
+      "original_proposal_probe": [
+        {
+          "name": "plateau_factor",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'plateau_factor' does not match any physical_base or geometry_carrier; nearest candidates: ['peaking_factor', 'safety_factor', 'factor']"
+        }
+      ]
+    },
+    {
+      "token": "green_function",
+      "worklist_gap_keys": [
+        "physical_base:green_function_neutron_flux_coefficient"
+      ],
+      "source_paths": [
+        "neutron_diagnostic/detector/green_functions/neutron_flux"
+      ],
+      "dd_evidence": [
+        {
+          "source_path": "neutron_diagnostic/detector/green_functions/neutron_flux",
+          "cohort": "full_run",
+          "dd_version": "4.1.0",
+          "documentation": "Grouped neutron flux in the detector from one neutron energy bin emitted by the current plasma voxel towards the detector",
+          "parent_path": "neutron_diagnostic/detector/green_functions",
+          "parent_documentation": "Green function coefficients used to represent the detector response based on its field of view",
+          "unit": "m^-2",
+          "recorded_refusal": "missing physical_base vocabulary token 'green_function_neutron_flux_coefficient': The registered response_function base denotes a counts-per-neutron detector response (unitless response matrix element), while its neutron_flux sibling denotes an actual incident flux. This path is a Green-function coefficient mapping a single emitted neutron energy-bin from a plasma voxel to grouped neutron flux at the detector (m^-2), and no registered base plus qualifier preserves the required flux-response, energy-bin, and voxel-response semantics.",
+          "live_status": "extracted",
+          "dd_reference_url": "https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/neutron_diagnostic.html"
+        }
+      ],
+      "parts": [
+        {
+          "segment": "binary_operator",
+          "spelling": "ratio_of",
+          "action": "reuse",
+          "existing_token": "ratio_of",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/binary_operators.yml",
+          "connector": "to",
+          "role": "response per emitted neutron"
+        },
+        {
+          "segment": "subject",
+          "spelling": "neutron",
+          "action": "reuse",
+          "existing_token": "neutron",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/subjects.yml",
+          "role": "particle species in both operands"
+        },
+        {
+          "segment": "physical_base",
+          "spelling": "fluence",
+          "action": "reuse",
+          "existing_token": "fluence",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/physical_bases.yml",
+          "role": "detector areal neutron count, unit m^-2"
+        },
+        {
+          "segment": "locus",
+          "spelling": "neutron_detector",
+          "action": "reuse",
+          "existing_token": "neutron_detector",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/locus_registry.yml",
+          "role": "response location for numerator only"
+        },
+        {
+          "segment": "physical_base",
+          "spelling": "count",
+          "action": "reuse",
+          "existing_token": "count",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/physical_bases.yml",
+          "role": "input neutron count, dimensionless"
+        }
+      ],
+      "existing_only_spellings": [
+        "ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count"
+      ],
+      "new_tokens": [],
+      "rejected_alternatives": [
+        {
+          "spelling": "green_function_neutron_flux_coefficient",
+          "reason": "Combines the response role, particle species and dimensional output into one opaque base."
+        },
+        {
+          "spelling": "neutron_response_function_of_neutron_detector",
+          "reason": "Valid but too broad to distinguish this m^-2 fluence kernel from the dimensionless detector-event response sibling."
+        },
+        {
+          "spelling": "neutron_flux_of_neutron_detector",
+          "reason": "A rate flux would add an inverse-time dimension absent from the DD coefficient."
+        }
+      ],
+      "required_binding": {
+        "unit": "m^-2",
+        "input": {
+          "quantity": "neutron_count",
+          "normalization": 1,
+          "role": "emitted source impulse, not detector event count",
+          "origin": "current plasma voxel",
+          "source_energy_axis": "neutron_diagnostic/detector/green_functions/source_neutron_energies",
+          "direction": "towards the detector"
+        },
+        "output": {
+          "quantity": "neutron_fluence_of_neutron_detector",
+          "grouping": "event_in_detector_neutron_flux/values"
+        },
+        "coordinates": [
+          "emission_grid/r",
+          "emission_grid/z",
+          "emission_grid/phi",
+          "source_neutron_energies",
+          "event_in_detector_neutron_flux/values"
+        ],
+        "integrated_axis_flags": "neutron_flux_integrated_flags",
+        "linear_kernel": "Evaluate numerator for the unit input impulse; this is not an arbitrary ratio of an observed fluence and an unrelated neutron count.",
+        "dimension_reason": "A unit neutron impulse gives areal neutron response m^-2. Do not silently convert it to a time-rate flux in m^-2.s^-1."
+      },
+      "lead_ruling": "Accept the ratio of existing fluence and count quantities, with the unit-emission impulse and full source/output coordinates retained. No green_function vocabulary token is needed.",
+      "disposition": "existing_binary_quantity_with_unit_impulse_binding",
+      "reworked_spelling": "ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count",
+      "description": "Grouped detector neutron fluence per neutron emitted from one source voxel and energy bin toward the detector.",
+      "parse_measurement": {
+        "main_head": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "existing_only": [
+          {
+            "name": "ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count",
+            "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+            "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+            "strict": true,
+            "accepted": true,
+            "composed": "ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count",
+            "round_trip": true,
+            "ir": {
+              "operators": [
+                {
+                  "kind": "binary",
+                  "op": "ratio",
+                  "args": [
+                    {
+                      "operators": [],
+                      "qualifiers": [
+                        {
+                          "token": "neutron"
+                        }
+                      ],
+                      "base": {
+                        "token": "fluence",
+                        "kind": "quantity"
+                      },
+                      "locus": {
+                        "relation": "of",
+                        "token": "neutron_detector",
+                        "qualifiers": [],
+                        "type": "entity"
+                      }
+                    },
+                    {
+                      "operators": [],
+                      "qualifiers": [
+                        {
+                          "token": "neutron"
+                        }
+                      ],
+                      "base": {
+                        "token": "count",
+                        "kind": "quantity"
+                      }
+                    }
+                  ],
+                  "separator": "to",
+                  "bare_prefix": false
+                }
+              ],
+              "qualifiers": [],
+              "base": {
+                "token": "placeholder",
+                "kind": "quantity"
+              }
+            }
+          }
+        ],
+        "proposed_complete_identity": {
+          "name": "ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": true,
+          "composed": "ratio_of_neutron_fluence_of_neutron_detector_to_neutron_count",
+          "round_trip": true,
+          "ir": {
+            "operators": [
+              {
+                "kind": "binary",
+                "op": "ratio",
+                "args": [
+                  {
+                    "operators": [],
+                    "qualifiers": [
+                      {
+                        "token": "neutron"
+                      }
+                    ],
+                    "base": {
+                      "token": "fluence",
+                      "kind": "quantity"
+                    },
+                    "locus": {
+                      "relation": "of",
+                      "token": "neutron_detector",
+                      "qualifiers": [],
+                      "type": "entity"
+                    }
+                  },
+                  {
+                    "operators": [],
+                    "qualifiers": [
+                      {
+                        "token": "neutron"
+                      }
+                    ],
+                    "base": {
+                      "token": "count",
+                      "kind": "quantity"
+                    }
+                  }
+                ],
+                "separator": "to",
+                "bare_prefix": false
+              }
+            ],
+            "qualifiers": [],
+            "base": {
+              "token": "placeholder",
+              "kind": "quantity"
+            }
+          }
+        },
+        "new_token_count": 0
+      },
+      "original_proposal_probe": [
+        {
+          "name": "green_function_neutron_flux_of_neutron_detector",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'green_function_neutron_flux' does not match any physical_base or geometry_carrier; nearest candidates: (none)"
+        }
+      ]
+    },
+    {
+      "token": "source",
+      "worklist_gap_keys": [
+        "channel:current"
+      ],
+      "source_paths": [
+        "edge_sources/source/ggd/current/values"
+      ],
+      "dd_evidence": [
+        {
+          "source_path": "edge_sources/source/ggd/current/values",
+          "cohort": "full_run",
+          "dd_version": "4.1.0",
+          "documentation": "One scalar value is provided per element in the grid subset.",
+          "parent_path": "edge_sources/source/ggd/current",
+          "parent_documentation": "Current density source",
+          "unit": "A.m^-2",
+          "recorded_refusal": "non-actionable vocabulary gap: The source is a current-density source term (A.m^-2 per the supplied grid source), but the closed channel vocabulary only provides energy/heat/momentum/particle, so a source-rate base cannot be qualified with the current-density carrier; naming it `current_density` alo",
+          "live_status": "failed",
+          "dd_reference_url": "https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/edge_sources.html"
+        }
+      ],
+      "parts": [
+        {
+          "segment": "physical_base",
+          "spelling": "current_density",
+          "action": "reuse",
+          "existing_token": "current_density",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/physical_bases.yml",
+          "role": "charge-current density, A.m^-2"
+        },
+        {
+          "segment": "qualifier",
+          "spelling": "external",
+          "action": "reuse",
+          "existing_token": "external",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/qualifiers.yml",
+          "role": "optional only when source identity establishes an external contribution; not applied to every source"
+        },
+        {
+          "segment": "physical_base",
+          "spelling": "source",
+          "action": "reuse",
+          "existing_token": "source",
+          "yaml_path": "imas_standard_names/grammar/vocabularies/physical_bases.yml",
+          "role": "existing registration retained; not re-registered as a qualifier"
+        }
+      ],
+      "existing_only_spellings": [
+        "current_density",
+        "external_current_density"
+      ],
+      "new_tokens": [],
+      "rejected_alternatives": [
+        {
+          "spelling": "source_current_density",
+          "reason": "Would overload the already registered physical base source with a qualifier of the same spelling."
+        },
+        {
+          "spelling": "current_density_source_rate",
+          "reason": "Would imply a temporal rate and does not match the DD A.m^-2 unit."
+        },
+        {
+          "spelling": "external_current_density",
+          "reason": "Parses, but is not an unconditional replacement: the DD source collection can contain mechanisms not established as external by the path."
+        }
+      ],
+      "required_binding": {
+        "unit": "A.m^-2",
+        "term_role": "source_contribution",
+        "source_collection": "edge_sources/source",
+        "source_identity": "edge_sources/source/identifier",
+        "source_instance": "Retain the source array element identity independently of the grid subset.",
+        "grid_binding": "edge_sources/source/ggd/current; retain grid_index and grid_subset_index",
+        "identity_policy": "The source-contribution role and source identity are mandatory. Do not attach this binding to a total-profile current-density entry.",
+        "conditional_spelling": "Use external_current_density only when the actual source identifier establishes externally applied current. A known registered mechanism can instead use current_density_due_to_<process>; no mechanism is inferred from the path alone."
+      },
+      "lead_ruling": "Keep current_density and the explicit source-contribution binding; accept external_current_density only for a documented external source. Do not add source as a qualifier.",
+      "disposition": "existing_quantity_plus_source_contribution_binding",
+      "reworked_spelling": "current_density",
+      "description": "Current-density contribution from the identified edge source, evaluated on its GGD subset.",
+      "parse_measurement": {
+        "main_head": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+        "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+        "existing_only": [
+          {
+            "name": "current_density",
+            "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+            "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+            "strict": true,
+            "accepted": true,
+            "composed": "current_density",
+            "round_trip": true,
+            "ir": {
+              "operators": [],
+              "qualifiers": [],
+              "base": {
+                "token": "current_density",
+                "kind": "quantity"
+              }
+            }
+          },
+          {
+            "name": "external_current_density",
+            "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+            "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+            "strict": true,
+            "accepted": true,
+            "composed": "external_current_density",
+            "round_trip": true,
+            "ir": {
+              "operators": [],
+              "qualifiers": [
+                {
+                  "token": "external",
+                  "category": "state"
+                }
+              ],
+              "base": {
+                "token": "current_density",
+                "kind": "quantity"
+              }
+            }
+          }
+        ],
+        "proposed_complete_identity": {
+          "name": "current_density",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": true,
+          "composed": "current_density",
+          "round_trip": true,
+          "ir": {
+            "operators": [],
+            "qualifiers": [],
+            "base": {
+              "token": "current_density",
+              "kind": "quantity"
+            }
+          }
+        },
+        "new_token_count": 0
+      },
+      "original_proposal_probe": [
+        {
+          "name": "source_current_density",
+          "revision": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+          "module": "/home/ITER/mcintos/Code/imas-standard-names/imas_standard_names/grammar/parser.py",
+          "strict": true,
+          "accepted": false,
+          "round_trip": false,
+          "error_type": "ParseError",
+          "error": "residue 'source_current_density' does not match any physical_base or geometry_carrier; nearest candidates: ['current_density', 'power_density', 'source_rate']"
+        }
+      ]
+    }
+  ]
+}
