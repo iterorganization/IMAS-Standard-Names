@@ -347,6 +347,7 @@ GENERIC_PHYSICAL_BASES: tuple[str, ...] = (
 # Empty tuple when 'transformations' vocabulary is absent (use operators.yml)
 TRANSFORMATION_TOKENS: tuple[str, ...] = (
     "accumulated",
+    "argmax_with_respect_to",
     "cumulative",
     "cumulative_inside_flux_surface",
     "derivative",
@@ -403,6 +404,7 @@ TRANSFORMATION_TOKENS: tuple[str, ...] = (
 # Empty tuple when 'decomposition' vocabulary is absent (use operators.yml)
 DECOMPOSITION_TOKENS: tuple[str, ...] = (
     "accumulated",
+    "argmax_with_respect_to",
     "cumulative",
     "cumulative_inside_flux_surface",
     "derivative",

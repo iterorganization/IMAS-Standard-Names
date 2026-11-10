@@ -12,6 +12,7 @@
 #   separator     - str used between arguments for binary operators
 #   indexed       - bool; if true, index parameters are appended to the name
 #   index_params  - list[str] naming the index parameters (requires indexed=true)
+#   dimension_transforming - operand (remaps argument units) | index (coordinate unit)
 #   semantic_effects - stable semantic categories supplied to consumers
 #
 # Rendering templates:
@@ -49,25 +50,34 @@ operators:
     kind: unary_prefix
     precedence: 15
     returns: scalar
-    dimension_transforming: true
+    dimension_transforming: operand
+
+  argmax_with_respect_to:
+    kind: unary_prefix
+    precedence: 20
+    returns: scalar
+    arg_types: [scalar]
+    indexed: true
+    index_params: [coord]
+    dimension_transforming: index
 
   cumulative:
     kind: unary_prefix
     precedence: 15
     returns: scalar
-    dimension_transforming: true
+    dimension_transforming: operand
 
   cumulative_inside_flux_surface:
     kind: unary_prefix
     precedence: 15
     returns: scalar
-    dimension_transforming: true
+    dimension_transforming: operand
 
   derivative:
     kind: unary_prefix
     precedence: 20
     returns: scalar_or_vector
-    dimension_transforming: true
+    dimension_transforming: operand
 
   derivative_with_respect_to:
     kind: unary_prefix
@@ -75,7 +85,7 @@ operators:
     returns: scalar_or_vector
     indexed: true
     index_params: [coord]
-    dimension_transforming: true
+    dimension_transforming: operand
 
   flux_surface_averaged:
     kind: unary_prefix
@@ -88,13 +98,13 @@ operators:
     precedence: 20
     returns: vector
     arg_types: [scalar]
-    dimension_transforming: true
+    dimension_transforming: operand
 
   inverse:
     kind: unary_prefix
     precedence: 20
     returns: scalar_or_vector
-    dimension_transforming: true
+    dimension_transforming: operand
 
   line_averaged:
     kind: unary_prefix
@@ -105,7 +115,7 @@ operators:
     kind: unary_prefix
     precedence: 30
     returns: scalar
-    dimension_transforming: true
+    dimension_transforming: operand
 
   logarithm:
     kind: unary_prefix
@@ -174,7 +184,7 @@ operators:
     kind: unary_prefix
     precedence: 20
     returns: scalar_or_vector
-    dimension_transforming: true
+    dimension_transforming: operand
 
   root_mean_square:
     kind: unary_prefix
@@ -185,25 +195,25 @@ operators:
     kind: unary_prefix
     precedence: 20
     returns: scalar_or_vector
-    dimension_transforming: true
+    dimension_transforming: operand
 
   second_radial_derivative:
     kind: unary_prefix
     precedence: 20
     returns: scalar_or_vector
-    dimension_transforming: true
+    dimension_transforming: operand
 
   square:
     kind: unary_prefix
     precedence: 20
     returns: scalar_or_vector
-    dimension_transforming: true
+    dimension_transforming: operand
 
   surface_integrated:
     kind: unary_prefix
     precedence: 30
     returns: scalar
-    dimension_transforming: true
+    dimension_transforming: operand
 
   # Finite/discrete increment (Delta) of the base over an event, not a rate.
   # Unlike time_derivative (which returns a per-time rate and renders
@@ -226,7 +236,7 @@ operators:
     kind: unary_prefix
     precedence: 20
     returns: rate
-    dimension_transforming: true
+    dimension_transforming: operand
     semantic_effects: [temporal_change]
 
   variation:
@@ -243,7 +253,7 @@ operators:
     kind: unary_prefix
     precedence: 30
     returns: scalar
-    dimension_transforming: true
+    dimension_transforming: operand
 
   # --- Uncertainty modifier operators (error siblings) ---
   # Three deterministic operators for IMAS _error_upper / _error_lower /
@@ -334,7 +344,7 @@ operators:
     kind: unary_postfix
     precedence: 15
     returns: scalar_or_vector
-    dimension_transforming: true
+    dimension_transforming: operand
 
   reference_waveform:
     kind: unary_postfix

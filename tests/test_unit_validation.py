@@ -1,7 +1,9 @@
 """Tests for dimensionless unit validation in semantic checks."""
 
-from __future__ import annotations
+import pytest
 
+from imas_standard_names import parse
+from imas_standard_names.grammar.vocab_loaders import load_operators
 from imas_standard_names.models import (
     StandardNameMetadataEntry,
     StandardNameScalarEntry,
@@ -11,6 +13,45 @@ from imas_standard_names.validation.semantic import (
     _check_dimensionless_physical_quantity,
     _check_none_unit_with_quantitative_kind,
 )
+
+_OPERAND_DIMENSION_OPERATORS = {
+    "accumulated": "accumulated_electron_density",
+    "cumulative": "cumulative_electron_density",
+    "cumulative_inside_flux_surface": "cumulative_inside_flux_surface_electron_density",
+    "derivative": "derivative_of_electron_density",
+    "derivative_with_respect_to": (
+        "derivative_of_electron_density_with_respect_to_normalized_toroidal_flux_coordinate"
+    ),
+    "gradient": "gradient_of_electron_density",
+    "inverse": "inverse_of_electron_density",
+    "line_integrated": "line_integrated_electron_density",
+    "radial_derivative": "radial_derivative_of_electron_density",
+    "second_derivative": "second_derivative_of_electron_density",
+    "second_radial_derivative": "second_radial_derivative_of_electron_density",
+    "square": "square_of_electron_density",
+    "surface_integrated": "surface_integrated_electron_density",
+    "time_derivative": "time_derivative_of_electron_density",
+    "volume_integrated": "volume_integrated_electron_density",
+    "per_solid_angle": "electron_density_per_solid_angle",
+}
+
+
+def test_operand_dimension_registry_is_complete() -> None:
+    assert {
+        token
+        for token, definition in load_operators().operators.items()
+        if definition.dimension_transforming == "operand"
+    } == set(_OPERAND_DIMENSION_OPERATORS)
+
+
+@pytest.mark.parametrize("token,name", _OPERAND_DIMENSION_OPERATORS.items())
+def test_operand_dimension_operator_preserves_unit_warning_exemption(
+    token: str, name: str
+) -> None:
+    assert load_operators().operators[token].dimension_transforming == "operand"
+    parse(name, strict=True)
+    entry = _scalar(name, unit="1")
+    assert _check_dimensionless_physical_quantity(name, entry) == []
 
 
 def _scalar(name: str, unit: str = "eV") -> StandardNameScalarEntry:

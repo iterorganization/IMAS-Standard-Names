@@ -186,7 +186,7 @@ def test_reduction_carries_no_dimensionality_assertion() -> None:
         definition = operators[token]
         assert definition.flux_surface_reduction is True
         assert definition.dimensionless is False
-        assert definition.dimension_transforming is False
+        assert definition.dimension_transforming is None
 
 
 # ---------------------------------------------------------------------------
