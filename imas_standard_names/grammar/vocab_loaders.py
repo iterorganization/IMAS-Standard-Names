@@ -1,4 +1,4 @@
-"""Pydantic v2 loaders for vocabulary files.
+"""Pydantic loaders for vocabulary files.
 
 Each loader reads the corresponding YAML under
 ``imas_standard_names/grammar/vocabularies/`` and validates it with
@@ -13,10 +13,8 @@ Public API::
     geo    = load_geometry_carriers()  # GeometryCarriersRegistry
 """
 
-from __future__ import annotations
-
+import typing
 from pathlib import Path
-from typing import Literal
 
 import yaml
 from pydantic import BaseModel, Field, ValidationError, model_validator
@@ -67,8 +65,8 @@ def load_coordinate_axes() -> CoordinateAxesRegistry:
 # locus_registry.yml
 # ---------------------------------------------------------------------------
 
-LocusType = Literal["entity", "position", "geometry", "region"]
-LocusRelation = Literal["of", "at", "over", "along"]
+LocusType = typing.Literal["entity", "position", "geometry", "region"]
+LocusRelation = typing.Literal["of", "at", "over", "along"]
 
 
 class LocusEntry(BaseModel, extra="forbid"):
@@ -116,8 +114,9 @@ def load_locus_registry() -> LocusRegistry:
 # operators.yml
 # ---------------------------------------------------------------------------
 
-OperatorKind = Literal["unary_prefix", "unary_postfix", "binary"]
-OperatorSemanticEffect = Literal["temporal_change"]
+OperatorKind = typing.Literal["unary_prefix", "unary_postfix", "binary"]
+OperatorSemanticEffect = typing.Literal["temporal_change"]
+DimensionTransforming = typing.Literal["operand", "index"]
 
 
 class OperatorDef(BaseModel, extra="forbid"):
@@ -131,11 +130,11 @@ class OperatorDef(BaseModel, extra="forbid"):
     indexed: bool = False
     index_params: list[str] | None = None
     dimensionless: bool = False
-    # The operator changes the DIMENSIONS of its argument (integrals multiply
-    # by a length/area/volume/time, derivatives divide, inverse/square remap).
-    # The base-implies-unit heuristic in validation/semantic.py is invalid for
-    # names carrying such an operator (volume_integrated density is a count).
-    dimension_transforming: bool = False
+    # Operand transformations remap the argument's dimensions (integration,
+    # differentiation, inverse, square); index transformations return the
+    # coordinate's dimension. Both exempt the result from base-implies-unit
+    # inference in validation/semantic.py. None declares no transformation.
+    dimension_transforming: DimensionTransforming | None = None
     # The operator reduces over a flux surface (flux_surface_averaged,
     # maximum/minimum_over_flux_surface). Applied to a base flagged
     # constant_on_flux_surface it is a no-op (the reduction of a flux
@@ -166,7 +165,7 @@ def load_operators() -> OperatorRegistry:
 # ---------------------------------------------------------------------------
 
 
-BaseKind = Literal["scalar", "vector", "tensor", "complex"]
+BaseKind = typing.Literal["scalar", "vector", "tensor", "complex"]
 
 
 class PhysicalBaseDef(BaseModel, extra="forbid"):
@@ -533,7 +532,7 @@ class _AllRegistries(BaseModel):
     carriers: GeometryCarriersRegistry
 
     @model_validator(mode="after")
-    def _no_duplicate_names_across_registries(self) -> _AllRegistries:
+    def _no_duplicate_names_across_registries(self) -> typing.Self:
         """Assert no token appears in more than one vocabulary registry."""
         pools: list[tuple[str, set[str]]] = [
             ("coordinate_axes", set(self.axes.axes)),

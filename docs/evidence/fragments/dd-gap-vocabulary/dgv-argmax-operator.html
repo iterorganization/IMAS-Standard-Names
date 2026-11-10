@@ -1,0 +1,35 @@
+<section id="dgv-argmax-operator-evidence">
+<h3>Argmax returns the coordinate of a profile maximum</h3>
+<p><code>argmax_of_deposited_power_with_respect_to_normalized_toroidal_flux_coordinate</code> strictly parses, renders canonically and round-trips through both the lossless IR and the flat facade. The IR keeps <code>argmax_with_respect_to_normalized_toroidal_flux_coordinate</code> as one operator token with no explicit arguments; the operand retains qualifier <code>deposited</code> and physical base <code>power</code>.</p>
+<p>The name describes the normalized toroidal flux coordinate where deposited power is maximal, with unit <code>1</code>. <code>maximum_of_deposited_power</code> names the peak power value, with unit <code>W</code>; that value cannot describe the location of the peak. This grammar addition supports the intended worklist bindings below; it does not publish catalog entries or change the live graph.</p>
+<table id="dgv-argmax-operator-bindings">
+<thead><tr><th>Worklist source path</th><th>Quantity named</th><th>Unit</th></tr></thead>
+<tbody>
+<tr><td><code>summary/heating_current_drive/ec/position/value</code></td><td>Coordinate of maximum deposited power</td><td><code>1</code></td></tr>
+<tr><td><code>summary/heating_current_drive/ic/position/value</code></td><td>Coordinate of maximum deposited power</td><td><code>1</code></td></tr>
+<tr><td><code>summary/heating_current_drive/lh/position/value</code></td><td>Coordinate of maximum deposited power</td><td><code>1</code></td></tr>
+</tbody></table>
+<p>The source-path evidence is the <code>position:power_deposition_peak</code> entry in <code>imas-codex/docs/evidence/fragments/sn-integrity-backlog/sib-vocab-worklist.json</code>. Heating/current-drive process and the maximum-selection convention remain metadata.</p>
+<p><code>dimension_transforming</code> is typed as <code>operand</code>, <code>index</code> or <code>None</code>. All 16 operators carrying boolean true at the base revision now carry <code>operand</code>; argmax carries <code>index</code>. No semantic-effect member or parallel dimension field was added. A shared named-pair unit check serves both source/flux collision detection and indexed result validation.</p>
+<table id="dgv-argmax-operator-units">
+<thead><tr><th>Argmax entry and coordinate entry</th><th>Observed semantic result</th></tr></thead>
+<tbody>
+<tr><td>Argmax <code>1</code>, normalized coordinate <code>1</code>, operand <code>W</code></td><td>No issue</td></tr>
+<tr><td>Argmax <code>W</code>, normalized coordinate <code>1</code></td><td>Warning names the result, coordinate and both units</td></tr>
+<tr><td>Coordinate entry absent</td><td>Warning reports a non-existent standard name</td></tr>
+<tr><td>Argmax <code>Wb</code>, toroidal flux coordinate <code>Wb</code></td><td>No issue</td></tr>
+</tbody></table>
+<p>The pre-change strict parser rejected the argmax spelling with <code>residue ... does not match any physical_base or geometry_carrier</code>, while the equivalent derivative round-tripped. A separate 16-name probe found 14 working unit-warning exemptions and two erroneous warnings, for a fused indexed derivative and a postfix <code>per_solid_angle</code> transformation. Registry-key normalization and reading the IR operator's <code>op</code> field repair those cases; all 16 are covered by regression tests.</p>
+<table id="dgv-argmax-operator-measures">
+<thead><tr><th>Measurement</th><th>Recorded result</th></tr></thead>
+<tbody>
+<tr><td>Base <code>8bead18ed4015da2a7410e1072a5a76091c5b168</code></td><td>1576 passed, 32 skipped in 1336.31s (0:22:16); exit 0</td></tr>
+<tr><td>Product <code>d060f97941997978d4d1c6378c660d885f6686b1</code></td><td>1610 passed, 32 skipped in 1206.60s (0:20:06); exit 0; zero added failure IDs</td></tr>
+<tr><td>Focused regression and coverage gate</td><td>112 passed in 48.16s; 43/43 changed executable lines covered in the two handwritten source modules</td></tr>
+<tr><td>Argmax effect changed to operand</td><td>2 failed: operand-unit refusal and missing-coordinate tests</td></tr>
+<tr><td>Absent-target branch removed</td><td>1 failed, 1 passed: missing-coordinate test fails</td></tr>
+<tr><td>Generated grammar drift</td><td>Generated files in sync with grammar specification; exit 0</td></tr>
+</tbody></table>
+<p>The base and head gates ran serially under <code>timeout 2400</code>, without xdist, on the assigned compute allocation. The failure-ID reader recognized both known failures in the planted-control log before reporting the empty base/head failure sets. Mutated source files were restored byte for byte. Runtime provenance confirms the semantic module is imported from this assigned worktree and the generated argmax enum and typed index effect are present.</p>
+<p>Receipts: <code>/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/base.log</code>, <code>/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/head.log</code>, <code>/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/focused.log</code>, <code>/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/negative-control.log</code>, <code>/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/changed-line-coverage.json</code>, <code>/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/failure-id-delta.json</code> and <code>/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010501610495-dgv-argmax-operator/runtime-marker.log</code>. Coordinator review, integration and the separately dispatched merged-head verification remain outside this worker's delivery.</p>
+</section>

@@ -1,14 +1,14 @@
 """Semantic validation checks for provenance/operator logic."""
 
-from __future__ import annotations
-
 import re
 from functools import lru_cache
 
-from ..grammar.model import parse_standard_name
-from ..grammar.model_types import GeometricBase
-from ..models import StandardNameEntry, StandardNameMetadataEntry
-from ..provenance import OperatorProvenance
+from imas_standard_names.grammar.model import parse_standard_name
+from imas_standard_names.grammar.model_types import GeometricBase
+from imas_standard_names.grammar.parser import ParseError, parse
+from imas_standard_names.grammar.vocab_loaders import load_operators
+from imas_standard_names.models import StandardNameEntry, StandardNameMetadataEntry
+from imas_standard_names.provenance import OperatorProvenance
 
 __all__ = ["run_semantic_checks"]
 
@@ -72,7 +72,7 @@ def run_semantic_checks(entries: dict[str, StandardNameEntry]) -> list[str]:
     issues: list[str] = []
     known_names = set(entries)
     for name, entry in entries.items():
-        # Existing provenance checks
+        # Operator-provenance checks
         prov = getattr(entry, "provenance", None)
         if isinstance(prov, OperatorProvenance):
             # Example rule: if gradient operator present, unit should include division by length
@@ -84,7 +84,7 @@ def run_semantic_checks(entries: dict[str, StandardNameEntry]) -> list[str]:
                         f"{name}: gradient operator present but unit '{unit}' does not look like derivative (heuristic)."
                     )
 
-        # New grammar-based semantic checks
+        # Grammar-based semantic checks
         issues.extend(_check_geometric_qualifier_requirement(name, entry))
         issues.extend(_check_component_with_base_type(name, entry))
         issues.extend(_check_coordinate_with_base_type(name, entry))
@@ -95,6 +95,7 @@ def run_semantic_checks(entries: dict[str, StandardNameEntry]) -> list[str]:
         issues.extend(_check_dimensionless_physical_quantity(name, entry))
         issues.extend(_check_none_unit_with_quantitative_kind(name, entry))
         issues.extend(_check_referential_integrity(name, entry, known_names))
+        issues.extend(_check_index_dimension_unit(name, entry, entries))
 
     issues.extend(_check_source_flux_unit_collision(entries))
 
@@ -109,6 +110,64 @@ def run_semantic_checks(entries: dict[str, StandardNameEntry]) -> list[str]:
 # densities sharing units with the differently-defined "*_momentum_flux"
 # family.
 _DIMENSIONAL_DERIVATIVE_TOKENS = ("flux", "source")
+
+
+def _check_named_pair_units(
+    name: str,
+    entry: StandardNameEntry,
+    target: str,
+    target_entry: StandardNameEntry,
+    *,
+    must_match: bool,
+    relationship: str,
+) -> list[str]:
+    """Compare stored units for a named pair with a dimensional relationship."""
+    unit = getattr(entry, "unit", None)
+    target_unit = getattr(target_entry, "unit", None)
+    if not unit or not target_unit or (unit == target_unit) == must_match:
+        return []
+    return [
+        f"{name}: WARNING - '{name}' has unit '{unit}' and '{target}' has "
+        f"unit '{target_unit}'; {relationship}."
+    ]
+
+
+def _registry_operator_token(token: str) -> str:
+    """Resolve the registry key of a coordinate-fused operator token."""
+    operator, separator, _ = token.partition("_with_respect_to_")
+    return f"{operator}_with_respect_to" if separator else token
+
+
+def _check_index_dimension_unit(
+    name: str, entry: StandardNameEntry, entries: dict[str, StandardNameEntry]
+) -> list[str]:
+    """Check a result whose outer operator takes its dimension from its index."""
+    if "_with_respect_to_" not in name:
+        return []
+    try:
+        ir = parse(name, strict=True).ir
+    except ParseError:
+        # Structural validation reports names that cannot resolve to an IR.
+        return []
+    token = ir.operators[0].op
+    definition = load_operators().operators[_registry_operator_token(token)]
+    if definition.dimension_transforming != "index":
+        return []
+    coordinate = token.partition("_with_respect_to_")[2]
+    target_entry = entries.get(coordinate)
+    if target_entry is None:
+        return [
+            f"{name}: WARNING - operator index references non-existent standard "
+            f"name '{coordinate}'"
+        ]
+    return _check_named_pair_units(
+        name,
+        entry,
+        coordinate,
+        target_entry,
+        must_match=True,
+        relationship="the result must carry its index coordinate's unit",
+    )
 
 
 def _check_source_flux_unit_collision(
@@ -136,13 +195,20 @@ def _check_source_flux_unit_collision(
             sibling_entry = entries.get(sibling)
             if sibling_entry is None:
                 continue
-            if getattr(sibling_entry, "unit", None) == unit:
-                issues.append(
-                    f"{name}: WARNING - '{name}' and '{sibling}' differ only "
-                    f"by '{token}' but share unit '{unit}'. A {token} of a "
-                    "quantity has different dimensions from the quantity "
-                    "itself, so one of the pair is likely misnamed."
+            issues.extend(
+                _check_named_pair_units(
+                    name,
+                    entry,
+                    sibling,
+                    sibling_entry,
+                    must_match=False,
+                    relationship=(
+                        f"the names differ only by '{token}' but share unit '{unit}'. "
+                        f"A {token} of a quantity has different dimensions from the "
+                        "quantity itself, so one of the pair is likely misnamed"
+                    ),
                 )
+            )
     return issues
 
 
@@ -481,19 +547,17 @@ def _load_dimensionless_operators() -> frozenset[str]:
 
 
 def _load_dimension_transforming_operators() -> frozenset[str]:
-    """Load operators marked ``dimension_transforming: true`` in the vocabulary.
+    """Load operators declaring a dimension transformation in the vocabulary.
 
     These change the dimensions of their argument (integrals, derivatives,
     inverse, square), so the base-implies-unit heuristic does not apply —
     ``volume_integrated_<density>`` is a dimensionless count.
     """
-    from ..grammar.vocab_loaders import load_operators  # noqa: PLC0415
-
     registry = load_operators()
     return frozenset(
         token
         for token, defn in registry.operators.items()
-        if defn.dimension_transforming
+        if defn.dimension_transforming is not None
     )
 
 
@@ -550,7 +614,9 @@ def _check_dimensionless_physical_quantity(
         dimensionless_ops = _load_dimensionless_operators()
         transforming_ops = _load_dimension_transforming_operators()
         exempt_ops = dimensionless_ops | transforming_ops
-        tx_value = getattr(transformation, "value", transformation)
+        tx_value = _registry_operator_token(
+            getattr(transformation, "value", transformation) or ""
+        )
         if tx_value in exempt_ops:
             return issues
 
@@ -571,7 +637,7 @@ def _check_dimensionless_physical_quantity(
                 if qualifier_tokens & exempt_qualifiers:
                     return issues
                 operator_tokens = {
-                    getattr(op, "token", op) for op in (ir.operators or [])
+                    _registry_operator_token(op.op) for op in (ir.operators or [])
                 }
                 if operator_tokens & exempt_ops:
                     return issues

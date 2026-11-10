@@ -684,6 +684,7 @@ class GeometricBase(StrEnum):
 
 class Transformation(StrEnum):
     ACCUMULATED = "accumulated"
+    ARGMAX_WITH_RESPECT_TO = "argmax_with_respect_to"
     CUMULATIVE = "cumulative"
     CUMULATIVE_INSIDE_FLUX_SURFACE = "cumulative_inside_flux_surface"
     DERIVATIVE = "derivative"
@@ -735,6 +736,7 @@ class Transformation(StrEnum):
 
 class Decomposition(StrEnum):
     ACCUMULATED = "accumulated"
+    ARGMAX_WITH_RESPECT_TO = "argmax_with_respect_to"
     CUMULATIVE = "cumulative"
     CUMULATIVE_INSIDE_FLUX_SURFACE = "cumulative_inside_flux_surface"
     DERIVATIVE = "derivative"

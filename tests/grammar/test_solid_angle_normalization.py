@@ -43,7 +43,7 @@ def test_the_token_is_a_dimension_transforming_postfix_operator() -> None:
     operator = load_operators().operators["per_solid_angle"]
 
     assert operator.kind == "unary_postfix"
-    assert operator.dimension_transforming is True
+    assert operator.dimension_transforming == "operand"
 
 
 def test_one_token_serves_every_emitted_quantity() -> None:
