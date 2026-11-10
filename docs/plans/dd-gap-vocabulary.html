@@ -20,11 +20,11 @@
   <meta name="plan-tags" content="grammar,vocabulary,release">
   <meta name="plan-blocks" content="imas-codex:sn-integrity-backlog">
   <meta name="plan-section-depends-on" content="{&quot;s3&quot;: [&quot;dd-gap-vocabulary#s2&quot;], &quot;s4&quot;: [&quot;dd-gap-vocabulary#s2&quot;, &quot;dd-gap-vocabulary#s5&quot;], &quot;s6&quot;: [&quot;dd-gap-vocabulary#s3&quot;, &quot;dd-gap-vocabulary#s4&quot;]}">
-  <meta name="plan-section-declarations" content="{&quot;s1&quot;:&quot;done&quot;,&quot;s2&quot;:&quot;done&quot;,&quot;s3&quot;:&quot;implementable&quot;,&quot;s4&quot;:&quot;done&quot;,&quot;s5&quot;:&quot;done&quot;,&quot;s6&quot;:&quot;implementable&quot;}">
+  <meta name="plan-section-declarations" content="{&quot;s1&quot;:&quot;done&quot;,&quot;s2&quot;:&quot;done&quot;,&quot;s3&quot;:&quot;done&quot;,&quot;s4&quot;:&quot;done&quot;,&quot;s5&quot;:&quot;done&quot;,&quot;s6&quot;:&quot;implementable&quot;}">
   <title>The Vocabulary The DD's Unnamed Sources Need | imas-standard-names</title>
   <link rel="stylesheet" href="/_shared/foundation.css">
   <link rel="stylesheet" href="/_shared/dashboard.css">
-<meta name="plan-version" content="10">
+<meta name="plan-version" content="11">
 <meta name="plan-modified" content="2026-11-11">
 </head>
 <body>
@@ -55,7 +55,7 @@
     </ul>
 
     <h2 id="s3">§3 — The doubtful additions are reworked</h2>
-    <section data-reckon="section" data-id="s3" data-effort-hours="1.5" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable" data-links=""></section>
+    <section data-reckon="section" data-id="s3" data-effort-hours="1.5" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="done" data-links=""></section>
     <p>The lead judged six proposed tokens too generic or too composite, and a seventh, <code>source</code> as a qualifier, would compete with the existing physical base <code>source</code> for the same spelling. No test guards qualifiers against physical bases today (<code>_no_duplicate_names_across_registries</code> in <code>vocab_loaders.py</code> covers five other registries), so the carve-out rests on one meaning per spelling, not on a failing gate. Each is reworked against the DD documentation of the sources that need it.</p>
     <ul>
       <li><code>species</code> serves <code>pellets/time_slice/pellet/species/density</code>, an intact pellet. The vocabulary's only pellet species subject is <code>shattered_pellet_species</code>, which names a different DD quantity and must not be reused for it. The rework states whether an intact-pellet species subject is a genuine new token and, if so, its spelling and definition.</li>
@@ -119,17 +119,17 @@
 <div class="r-comment" data-section="s2" data-id="c-run-r-20261110T004701279563-review-of-dgv-accepted-vocabulary-2a2a3ccae705" data-who="reckon-build" data-when="2026-11-10T00:54:15Z">
     <div class="r-comment-body"><p>Independent review of d88e5bee0db310bb311de9aa20f46c63dd4eded9..2a2a3ccae7050650f4627f7ea108a7899a3a2894 is parsed with all six dimensions 20/20, zero findings and zero added failure IDs derived from completed source gate logs.</p></div>
 </div>
-<div class="r-comment" data-section="s5" data-id="c-run-r-20261110T015807301087-review-of-dgv-argmax-operator-8508571f937f" data-who="reckon-build" data-when="2026-11-10T02:05:44Z">
-    <div class="r-comment-body"><p>Independent review of 8bead18ed4015da2a7410e1072a5a76091c5b168..8508571f937f82d8f0f6c443803cbb8414b6e3cf is parsed; all six dimensions score 20/20, no findings, and zero added failure IDs derived from completed source gate logs.</p></div>
-</div>
-<div class="r-comment" data-section="s5" data-id="c-run-r-20261110T010501610495-dgv-argmax-operator" data-who="reckon-build" data-when="2026-11-10T01:56:39Z">
-    <div class="r-comment-body"><p>Added typed operand/index dimensions and coordinate-indexed argmax with unit and absent-target checks; all 16 operand transformations are tested; base 1576 passed, 32 skipped in 1336.31s (0:22:16); head 1610 passed, 32 skipped in 1206.60s (0:20:06); both exit 0 with zero added failure IDs; 112 passed in 48.16s, 43/43 changed executable lines covered, and both planted controls fail as declared.</p></div>
-</div>
 <div class="r-comment" data-section="s3" data-id="c-run-r-20261110T010543579100-dgv-doubtful-rework" data-who="reckon-build" data-when="2026-11-10T14:44:29Z">
     <div class="r-comment-body"><p>The 2026-11-10 ruling is recorded: pellet_species, plateau_factor and current_profile_alignment are accepted for vocabulary implementation. Three corrected names explicitly preserve source identity distinctions: sourced_current_density, vertical_grid_of_breakdown_candidate and vertical_position_of_breakdown_candidate. Two reusable additions, sourced and breakdown_candidate, are proposed. All seven full spellings probed at main cb8a19d8527c07be72937e8c8eec91260402aa0b: one ratio round-trips and six refuse pending registration of five unique tokens; seven positive controls and two existing subexpressions pass; DD confirms A at current_alignment and current_alignment/value; zero grammar changes. Evidence anchor /imas-standard-names/evidence/fragments/dd-gap-vocabulary/dgv-doubtful-rework.html#dgv-doubtful-rework-explicit-names</p></div>
 </div>
 <div class="r-comment" data-section="s3" data-id="c-run-r-20261110T210103725055-review-of-dgv-doubtful-rework-67cc80a489ce" data-who="reckon-build" data-when="2026-11-10T21:11:04Z">
     <div class="r-comment-body"><p>Parsed review of d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9..67cc80a489ce35936ffd82f23e127444aeb0fd66 stored at both declared paths; all six dimensions scored, no source findings; suite failure delta cannot be measured from empty source arms.</p></div>
+</div>
+<div class="r-comment" data-section="s5" data-id="c-run-r-20261110T015807301087-review-of-dgv-argmax-operator-8508571f937f" data-who="reckon-build" data-when="2026-11-10T02:05:44Z">
+    <div class="r-comment-body"><p>Independent review of 8bead18ed4015da2a7410e1072a5a76091c5b168..8508571f937f82d8f0f6c443803cbb8414b6e3cf is parsed; all six dimensions score 20/20, no findings, and zero added failure IDs derived from completed source gate logs.</p></div>
+</div>
+<div class="r-comment" data-section="s5" data-id="c-run-r-20261110T010501610495-dgv-argmax-operator" data-who="reckon-build" data-when="2026-11-10T01:56:39Z">
+    <div class="r-comment-body"><p>Added typed operand/index dimensions and coordinate-indexed argmax with unit and absent-target checks; all 16 operand transformations are tested; base 1576 passed, 32 skipped in 1336.31s (0:22:16); head 1610 passed, 32 skipped in 1206.60s (0:20:06); both exit 0 with zero added failure IDs; 112 passed in 48.16s, 43/43 changed executable lines covered, and both planted controls fail as declared.</p></div>
 </div>
 </section>
 </main>
