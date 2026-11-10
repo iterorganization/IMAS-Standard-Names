@@ -1,0 +1,23 @@
+<article id="dgv-rework-tokens-registered">
+<h2>Accepted quantity identities registered</h2>
+<p>Five tokens preserve the DD distinctions carried by six complete names. The definitions are copied from the accepted rework evidence. The generated grammar types were regenerated with the vocabulary changes.</p>
+<table>
+<thead><tr><th>Token and role</th><th>Canonical spelling</th><th>DD source binding</th></tr></thead>
+<tbody>
+<tr><td><code>pellet_species</code> (subject)</td><td><code>pellet_species_number_density_of_pellet</code></td><td><code>pellets/time_slice/pellet/species/density</code></td></tr>
+<tr><td><code>breakdown_candidate</code> (position)</td><td><code>vertical_grid_of_breakdown_candidate</code></td><td><code>plasma_initiation/b_field_lines/townsend_or_closed_grid_positions/z</code></td></tr>
+<tr><td><code>breakdown_candidate</code> (position)</td><td><code>vertical_position_of_breakdown_candidate</code></td><td><code>plasma_initiation/b_field_lines/townsend_or_closed_positions/z</code></td></tr>
+<tr><td><code>current_profile_alignment</code> (physical_base)</td><td><code>current_profile_alignment</code></td><td><code>summary/global_quantities/current_alignment/value</code></td></tr>
+<tr><td><code>plateau_factor</code> (physical_base)</td><td><code>plateau_factor</code></td><td><code>summary/local/r_eff_norm_2_3/plateau_factor/value</code></td></tr>
+<tr><td><code>sourced</code> (qualifier)</td><td><code>sourced_current_density</code></td><td><code>edge_sources/source/ggd/current/values</code></td></tr>
+</tbody>
+</table>
+<p><code>pellet_species</code> identifies intact-pellet constituents; <code>shattered_pellet_species</code> remains a distinct subject. <code>current_profile_alignment</code> is a current-valued figure of merit (A); <code>plateau_factor</code> is dimensionless. The single <code>breakdown_candidate</code> position locus preserves the Townsend-or-closed-line selection in both grid and position representations.</p>
+<p><code>sourced</code> selects an additive contribution with the dimensions of its quantity. It is registered in the source category and as a phrase-scoping qualifier: <code>sourced_electron_current_density</code> retains the modifier outside the species. The accepted spelling <code>sourced_current_density</code> names a source contribution; <code>specified_current_density</code> would instead suggest a prescribed value, and <code>external_current_density</code> would assert an origin the generic source path does not establish.</p>
+<h3>Verification</h3>
+<p>Implementation commit: <code>5b5289bf1a5a96c56d6793cc36e449fd940a4cfe</code>. The strict baseline probe refused all six complete spellings while two known controls round-tripped. The focused tests reported <code>14 passed in 1.66s</code>. <code>build-grammar --check</code> exited 0 with generated files in sync.</p>
+<ul><li>Base <code>45f1f624f387bf1127c1b89982fa46f5ee7bf81a</code>: 1399 passed, 32 skipped in 523.68s (0:08:43); exit 0.</li>
+<li>Head <code>5b5289bf1a5a96c56d6793cc36e449fd940a4cfe</code>: 1413 passed, 32 skipped in 518.38s (0:08:38); exit 0.</li>
+<li>Added failure IDs: 0. Both grammar suites ran serially under <code>timeout 2400</code> in separate <code>all_debug</code> jobs against archived revisions, with imported-module and working-directory paths recorded in their logs.</li></ul>
+<p>Five independent token removals followed by regeneration each produced exit 1 and the corresponding round-trip failure; removing <code>breakdown_candidate</code> failed both carrier spellings. A sixth control removed only the <code>sourced</code> phrase-scope registration: the scope test failed because the canonical spelling became <code>electron_sourced_current_density</code>. No mutation failure is present in the unmutated head arm. Logs and receipts are retained in the run directory.</p>
+</article>
