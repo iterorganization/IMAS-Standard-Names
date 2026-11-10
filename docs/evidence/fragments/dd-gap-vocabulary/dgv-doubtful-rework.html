@@ -30,3 +30,38 @@
     six of six existing-only round-trips, three proposed new tokens, nine reproduced refusals,
     four of four positive parser controls and zero grammar changes.</p>
 </section>
+
+<section id="dgv-doubtful-rework-explicit-names">
+  <h3>Explicit-name rework after the 2026-11-10 ruling</h3>
+  <p>This correction supersedes the metadata-only source and selection spellings in the initial
+    proposal above. The lead accepted <code>pellet_species</code>, <code>plateau_factor</code> and
+    <code>current_profile_alignment</code> for vocabulary implementation. Two further tokens are
+    proposed: <code>sourced</code> and the shared position-typed locus <code>breakdown_candidate</code>.</p>
+  <table>
+    <thead><tr><th>DD source</th><th>Rejected complete name</th><th>Proposed explicit name</th></tr></thead>
+    <tbody>
+      <tr><td>edge_sources/source/ggd/current/values</td><td><code>current_density</code></td><td><code>sourced_current_density</code></td></tr>
+      <tr><td>plasma_initiation/b_field_lines/townsend_or_closed_grid_positions/z</td><td><code>vertical_grid</code></td><td><code>vertical_grid_of_breakdown_candidate</code></td></tr>
+      <tr><td>plasma_initiation/b_field_lines/townsend_or_closed_positions/z</td><td><code>vertical_position_of_magnetic_field_line</code></td><td><code>vertical_position_of_breakdown_candidate</code></td></tr>
+    </tbody>
+  </table>
+  <p><code>sourced</code> selects an additive source-term contribution without asserting external
+    origin, a particular mechanism or a temporal derivative. <code>breakdown_candidate</code>
+    selects the magnetic-field-line set meeting the Townsend condition <em>or</em> consisting of
+    closed lines. Existing <code>grid</code> and <code>position</code> carriers retain, respectively,
+    containing grid points and samples along those lines. The names carry these distinctions;
+    bindings retain sampling coordinates and source identifiers.</p>
+  <p>At main <code>cb8a19d8527c07be72937e8c8eec91260402aa0b</code>, all seven complete identities were probed: one existing ratio
+    round-trips and six refuse pending registration of their five unique tokens. The three newly
+    reworked spellings all refuse as expected; no temporary registration is reported as a main
+    pass. Seven positive parser controls and two existing-only subexpression checks pass.</p>
+  <p>The <a href="https://imas-data-dictionary.readthedocs.io/en/4.1.1/generated/ids/summary.html">DD summary reference</a>
+    explicitly reports <code>A</code> at both <code>summary/global_quantities/current_alignment</code>
+    and <code>summary/global_quantities/current_alignment/value</code>, the latter a
+    <code>FLT_1D</code> field on time. A fresh DD-only fetch independently confirms both ampere
+    units. The full weighting formula remains distinct from this confirmed DD-unit evidence.</p>
+  <p>The <a href="/imas-standard-names/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json">seven-row evidence</a>
+    and <a href="/imas-standard-names/evidence/fragments/dd-gap-vocabulary/doubtful-rework.html">current summary</a>
+    retain all seven original DD source paths and separate the three accepted definitions from
+    the two additional proposals. No grammar or test files changed; no source or plan is closed.</p>
+</section>
