@@ -132,3 +132,49 @@
     covered, restored source bytes and clean code-generation check remain
     valid. The node remains blocked on the category metadata scope extension.</p>
 </section>
+
+<section id="dgv-accepted-vocabulary-completion">
+  <h3>Accepted vocabulary and full grammar verification complete</h3>
+  <p>The granted qualifier-category file now registers all ten added qualifiers.
+    The previously failing coverage check and the vocabulary regression file
+    pass together: <code>82 passed in 4.97s</code>. Regeneration leaves the
+    generated files unchanged, and the code-generation drift check is clean.
+    Category commit <code>f06af0a3f19bccc62a953c7449d4f40d60ebc94c</code>
+    contains exactly ten registration lines.</p>
+  <table>
+    <thead><tr><th>Category</th><th>Added qualifiers</th><th>Definition fit</th></tr></thead>
+    <tbody>
+      <tr><td>transport</td><td>bounce</td><td>Periodic particle-orbit motion.</td></tr>
+      <tr><td>source</td><td>chemical</td><td>Material removal through a chemical mechanism.</td></tr>
+      <tr><td>geometry</td><td>helical, ripple, second_inclination, tangency</td><td>Spatial variation, orientation or closest-approach geometry.</td></tr>
+      <tr><td>energy</td><td>rotational</td><td>The pressure contribution associated with bulk rotational energy.</td></tr>
+      <tr><td>diagnostic</td><td>sine, cosine</td><td>Fourier basis forms, grouped with the existing spectral qualifiers.</td></tr>
+      <tr><td>engineering</td><td>compressive</td><td>A structural force defined positive in compression.</td></tr>
+    </tbody>
+  </table>
+  <p>The completed base arm stands unchanged. The final head suite ran serially
+    in the assigned worktree under <code>timeout 2400</code> and reached its
+    terminal summary:</p>
+  <table>
+    <thead><tr><th>Arm</th><th>Passed</th><th>Skipped</th><th>Failing IDs</th><th>Exit</th></tr></thead>
+    <tbody>
+      <tr><td>Standing base</td><td>1285</td><td>32</td><td>0</td><td>0</td></tr>
+      <tr><td>Final head</td><td>1382</td><td>32</td><td>0</td><td>0</td></tr>
+    </tbody>
+  </table>
+  <p>The final head summary is
+    <code>1382 passed, 32 skipped in 1514.75s (0:25:14)</code>.
+    Both suite receipts declare completion and both logs end with
+    <code>EXIT=0</code>. Their completed failure-ID sets are empty:
+    <strong>zero added failure IDs</strong>. The category-coverage failure in
+    the preceding record is resolved. This result completes this node's
+    verification without closing the plan section.</p>
+  <p>All 34 accepted tokens retain their worklist definitions and source-bound
+    strict parse and round-trip cases. For example,
+    <code>voltage_of_power_convertor</code> binds
+    <code>pf_active/supply/voltage</code>; <code>power_convertor</code> denotes
+    equipment converting and regulating delivered power. The rejected-token
+    membership checks and exact reused registrations pass. Both planted
+    controls still provide the recorded expected failing IDs, and the model
+    change has 17/17 added executable lines covered.</p>
+</section>
