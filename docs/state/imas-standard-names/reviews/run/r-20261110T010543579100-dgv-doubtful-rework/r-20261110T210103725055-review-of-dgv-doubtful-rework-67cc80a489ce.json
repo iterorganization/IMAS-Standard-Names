@@ -1,0 +1,75 @@
+{
+  "absent": [],
+  "absent_items": [],
+  "added_failure_count": null,
+  "added_failure_ids": [],
+  "added_failures_note": "Unmeasured: source manifest.md baseline_suite and after_suite are empty; no baseline/head suite logs exist to derive a failure delta. The successful artifact-only gate is not a suite pair.",
+  "assertion_review": {
+    "committed_assertions": [],
+    "external_gate": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010543579100-dgv-doubtful-rework/check_ruling.py",
+    "failure_conditions": [
+      "Row-set and seven-row assertions fail on missing, duplicated or unexpected tokens.",
+      "Worklist digest and source/evidence equalities fail on altered inputs, omitted bindings or documentation mismatches against the independent worklist.",
+      "Registry membership assertions fail if a claimed reused token is absent; replay assertions fail on parser admission/refusal, IR, composition or revision mismatches.",
+      "Independent literal corrected-name, selector OR, sample-domain and source-unit assertions fail if current_density, vertical_grid or vertical_position_of_magnetic_field_line is reinstated as a complete identity.",
+      "Token-set and registration-state assertions fail on missing, inconsistent or premature registration of the five proposed definitions.",
+      "DD receipt digest, independent literal A paths and known ip control fail if captured evidence is changed or lacks the confirmed units.",
+      "HTML content and unique-anchor assertions fail on missing corrected names, bindings, unit evidence or duplicated anchors.",
+      "Changed-path and stable-main-head assertions fail on out-of-scope artifacts or concurrent grammar-revision drift."
+    ],
+    "reason": "All three committed files are JSON or HTML evidence; no test, function, class or module is added.",
+    "same_input_comparisons": "compose(parse(name).ir) == name checks round-trip behavior, not semantic identity; returning a different canonical name or malformed IR would fail it, while changing the input name with its receipt would not prove the intended identity. Durability here relies instead on the separate literal-name and independent worklist assertions; no committed tautological assertion is added."
+  },
+  "base_log_revision": null,
+  "call_site_count": 0,
+  "call_sites": [],
+  "completed_at": "2026-11-10T21:11:04Z",
+  "dispatched_at": "2026-11-10T21:03:37Z",
+  "failure_delta_evidence": {
+    "after_suite": null,
+    "artifact_gate": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010543579100-dgv-doubtful-rework/ruling-artifact-gate.log",
+    "baseline_suite": null,
+    "manifest": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T010543579100-dgv-doubtful-rework/manifest.md"
+  },
+  "findings": [],
+  "head_log_revision": null,
+  "item_aggregate": 6,
+  "item_verdicts": {
+    "call_sites": "no production call sites found",
+    "diff": "Read commits e8f52d72ad05595fd473c106c8ec840c6b3ef5d6, 7249808cb7ea617fd7f77c807729720a9f949d2f and 67cc80a489ce35936ffd82f23e127444aeb0fd66 against d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9; the first adds JSON evidence, the second adds the two HTML presentations, and the third corrects three identities and appends the correction without removing the initial landing record.",
+    "done_when": "Read dispatch-detail.json admit_request.node.done_when; doubtful-rework.json retains all seven exact worklist bindings, reused parts, separate token definitions and strict main-head probes, while ruling-artifact-gate.log records seven positive controls, one accepted complete identity, six expected refusals and EXIT=0.",
+    "goal": "Read dispatch-detail.json admit_request.node.goal and live dd-gap-vocabulary section s3; doubtful-rework.json supplies seven source-bound proposals, and dgv-doubtful-rework.html:34 appends the explicit-name correction required by the ruling.",
+    "manifest": "Read source manifest.md:1-33 and its named ruling-artifact-gate.log; the artifact result is recorded and corroborated by SHA-bound inputs, but baseline_suite and after_suite at manifest.md:21-22 are empty so a suite failure delta is unmeasured.",
+    "write_paths": "Read dispatch-detail.json admit_request.node.write_paths; all three changed evidence files are inside its four declared file or directory grants, with no grammar or test change."
+  },
+  "justifications": {
+    "durability": "No executable assertions are added in the three committed evidence files; source-run check_ruling.py has independent literal guards that would fail if source or selection names reverted, but that checker is outside the committed repository and supplies no checkout-local regression test.",
+    "evidence": "ruling-artifact-gate.log ends with seven rows, seven source paths, seven positive controls, six pending-registration refusals, one complete-identity round-trip, confirmed DD A and EXIT=0, and doubtful-rework.json binds the checked inputs by digest and grammar revision.",
+    "fit": "doubtful-rework.html uses the shared evidence styles and prefixed fragment anchors, while doubtful-rework.json reuses the grammar's physical-base, carrier, subject, qualifier and locus roles without adding source symbols or forbidden source names.",
+    "goal_fidelity": "docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.html:20-29 presents all seven complete identities, and dgv-doubtful-rework.html:34-67 preserves source-contribution and Townsend-or-closed selection in the corrected names.",
+    "reuse": "Searches and reads of physical_bases.yml:423-428, geometry_carriers.yml:40-41 and :155-157, locus_registry.yml:669-680, subjects.yml:93 and qualifier_categories.yml:27-41 show existing owners reused by the proposals and no owner for the intact-pellet subject, named current/plateau quantities, generic source-contribution qualifier or Townsend-or-closed locus.",
+    "scope_discipline": "git diff d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9..67cc80a489ce35936ffd82f23e127444aeb0fd66 changes only the three docs/evidence/fragments/dd-gap-vocabulary files declared in source manifest.md:3."
+  },
+  "project": "imas-standard-names",
+  "raw_text": "VERDICT goal: Read dispatch-detail.json admit_request.node.goal and live dd-gap-vocabulary section s3; doubtful-rework.json supplies seven source-bound proposals, and dgv-doubtful-rework.html:34 appends the explicit-name correction required by the ruling.\nVERDICT done_when: Read dispatch-detail.json admit_request.node.done_when; doubtful-rework.json retains all seven exact worklist bindings, reused parts, separate token definitions and strict main-head probes, while ruling-artifact-gate.log records seven positive controls, one accepted complete identity, six expected refusals and EXIT=0.\nVERDICT write_paths: Read dispatch-detail.json admit_request.node.write_paths; all three changed evidence files are inside its four declared file or directory grants, with no grammar or test change.\nVERDICT manifest: Read source manifest.md:1-33 and its named ruling-artifact-gate.log; the artifact result is recorded and corroborated by SHA-bound inputs, but baseline_suite and after_suite at manifest.md:21-22 are empty so a suite failure delta is unmeasured.\nVERDICT diff: Read commits e8f52d72ad05595fd473c106c8ec840c6b3ef5d6, 7249808cb7ea617fd7f77c807729720a9f949d2f and 67cc80a489ce35936ffd82f23e127444aeb0fd66 against d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9; the first adds JSON evidence, the second adds the two HTML presentations, and the third corrects three identities and appends the correction without removing the initial landing record.\nCALL_SITES: none\nSCORE goal_fidelity: 20\nJUSTIFICATION goal_fidelity: docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.html:20-29 presents all seven complete identities, and dgv-doubtful-rework.html:34-67 preserves source-contribution and Townsend-or-closed selection in the corrected names.\nSCORE evidence: 20\nJUSTIFICATION evidence: ruling-artifact-gate.log ends with seven rows, seven source paths, seven positive controls, six pending-registration refusals, one complete-identity round-trip, confirmed DD A and EXIT=0, and doubtful-rework.json binds the checked inputs by digest and grammar revision.\nSCORE scope_discipline: 20\nJUSTIFICATION scope_discipline: git diff d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9..67cc80a489ce35936ffd82f23e127444aeb0fd66 changes only the three docs/evidence/fragments/dd-gap-vocabulary files declared in source manifest.md:3.\nSCORE durability: 12\nJUSTIFICATION durability: No executable assertions are added in the three committed evidence files; source-run check_ruling.py has independent literal guards that would fail if source or selection names reverted, but that checker is outside the committed repository and supplies no checkout-local regression test.\nSCORE fit: 20\nJUSTIFICATION fit: doubtful-rework.html uses the shared evidence styles and prefixed fragment anchors, while doubtful-rework.json reuses the grammar's physical-base, carrier, subject, qualifier and locus roles without adding source symbols or forbidden source names.\nSCORE reuse: 20\nJUSTIFICATION reuse: Searches and reads of physical_bases.yml:423-428, geometry_carriers.yml:40-41 and :155-157, locus_registry.yml:669-680, subjects.yml:93 and qualifier_categories.yml:27-41 show existing owners reused by the proposals and no owner for the intact-pellet subject, named current/plateau quantities, generic source-contribution qualifier or Townsend-or-closed locus.\n",
+  "review_checks_evidence": {
+    "call_sites": "No production reference to doubtful-rework found in package code or mkdocs configuration; these are decision evidence documents, not runtime inputs.",
+    "new_executable_definitions": "none"
+  },
+  "review_run_id": "r-20261110T210103725055-review-of-dgv-doubtful-rework-67cc80a489ce",
+  "reviewed_base_sha": "d46fd86214d7c8d3f9ee7ba46c3a93c37aa827f9",
+  "reviewed_head_sha": "67cc80a489ce35936ffd82f23e127444aeb0fd66",
+  "reviewed_run_id": "r-20261110T010543579100-dgv-doubtful-rework",
+  "scores": {
+    "durability": 12,
+    "evidence": 20,
+    "fit": 20,
+    "goal_fidelity": 20,
+    "reuse": 20,
+    "scope_discipline": 20
+  },
+  "status": "parsed",
+  "times_source": "run-record",
+  "timestamp": "2026-11-10T23:08:14.738158+00:00",
+  "total": 112
+}
