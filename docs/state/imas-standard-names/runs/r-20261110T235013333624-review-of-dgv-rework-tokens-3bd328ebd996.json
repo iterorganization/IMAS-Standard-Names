@@ -1,0 +1,720 @@
+{
+  "agent": {
+    "alias": "sol61",
+    "backend": "codex",
+    "effort": "high",
+    "launch": "cli",
+    "model": "gpt-6.1-sol",
+    "sandbox": "read-only"
+  },
+  "attempt": 1,
+  "attempt_kind": "dispatch",
+  "backend": "codex",
+  "base_sha": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+  "boundary_waiver": null,
+  "brief": {
+    "path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996/brief.md",
+    "sha256": "53ab1f6992768d70879d632b8d0240f5e6409fd0f6c43385433efe092e271ec9"
+  },
+  "budget": {
+    "budget_overrun": false,
+    "budget_overrun_notice": null,
+    "budget_overrun_seconds": 0,
+    "budget_overrun_tokens": 0,
+    "cost_usd": null,
+    "detail": "backend reports token usage but no headroom",
+    "headroom": "unknown",
+    "rate_limit_period_minutes": null,
+    "rate_limit_type": null,
+    "refusal": false,
+    "resets_at": null,
+    "surpassed_threshold": null,
+    "threshold_status": null,
+    "tokens": {
+      "cache_write_input_tokens": 0,
+      "cache_write_input_tokens_cumulative": 0,
+      "cached_input_tokens": 1680000,
+      "cached_input_tokens_cumulative": 1680000,
+      "input_tokens": 1779760,
+      "input_tokens_cumulative": 1779760,
+      "output_tokens": 12697,
+      "output_tokens_cumulative": 12697,
+      "reasoning_output_tokens": 1824,
+      "reasoning_output_tokens_cumulative": 1824
+    },
+    "utilisation_pct": null
+  },
+  "changed_lines": null,
+  "clone_matches": {
+    "reason": "the run asserted no revision pair to compare",
+    "status": "unmeasured"
+  },
+  "commit_resolution": null,
+  "commits": [],
+  "completed_at": "2026-11-10T23:59:14Z",
+  "completed_at_source": "stream_mtime",
+  "dispatched_at": "2026-11-10T23:51:31Z",
+  "disposition": null,
+  "dispute_count": 0,
+  "domain_waiver": null,
+  "duration_measurement": {
+    "reason": "model_span_unavailable_at_promotion",
+    "status": "underivable"
+  },
+  "execution_fit": {
+    "allowed": true,
+    "execution_capable": false,
+    "matched_measure": null,
+    "override": false,
+    "role": "review",
+    "status": "no-execution-measure"
+  },
+  "failure_classification": null,
+  "gate": "not-run",
+  "gate_check": null,
+  "impl_move": {
+    "at_complete": null,
+    "at_dispatch": 0.8888888888888888,
+    "plan": "dd-gap-vocabulary",
+    "reason": "role-not-enforced:review",
+    "verdict": "exempt"
+  },
+  "lane": "codex",
+  "lane_advisory": {
+    "backend": "codex",
+    "burn_multiple": 1.3587535081776831,
+    "cheaper_lane": {
+      "detail": "",
+      "lane": null,
+      "state": "not_evaluated"
+    },
+    "detail": "'codex' is projected to exhaust at 2026-11-13T16:19:56Z, which is after this node's 3600s horizon ending 2026-11-11T00:50:18.153332+00:00",
+    "horizon_ends_at": "2026-11-11T00:50:18.153332+00:00",
+    "horizon_seconds": 3600,
+    "metered": true,
+    "observed_at": "2026-11-10T23:50:16Z",
+    "precedes_horizon": false,
+    "projected_exhaustion_at": "2026-11-13T16:19:56Z",
+    "resets_at": "2026-11-14T15:28:13Z",
+    "seconds_until_reset": 315476,
+    "state": "quiet",
+    "utilisation_pct": 65.0
+  },
+  "lane_declaration": {
+    "backend": "codex",
+    "headroom": "known",
+    "metered": true,
+    "observed_at": "2026-11-10T23:50:16Z",
+    "read_at": "2026-11-10T23:50:18Z",
+    "resolved_backend": "codex",
+    "utilisation_pct": 65.0
+  },
+  "lane_reading": {
+    "age_seconds": null,
+    "binding_observed": "unknown",
+    "detail": "backend declares no lane document",
+    "generating": "unknown",
+    "headroom": "unknown",
+    "mean_context": "unknown",
+    "observed_at": null,
+    "state": "unknown",
+    "suggested_shelf_life_seconds": null,
+    "throughput": {
+      "age_seconds": null,
+      "aggregate_tokens_per_second": "unknown",
+      "detail": "backend declares no lane document",
+      "mean_tokens_per_second": "unknown",
+      "observed_at": null,
+      "runs": "unknown",
+      "state": "unknown"
+    },
+    "waiting": "unknown"
+  },
+  "lane_receipt": {
+    "effective_context_window": 380000,
+    "notional_cost_usd": "unmeasured",
+    "observed_at": "2026-11-10T23:59:14Z",
+    "quota_state": "measured",
+    "quota_windows": [
+      {
+        "observed_at": "2026-11-10T23:59:14Z",
+        "resets_at": 1794670093,
+        "used_percent": 65.0,
+        "window_minutes": 10080
+      }
+    ],
+    "rate_basis": "unmeasured",
+    "unmeasured": {
+      "notional_cost_usd": "no_dated_rate",
+      "rate_basis": "no_dated_rate"
+    }
+  },
+  "lineage": null,
+  "local": false,
+  "manifest_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996/manifest.md",
+  "member": "disposable-r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996",
+  "model_key": "sol",
+  "negative_control": {
+    "reason": "node-writes-no-test-path",
+    "verdict": "exempt"
+  },
+  "no_commit": null,
+  "node": "review-of-dgv-rework-tokens-3bd328ebd996",
+  "node_definition": {
+    "admission_findings": [],
+    "after": [],
+    "anchor_paths": [],
+    "brief": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/review-brief.md",
+    "brief_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996/brief.md",
+    "brief_sha256": "53ab1f6992768d70879d632b8d0240f5e6409fd0f6c43385433efe092e271ec9",
+    "capability": {
+      "class": "general",
+      "requirements": {
+        "reasoning": "standard",
+        "risk": "moderate",
+        "verification": "strict"
+      },
+      "version": "1.0"
+    },
+    "compares_with": "",
+    "coordinator": {
+      "authoring_turn": {
+        "detail": "the dispatching harness exposed no authoring-turn token usage",
+        "status": "unknown",
+        "tokens": null
+      },
+      "harness": null,
+      "runtime_session_id": null,
+      "session_id": "4f554c2d-3a28-4c55-8645-67a1e8a30dea"
+    },
+    "done_when": "the review for r-20261110T210440922543-dgv-rework-tokens stores a parsed record scoring all 6 dimensions in the range 0..20, recording the revision it read as reviewed_base_sha and reviewed_head_sha, and carrying added_failure_count and added_failure_ids derived from the reviewed run's own baseline_suite and after_suite gate logs; the record is written at one of this run's declared write paths, under review-records/ inside the directory of run r-20261110T210440922543-dgv-rework-tokens, and never in the worktree; the turn ends once that record is stored and the manifest reads complete",
+    "estimated_hours": null,
+    "goal": "attach an independent review to run r-20261110T210440922543-dgv-rework-tokens",
+    "id": "review-of-dgv-rework-tokens-3bd328ebd996",
+    "images": [],
+    "inputs": [],
+    "lane_declaration": {
+      "backend": "codex",
+      "headroom": "known",
+      "metered": true,
+      "observed_at": "2026-11-10T23:50:16Z",
+      "read_at": "2026-11-10T23:50:18Z",
+      "resolved_backend": "codex",
+      "utilisation_pct": 65.0
+    },
+    "lane_reading": {
+      "age_seconds": null,
+      "binding_observed": "unknown",
+      "detail": "backend declares no lane document",
+      "generating": "unknown",
+      "headroom": "unknown",
+      "mean_context": "unknown",
+      "observed_at": null,
+      "state": "unknown",
+      "suggested_shelf_life_seconds": null,
+      "throughput": {
+        "age_seconds": null,
+        "aggregate_tokens_per_second": "unknown",
+        "detail": "backend declares no lane document",
+        "mean_tokens_per_second": "unknown",
+        "observed_at": null,
+        "runs": "unknown",
+        "state": "unknown"
+      },
+      "waiting": "unknown"
+    },
+    "manifest_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996/manifest.md",
+    "negative_control": "",
+    "over_fence_reason": "",
+    "peer_scopes": {},
+    "plan": "dd-gap-vocabulary",
+    "regenerate_paths": [],
+    "requested_backend": "codex",
+    "requires_decisions": [],
+    "role": "review",
+    "section": "§6",
+    "spec_level": "exact",
+    "time_budget": "60m",
+    "token_budget": null,
+    "write_paths": [
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/review-records/r-20261110T210440922543-dgv-rework-tokens.json",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/review-records/r-20261110T210440922543-dgv-rework-tokens.at-3bd328ebd99622f9d775c9c0745e2ffbfd73a7a1.json"
+    ]
+  },
+  "orchestrator_lane_override": null,
+  "orientation_input_tokens": null,
+  "outcome": "",
+  "outside_scope_paths": [],
+  "pace": {
+    "allowance": {
+      "advisory": true,
+      "burn_multiple": 1.3584574973713586,
+      "derived": 0.5263322565362103,
+      "drain_hours": 168.0,
+      "effective_limit": 0.5263322565362103,
+      "elapsed_fraction": 0.47848386957837297,
+      "elapsed_hours": 80.38529008916666,
+      "group": "codex-sub",
+      "lift": {
+        "ends_at": "2026-11-11T09:00:01+00:00",
+        "ends_on": "time",
+        "form": "uncapped",
+        "group": "codex-sub",
+        "id": "codex-sub-1794082577-c029e5",
+        "pace_multiple": null,
+        "remaining_seconds": 32920.955679,
+        "scope": "global"
+      },
+      "lift_hold": {
+        "held": false,
+        "kind": "uncapped"
+      },
+      "limited_by": "allowance",
+      "observed_at": "2026-11-10T23:51:20+00:00",
+      "pace_multiple": 1.1,
+      "provider_ceiling": null,
+      "reason": null,
+      "remaining_budget": 0.35,
+      "remaining_windows": null,
+      "resets_at": "2026-11-14T15:28:13Z",
+      "state": "observed",
+      "utilisation": 0.65,
+      "window_minutes": 10080
+    },
+    "bar": {
+      "bar": 0.71825,
+      "decided_by": "window",
+      "margin": -0.09325000000000006,
+      "name": "review-of-dgv-rework-tokens-3bd328ebd996",
+      "score": 0.625,
+      "state": "observed",
+      "verdict": "split",
+      "window_fill": 0.65
+    },
+    "clocks": {
+      "five_hour": {
+        "age_seconds": 0.044321,
+        "observed_at": "2026-11-10T23:51:20+00:00",
+        "period": "primary",
+        "resets_at": "2026-11-14T15:28:13Z",
+        "state": "observed",
+        "utilisation": 0.65,
+        "window_minutes": 10080
+      },
+      "seven_day": {
+        "age_seconds": null,
+        "observed_at": null,
+        "period": "seven_day",
+        "resets_at": null,
+        "state": "not_published",
+        "utilisation": null,
+        "window_minutes": null
+      }
+    },
+    "group": "codex-sub",
+    "hold": null,
+    "lane": "codex",
+    "lift_id": "codex-sub-1794082577-c029e5",
+    "member": "codex",
+    "node": "review-of-dgv-rework-tokens-3bd328ebd996",
+    "policy": {
+      "drain_lead_hours": 12.0,
+      "pace_multiple": 1.1
+    },
+    "reason": null,
+    "recorded_at": "2026-11-10T23:51:20.044321+00:00",
+    "score": 0.625,
+    "session": null,
+    "source": "recorded",
+    "state": "observed"
+  },
+  "picker_selection": {
+    "action": "fallback",
+    "answering_model": null,
+    "backend": "codex",
+    "comment": "",
+    "confidence": null,
+    "decision_source": "flight-default",
+    "effort": "xhigh",
+    "excluded": [],
+    "fallback_reason": "jev-error: LiveJevDisabledError",
+    "family": "codex",
+    "jev_latency_ms": 1.017,
+    "jev_model": "~typesafe/jev-latest",
+    "latency_ms": 1127.289,
+    "model": "gpt-6-astra",
+    "offered": [
+      {
+        "availability": "unknown",
+        "backend": "codex",
+        "budget_age_s": 68.010877,
+        "budget_reason": null,
+        "budget_source": "document",
+        "burn": {
+          "runway_hours": null,
+          "window_even_share_pct": 2.3963,
+          "window_rate_pct_per_hour": null
+        },
+        "burn_multiple": 1.3587797386276919,
+        "congestion": {
+          "lift": {
+            "ends_at": "2026-11-11T09:00:01+00:00",
+            "ends_on": "time",
+            "form": "uncapped",
+            "group": "codex-sub",
+            "id": "codex-sub-1794082577-c029e5",
+            "pace_multiple": null,
+            "remaining_seconds": 32989.585231,
+            "scope": "global"
+          }
+        },
+        "context": {
+          "estimated_tokens": 50392,
+          "headroom_pct": null,
+          "peak_utilisation_p50_pct": null,
+          "peak_utilisation_p90_pct": null,
+          "peak_utilisation_runs": null,
+          "window_tokens": null
+        },
+        "days_to_reset": 3.6513968069791667,
+        "effort": "xhigh",
+        "family": "codex",
+        "local": false,
+        "model": "gpt-6-astra",
+        "moved_in": {
+          "failed": 0,
+          "not-run": 0,
+          "passed": 0,
+          "unknown": 0
+        },
+        "moved_off": 0,
+        "note": null,
+        "outcomes": {
+          "failed": 0,
+          "not-run": 0,
+          "passed": 0,
+          "unknown": 0
+        },
+        "outcomes_at_requirement": {
+          "attempts_median": null,
+          "failed": 0,
+          "not-run": 0,
+          "passed": 0,
+          "passed_first_attempt": 0,
+          "review_dimensions_median": null,
+          "review_total_median": null,
+          "reviewed": 0,
+          "unknown": 0,
+          "unrecorded": 0,
+          "wall_seconds_median": null
+        },
+        "pace_allowance": 0.5262074342690147,
+        "prior_outcomes": null,
+        "reason": "eligible",
+        "reasons": [],
+        "resets_at": "2026-11-14T15:28:13+00:00",
+        "stale": false,
+        "suits": "The lane's frontier model, strongest and slowest, about five times sol's token price. Suits deep or open-ended design, elevated or critical risk, and nodes that already failed on another model.",
+        "utilisation_pct": 65.0,
+        "worker_slots": null
+      },
+      {
+        "availability": "unknown",
+        "backend": "codex",
+        "budget_age_s": 68.010877,
+        "budget_reason": null,
+        "budget_source": "document",
+        "burn": {
+          "runway_hours": null,
+          "window_even_share_pct": 2.3963,
+          "window_rate_pct_per_hour": null
+        },
+        "burn_multiple": 1.3587797386276919,
+        "congestion": {
+          "lift": {
+            "ends_at": "2026-11-11T09:00:01+00:00",
+            "ends_on": "time",
+            "form": "uncapped",
+            "group": "codex-sub",
+            "id": "codex-sub-1794082577-c029e5",
+            "pace_multiple": null,
+            "remaining_seconds": 32989.585231,
+            "scope": "global"
+          }
+        },
+        "context": {
+          "estimated_tokens": 50392,
+          "headroom_pct": null,
+          "peak_utilisation_p50_pct": null,
+          "peak_utilisation_p90_pct": null,
+          "peak_utilisation_runs": null,
+          "window_tokens": null
+        },
+        "days_to_reset": 3.6513968069791667,
+        "effort": "xhigh",
+        "family": "codex",
+        "local": false,
+        "model": "gpt-6-luna",
+        "moved_in": {
+          "failed": 0,
+          "not-run": 0,
+          "passed": 0,
+          "unknown": 0
+        },
+        "moved_off": 0,
+        "note": null,
+        "outcomes": {
+          "failed": 0,
+          "not-run": 0,
+          "passed": 0,
+          "unknown": 0
+        },
+        "outcomes_at_requirement": {
+          "attempts_median": null,
+          "failed": 0,
+          "not-run": 0,
+          "passed": 0,
+          "passed_first_attempt": 0,
+          "review_dimensions_median": null,
+          "review_total_median": null,
+          "reviewed": 0,
+          "unknown": 0,
+          "unrecorded": 0,
+          "wall_seconds_median": null
+        },
+        "pace_allowance": 0.5262074342690147,
+        "prior_outcomes": null,
+        "reason": "eligible",
+        "reasons": [],
+        "resets_at": "2026-11-14T15:28:13+00:00",
+        "stale": false,
+        "suits": "The lane's fast, affordable model, about a twentieth of sol's token price. Suits well-defined, less difficult work: reviews, exact-spec implementation, tests and documentation.",
+        "utilisation_pct": 65.0,
+        "worker_slots": null
+      },
+      {
+        "availability": "unknown",
+        "backend": "codex",
+        "budget_age_s": 68.010877,
+        "budget_reason": null,
+        "budget_source": "document",
+        "burn": {
+          "runway_hours": null,
+          "window_even_share_pct": 2.3963,
+          "window_rate_pct_per_hour": null
+        },
+        "burn_multiple": 1.3587797386276919,
+        "congestion": {
+          "lift": {
+            "ends_at": "2026-11-11T09:00:01+00:00",
+            "ends_on": "time",
+            "form": "uncapped",
+            "group": "codex-sub",
+            "id": "codex-sub-1794082577-c029e5",
+            "pace_multiple": null,
+            "remaining_seconds": 32989.585231,
+            "scope": "global"
+          }
+        },
+        "context": {
+          "estimated_tokens": 50392,
+          "headroom_pct": null,
+          "peak_utilisation_p50_pct": null,
+          "peak_utilisation_p90_pct": null,
+          "peak_utilisation_runs": null,
+          "window_tokens": null
+        },
+        "days_to_reset": 3.6513968069791667,
+        "effort": "high",
+        "family": "codex",
+        "local": false,
+        "model": "gpt-6.1-sol",
+        "moved_in": {
+          "failed": 0,
+          "not-run": 0,
+          "passed": 0,
+          "unknown": 0
+        },
+        "moved_off": 0,
+        "note": null,
+        "outcomes": {
+          "failed": 0,
+          "not-run": 3,
+          "passed": 0,
+          "unknown": 0
+        },
+        "outcomes_at_requirement": {
+          "attempts_median": null,
+          "failed": 0,
+          "not-run": 0,
+          "passed": 0,
+          "passed_first_attempt": 0,
+          "review_dimensions_median": null,
+          "review_total_median": null,
+          "reviewed": 0,
+          "unknown": 0,
+          "unrecorded": 3,
+          "wall_seconds_median": null
+        },
+        "pace_allowance": 0.5262074342690147,
+        "prior_outcomes": null,
+        "reason": "eligible",
+        "reasons": [],
+        "resets_at": "2026-11-14T15:28:13+00:00",
+        "stale": false,
+        "suits": "The lane default, the current-generation general model. Suits guided implementation, tests and full reviews at standard or deep reasoning and moderate risk. About twenty times luna's token price and a fifth of astra's.",
+        "utilisation_pct": 65.0,
+        "worker_slots": null
+      }
+    ],
+    "probabilities": {},
+    "questions": {
+      "route": {
+        "criteria": {
+          "codex:gpt-6-astra:codex": {
+            "backend": "codex",
+            "effort": "xhigh",
+            "lane": "codex",
+            "local": false,
+            "meaning": "Execute the node as this lane and model pair; read the lane's shared pressure from the lanes block and this pair's own fit and serving observation from the candidate table.",
+            "model": "gpt-6-astra"
+          },
+          "codex:gpt-6-luna:codex": {
+            "backend": "codex",
+            "effort": "xhigh",
+            "lane": "codex",
+            "local": false,
+            "meaning": "Execute the node as this lane and model pair; read the lane's shared pressure from the lanes block and this pair's own fit and serving observation from the candidate table.",
+            "model": "gpt-6-luna"
+          },
+          "codex:gpt-6.1-sol:codex": {
+            "backend": "codex",
+            "effort": "high",
+            "lane": "codex",
+            "local": false,
+            "meaning": "Execute the node as this lane and model pair; read the lane's shared pressure from the lanes block and this pair's own fit and serving observation from the candidate table.",
+            "model": "gpt-6.1-sol"
+          },
+          "hold": "Do not dispatch now; wait for pressure to ease. When the local lane is not admitting (full, paused or unavailable), well-defined, routine or deferrable work should usually hold for it rather than spend a pressed metered lane. On a sliding scale, hard, high-risk or urgent work may still take the metered lane; weigh expected wait against urgency without a numeric threshold. When exactly one lane can serve the node, a hold waits for that lane alone, as hold_waits_for states."
+        },
+        "glossary": {
+          "budget_age_s": "Seconds since the budget reading was observed; null when unknown.",
+          "budget_source": "Where a budget reading came from: a document reading is taken from the published paid-lanes document, an account-surface reading describes now, and a ledger reading carries the age of the run behind it.",
+          "burn": "A metered lane's own burn block. window_rate_pct_per_hour is the window's utilisation change per hour over the trailing three hours, read from the lane's recorded readings rather than averaged over the whole window, so it describes what the lane is spending now and is present in a window too young for burn_multiple; null when fewer than two readings lie at least half an hour apart. window_even_share_pct is the even pace for the coming period -- the window's remaining percentage over the hours to its reset -- given as a reference to weigh against the node's priority and difficulty, never applied as a limit. Under a credits lift the block also carries credit_pool_remaining and credit_pool_cap (the lift's dispatch stop less the credits drawn since grant, and its cap), credit_rate_per_hour (the balance's fall per hour over the same trailing span) and credit_even_share (the pool's even pace to the lift's end); those four are absent with no credits lift. runway_hours is the credit pool over the credit rate under a lift, and the window's remainder over its own rate without one; null when the rate behind it is null or zero. A lane whose burn is racing ahead of its even share will exhaust before its reset, and a credits-lifted lane's pool is spent by priority: it is a budget for the work that needs the lane, not an even pace to the reset.",
+          "burn_multiple": "Metered spend so far divided by the lane's allowance for its window; above 1 is ahead of the pace that window plans for.",
+          "context": "A candidate's context block. window_tokens is the input window that gates the lane; estimated_tokens is this node's deterministic input estimate (standing instructions plus the repository files its brief loads) measured against that window; headroom_pct is the share of the window the estimate leaves free. peak_utilisation_p50_pct and peak_utilisation_p90_pct are the median and 90th-percentile peak input utilisation of recent passed runs on the lane, with peak_utilisation_runs behind them. A run whose input approaches its window risks dying mid-way, so a small headroom is a real risk to be weighed with pressure. A null figure is unknown, never zero.",
+          "days_to_reset": "Days until the lane's window resets; null when unknown.",
+          "expected_wait_profile_age_s": "The age in seconds of the oldest foreign project's run-time profile that contributed to expected_wait_s, counted from the instant its promotion published it; null when no foreign profile contributed. A pick reads a published profile rather than rebuilding one, so this names how stale the reading behind the wait is.",
+          "hold_waits_for": "What a hold waits on. When exactly one lane can serve the node a hold waits for that lane alone: waiting for any other lane to free changes nothing, because it cannot run this node. Null when no lane can serve the node.",
+          "lanes": "One pressure block per lane, however many models the lane holds. A lane is a subscription or host whose models share one account window, so its utilisation, burn, pace allowance, reset, worker slots, congestion and banked-reset flag are stated here once and are the same for every model in it. availability is the lane's serving state aggregated over those models. Read a model's own serving observation from its candidate entry; read the shared spending policy from its lane.",
+          "lift": "A lift in force on the lane's budget group: its form (uncapped, drain_by or multiple), who granted it, and when it ends. A lane under a lift is one whose window is meant to be spent, so its burn and pace do not press it while the lift stands.",
+          "lift_preference": "The lane a lift in force makes the preferred home for this node: its form and scope, the lift block itself, and the risk the node declared to earn it. Present only when the node's declared or assessed risk is at or above elevated and exactly one metered lane carrying a lift serves the node with room. Prefer it for that node -- route there unless serving state, context fit, worker slots or review exclusion forbid it -- and null means no lift moves this choice, so well-defined low-risk work stays local while the local lane has room.",
+          "moved_in": "A candidate's gate history over the runs a coordinator moved onto it from another lane: a run Jev routed elsewhere, whose lineage records a lane change onto this candidate. It uses the same passed, failed, not-run and unknown counts as outcomes, but those runs are kept out of outcomes and outcomes_at_requirement, because their outcome is the outcome of the pick they were chosen for, not of this lane's own picks. Read at the request's requirement when it names one, and over every move when it names none. Present only when at least one such move exists; an absent key means no coordinator moved a run onto this candidate in the window.",
+          "moved_off": "How many of this candidate's own picks a coordinator moved away to another lane. Read at the request's requirement when it names one, and over every move when it names none. A high moved_off means coordinators overrode the choice this candidate was picked for, so the lane never ran the nodes it was chosen for. Present only when it is greater than zero; an absent key means no coordinator moved this candidate's pick away in the window.",
+          "outcomes_at_requirement": "A candidate's gate history at this node's requirement: the same passed, failed, not-run and unknown counts as outcomes, but over only the rows whose recorded requirement (reasoning and risk) equals this node's. reviewed is the composition of the sample behind the dimension medians: how many rows a review scored on every dimension, and review_dimensions_median is the median of each dimension over exactly those rows, each scored 0 to 20, so a low dimension shows even when the total does not. review_total_median and wall_seconds_median are the median review score and wall time over those rows, null when none was recorded; review_total_median can rest on a different number of rows than reviewed, because a total is sometimes withheld and reviews scored before reuse existed carry a total without it. attempts_median is the median number of launches those rows took, and passed_first_attempt is how many of them passed on the first launch; a launch beyond the first is a resume, and resumes include the repairs that answer a blocking review, so a pass on the fifth launch is not a pass on the first. Rows that recorded no requirement count under unrecorded and are never matched, so history written before a requirement was recorded reads as unknown rather than as a match. These counts are the history at this node's difficulty, not a calibrated ranking.",
+          "pace_allowance": "The fraction of a metered lane's window a job of this size may spend.",
+          "prior_outcomes": "A candidate's lane model key's earlier generations, rendered only for a candidate whose own model id carries too few outcomes to weigh on their own. It uses the same passed, failed, not-run and unknown counts as outcomes, but over only the runs recorded under this candidate's lane and model key with a different model id, so a key re-pointed to a new generation shows the record its predecessor built. model_ids names each of those earlier ids. Read it as a prior: it is the key's own history weighed below the candidate's own outcomes, never in place of them, and it is absent once the candidate's own outcomes are enough to weigh on their own.",
+          "reserved_lane": "The lane a flight policy reserves for the orchestrators that share it, recorded beside the route when it spends one. Spend one only as the policy offers it, and answer with \"reason\" in the route naming how hard the node is and the share of the lane's window left free; a route that spends a reserved lane and gives no reason is refused, and the pick is asked again with that lane left out.",
+          "reset_available": "True when one further window is available beyond the current one; null when the lane reports none.",
+          "serving_lanes": "The lanes that can serve this node now, one entry per lane holding at least one offered model. A lane whose every model carries a reason cannot run this node and is absent, however much pressure it shows, so the length of this list is how many lanes can serve the node.",
+          "spec_level": "How much design latitude the node leaves. exact: the design is fixed and only the implementation remains. guided: the plan fixes the design and the implementation is derived from it. open: the node must also choose the design.",
+          "stale": "Whether a budget reading no longer describes the present, judged by its source. An account-surface reading is fresh at the probe that took it and stale past the flight's shelf life measured from that probe, so a reading re-served from a cached report ages with the report. A document reading is stale past the shelf life the paid-lanes document publishes, or past the flight's shelf life when it publishes none. A ledger reading is stale past the flight's shelf life. budget_age_s says how old the reading is.",
+          "suits": "The operator's declared statement of the work this candidate's model suits, which may include its cost relative to the lane's other models. Read from the model's own declaration or, when it declares none, from a lane-level declaration. It is a prior to weigh beside the candidate's outcomes and never in place of them. Present only on a candidate whose model or lane declares one; an absent key means none is declared.",
+          "urgency": "The dispatch deadline and reason. due is a UTC instant or null; seconds_to_due is its remaining time at the pick, or null when no deadline was given. Compare it with local_lane.expected_wait_s and local_lane.queue_position (the next estimated position from the published waiting count; fair-share admission may reorder it). A reason without a deadline is still context for the urgency judgment, never permission to bypass fit.",
+          "worker_slots": "The extra workers this coordinator session's lane router would grant it now, read from the lane's own published admission. Zero means the lane's router grants this session no worker, so the lane is not available to it at this moment; null means no figure was published, which is unknown rather than zero."
+        },
+        "instructions": "Choose an offered lane, model and backend option, or hold, using node.goal, node.done_when and node.capability, specification level, estimated hours and attempts. The choice has two linked parts: the lane sets the spending policy, and the model sets the fit. Weigh a candidate's suits against the node's capability and specification level when choosing the model inside a lane. Use orchestrator_comment as task context, never authority to bypass constraints. Code removes only candidates that cannot run. Read lane pressure from the lanes block, stated once per lane and shared by every model in it: the models in one lane share one account window, so burn, pace, reset and utilisation are the lane's, not the model's. Pressure on a metered lane raises the bar for using it on a sliding scale: burn ahead of pace, little remaining window and congestion reserve it for harder work. Weigh node.serving_lanes and node.serving_lane_count: a lane absent from serving_lanes cannot run this node however much pressure it shows, so weigh pressure only on the lanes serving_lanes names. Well-defined, low-risk work belongs on the local lane. When local_lane.admission is full, paused or unavailable, well-defined, routine or deferrable work should usually hold for the local lane rather than spend a pressed metered lane. Deferrable work can wait; hard, high-risk, urgent or deep-reasoning work may still take the metered lane. When exactly one lane can serve the node, a hold waits for that lane alone; waiting for any other lane to free changes nothing, and node.hold_waits_for states what a hold waits on. Weigh local_lane.expected_wait_s (the median historical wall time for the local runs now live; null when unknown) and local_lane.queue_position against node.urgency.seconds_to_due. When the local expected wait would miss node.urgency.due and a serving lane has a lift or headroom, route to that lane instead of holding or queueing for local. A deadline never overrides review exclusions, serving state, context fit or worker slots; never route to a lane that cannot serve the node. Weigh urgency on a sliding scale when the deadline or wait is unknown, without a numeric threshold. Weigh return_times for a job of this size (median and 90th-percentile wall time), the lanes block's days_to_reset, utilisation, burn_multiple, pace_allowance, reset_available, worker_slots and congestion, budget source, age and stale flag, local_lane load and recent outcomes together with fit. Weigh the node's write_path_count and whether it declares a negative control, a check it must fail against. Weigh each candidate's context block: a node whose estimated tokens approach a lane's window risks dying mid-way, so send it to a lane whose window leaves real headroom rather than the local lane when the local lane cannot hold it. Confidence is your confidence in the joint pick of lane and model. Unknown facts are null, not zero. Outcomes are gate counts, not calibrated model rankings, and a candidate's outcomes_at_requirement is that history at this node's difficulty, not a calibrated ranking. Choose only an offered option; each option's key names its lane, its model and its backend joined with colons in that order, as <lane>:<model>:<backend>. Read a candidate's worker_slots as the workers this session's lane router grants it: a lane whose worker_slots is 0 grants this session no worker now, so it is not available to the session and a well-defined implementation or test node must not be routed or left queued there; a null worker_slots is no published figure, which is unknown rather than zero. A candidate whose congestion block carries a lift is on a lane whose window is meant to be spent: its burn and pace do not press it while the lift stands, and when the local lane is full, holding or queueing for that lane is no longer the default for work it can serve. A review should prefer the lifted lane's cheaper models. A lane under a reserved-lane policy is one the orchestrators share, and it is offered on the policy's terms alone: it appears in this list only when the node's declared requirements or the coordinator's assessment meet the policy's floor, or the node has already been attempted at least the policy's count of times, and only while the lane's own window utilisation is below the policy's ceiling. A reserved lane is for work where a wrong answer is costly -- open-ended, multi-file, physics-heavy or diagnostic work, and work that has grown hard by failing elsewhere -- and its price is the capacity the orchestrators themselves need, so it is never a fallback when a better-fitting lane is pressed and never the default for ordinary work. When you choose a reserved lane, also carry \"reason\" inside the route answer, naming the node's difficulty and the headroom you relied on: a reserved-lane choice with no reason is refused, and the pick is asked again with that lane left out. Review exclusions, serving state, context fit and worker slots bound a reserved lane exactly as they bound any other. The glossary defines urgency, spec_level, suits, burn_multiple, pace_allowance, budget_source, budget_age_s, stale, reset_available, days_to_reset, lanes, serving_lanes, hold_waits_for, worker_slots, lift, outcomes_at_requirement, reserved_lane and context. node.orchestrator_assessment, when present, is the coordinator's own reading of the node's difficulty, stated in the same capability requirement keys as node.capability; weigh the two together, and where they disagree weigh both rather than treating either as authority",
+        "type": "choice"
+      }
+    },
+    "rendered_state": "{\"node\":{\"role\":\"review\",\"spec_level\":\"exact\",\"capability\":{\"version\":\"1.0\",\"class\":\"general\",\"requirements\":{\"reasoning\":\"standard\",\"verification\":\"strict\",\"risk\":\"moderate\"}},\"goal\":\"attach an independent review to run r-20261110T210440922543-dgv-rework-tokens\",\"done_when\":\"the review for r-20261110T210440922543-dgv-rework-tokens stores a parsed record scoring all 6 dimensions in the range 0..20, recording the revision it read as reviewed_base_sha and reviewed_head_sha, and carrying added_failure_count and added_failure_ids derived from the reviewed run's own baseline_suite and after_suite gate logs; the record is written at one of this run's declared write paths, under review-records/ inside the directory of run r-20261110T210440922543-dgv-rework-tokens, and never in the worktree; the turn ends once that record is stored and the manifest reads complete\",\"urgency\":{\"due\":null,\"seconds_to_due\":null,\"reason\":null},\"estimated_context\":50392,\"estimated_hours\":1.0,\"estimated_hours_source\":\"section\",\"attempts\":0,\"write_path_count\":2,\"negative_control_declared\":false,\"serving_lanes\":[\"codex\"],\"serving_lane_count\":1,\"hold_waits_for\":\"the codex lane, the only lane that can serve this node\",\"lift_preference\":null},\"orchestrator_comment\":\"\",\"candidates\":{\"codex:gpt-6-astra:codex\":{\"backend\":\"codex\",\"lane\":\"codex\",\"model\":\"gpt-6-astra\",\"availability\":\"unknown\",\"utilisation_pct\":65.0,\"burn_multiple\":1.3587797386276919,\"pace_allowance\":0.5262074342690147,\"burn\":{\"window_rate_pct_per_hour\":null,\"window_even_share_pct\":2.3963,\"runway_hours\":null},\"days_to_reset\":3.6513968069791667,\"resets_at\":\"2026-11-14T15:28:13+00:00\",\"worker_slots\":null,\"congestion\":{\"lift\":{\"id\":\"codex-sub-1794082577-c029e5\",\"group\":\"codex-sub\",\"form\":\"uncapped\",\"scope\":\"global\",\"pace_multiple\":null,\"ends_at\":\"2026-11-11T09:00:01+00:00\",\"ends_on\":\"time\",\"remaining_seconds\":32989.585231}},\"outcomes\":{\"passed\":0,\"failed\":0,\"not-run\":0,\"unknown\":0},\"outcomes_at_requirement\":{\"passed\":0,\"failed\":0,\"not-run\":0,\"unknown\":0,\"unrecorded\":0,\"reviewed\":0,\"review_total_median\":null,\"review_dimensions_median\":null,\"wall_seconds_median\":null,\"attempts_median\":null,\"passed_first_attempt\":0},\"suits\":\"The lane's frontier model, strongest and slowest, about five times sol's token price. Suits deep or open-ended design, elevated or critical risk, and nodes that already failed on another model.\",\"context\":{\"window_tokens\":null,\"estimated_tokens\":50392,\"headroom_pct\":null,\"peak_utilisation_p50_pct\":null,\"peak_utilisation_p90_pct\":null,\"peak_utilisation_runs\":null},\"budget_source\":\"document\",\"budget_age_s\":68.010877,\"stale\":false,\"reset_available\":null},\"codex:gpt-6-luna:codex\":{\"backend\":\"codex\",\"lane\":\"codex\",\"model\":\"gpt-6-luna\",\"availability\":\"unknown\",\"utilisation_pct\":65.0,\"burn_multiple\":1.3587797386276919,\"pace_allowance\":0.5262074342690147,\"burn\":{\"window_rate_pct_per_hour\":null,\"window_even_share_pct\":2.3963,\"runway_hours\":null},\"days_to_reset\":3.6513968069791667,\"resets_at\":\"2026-11-14T15:28:13+00:00\",\"worker_slots\":null,\"congestion\":{\"lift\":{\"id\":\"codex-sub-1794082577-c029e5\",\"group\":\"codex-sub\",\"form\":\"uncapped\",\"scope\":\"global\",\"pace_multiple\":null,\"ends_at\":\"2026-11-11T09:00:01+00:00\",\"ends_on\":\"time\",\"remaining_seconds\":32989.585231}},\"outcomes\":{\"passed\":0,\"failed\":0,\"not-run\":0,\"unknown\":0},\"outcomes_at_requirement\":{\"passed\":0,\"failed\":0,\"not-run\":0,\"unknown\":0,\"unrecorded\":0,\"reviewed\":0,\"review_total_median\":null,\"review_dimensions_median\":null,\"wall_seconds_median\":null,\"attempts_median\":null,\"passed_first_attempt\":0},\"suits\":\"The lane's fast, affordable model, about a twentieth of sol's token price. Suits well-defined, less difficult work: reviews, exact-spec implementation, tests and documentation.\",\"context\":{\"window_tokens\":null,\"estimated_tokens\":50392,\"headroom_pct\":null,\"peak_utilisation_p50_pct\":null,\"peak_utilisation_p90_pct\":null,\"peak_utilisation_runs\":null},\"budget_source\":\"document\",\"budget_age_s\":68.010877,\"stale\":false,\"reset_available\":null},\"codex:gpt-6.1-sol:codex\":{\"backend\":\"codex\",\"lane\":\"codex\",\"model\":\"gpt-6.1-sol\",\"availability\":\"unknown\",\"utilisation_pct\":65.0,\"burn_multiple\":1.3587797386276919,\"pace_allowance\":0.5262074342690147,\"burn\":{\"window_rate_pct_per_hour\":null,\"window_even_share_pct\":2.3963,\"runway_hours\":null},\"days_to_reset\":3.6513968069791667,\"resets_at\":\"2026-11-14T15:28:13+00:00\",\"worker_slots\":null,\"congestion\":{\"lift\":{\"id\":\"codex-sub-1794082577-c029e5\",\"group\":\"codex-sub\",\"form\":\"uncapped\",\"scope\":\"global\",\"pace_multiple\":null,\"ends_at\":\"2026-11-11T09:00:01+00:00\",\"ends_on\":\"time\",\"remaining_seconds\":32989.585231}},\"outcomes\":{\"passed\":0,\"failed\":0,\"not-run\":3,\"unknown\":0},\"outcomes_at_requirement\":{\"passed\":0,\"failed\":0,\"not-run\":0,\"unknown\":0,\"unrecorded\":3,\"reviewed\":0,\"review_total_median\":null,\"review_dimensions_median\":null,\"wall_seconds_median\":null,\"attempts_median\":null,\"passed_first_attempt\":0},\"suits\":\"The lane default, the current-generation general model. Suits guided implementation, tests and full reviews at standard or deep reasoning and moderate risk. About twenty times luna's token price and a fifth of astra's.\",\"context\":{\"window_tokens\":null,\"estimated_tokens\":50392,\"headroom_pct\":null,\"peak_utilisation_p50_pct\":null,\"peak_utilisation_p90_pct\":null,\"peak_utilisation_runs\":null},\"budget_source\":\"document\",\"budget_age_s\":68.010877,\"stale\":false,\"reset_available\":null}},\"return_times\":{\"codex:gpt-6-astra:codex\":{\"p50_s\":429,\"p90_s\":447,\"runs\":3,\"size_key\":\"time_budget\",\"size_bucket\":\"30m_to_60m\",\"budget_source\":\"document\",\"budget_age_s\":68.372699,\"stale\":false},\"codex:gpt-6-luna:codex\":{\"p50_s\":429,\"p90_s\":447,\"runs\":3,\"size_key\":\"time_budget\",\"size_bucket\":\"30m_to_60m\",\"budget_source\":\"document\",\"budget_age_s\":68.372699,\"stale\":false},\"codex:gpt-6.1-sol:codex\":{\"p50_s\":429,\"p90_s\":447,\"runs\":3,\"size_key\":\"time_budget\",\"size_bucket\":\"30m_to_60m\",\"budget_source\":\"document\",\"budget_age_s\":68.372699,\"stale\":false}},\"lanes\":{\"codex\":{\"availability\":\"unknown\",\"utilisation_pct\":65.0,\"burn_multiple\":1.3587797386276919,\"pace_allowance\":0.5262074342690147,\"resets_at\":\"2026-11-14T15:28:13+00:00\",\"days_to_reset\":3.651392619224537,\"worker_slots\":null,\"congestion\":null,\"reset_available\":false}},\"local_lane\":{\"admission\":\"unavailable\",\"expected_wait_s\":531.5,\"expected_wait_profile_age_s\":3976.104087,\"running\":7,\"waiting\":0,\"queue_position\":1,\"headroom\":4,\"worker_slots\":40,\"tokens_per_second\":90.446,\"read_at\":\"2026-11-10T23:50:12.678989+00:00\"}}",
+    "rendered_token_estimate": 1617,
+    "stage_ms": {
+      "budget-snapshot": 286.635,
+      "context-estimate": 37.939,
+      "records": 130.395,
+      "verdict-inputs": 119.817
+    },
+    "template_digest": "cb9d48e7fca5878b52cc4affdedfdee9f5e04b929f720979b14d0d78b8456ced",
+    "usage": {}
+  },
+  "plan": null,
+  "plan_impl_at_dispatch": 0.8888888888888888,
+  "plan_link": null,
+  "promoted_by": "review-self",
+  "promoted_revision": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+  "resume_waiver": null,
+  "review": {
+    "absent": [],
+    "id": "r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996",
+    "reviewed_base_sha": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+    "reviewed_head_sha": "3bd328ebd99622f9d775c9c0745e2ffbfd73a7a1",
+    "scores": {
+      "durability": 20,
+      "evidence": 20,
+      "fit": 20,
+      "goal_fidelity": 20,
+      "reuse": 5,
+      "scope_discipline": 20
+    },
+    "status": "parsed",
+    "total": 105
+  },
+  "review_tier": "none",
+  "role": "review",
+  "route_mode": "explicit",
+  "run_id": "r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996",
+  "scope_acceptances": null,
+  "scope_changed": false,
+  "section": "§6",
+  "session": "4f554c2d-3a28-4c55-8645-67a1e8a30dea",
+  "session_harness": "codex",
+  "session_id": "01a1c7e0-c47e-77d1-a1e6-a97165ce8d09",
+  "session_model": "gpt-6.1-sol",
+  "shadow_controlled": null,
+  "shadow_patch": "",
+  "spec_level": "exact",
+  "stalled": false,
+  "suite_delta": null,
+  "tests_added": null,
+  "throughput": {
+    "cumulative_cached_input_tokens": 1680000,
+    "cumulative_input_tokens": 3459760,
+    "detail": "turn tokens recorded, but no span was supplied to rate them",
+    "generated_tokens": 14521
+  },
+  "time_budget": "60m",
+  "tool_steps": 60.0,
+  "unplanned_reason": null,
+  "unreconciled_override": null,
+  "wall_seconds": 463,
+  "watch_override": null,
+  "worker_exit": {
+    "attempt": 1,
+    "ended_during": "working",
+    "ended_pids": [],
+    "exit_code": 0,
+    "exited_at": "2026-11-10T23:59:21Z",
+    "last_record_type": "turn.completed",
+    "launched_at": "2026-11-10T23:52:13Z",
+    "recorded_by": "supervisor",
+    "removed_harness_caches": [
+      {
+        "bytes": 68049745,
+        "path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996/codex-home/cache"
+      },
+      {
+        "bytes": 28814443,
+        "path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996/codex-home/plugins"
+      }
+    ],
+    "run_id": "r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996",
+    "signal": null,
+    "signal_name": null,
+    "stream_records_seen": 144,
+    "worker_pid": 2405360
+  },
+  "worker_seconds": 463,
+  "worker_seconds_source": "wall_fallback",
+  "worktree_retention": null
+}

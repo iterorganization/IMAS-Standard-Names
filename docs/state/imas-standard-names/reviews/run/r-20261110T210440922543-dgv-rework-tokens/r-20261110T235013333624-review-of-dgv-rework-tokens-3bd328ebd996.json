@@ -1,0 +1,158 @@
+{
+  "absent": [],
+  "absent_items": [],
+  "added_failure_count": 0,
+  "added_failure_ids": [],
+  "assertion_analysis": [
+    {
+      "failure_condition": "Composition changes or loses a canonical spelling; removing any of the five registrations first makes strict parse raise, as the five removal logs show. case.name is a fixed expected spelling, not a supplied expected return value.",
+      "lines": "tests/grammar/test_rework_tokens.py:82"
+    },
+    {
+      "failure_condition": "Reparsing the composed name changes the IR. This is a metamorphic consistency assertion, not an independent semantic oracle; semantic expectations are fixed by the other assertions.",
+      "lines": "tests/grammar/test_rework_tokens.py:83"
+    },
+    {
+      "failure_condition": "The token disappears from its expected segment map, even if another grammar decomposition still accepts the spelling.",
+      "lines": "tests/grammar/test_rework_tokens.py:84"
+    },
+    {
+      "failure_condition": "A list token is removed or its independent resource comment no longer equals the fixed accepted definition.",
+      "lines": "tests/grammar/test_rework_tokens.py:94-95"
+    },
+    {
+      "failure_condition": "The registry definition differs from the accepted literal; that literal is not passed into the resource loader.",
+      "lines": "tests/grammar/test_rework_tokens.py:98"
+    },
+    {
+      "failure_condition": "The breakdown locus becomes another type or loses/adds/reorders an allowed relation relative to the accepted [at, of, along] contract.",
+      "lines": "tests/grammar/test_rework_tokens.py:100-101"
+    },
+    {
+      "failure_condition": "A physical base ceases to be scalar, current_profile_alignment loses inherent dimensionality, or plateau_factor acquires it.",
+      "lines": "tests/grammar/test_rework_tokens.py:103-106"
+    },
+    {
+      "failure_condition": "Either parsed pellet population has a subject other than its independently named intact/shattered identity.",
+      "lines": "tests/grammar/test_rework_tokens.py:112-113"
+    },
+    {
+      "failure_condition": "Either pellet name changes physical_base away from number_density, even if both change together.",
+      "lines": "tests/grammar/test_rework_tokens.py:114"
+    },
+    {
+      "failure_condition": "Either distinct subject is missing from the subject segment map.",
+      "lines": "tests/grammar/test_rework_tokens.py:115-117"
+    },
+    {
+      "failure_condition": "The sourced species quantity changes spelling; removing only phrase-scope registration makes strict parse reject electron_sourced_current_density canonicalization, as sourced_scope-removal.log records.",
+      "lines": "tests/grammar/test_rework_tokens.py:123"
+    },
+    {
+      "failure_condition": "The flat result loses electron, sourced, or current_density or assigns one to a different segment.",
+      "lines": "tests/grammar/test_rework_tokens.py:125-127"
+    },
+    {
+      "failure_condition": "The independent scope registry no longer includes sourced.",
+      "lines": "tests/grammar/test_rework_tokens.py:128"
+    },
+    {
+      "failure_condition": "The parsed sourced qualifier disappears or has a category other than source; the expected category is a literal.",
+      "lines": "tests/grammar/test_rework_tokens.py:129-132"
+    },
+    {
+      "failure_condition": "The forbidden noun source is registered as a qualifier alongside sourced.",
+      "lines": "tests/grammar/test_rework_tokens.py:133"
+    }
+  ],
+  "call_site_count": 5,
+  "call_sites": [
+    "imas_standard_names/grammar/parser.py:load_vocabularies",
+    "imas_standard_names/grammar/model.py:_SCOPING_QUALIFIER_VALUES",
+    "imas_standard_names/grammar/model.py:_QUALIFIER_CATEGORY_OF",
+    "imas_standard_names/grammar/vocab_loaders.py:load_qualifier_categories",
+    "imas_standard_names/grammar/vocab_loaders.py:load_scoping_qualifiers"
+  ],
+  "completed_at": "2026-11-10T23:59:14Z",
+  "dispatched_at": "2026-11-10T23:51:31Z",
+  "findings": [
+    {
+      "file": "tests/grammar/test_rework_tokens.py",
+      "line": "14",
+      "severity": "blocking",
+      "text": "blocking: The new VocabularyCase is identical to tests/grammar/test_dd_gap_vocabulary.py:14, test_source_quantity_round_trips at :79 copies the existing owner's :308 implementation, and test_token_keeps_its_definition at :89 reimplements its :316 definition-checking capability; extend that existing case table and assertion owner, retaining the new semantic checks and distinct breakdown-case IDs, so the same grammar registration contract does not acquire two independently maintained implementations."
+    }
+  ],
+  "item_aggregate": 6,
+  "item_verdicts": {
+    "call_sites": "verified 5 production call site(s)",
+    "diff": "Read 5b5289bf and 3bd328eb against base 45f1f624; the 177 additions register vocabulary and evidence but tests/grammar/test_rework_tokens.py duplicates the existing DD vocabulary test owner.",
+    "done_when": "The source dispatch-detail.json measure is supported by base-suite.log (1399 passed, 32 skipped), head-suite.log (1413 passed, 32 skipped), codegen.log (EXIT=0), and six removal logs with named failures; patch publication in the broader live plan remains a coordinator action outside this node's goal.",
+    "goal": "The source goal in dispatch-detail.json is to add five accepted grammar tokens; commit 5b5289bf adds all five with the definitions in docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json and preserves the two pellet populations.",
+    "manifest": "The source manifest.md identifies both commits and readable completed suite arms; its after_suite names implementation revision 5b5289bf, and the later 3bd328eb commit changes only the evidence fragment.",
+    "write_paths": "All nine changed paths fall within dispatch-detail.json's write_paths/regenerate_paths plus the explicit scoping_qualifiers.yml scope extension in resume-1-advice.txt."
+  },
+  "justifications": {
+    "durability": "tests/grammar/test_rework_tokens.py:78-133 rejects each token removal through strict parsing and checks independent YAML definitions, pellet identities, sourced category and phrase scope, with six recorded removal failures absent from the head arm.",
+    "evidence": "The source base-suite.log and head-suite.log record completed serial timeout-2400 arms with EXIT=0 and zero failure IDs, while the six removal logs record EXIT=1 for the corresponding tests/grammar/test_rework_tokens.py cases.",
+    "fit": "imas_standard_names/grammar/model_types.py extends the generated enums, vocabulary additions follow their existing registries, and tests/grammar/test_rework_tokens.py uses the repository's strict public parse/compose idiom without banned source labels.",
+    "goal_fidelity": "imas_standard_names/grammar/vocabularies/subjects.yml:91, physical_bases.yml:100 and :341, locus_registry.yml:677, and qualifiers.yml:323 register the five accepted tokens with the required semantic distinctions.",
+    "reuse": "tests/grammar/test_rework_tokens.py:14 and :79-106 duplicate the VocabularyCase schema and round-trip/definition checking capability already owned by tests/grammar/test_dd_gap_vocabulary.py:14 and :308-338 rather than extending that owner.",
+    "scope_discipline": "The nine paths in the 45f1f624..3bd328eb diff are covered by dispatch-detail.json and the explicit resume-1-advice.txt grant for imas_standard_names/grammar/vocabularies/scoping_qualifiers.yml."
+  },
+  "project": "imas-standard-names",
+  "publication_note": "The broader plan requires patch publication; the reviewed implementation node explicitly leaves integration and publication to the coordinator.",
+  "raw_text": "VERDICT goal: The source goal in dispatch-detail.json is to add five accepted grammar tokens; commit 5b5289bf adds all five with the definitions in docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json and preserves the two pellet populations.\nVERDICT done_when: The source dispatch-detail.json measure is supported by base-suite.log (1399 passed, 32 skipped), head-suite.log (1413 passed, 32 skipped), codegen.log (EXIT=0), and six removal logs with named failures; patch publication in the broader live plan remains a coordinator action outside this node's goal.\nVERDICT write_paths: All nine changed paths fall within dispatch-detail.json's write_paths/regenerate_paths plus the explicit scoping_qualifiers.yml scope extension in resume-1-advice.txt.\nVERDICT manifest: The source manifest.md identifies both commits and readable completed suite arms; its after_suite names implementation revision 5b5289bf, and the later 3bd328eb commit changes only the evidence fragment.\nVERDICT diff: Read 5b5289bf and 3bd328eb against base 45f1f624; the 177 additions register vocabulary and evidence but tests/grammar/test_rework_tokens.py duplicates the existing DD vocabulary test owner.\nCALL_SITES: imas_standard_names/grammar/parser.py:load_vocabularies, imas_standard_names/grammar/model.py:_SCOPING_QUALIFIER_VALUES, imas_standard_names/grammar/model.py:_QUALIFIER_CATEGORY_OF, imas_standard_names/grammar/vocab_loaders.py:load_qualifier_categories, imas_standard_names/grammar/vocab_loaders.py:load_scoping_qualifiers\nSCORE goal_fidelity: 20\nJUSTIFICATION goal_fidelity: imas_standard_names/grammar/vocabularies/subjects.yml:91, physical_bases.yml:100 and :341, locus_registry.yml:677, and qualifiers.yml:323 register the five accepted tokens with the required semantic distinctions.\nSCORE evidence: 20\nJUSTIFICATION evidence: The source base-suite.log and head-suite.log record completed serial timeout-2400 arms with EXIT=0 and zero failure IDs, while the six removal logs record EXIT=1 for the corresponding tests/grammar/test_rework_tokens.py cases.\nSCORE scope_discipline: 20\nJUSTIFICATION scope_discipline: The nine paths in the 45f1f624..3bd328eb diff are covered by dispatch-detail.json and the explicit resume-1-advice.txt grant for imas_standard_names/grammar/vocabularies/scoping_qualifiers.yml.\nSCORE durability: 20\nJUSTIFICATION durability: tests/grammar/test_rework_tokens.py:78-133 rejects each token removal through strict parsing and checks independent YAML definitions, pellet identities, sourced category and phrase scope, with six recorded removal failures absent from the head arm.\nSCORE fit: 20\nJUSTIFICATION fit: imas_standard_names/grammar/model_types.py extends the generated enums, vocabulary additions follow their existing registries, and tests/grammar/test_rework_tokens.py uses the repository's strict public parse/compose idiom without banned source labels.\nSCORE reuse: 5\nJUSTIFICATION reuse: tests/grammar/test_rework_tokens.py:14 and :79-106 duplicate the VocabularyCase schema and round-trip/definition checking capability already owned by tests/grammar/test_dd_gap_vocabulary.py:14 and :308-338 rather than extending that owner.\nFINDING tests/grammar/test_rework_tokens.py:14 blocking: The new VocabularyCase is identical to tests/grammar/test_dd_gap_vocabulary.py:14, test_source_quantity_round_trips at :79 copies the existing owner's :308 implementation, and test_token_keeps_its_definition at :89 reimplements its :316 definition-checking capability; extend that existing case table and assertion owner, retaining the new semantic checks and distinct breakdown-case IDs, so the same grammar registration contract does not acquire two independently maintained implementations.\n",
+  "reproduction_evidence": {
+    "control_logs": [
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/pellet_species-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/plateau_factor-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/current_profile_alignment-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/breakdown_candidate-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/sourced-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/sourced_scope-removal.log"
+    ],
+    "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/reproduction.log",
+    "quote": "pellet_species_number_density_of_pellet: accepted false, residue 'pellet_species_number_density' does not match any physical_base or geometry_carrier; electron_temperature and shattered_pellet_species_number_density: accepted true"
+  },
+  "review_run_id": "r-20261110T235013333624-review-of-dgv-rework-tokens-3bd328ebd996",
+  "reviewed_base_sha": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+  "reviewed_head_sha": "3bd328ebd99622f9d775c9c0745e2ffbfd73a7a1",
+  "reviewed_run_id": "r-20261110T210440922543-dgv-rework-tokens",
+  "revision_note": "The review worktree is at base; source commits were read explicitly with git show/diff. after_suite ran at 5b5289bf; 3bd328eb adds only the evidence fragment.",
+  "scores": {
+    "durability": 20,
+    "evidence": 20,
+    "fit": 20,
+    "goal_fidelity": 20,
+    "reuse": 5,
+    "scope_discipline": 20
+  },
+  "self_referential_assertions": "No assertion merely checks a returned expected value supplied to the API; name/IR round trips are metamorphic checks whose strict parser precondition demonstrably fails on token removals, and the resource and flat semantic assertions supply independent literal expectations.",
+  "status": "parsed",
+  "suite_evidence": {
+    "after_suite": {
+      "command": "timeout 2400 uv run --directory /tmp/isn-grammar-1309915-1Nz1/tree --no-sync pytest -q -p no:cacheprovider /tmp/isn-grammar-1309915-1Nz1/tree/tests/grammar --basetemp=/tmp/isn-grammar-1309915-1Nz1/pytest",
+      "completed": true,
+      "exit_status": 0,
+      "failure_count": 0,
+      "failure_ids": [],
+      "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/head-suite.log",
+      "revision": "5b5289bf1a5a96c56d6793cc36e449fd940a4cfe",
+      "summary": "1413 passed, 32 skipped in 518.38s (0:08:38)"
+    },
+    "baseline_suite": {
+      "command": "timeout 2400 uv run --directory /tmp/isn-grammar-1309912-HY12/tree --no-sync pytest -q -p no:cacheprovider /tmp/isn-grammar-1309912-HY12/tree/tests/grammar --basetemp=/tmp/isn-grammar-1309912-HY12/pytest",
+      "completed": true,
+      "exit_status": 0,
+      "failure_count": 0,
+      "failure_ids": [],
+      "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/base-suite.log",
+      "revision": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+      "summary": "1399 passed, 32 skipped in 523.68s (0:08:43)"
+    }
+  },
+  "times_source": "run-record",
+  "timestamp": "2026-11-11T00:04:56.618757+00:00",
+  "total": 105
+}
