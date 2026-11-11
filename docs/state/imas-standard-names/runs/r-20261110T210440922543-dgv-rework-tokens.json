@@ -1,0 +1,475 @@
+{
+  "agent": {
+    "alias": "sol61",
+    "backend": "codex",
+    "effort": "high",
+    "launch": "cli",
+    "model": "gpt-6.1-sol",
+    "sandbox": "worktree-full"
+  },
+  "attempt": 30,
+  "attempt_kind": "resume",
+  "backend": "codex",
+  "base_sha": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+  "boundary_waiver": null,
+  "brief": null,
+  "budget": {
+    "budget_overrun": false,
+    "budget_overrun_notice": null,
+    "budget_overrun_seconds": 0,
+    "budget_overrun_tokens": 0,
+    "cost_usd": null,
+    "detail": "backend reports token usage but no headroom",
+    "headroom": "unknown",
+    "rate_limit_period_minutes": null,
+    "rate_limit_type": null,
+    "refusal": false,
+    "resets_at": null,
+    "surpassed_threshold": null,
+    "threshold_status": null,
+    "tokens": {
+      "cache_write_input_tokens": 0,
+      "cache_write_input_tokens_cumulative": 0,
+      "cached_input_tokens": 25045888,
+      "cached_input_tokens_cumulative": 25045888,
+      "input_tokens": 25252953,
+      "input_tokens_cumulative": 25252953,
+      "output_tokens": 73838,
+      "output_tokens_cumulative": 73838,
+      "reasoning_output_tokens": 25639,
+      "reasoning_output_tokens_cumulative": 25639
+    },
+    "utilisation_pct": null
+  },
+  "changed_lines": {
+    "added": 473,
+    "files": 10,
+    "removed": 6
+  },
+  "clone_matches": [],
+  "commit_resolution": null,
+  "commits": [
+    "5b5289bf1a5a96c56d6793cc36e449fd940a4cfe",
+    "3bd328ebd99622f9d775c9c0745e2ffbfd73a7a1",
+    "c5dbf507c0f4d521e5953d3d52ae96904268364f",
+    "21577ef61a19214343cb1d30de526418581de01c"
+  ],
+  "completed_at": "2026-11-11T04:08:20Z",
+  "completed_at_source": "stream_mtime",
+  "dispatched_at": "2026-11-10T23:19:10Z",
+  "disposition": null,
+  "dispute_count": 0,
+  "domain_waiver": null,
+  "duration_measurement": {
+    "reason": "model_span_unavailable_at_promotion",
+    "status": "underivable"
+  },
+  "execution_fit": {
+    "allowed": true,
+    "execution_capable": true,
+    "matched_measure": null,
+    "override": false,
+    "role": "implement",
+    "status": "no-execution-measure"
+  },
+  "failure_classification": null,
+  "gate": "passed",
+  "gate_check": {
+    "command": "timeout 2400 uv run --directory /tmp/isn-grammar-1310017-YsN7/tree --no-sync pytest -q -p no:cacheprovider /tmp/isn-grammar-1310017-YsN7/tree/tests/grammar --basetemp=/tmp/isn-grammar-1310017-YsN7/pytest",
+    "exit_status": 0,
+    "log_digest": null,
+    "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/head-suite.log"
+  },
+  "impl_move": {
+    "at_complete": null,
+    "at_dispatch": 0.8888888888888888,
+    "plan": "dd-gap-vocabulary",
+    "reason": "corrective-run:resume",
+    "verdict": "exempt"
+  },
+  "lane": "codex",
+  "lane_advisory": {
+    "backend": "codex",
+    "burn_multiple": 1.3475044473300353,
+    "cheaper_lane": {
+      "detail": "",
+      "lane": null,
+      "state": "not_evaluated"
+    },
+    "detail": "'codex' is projected to exhaust at 2026-11-13T16:43:20Z, which is after this node's 3600s horizon ending 2026-11-11T00:15:45.750490+00:00",
+    "horizon_ends_at": "2026-11-11T00:15:45.750490+00:00",
+    "horizon_seconds": 3600,
+    "metered": true,
+    "observed_at": "2026-11-10T23:15:43Z",
+    "precedes_horizon": false,
+    "projected_exhaustion_at": "2026-11-13T16:43:20Z",
+    "resets_at": "2026-11-14T15:28:13Z",
+    "seconds_until_reset": 317549,
+    "state": "quiet",
+    "utilisation_pct": 64.0
+  },
+  "lane_declaration": {
+    "backend": "codex",
+    "headroom": "known",
+    "metered": true,
+    "observed_at": "2026-11-10T23:15:43Z",
+    "read_at": "2026-11-10T23:15:45Z",
+    "resolved_backend": "codex",
+    "utilisation_pct": 64.0
+  },
+  "lane_reading": {
+    "age_seconds": null,
+    "binding_observed": "unknown",
+    "detail": "backend declares no lane document",
+    "generating": "unknown",
+    "headroom": "unknown",
+    "mean_context": "unknown",
+    "observed_at": null,
+    "state": "unknown",
+    "suggested_shelf_life_seconds": null,
+    "throughput": {
+      "age_seconds": null,
+      "aggregate_tokens_per_second": "unknown",
+      "detail": "backend declares no lane document",
+      "mean_tokens_per_second": "unknown",
+      "observed_at": null,
+      "runs": "unknown",
+      "state": "unknown"
+    },
+    "waiting": "unknown"
+  },
+  "lane_receipt": {
+    "effective_context_window": 380000,
+    "notional_cost_usd": "unmeasured",
+    "observed_at": "2026-11-11T04:08:20Z",
+    "quota_state": "measured",
+    "quota_windows": [
+      {
+        "observed_at": "2026-11-11T04:08:20Z",
+        "resets_at": 1794670093,
+        "used_percent": 68.0,
+        "window_minutes": 10080
+      }
+    ],
+    "rate_basis": "unmeasured",
+    "unmeasured": {
+      "notional_cost_usd": "no_dated_rate",
+      "rate_basis": "no_dated_rate"
+    }
+  },
+  "lineage": null,
+  "local": false,
+  "manifest_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/manifest.md",
+  "member": "disposable-r-20261110T210440922543-dgv-rework-tokens",
+  "model_key": "sol",
+  "negative_control": {
+    "added_failure_ids": [
+      "::test_all_cases_state_independent_literal_expectations",
+      "::test_breakdown_cases_have_distinct_explicit_ids",
+      "::test_registration_contract_has_one_owner",
+      "::test_round_trip_rejects_renderer_echoing_input",
+      "::test_round_trip_rejects_self_consistent_wrong_ir"
+    ],
+    "baseline_failure_ids": [],
+    "comparison_arm": "after_suite",
+    "control_exit_status": 1,
+    "control_failure_ids": [
+      "::test_all_cases_state_independent_literal_expectations",
+      "::test_breakdown_cases_have_distinct_explicit_ids",
+      "::test_registration_contract_has_one_owner",
+      "::test_round_trip_rejects_renderer_echoing_input",
+      "::test_round_trip_rejects_self_consistent_wrong_ir"
+    ],
+    "control_run_failed": true,
+    "declaration": "remove one added token from its vocabulary and regenerate: its round-trip test fails",
+    "head_failure_ids": [],
+    "log": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-reversed.log",
+    "resolved_log": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-reversed.log",
+    "test_paths": [
+      "tests/grammar/test_dd_gap_vocabulary.py",
+      "tests/grammar/test_rework_tokens.py"
+    ],
+    "verdict": "matched"
+  },
+  "no_commit": null,
+  "node": "dgv-rework-tokens",
+  "node_definition": {
+    "admission_findings": [],
+    "after": [],
+    "anchor_paths": [],
+    "brief": "",
+    "brief_path": "",
+    "brief_sha256": "",
+    "capability": {
+      "class": "general",
+      "requirements": {
+        "reasoning": "standard",
+        "risk": "moderate",
+        "verification": "strict"
+      },
+      "version": "1.0"
+    },
+    "compares_with": "",
+    "coordinator": {
+      "authoring_turn": {
+        "detail": "the dispatching harness exposed no authoring-turn token usage",
+        "status": "unknown",
+        "tokens": null
+      },
+      "harness": null,
+      "runtime_session_id": null,
+      "session_id": "4f554c2d-3a28-4c55-8645-67a1e8a30dea"
+    },
+    "done_when": "pellet_species (subject), plateau_factor and current_profile_alignment (physical bases), breakdown_candidate (position, in the loci mapping) and sourced (qualifier, registered in qualifier_categories.yml) are in their vocabularies with the definitions from docs/evidence/fragments/dd-gap-vocabulary/doubtful-rework.json; build-grammar --check exits 0 with no generated-file drift; tests/grammar/test_rework_tokens.py parses and round-trips each row's spelling (pellet_species_number_density_of_pellet, plateau_factor, current_profile_alignment, vertical_grid_of_breakdown_candidate, vertical_position_of_breakdown_candidate, sourced_current_density) with a planted-removal control per token; pellet_species and shattered_pellet_species stay distinct subjects; the grammar suite run serially under timeout 2400 adds no failure id against the stated base",
+    "estimated_hours": null,
+    "goal": "Add the five rework tokens the lead accepted to the grammar",
+    "id": "dgv-rework-tokens",
+    "images": [],
+    "inputs": [],
+    "lane_declaration": {
+      "backend": "codex",
+      "headroom": "known",
+      "metered": true,
+      "observed_at": "2026-11-10T23:15:43Z",
+      "read_at": "2026-11-10T23:15:45Z",
+      "resolved_backend": "codex",
+      "utilisation_pct": 64.0
+    },
+    "lane_reading": {
+      "age_seconds": null,
+      "binding_observed": "unknown",
+      "detail": "backend declares no lane document",
+      "generating": "unknown",
+      "headroom": "unknown",
+      "mean_context": "unknown",
+      "observed_at": null,
+      "state": "unknown",
+      "suggested_shelf_life_seconds": null,
+      "throughput": {
+        "age_seconds": null,
+        "aggregate_tokens_per_second": "unknown",
+        "detail": "backend declares no lane document",
+        "mean_tokens_per_second": "unknown",
+        "observed_at": null,
+        "runs": "unknown",
+        "state": "unknown"
+      },
+      "waiting": "unknown"
+    },
+    "manifest_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/manifest.md",
+    "negative_control": "remove one added token from its vocabulary and regenerate: its round-trip test fails",
+    "over_fence_reason": "",
+    "peer_scopes": {},
+    "plan": "dd-gap-vocabulary",
+    "regenerate_paths": [
+      "imas_standard_names/grammar/model_types.py",
+      "imas_standard_names/grammar/constants.py",
+      "imas_standard_names/grammar/tag_types.py",
+      "imas_standard_names/grammar/field_schemas.py"
+    ],
+    "requested_backend": "codex",
+    "requires_decisions": [],
+    "role": "implement",
+    "section": "§6",
+    "spec_level": "guided",
+    "time_budget": "60m",
+    "token_budget": null,
+    "write_paths": [
+      "imas_standard_names/grammar/vocabularies/subjects.yml",
+      "imas_standard_names/grammar/vocabularies/physical_bases.yml",
+      "imas_standard_names/grammar/vocabularies/locus_registry.yml",
+      "imas_standard_names/grammar/vocabularies/qualifiers.yml",
+      "imas_standard_names/grammar/vocabularies/qualifier_categories.yml",
+      "tests/grammar/test_rework_tokens.py",
+      "imas_standard_names/grammar/model_types.py",
+      "imas_standard_names/grammar/constants.py",
+      "imas_standard_names/grammar/tag_types.py",
+      "imas_standard_names/grammar/field_schemas.py",
+      "docs/evidence/fragments/dd-gap-vocabulary/dgv-rework-tokens.html",
+      "docs/figures/dd-gap-vocabulary/dgv-rework-tokens",
+      "imas_standard_names/grammar/vocabularies/scoping_qualifiers.yml",
+      "tests/grammar/test_dd_gap_vocabulary.py"
+    ]
+  },
+  "orchestrator_lane_override": null,
+  "orientation_input_tokens": null,
+  "outcome": "",
+  "outside_scope_paths": [],
+  "pace": {
+    "allowance": {
+      "advisory": true,
+      "burn_multiple": 1.3466480166115125,
+      "derived": 0.5227795172278439,
+      "drain_hours": 168.0,
+      "effective_limit": 0.5227795172278439,
+      "elapsed_fraction": 0.47525410657076717,
+      "elapsed_hours": 79.84268990388888,
+      "group": "codex-sub",
+      "lift": {
+        "ends_at": "2026-11-11T09:00:01+00:00",
+        "ends_on": "time",
+        "form": "uncapped",
+        "group": "codex-sub",
+        "id": "codex-sub-1794082577-c029e5",
+        "pace_multiple": null,
+        "remaining_seconds": 34874.316346,
+        "scope": "global"
+      },
+      "lift_hold": {
+        "held": false,
+        "kind": "uncapped"
+      },
+      "limited_by": "allowance",
+      "observed_at": "2026-11-10T23:18:46+00:00",
+      "pace_multiple": 1.1,
+      "provider_ceiling": null,
+      "reason": null,
+      "remaining_budget": 0.36,
+      "remaining_windows": null,
+      "resets_at": "2026-11-14T15:28:13Z",
+      "state": "observed",
+      "utilisation": 0.64,
+      "window_minutes": 10080
+    },
+    "bar": {
+      "bar": 0.704512,
+      "decided_by": "window",
+      "margin": -0.04201200000000005,
+      "name": "dgv-rework-tokens",
+      "score": 0.6625,
+      "state": "observed",
+      "verdict": "split",
+      "window_fill": 0.64
+    },
+    "clocks": {
+      "five_hour": {
+        "age_seconds": 0.683654,
+        "observed_at": "2026-11-10T23:18:46+00:00",
+        "period": "primary",
+        "resets_at": "2026-11-14T15:28:13Z",
+        "state": "observed",
+        "utilisation": 0.64,
+        "window_minutes": 10080
+      },
+      "seven_day": {
+        "age_seconds": null,
+        "observed_at": null,
+        "period": "seven_day",
+        "resets_at": null,
+        "state": "not_published",
+        "utilisation": null,
+        "window_minutes": null
+      }
+    },
+    "group": "codex-sub",
+    "hold": null,
+    "lane": "codex",
+    "lift_id": "codex-sub-1794082577-c029e5",
+    "member": "codex",
+    "node": "dgv-rework-tokens",
+    "policy": {
+      "drain_lead_hours": 12.0,
+      "pace_multiple": 1.1
+    },
+    "reason": null,
+    "recorded_at": "2026-11-10T23:18:46.683654+00:00",
+    "score": 0.6625,
+    "session": null,
+    "source": "recorded",
+    "state": "observed"
+  },
+  "picker_selection": {
+    "action": "fallback",
+    "backend": null,
+    "comment": "",
+    "confidence": null,
+    "effort": null,
+    "excluded": [],
+    "fallback_reason": "timeout",
+    "family": null,
+    "jev_model": "~typesafe/jev-latest",
+    "latency_ms": 5000.714,
+    "model": null,
+    "offered": [],
+    "probabilities": {},
+    "stage_ms": {}
+  },
+  "plan": "dd-gap-vocabulary",
+  "plan_impl_at_dispatch": 0.8888888888888888,
+  "plan_link": null,
+  "promoted_by": null,
+  "promoted_revision": "21577ef61a19214343cb1d30de526418581de01c",
+  "resume_waiver": null,
+  "review": {
+    "absent": [],
+    "reviewed_base_sha": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+    "reviewed_head_sha": "21577ef61a19214343cb1d30de526418581de01c",
+    "scores": {
+      "durability": 20,
+      "evidence": 20,
+      "fit": 20,
+      "goal_fidelity": 20,
+      "reuse": 20,
+      "scope_discipline": 20
+    },
+    "status": "parsed",
+    "total": 120
+  },
+  "review_tier": "full",
+  "role": "implement",
+  "route_mode": "explicit",
+  "run_id": "r-20261110T210440922543-dgv-rework-tokens",
+  "scope_acceptances": null,
+  "scope_changed": false,
+  "section": "§6",
+  "session": "4f554c2d-3a28-4c55-8645-67a1e8a30dea",
+  "session_harness": "codex",
+  "session_id": "01a1c7c3-45c2-7a31-9cac-8bfc003242e0",
+  "session_model": "gpt-6.1-sol",
+  "shadow_controlled": null,
+  "shadow_patch": "",
+  "spec_level": "guided",
+  "stalled": true,
+  "suite_delta": null,
+  "tests_added": null,
+  "throughput": {
+    "cumulative_cached_input_tokens": 25045888,
+    "cumulative_input_tokens": 50298841,
+    "detail": "turn tokens recorded, but no span was supplied to rate them",
+    "generated_tokens": 99477
+  },
+  "time_budget": "60m",
+  "tool_steps": 51.0,
+  "unplanned_reason": null,
+  "unreconciled_override": null,
+  "wall_seconds": 17350,
+  "watch_override": null,
+  "worker_exit": {
+    "attempt": 30,
+    "ended_during": "working",
+    "ended_pids": [],
+    "exit_code": 0,
+    "exited_at": "2026-11-11T04:08:25Z",
+    "last_record_type": "turn.completed",
+    "launched_at": "2026-11-11T03:48:40Z",
+    "recorded_by": "supervisor",
+    "removed_harness_caches": [
+      {
+        "bytes": 68309557,
+        "path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/codex-home/cache"
+      },
+      {
+        "bytes": 28814443,
+        "path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/codex-home/plugins"
+      }
+    ],
+    "run_id": "r-20261110T210440922543-dgv-rework-tokens",
+    "signal": null,
+    "signal_name": null,
+    "stream_records_seen": 785,
+    "worker_pid": 3578437
+  },
+  "worker_seconds": 17272,
+  "worker_seconds_source": "rollout_receipts",
+  "worktree_retention": null
+}
