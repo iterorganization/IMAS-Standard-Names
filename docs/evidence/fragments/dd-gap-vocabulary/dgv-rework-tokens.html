@@ -21,3 +21,21 @@
 <li>Added failure IDs: 0. Both grammar suites ran serially under <code>timeout 2400</code> in separate <code>all_debug</code> jobs against archived revisions, with imported-module and working-directory paths recorded in their logs.</li></ul>
 <p>Five independent token removals followed by regeneration each produced exit 1 and the corresponding round-trip failure; removing <code>breakdown_candidate</code> failed both carrier spellings. A sixth control removed only the <code>sourced</code> phrase-scope registration: the scope test failed because the canonical spelling became <code>electron_sourced_current_density</code>. No mutation failure is present in the unmutated head arm. Logs and receipts are retained in the run directory.</p>
 </article>
+
+<article id="dgv-rework-tokens-shared-contract">
+<h2>One registration contract with independent expectations</h2>
+<p>The six rework spellings now extend the existing <code>VocabularyCase</code> table and registration checks in <code>tests/grammar/test_dd_gap_vocabulary.py</code>. That file owns all 40 cases. <code>tests/grammar/test_rework_tokens.py</code> retains only the two distinct semantic checks for intact versus shattered pellet species and whole-quantity source scope.</p>
+<p>Every shared case now states a literal expected spelling and an independently authored expected IR. The check compares both the first parse and the reparse with that expected IR, and compares composition with the expected spelling. It does not use the first parsed IR or input string as the expected answer. The source-scope semantic check uses the same independent expectation rule.</p>
+<table><thead><tr><th>Representative name</th><th>Independent IR expectations</th></tr></thead><tbody>
+<tr><td><code>pellet_species_number_density_of_pellet</code></td><td>Quantity base <code>number_density</code>; subject <code>pellet_species</code>; entity locus <code>pellet</code> with relation <code>of</code>.</td></tr>
+<tr><td><code>vertical_grid_of_breakdown_candidate</code></td><td>Geometry base <code>grid</code>; vertical coordinate projection; position locus <code>breakdown_candidate</code>.</td></tr>
+<tr><td><code>vertical_position_of_breakdown_candidate</code></td><td>Geometry base <code>position</code>; vertical coordinate projection; the same selected locus. Its token-and-spelling case ID is distinct from the grid case.</td></tr>
+<tr><td><code>sourced_current_density</code></td><td>Quantity base <code>current_density</code>; qualifier <code>sourced</code> in category <code>source</code>.</td></tr>
+</tbody></table>
+<p>Answering commit: <code>c5dbf507c0f4d521e5953d3d52ae96904268364f</code>. The focused owner and semantic tests reported <code>95 passed in 4.46s</code>. The partition repair harness reported <code>6 passed in 52.97s</code>, exit 0.</p>
+<p>Reversing that answering commit in an archived scratch tree restored both edited files byte-for-byte to their parent revision. The same harness then reported <code>5 failed, 1 passed in 53.05s</code>, exit 1. Its five named failures expose duplicate ownership, absent literal expectations, acceptance of a self-consistent wrong IR, acceptance of a renderer echoing its input, and missing distinct breakdown-case IDs. The reparsed-IR refusal remains effective in both arms.</p>
+<p>All five token removals followed by regeneration now fail the shared owner's corresponding round-trip tests; removing <code>breakdown_candidate</code> fails both distinct sampling cases. Removing only <code>sourced</code> phrase scope still fails the semantic check.</p>
+<ul><li>Recorded base <code>45f1f624f387bf1127c1b89982fa46f5ee7bf81a</code>: 1399 passed, 32 skipped in 523.68s (0:08:43); exit 0.</li>
+<li>Repaired head <code>c5dbf507c0f4d521e5953d3d52ae96904268364f</code>: 1413 passed, 32 skipped in 553.90s (0:09:13); exit 0.</li>
+<li>Added failure IDs: 0. The repaired grammar suite ran serially under <code>timeout 2400</code> on <code>all_debug</code>. Mutation and reversal checks also ran on <code>all_debug</code>; their logs retain the revision, imported module path, working directory, command, summary and exit.</li></ul>
+</article>
