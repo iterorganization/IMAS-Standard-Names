@@ -1,0 +1,223 @@
+{
+  "absent": [],
+  "added_failure_count": 0,
+  "added_failure_ids": [],
+  "assertion_assessments": [
+    {
+      "fails_if": "compose emits a spelling different from the hardcoded case.name canonical spelling",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": false,
+      "line": 82,
+      "reason": "case.name is also the input passed to parse on line 81"
+    },
+    {
+      "fails_if": "parsing the composed IR changes the original parsed IR",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": false,
+      "line": 83,
+      "reason": "result.ir is passed to compose and is also the expected value"
+    },
+    {
+      "fails_if": "the generated token map omits the case token from its declared segment",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 84
+    },
+    {
+      "fails_if": "the flat vocabulary list omits the token",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 94
+    },
+    {
+      "fails_if": "the flat vocabulary comment no longer carries the expected definition",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 95
+    },
+    {
+      "fails_if": "the registry definition differs from the expected definition",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 98
+    },
+    {
+      "fails_if": "the breakdown locus is not typed as a position",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 100
+    },
+    {
+      "fails_if": "the breakdown locus does not allow exactly at, of and along",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 101
+    },
+    {
+      "fails_if": "a physical-base entry is not scalar",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 103
+    },
+    {
+      "fails_if": "current_profile_alignment dimensionality metadata is not true or plateau_factor metadata is not false",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 104
+    },
+    {
+      "fails_if": "the intact-pellet spelling resolves to another subject",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 112
+    },
+    {
+      "fails_if": "the shattered-pellet spelling resolves to another subject",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 113
+    },
+    {
+      "fails_if": "the two parsed pellet names do not share number_density",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 114
+    },
+    {
+      "fails_if": "the subject token map omits either intact or shattered pellet species",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 115
+    },
+    {
+      "fails_if": "compose emits a spelling different from sourced_electron_current_density",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": false,
+      "line": 123,
+      "reason": "name is also the input passed to parse on line 122"
+    },
+    {
+      "fails_if": "the flat parsed subject is not electron",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 125
+    },
+    {
+      "fails_if": "the flat parsed qualifier is not exactly sourced",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 126
+    },
+    {
+      "fails_if": "the flat parsed physical base is not current_density",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 127
+    },
+    {
+      "fails_if": "sourced is absent from the phrase-scoping qualifier registry",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 128
+    },
+    {
+      "fails_if": "the parsed sourced qualifier has a category other than source",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 129
+    },
+    {
+      "fails_if": "source is incorrectly registered as a parser qualifier token",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 133
+    }
+  ],
+  "call_sites": [
+    "imas_standard_names/grammar/parser.py:161,163,196,275",
+    "imas_standard_names/grammar/terms.py:49,178",
+    "imas_standard_names/grammar/model.py:169,177,198,1731",
+    "imas_standard_names/validation/semantic.py:483,533"
+  ],
+  "completed_at": "2026-11-11T00:38:17Z",
+  "dispatched_at": "2026-11-11T00:18:02Z",
+  "findings": [
+    {
+      "file": "tests/grammar/test_rework_tokens.py",
+      "line": "16",
+      "severity": "blocking",
+      "text": "blocking: VocabularyCase, CASES, test_source_quantity_round_trips and test_token_keeps_its_definition duplicate the reusable registration owner in tests/grammar/test_dd_gap_vocabulary.py:15 and :308-338 instead of extending it; this still reproduces in repair-reuse-before.log: AssertionError: VocabularyCase is duplicated instead of using the existing registration owner; consolidate the new cases and semantic checks into the existing owner before landing."
+    },
+    {
+      "disposition": "folded",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "line": "82",
+      "node": "dgv-rework-tokens",
+      "severity": "non-blocking",
+      "text": "non-blocking: compose(result.ir) is compared with case.name, the same value passed to parse at line 81, so it is not an independent canonical-name oracle; disposition folded into node dgv-rework-tokens, whose reuse repair can move this check into the existing owner and use an independent expected spelling."
+    },
+    {
+      "disposition": "folded",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "line": "83",
+      "node": "dgv-rework-tokens",
+      "severity": "non-blocking",
+      "text": "non-blocking: the reparsed IR is compared with result.ir, which was passed to compose on the left side of the round trip, so both sides can move together; disposition folded into node dgv-rework-tokens, whose reuse repair can replace the self-comparison with an independent expected IR or remove it."
+    },
+    {
+      "disposition": "folded",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "line": "123",
+      "node": "dgv-rework-tokens",
+      "severity": "non-blocking",
+      "text": "non-blocking: compose(result.ir) is compared with name, the same value passed to parse at line 122, so it is not an independent canonical-name oracle; disposition folded into node dgv-rework-tokens, whose reuse repair can move this check into the existing owner and use an independent expected spelling."
+    }
+  ],
+  "item_verdicts": {
+    "call_sites": "Verified production readers in grammar/parser.py, grammar/terms.py, grammar/model.py and validation/semantic.py; the specific runtime call sites are listed below.",
+    "diff": "I read commits 5b5289bf and 3bd328eb against 45f1f624; the independent assertions fail on missing tokens, changed YAML definitions/types/relations/dimensionality, wrong pellet identities, or changed sourced scope/category, while test_rework_tokens.py:82, :83 and :123 compare results to values supplied to those same parse/compose operations and are not independent expectations.",
+    "done_when": "The declared round-trip, definition, distinct-pellet, scoping, no-drift and zero-added-failure measures are supported by targeted.log (14 passed), codegen.log (EXIT=0), six EXIT=1 removal logs with the named test failures, and completed base/head suite receipts with 0 added failure IDs.",
+    "goal": "The dispatch-detail.json goal is to add five accepted grammar tokens; the diff registers pellet_species, plateau_factor, current_profile_alignment, breakdown_candidate and sourced in their declared vocabularies and generated types.",
+    "manifest": "The source manifest.md records both commits, the exact base and implementation head suite receipts, targeted and codegen results, six negative controls, and its blocked status for consolidating duplicate vocabulary tests into test_dd_gap_vocabulary.py.",
+    "write_paths": "The source manifest.md's effective grants cover every one of the nine paths in the base-to-head diff, including the generated model_types.py and evidence fragment."
+  },
+  "justifications": {
+    "durability": "Independent token-map, YAML definition, type, relation, dimensionality, pellet identity and sourced-category assertions plus six mutation receipts guard the changes; durability does not rely on the circular comparisons at test_rework_tokens.py:82, :83 and :123.",
+    "evidence": "The source suite-receipts.json reconciles base-suite.log at 1399 passed/32 skipped and head-suite.log at 1413 passed/32 skipped, both EXIT=0 with zero added IDs; targeted.log has 14 passes, codegen.log exits 0, and all six removal controls have named failures and EXIT=1.",
+    "fit": "The vocabulary data follows the existing registry shapes and model_types.py extends generated enums without introducing a forbidden source name; test_rework_tokens.py follows repository pytest idioms, though its parallel owner is a reuse defect.",
+    "goal_fidelity": "dispatch-detail.json records the goal of adding five accepted tokens; subjects.yml, physical_bases.yml, locus_registry.yml and qualifiers.yml add pellet_species, current_profile_alignment, plateau_factor, breakdown_candidate and sourced with the ruled distinctions.",
+    "reuse": "tests/grammar/test_rework_tokens.py:16 and :80-106 duplicate the VocabularyCase, canonical round-trip and definition-check capability already owned by tests/grammar/test_dd_gap_vocabulary.py:15 and :308-338 instead of extending that owner.",
+    "scope_discipline": "All nine paths in the base-to-head diff are within the effective paths recorded in the source manifest.md, including the generated model type, test, vocabulary files and evidence fragment."
+  },
+  "project": "imas-standard-names",
+  "reproduction_evidence": {
+    "control_logs": [
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/pellet_species-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/plateau_factor-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/current_profile_alignment-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/breakdown_candidate-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/sourced-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/sourced_scope-removal.log"
+    ],
+    "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-reuse-before.log",
+    "quote": "AssertionError: VocabularyCase is duplicated instead of using the existing registration owner"
+  },
+  "review_run_id": "r-20261111T001726301454-review-of-dgv-rework-tokens-3bd328ebd996",
+  "reviewed_base_sha": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+  "reviewed_head_sha": "3bd328ebd99622f9d775c9c0745e2ffbfd73a7a1",
+  "reviewed_run_id": "r-20261110T210440922543-dgv-rework-tokens",
+  "revision_note": "The two reviewed commits are 5b5289bf1a5a96c56d6793cc36e449fd940a4cfe and 3bd328ebd99622f9d775c9c0745e2ffbfd73a7a1 against 45f1f624f387bf1127c1b89982fa46f5ee7bf81a; completed base/head suite arms compare base with implementation commit 5b5289bf, and 3bd328eb adds only the evidence fragment.",
+  "scores": {
+    "durability": 16,
+    "evidence": 20,
+    "fit": 20,
+    "goal_fidelity": 20,
+    "reuse": 2,
+    "scope_discipline": 20
+  },
+  "self_referential_assertions": "Three assertions are non-independent: test_rework_tokens.py:82 compares compose output with the input to parse, :83 compares a reparsed IR with the IR input to compose, and :123 compares sourced composition with the input to parse; they are separately reported as non-blocking findings and are not the basis for the durability score.",
+  "status": "parsed",
+  "times_source": "run-record",
+  "timestamp": "2026-11-11T00:41:35.465067+00:00",
+  "total": 98
+}
