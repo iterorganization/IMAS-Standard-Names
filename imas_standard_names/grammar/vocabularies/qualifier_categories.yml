@@ -37,6 +37,7 @@ qualifier_categories:
     - nuclear
     - radiative
     - rf
+    - sourced
     - waste
 
   # Geometric, directional, and tensor qualifiers

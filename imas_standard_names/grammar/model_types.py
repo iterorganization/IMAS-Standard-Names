@@ -102,6 +102,7 @@ class Subject(StrEnum):
     NEUTRAL_STATE = "neutral_state"
     STATE = "state"
     PELLET = "pellet"
+    PELLET_SPECIES = "pellet_species"
     SHATTERED_PELLET = "shattered_pellet"
     SHATTERED_PELLET_FRAGMENT = "shattered_pellet_fragment"
     SHATTERED_PELLET_SPECIES = "shattered_pellet_species"
@@ -297,6 +298,7 @@ class Qualifier(StrEnum):
     SECOND_INCLINATION = "second_inclination"
     ROTATIONAL = "rotational"
     TANGENCY = "tangency"
+    SOURCED = "sourced"
 
 
 class ChannelQualifier(StrEnum):
@@ -592,6 +594,7 @@ class Position(StrEnum):
     IMAGE_SURFACE = "image_surface"
     MAGNETIC_FIELD_LINE = "magnetic_field_line"
     PRE_SAWTOOTH_CRASH = "pre_sawtooth_crash"
+    BREAKDOWN_CANDIDATE = "breakdown_candidate"
     THRESHOLD_CROSSING = "threshold_crossing"
     MAGNETIC_AXIS = "magnetic_axis"
     MEASUREMENT_POSITION = "measurement_position"

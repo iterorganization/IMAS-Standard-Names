@@ -674,6 +674,10 @@ loci:
     type: position
     allowed_relations: [at, of]
     definition: The evaluation state immediately before a sawtooth crash.
+  breakdown_candidate:
+    type: position
+    allowed_relations: [at, of, along]
+    definition: The magnetic-field-line set selected as plasma-breakdown candidates because each selected line encounters the Townsend breakdown condition or is a closed magnetic field line. The grid representation contains original tracing-grid points containing at least one selected line; the position representation contains samples along the selected lines.
   threshold_crossing:
     type: position
     allowed_relations: [at, of]

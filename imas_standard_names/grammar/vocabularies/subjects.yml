@@ -88,6 +88,7 @@
 
 # === Injected / fuelling species ===
 - pellet
+- pellet_species  # A chemically or isotopically identified constituent population in the material composition of an intact injected pellet, resolved by the pellet species coordinate; distinct from a shattered-pellet constituent.
 - shattered_pellet
 - shattered_pellet_fragment
 - shattered_pellet_species
