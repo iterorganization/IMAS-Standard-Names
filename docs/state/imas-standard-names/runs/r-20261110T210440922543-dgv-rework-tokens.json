@@ -399,6 +399,41 @@
   "plan_link": null,
   "promoted_by": null,
   "promoted_revision": "21577ef61a19214343cb1d30de526418581de01c",
+  "release": {
+    "arms_kept": [],
+    "arms_logs_copied": [],
+    "arms_removed_paths": [],
+    "arms_withheld": "",
+    "ledger_index_removed": "/home/ITER/mcintos/.cache/reckon/ledger-11c5fe75d2a8f9d55d232d4020c5eaae0733afdcf573b46e1a71fe185fc809d2-v5.sqlite",
+    "process_signalled": false,
+    "process_withheld": "process is not alive",
+    "scratch_absent": true,
+    "scratch_bytes": null,
+    "scratch_host": "98dci4-clu-2023.iter.org",
+    "scratch_path": "/tmp/reckon-crew-scratch/r-20261110T210440922543-dgv-rework-tokens",
+    "scratch_removed": false,
+    "scratch_removed_paths": [],
+    "scratch_withheld": "scratch directory is no longer present",
+    "worktree_audit": {
+      "counts": {
+        "dirty": 0,
+        "disposable": 0,
+        "integrated": 0,
+        "live-referenced": 0,
+        "retained-for-resume": 0,
+        "unintegrated": 0
+      },
+      "worktrees": [
+        {
+          "available": false,
+          "detail": "tree is no longer available",
+          "path": "/home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/4f554c2d-3a28-4c55-8645-67a1e8a30dea/dgv-rework-tokens",
+          "unavailable_state": "missing"
+        }
+      ]
+    },
+    "worktree_released": true
+  },
   "resume_waiver": null,
   "review": {
     "absent": [],
