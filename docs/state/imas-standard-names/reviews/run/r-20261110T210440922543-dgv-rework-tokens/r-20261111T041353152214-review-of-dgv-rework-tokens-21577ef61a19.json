@@ -1,0 +1,213 @@
+{
+  "absent": [],
+  "added_failure_count": 0,
+  "added_failure_ids": [],
+  "assertion_assessments": [
+    {
+      "fails_if": "The parser assigns a different base, subject, qualifier, locus, relation or projection than the independently authored expected_ir.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 656
+    },
+    {
+      "fails_if": "The composer changes a canonical spelling away from the separate expected_spelling literal.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 658
+    },
+    {
+      "fails_if": "Parsing the composed name no longer yields the independently authored expected_ir.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 659
+    },
+    {
+      "fails_if": "The generated segment-token map omits the case token from its expected grammar segment.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 660
+    },
+    {
+      "fails_if": "The expected flat vocabulary no longer contains pellet_species or sourced.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 672
+    },
+    {
+      "fails_if": "The accepted flat-token definition comment changes or disappears.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 673
+    },
+    {
+      "fails_if": "The breakdown_candidate registry definition differs from the expected selected-line and sampling description.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 676
+    },
+    {
+      "fails_if": "breakdown_candidate is registered with a type other than position.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 678
+    },
+    {
+      "fails_if": "breakdown_candidate loses one of its explicitly allowed at, of or along relations.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 679
+    },
+    {
+      "fails_if": "Either new physical-base definition changes from its accepted independent text.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 691
+    },
+    {
+      "fails_if": "A new physical base is registered with a kind other than scalar.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 693
+    },
+    {
+      "fails_if": "current_profile_alignment loses its dimensional flag or plateau_factor gains one.",
+      "file": "tests/grammar/test_dd_gap_vocabulary.py",
+      "independent": true,
+      "line": 695
+    },
+    {
+      "fails_if": "The parser no longer classifies the intact-pellet name as pellet_species.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 13
+    },
+    {
+      "fails_if": "The shattered-pellet name no longer remains shattered_pellet_species.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 14
+    },
+    {
+      "fails_if": "Either pellet name loses the independently expected number_density base.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 15
+    },
+    {
+      "fails_if": "Either pellet subject disappears from the compiled subject-token set.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 16
+    },
+    {
+      "fails_if": "The sourced-current-density IR composes to a different literal canonical name.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 24
+    },
+    {
+      "fails_if": "The parser does not produce the explicit current_density plus sourced/electron IR.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 34
+    },
+    {
+      "fails_if": "The reparsed composed name diverges from the same independently authored expected IR.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 35
+    },
+    {
+      "fails_if": "The flattened standard-name view loses the electron subject.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 37
+    },
+    {
+      "fails_if": "The flattened standard-name view does not expose sourced as its qualifier.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 38
+    },
+    {
+      "fails_if": "The flattened standard-name view changes the current_density base.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 39
+    },
+    {
+      "fails_if": "The sourced phrase-scope token is absent from the scoping-qualifier loader.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 40
+    },
+    {
+      "fails_if": "The parsed sourced qualifier receives a category other than source.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 42
+    },
+    {
+      "fails_if": "The source category is incorrectly exposed as a qualifier token.",
+      "file": "tests/grammar/test_rework_tokens.py",
+      "independent": true,
+      "line": 45
+    }
+  ],
+  "call_sites": [
+    "imas_standard_names/grammar/parser.py:161,163,196,275",
+    "imas_standard_names/grammar/terms.py:49,178",
+    "imas_standard_names/grammar/model.py:169,177,198,1731",
+    "imas_standard_names/validation/semantic.py:483,533"
+  ],
+  "completed_at": "2026-11-11T04:30:26Z",
+  "dispatched_at": "2026-11-11T04:14:14Z",
+  "findings": [],
+  "item_verdicts": {
+    "diff": "I read all four commits from 45f1f624 to 21577ef6; the final test owner at test_dd_gap_vocabulary.py:653-700 uses independently authored expected IRs and spellings, while test_rework_tokens.py:10-45 keeps only distinct semantic checks and the two later commits append evidence.",
+    "done_when": "The source prompt at prompt.txt:108 requires definitions, generated-file cleanliness, six spelling round trips, removal controls, distinct pellet subjects and zero new grammar-suite failure IDs; the c5dbf50 suite and mutation receipts record those checks complete.",
+    "goal": "The source prompt at prompt.txt:38 sets the goal to add five accepted rework tokens; the diff registers pellet_species, plateau_factor, current_profile_alignment, breakdown_candidate and sourced in their grammar vocabularies and generated types.",
+    "manifest": "The source manifest.md records the four commits, the exact base and repaired-head suite receipts, build-grammar check, six focused mutation controls, the reused-test-owner repair and zero added failure IDs.",
+    "write_paths": "The source prompt's scope at prompt.txt:80-92 covers every changed file except test_dd_gap_vocabulary.py, whose explicit extension is recorded in manifest.md evidence_inputs; the base-to-head diff has ten paths and no others."
+  },
+  "justifications": {
+    "durability": "tests/grammar/test_dd_gap_vocabulary.py:653-700 and tests/grammar/test_rework_tokens.py:10-45 compare parser results to literal spellings, explicit IRs, vocabulary definitions and distinct semantic expectations; the token-removal and reversal receipts show those guards fail on the named regressions.",
+    "evidence": "The source run's repair-suite-receipts.json records complete base and repaired-head grammar suites with zero added failure IDs, while repair-control-receipts.json records six expected failing mutations.",
+    "fit": "model_types.py and the YAML registries extend the repository's existing token shapes, and the changed tests use the existing pytest case-table idiom without introducing plan-stage names.",
+    "goal_fidelity": "The source goal in the dispatch prompt is satisfied by the five accepted token registrations across subjects.yml, physical_bases.yml, locus_registry.yml, qualifiers.yml and qualifier_categories.yml.",
+    "reuse": "The diff extends the existing VocabularyCase owner in tests/grammar/test_dd_gap_vocabulary.py:13 and removes the duplicate table and generic checks from test_rework_tokens.py, retaining only distinct pellet and source-scope semantics.",
+    "scope_discipline": "The ten base-to-head changed paths match the prompt's grants plus the test_dd_gap_vocabulary.py extension recorded in the source manifest's evidence_inputs."
+  },
+  "project": "imas-standard-names",
+  "reproduction_evidence": {
+    "control_logs": [
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-reversed.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-pellet_species-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-plateau_factor-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-current_profile_alignment-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-breakdown_candidate-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-sourced-removal.log",
+      "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-sourced_scope-removal.log"
+    ],
+    "log_path": "/home/ITER/mcintos/.config/reckon/crew/runs/r-20261110T210440922543-dgv-rework-tokens/repair-reuse-before.log",
+    "quote": "AssertionError: VocabularyCase is duplicated instead of using the existing registration owner"
+  },
+  "review_run_id": "r-20261111T041353152214-review-of-dgv-rework-tokens-21577ef61a19",
+  "reviewed_base_sha": "45f1f624f387bf1127c1b89982fa46f5ee7bf81a",
+  "reviewed_head_sha": "21577ef61a19214343cb1d30de526418581de01c",
+  "reviewed_run_id": "r-20261110T210440922543-dgv-rework-tokens",
+  "revision_note": "The reviewed range is 45f1f624f387bf1127c1b89982fa46f5ee7bf81a..21577ef61a19214343cb1d30de526418581de01c. The grammar suite's repaired head arm is c5dbf507c0f4d521e5953d3d52ae96904268364f; the final reviewed commit 21577ef appends only evidence documentation.",
+  "scores": {
+    "durability": 20,
+    "evidence": 20,
+    "fit": 20,
+    "goal_fidelity": 20,
+    "reuse": 20,
+    "scope_discipline": 20
+  },
+  "self_referential_assertions": "None among the final reviewed guards: round-trip results are compared with literal expected spellings and independently authored expected IRs, and the distinct semantic checks compare against fixed expected tokens and segments.",
+  "status": "parsed",
+  "times_source": "run-record",
+  "timestamp": "2026-11-11T04:36:53.727806+00:00",
+  "total": 120
+}
