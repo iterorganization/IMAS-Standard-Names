@@ -1,0 +1,73 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-13T10:43:59.177Z",
+  "dispatched_at": "2026-11-13T10:35:39Z",
+  "findings": [
+    {
+      "anchor": "tests/test_vocabulary_extension_round_trip.py:262",
+      "id": "reuse_search-1",
+      "reason": "the node must either adopt the recorded spelling or retire that xfail, and the plan should say which, otherwise the merge lands a feature contradicted by its own passing test suite.",
+      "text": "\u00a72 introduces `equivalent_electron` while the repository already records that convention as `electron_equivalent` (strict xfail `test_transformation_enum_membership` at line 262 and `test_electron_equivalent_compose_round_trip` at line 286, the latter noting the greedy-prefix ambiguity between `electron` as a subject and the convention), so after this change one convention has two spellings and a strict xfail still asserts that the feature does not exist",
+      "type": "reuse_search",
+      "would_change": true
+    },
+    {
+      "anchor": "docs/plans/equivalent-electron-counting-qualifier.html#s2",
+      "id": "deep_module-1",
+      "reason": "the node must choose an order between two tokens whose values are in the same segment, and that choice fixes the spelling of the names imas-codex regenerates, so leaving it open produces a spelling the plan did not predict.",
+      "text": "\u00a72 states the word \"sits directly before the base\", but in two of its own done-when names (`neon_equivalent_electron_prefill_count`, `accumulated_oxygen_equivalent_electron_prefill_count_due_to_gas_injection`) the token immediately before the base is `prefill`, so the order of two kind-forming qualifiers is undecided; `specification.yml:207-231` records that a canonical intra-order by category rank is \"planned but not yet enforced\", and `prefill` already sits in a different presentation category (`engineering`, `qualifier_categories.yml:181`), so nothing in the grammar settles it",
+      "type": "deep_module",
+      "would_change": true
+    },
+    {
+      "anchor": "imas_standard_names/grammar/vocabularies/qualifiers.yml:1",
+      "id": "thin_wrapper-1",
+      "reason": "the plan must either drop the refusal or say that it extends the vocabulary entry schema with an applicable-base field, because a single-token special case is new surface with no owner and would not be reproduced by the next kind-forming word.",
+      "text": "`qualifiers.yml` is a bare token list (`load_qualifiers`, `vocab_loaders.py:255-273`) carrying no per-token metadata, and the census is total: no qualifier token in the vocabulary is restricted to any base, which I confirmed by measurement \u2014 `argon_prefill_temperature` parses strictly at 0e1f538 even though `prefill` has no meaning on a temperature \u2014 so the refusal \u00a72 requires would be a guard applying to one new token alone, asymmetric with every existing kind-forming qualifier",
+      "type": "thin_wrapper",
+      "would_change": true
+    },
+    {
+      "anchor": "imas_standard_names/grammar/vocabularies/conventions/concepts.yml:1",
+      "id": "duplicate_owner-1",
+      "reason": "the brief has to carry all three registration sites and name the concept file as the definition's owner, because the plan's wording admits a one-file reading that yields an inconsistent catalog and, with the invariant test enforcing it, a red suite.",
+      "text": "the definition \u00a72 requires is owned by `conventions/concepts.yml` (`load_conventions`, `vocab_loaders.py:899`, whose header refuses an entry that restates a definition already on the token's vocabulary entry), and registration is owned by three separate sites a node must touch together: `qualifiers.yml`, `qualifier_categories.yml:15` (\"Add a token here in the same change that adds it to qualifiers.yml\", enforced by tests), and the concept file when a definition is wanted \u2014 so a node satisfying \"listed wherever the grammar documents its vocabulary\" in a single place duplicates the concept layer or leaves the category map stale, and the category map additionally forces a decision, since none of its twelve buckets names a unit convention (`normalized`, `qualifier_categories.yml:162`, holds divisions by reference parameters \u2014 `greenwald`, `gyro_bohm`, `ipb98y2` \u2014 and `engineering`, line 176, holds `prefill`)",
+      "type": "duplicate_owner",
+      "would_change": true
+    },
+    {
+      "anchor": "docs/plans/equivalent-electron-counting-qualifier.html#s2",
+      "id": "interface_budget-1",
+      "reason": "the section must account in its own text for the interface families it grows, which it can do cheaply by stating that the new refusal family either supersedes no existing rule (with the reason it must exist alone) or is generalised to every kind-forming qualifier.",
+      "text": "\u00a72 grows two of the four families: one public vocabulary definition (a token exposed as a StrEnum member and published in the grammar vocabularies the catalog dataset emits) and one new refusal case (\"the word is refused on a base it has no meaning for\"), against a week whose supplied figures are public_definitions 0, cli_options 0, mcp_views 0, refusal_families 0, and its text names neither what it retires or merges nor why nothing can be",
+      "type": "interface_budget",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "0e1f538b8c60de91b47af4857e9714a9642f1dfd",
+  "plan_fingerprint": "d9ba5d8a395840e96b504d15b8261c20a3954ba6d29899793bc5a03f928dc70c",
+  "plan_slug": "equivalent-electron-counting-qualifier",
+  "plan_version": 0,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261113T093404287735-plan-review-of-equivalent-electron-counting-qualifier",
+  "reviewed_blob_sha": "b2f8cde48d409e4472c2a7abc7cbc1117bdcf426",
+  "rubric": "design",
+  "rubric_items": {
+    "deep_module": "a finding \u2014 hiding the whole convention behind one word is the right depth, but \u00a72's single placement rule (\"sits directly before the base\") is already false in two of its own done-when names, where `prefill` also glues to the base.",
+    "duplicate_owner": "a finding \u2014 the token's definition and its registration each have an existing owner (`conventions/concepts.yml`, `qualifiers.yml`, `qualifier_categories.yml`), and \u00a72's \"listed wherever the grammar documents its vocabulary\" leaves a node free to duplicate the concept layer or leave a registration site stale.",
+    "interface_budget": "a finding \u2014 public_definitions 0, cli_options 0, mcp_views 0, refusal_families 0; \u00a72 adds both a public vocabulary definition and a new refusal case without naming what it retires or merges, or why nothing can be.",
+    "reuse_search": "a finding \u2014 the endpoint's word is a kind-forming qualifier and that segment already exists in `imas_standard_names/grammar/vocabularies/qualifiers.yml` with `prefill` as the exact `subject_qualifier_base` precedent (`specification.yml:207-231`, `argon_prefill_count`), but the same convention is already named `electron_equivalent` and recorded as a known-unimplemented transformation at `tests/test_vocabulary_extension_round_trip.py:262`, which \u00a72 neither reuses nor retires.",
+    "thin_wrapper": "a finding \u2014 \u00a72's \"refused on a base it has no meaning for\" needs a per-token base restriction that no qualifier in the grammar has today, so it would be a one-off guard beside the segment rather than an extension of it."
+  },
+  "section_digests": {
+    "_document": "d2cc7a7e80ac5b8bb4d1aecd5ec88b71d487963cba492a15b1e8b1813fbb17bb",
+    "s1": "eb40a4068118812363fba8e07ec4c55537454a4998937675fcfa84902d78063d",
+    "s2": "adfaefdd6e3254145fe35b6ef3aba58a50d38079093189a5d92f5ba669c8886b",
+    "s3": "a3409916ff4cbe01c22a8efd0fce35f097ebd823fa4076d0ba5981e641c8f401"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-13T11:36:00.023236+00:00",
+  "total": null
+}
