@@ -1,0 +1,67 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-13T11:52:46.686Z",
+  "dispatched_at": "2026-11-13T11:38:55Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/equivalent-electron-counting-qualifier.html:36",
+      "id": "reasoning-1",
+      "reason": "a node renaming all 64 acts on evidence that supports the convention for 61, and the plan fixes neither whether those 3 are in scope on grounds its own record does not state nor what happens to the other defect they carry.",
+      "text": "the section divides the 64 family findings \"Of the 64 names, 42 are counts \u2026 and 22 are rates \u2026 so one word must serve both\", implying all 64 take the word, but the cited record assigns three of them (`accumulated_helium_4_count_due_to_gas_injection`, `accumulated_hydrogen_prefill_count`, `accumulated_lithium_count`) the `restriction-to-one-object` qualifier and proposes a spelling that adds no equivalent-electron word at all (`\u2026_prefill_count_due_to_gas_injection`, `\u2026_count_due_to_gas_injection`); I confirmed the split by reading the JSON, which yields 61 `counting-convention` against 3 `restriction-to-one-object`",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/equivalent-electron-counting-qualifier.html:55",
+      "id": "done_when-1",
+      "reason": "without a control the release gate cannot show it discriminated, and the cheapest one (the same six names must be refused by `v0.11.1` installed from PyPI, with the import resolving under site-packages) is a one-line addition that makes the gate able to fail.",
+      "text": "\u00a73's done-when names four observations (tag pushed, workflow green, PyPI lists the version, six names parse from PyPI) and no control that must fail; \"installed from PyPI, not from the checkout\" is a caveat rather than a demonstrated discriminator, and imas-codex declares `imas-standard-names = { path = \"../imas-standard-names\", editable = true }` in `[tool.uv.sources]`, so a check run in that repo's environment can resolve the checkout and pass either way",
+      "type": "done_when",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/equivalent-electron-counting-qualifier.html:54",
+      "id": "single_goal-1",
+      "reason": "either the node does work outside its repository (and outside a measurable gate) or executes a step the plan asserts and never closes, and renaming the handoff as the blocked plan's own node removes both.",
+      "text": "\u00a73 states that \"imas-codex then bumps both pins in its `pyproject.toml` and syncs its graph grammar snapshot\", which are concrete edits in another repository, while the section's done-when measures only the tag, workflow, PyPI listing and parse; this is neither gated here nor owned by the node, and the repo's own plan-routing rule puts imas-codex coordination in imas-codex",
+      "type": "single_goal",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/equivalent-electron-counting-qualifier.html:41",
+      "id": "done_when-2",
+      "reason": "a node can satisfy all six bullets, and close the section, without stating the presentation group the plan says must be stated, so the obligation the section exists to fix becomes unverifiable.",
+      "text": "\u00a72 states a requirement in prose that its done-when does not measure: \"the group it is filed under is stated in the change and in the landing record\"",
+      "type": "done_when",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+  "plan_fingerprint": "0dc7787a7efb019bcddc99d7c892e9697102b79d24e1f5537421a554ba9373ec",
+  "plan_slug": "equivalent-electron-counting-qualifier",
+  "plan_version": 1,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261113T113724048007-plan-review-of-equivalent-electron-counting-qualifier",
+  "reviewed_blob_sha": "835443a097a15c613b70cd7905a0ff0a9ee87220",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 every anchor resolves: the evidence JSON exists and carries 64 findings with `equivalent-electron-count`; catalogue tag `v0.4.0rc8` is the catalogue repo's newest tag and the JSON records `published_names: 1977`; imas-codex commit `4da5d1034` resolves; `sn-definitions-by-construction` is a real imas-codex plan; the grammar's `conventions/` vocabulary directory and `tests/grammar/test_corpus_parse.py` both exist; all six plain names parse under the current grammar.",
+    "done_when": "a finding \u2014 \u00a73's done-when lists four observations and declares no negative control that must fail, unlike \u00a72's \"a test fails when the word is removed from the vocabulary\".",
+    "evidence_paths": "pass \u2014 the cited catalogue evidence sits in `imas-codex/docs/evidence/fragments/sn-definitions-by-construction/name-definition-seat-catalog.json`, \u00a72's gate log is a committed log ending with its exit status on a compute partition, and \u00a73's evidence (tag, workflow, PyPI listing) is external and durable.",
+    "naming": "pass \u2014 no file, symbol, comment or vocabulary word in the plan carries a plan label, stage name, ticket number or version tag; `equivalent_electron` is a controlled-vocabulary word, not a plan identifier.",
+    "reasoning": "a finding \u2014 the cited evidence records the equivalent-electron convention for 61 of the 64 names, not all 64.",
+    "single_goal": "a finding \u2014 \u00a73's goal is one release, but its prose also assigns imas-codex edits that no done-when measures.",
+    "wiring": "pass \u2014 `plan-section-depends-on` names `equivalent-electron-counting-qualifier#s2` for s3 in the house `<slug>#<section>` form that `dd-gap-vocabulary` also uses, and `plan-blocks imas-codex:sn-definitions-by-construction` resolves to an existing plan that itself cites the equivalent-electron word; no needed dependency is undeclared."
+  },
+  "section_digests": {
+    "_document": "d2cc7a7e80ac5b8bb4d1aecd5ec88b71d487963cba492a15b1e8b1813fbb17bb",
+    "s1": "eb40a4068118812363fba8e07ec4c55537454a4998937675fcfa84902d78063d",
+    "s2": "8af23518bb1e2e94335c384033dc5c599283ec74270b34a8dce88a63c9cca528",
+    "s3": "a3409916ff4cbe01c22a8efd0fce35f097ebd823fa4076d0ba5981e641c8f401"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-13T12:06:41.840817+00:00",
+  "total": null
+}
