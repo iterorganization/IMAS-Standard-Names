@@ -71,6 +71,16 @@
       "note": "The consumer's pin and snapshot sync are stated as imas-codex's own work and not part of this section.",
       "reason": "",
       "when": "2026-11-13T12:07:30.615843+00:00"
+    },
+    {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "cc83f8791a07365286ad13e9aac9e18e425db8bb",
+      "commit_basis": "edit",
+      "finding": "done_when-2",
+      "note": "The definition bullet now requires the landing record to name the presentation group.",
+      "reason": "",
+      "when": "2026-11-13T12:07:35.402339+00:00"
     }
   ],
   "responses": {
@@ -82,6 +92,15 @@
       "note": "The release check now requires the six names refused by v0.11.1 installed from the index into a fresh environment, importing from site-packages in both checks.",
       "reason": "",
       "when": "2026-11-13T12:07:24.314706+00:00"
+    },
+    "done_when-2": {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "cc83f8791a07365286ad13e9aac9e18e425db8bb",
+      "commit_basis": "edit",
+      "note": "The definition bullet now requires the landing record to name the presentation group.",
+      "reason": "",
+      "when": "2026-11-13T12:07:35.402339+00:00"
     },
     "reasoning-1": {
       "action": "acted",
