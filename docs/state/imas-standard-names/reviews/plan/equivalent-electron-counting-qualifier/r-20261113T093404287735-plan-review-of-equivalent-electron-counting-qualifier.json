@@ -79,6 +79,16 @@
       "note": "The refusal on a meaningless base is dropped; the plan states no word of this kind is base-restricted and this one is not made the exception.",
       "reason": "",
       "when": "2026-11-13T11:36:47.656504+00:00"
+    },
+    {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "finding": "duplicate_owner-1",
+      "note": "The definition is held once where convention definitions live, and the word is registered at every site the invariant tests require; the presentation group is stated in the change.",
+      "reason": "",
+      "when": "2026-11-13T11:36:58.299025+00:00"
     }
   ],
   "responses": {
@@ -90,6 +100,15 @@
       "note": "The order is ruled: the word is next to the base, after prefill; the two prefill names in the done-when are respelled and the other order is shown not to render.",
       "reason": "",
       "when": "2026-11-13T11:36:35.739710+00:00"
+    },
+    "duplicate_owner-1": {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "note": "The definition is held once where convention definitions live, and the word is registered at every site the invariant tests require; the presentation group is stated in the change.",
+      "reason": "",
+      "when": "2026-11-13T11:36:58.299025+00:00"
     },
     "reuse_search-1": {
       "action": "acted",
