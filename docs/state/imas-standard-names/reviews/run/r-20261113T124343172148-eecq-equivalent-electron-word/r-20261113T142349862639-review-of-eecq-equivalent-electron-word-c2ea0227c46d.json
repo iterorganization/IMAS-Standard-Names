@@ -1,0 +1,34 @@
+{
+  "added_failure_count": 0,
+  "added_failure_ids": [],
+  "added_failures_note": "Derived from the reviewed run's own arms: baseline_suite (7c0809e) records exit_status 0, completed true, failure_count 0, failure_ids []; after_suite (135c42e) records exit_status 0, completed true, failure_count 0, failure_ids []. Zero ids appear in the head arm that are absent from the base arm.",
+  "completed_at": "2026-11-13T17:47:48.993Z",
+  "dispatched_at": "2026-11-13T17:42:19Z",
+  "findings": [
+    {
+      "file": "tests/test_equivalent_electron_word.py",
+      "line": 53,
+      "severity": "non-blocking",
+      "text": "test_prefill_keeps_the_convention_next_to_the_base hands compose_standard_name a whole prefill_equivalent_electron_count string as physical_base, which is a pattern-only str at imas_standard_names/grammar/model.py:86, so the test exercises literal assembly plus the re-parse at model.py:1821 and never composes qualifier segments; the reversed-order assertion at line 54 is true by construction for any grammar state and cannot guard the ordering it was added for. The ordering is guarded independently by `ir.qualifiers[-1] == convention[0]` at line 32 for all six names, so this does not hold the node."
+    }
+  ],
+  "project": "imas-standard-names",
+  "raw_text": "VERDICT goal: the node's goal is one vocabulary word letting a count or rate say it is expressed in equivalent electrons; imas_standard_names/grammar/vocabularies/qualifiers.yml:326 registers `equivalent_electron` as a base-binding qualifier with no base restriction.\nVERDICT done_when: the done_when asks for six named spellings to parse and round-trip with the convention as a distinct part, plain names unchanged, a test that fails on removal, and a committed grammar-suite log; imas_standard_names/grammar/vocabularies/specification.yml:228 and the manifest's negative control carry all four.\nVERDICT write_paths: read the manifest's declared list; all 13 paths in the diff lie inside it, including imas_standard_names/grammar/model_types.py:302 and docs/evidence/fragments/equivalent-electron-counting-qualifier/.\nVERDICT manifest: read; it records both grammar arms as EXIT=0 with zero added failures and names five logs, and all five are byte-identical to the committed copies under docs/evidence/fragments/equivalent-electron-counting-qualifier/.\nVERDICT diff: read commit by commit (135c42e feature, c2ea022 evidence); four vocabulary/grammar files plus one generated enum member, two test files and six evidence artefacts, and nothing outside the goal.\nCALL_SITES: imas_standard_names/grammar/parser.py:196, imas_standard_names/grammar/vocab_loaders.py:255, imas_standard_names/grammar/terms.py:346, imas_standard_names/catalog/dataset.py:1262\nSCORE goal_fidelity: 19\nJUSTIFICATION goal_fidelity: imas_standard_names/grammar/vocabularies/qualifiers.yml:326 and conventions/concepts.yml:22 add exactly the one word and one definition the goal names, and tests/test_equivalent_electron_word.py:27 covers all six spellings.\nSCORE evidence: 19\nJUSTIFICATION evidence: docs/evidence/fragments/equivalent-electron-counting-qualifier/eecq-equivalent-electron-word-grammar-head.log ends `EXIT=0` on 1672 passed at revision 135c42e on all_debug, and its base arm ends `EXIT=0` on 1652 passed.\nSCORE scope_discipline: 19\nJUSTIFICATION scope_discipline: every path in `git diff --stat 7c0809e..c2ea022` appears in the manifest's declared write paths, and the two test files carry only the feature's own assertions plus the retired reversed-spelling expectations.\nSCORE durability: 18\nJUSTIFICATION durability: removing the token from qualifiers.yml reddens 14 tests at tests/test_equivalent_electron_word.py::test_equivalent_electron_is_a_distinct_qualifier for all six names, though the ordering assertions at line 53-54 are weaker than they read.\nSCORE fit: 19\nJUSTIFICATION fit: the new token follows the lowercase snake_case style of imas_standard_names/grammar/vocabularies/qualifiers.yml:321 and no plan, issue or revision identifier appears anywhere in the diff.\nSCORE reuse: 20\nJUSTIFICATION reuse: imas_standard_names/grammar/vocabularies/conventions/concepts.yml:19 is the repository's existing holder of convention definitions and select_conventions at imas_standard_names/grammar/terms.py:346 applies it, so the change extends both owners rather than forking them.\nFINDING tests/test_equivalent_electron_word.py:53 non-blocking: test_prefill_keeps_the_convention_next_to_the_base hands compose_standard_name a whole prefill_equivalent_electron_count string as physical_base, which is a pattern-only str at imas_standard_names/grammar/model.py:86, so the test exercises literal assembly plus the re-parse at model.py:1821 and never composes qualifier segments; the reversed-order assertion at line 54 is true by construction for any grammar state and cannot guard the ordering it was added for.\n",
+  "review_run_id": "r-20261113T142349862639-review-of-eecq-equivalent-electron-word-c2ea0227c46d",
+  "reviewed_base_sha": "7c0809e231ebd6c659270331b9a141cfffe85c7e",
+  "reviewed_head_sha": "c2ea0227c46d3aace6127ad43336b7e06dcca63f",
+  "reviewed_run_id": "r-20261113T124343172148-eecq-equivalent-electron-word",
+  "rubric": "code",
+  "scores": {
+    "durability": 18,
+    "evidence": 19,
+    "fit": 19,
+    "goal_fidelity": 19,
+    "reuse": 20,
+    "scope_discipline": 19
+  },
+  "status": "parsed",
+  "times_source": "run-record",
+  "timestamp": "2026-11-13T19:06:16.286883+00:00",
+  "total": 114
+}
