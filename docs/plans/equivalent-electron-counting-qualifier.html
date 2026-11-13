@@ -24,7 +24,7 @@
   <title>A Name Can Say It Counts Equivalent Electrons | imas-standard-names</title>
   <link rel="stylesheet" href="/_shared/foundation.css">
   <link rel="stylesheet" href="/_shared/dashboard.css">
-<meta name="plan-version" content="0">
+<meta name="plan-version" content="1">
 <meta name="plan-modified" content="2026-11-13">
 </head>
 <body>
@@ -37,13 +37,15 @@
 
     <h2 id="s2">§2 — One word for the equivalent-electron convention</h2>
     <section data-reckon="section" data-id="s2" data-effort-hours="1.75" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable" data-links=""></section>
-    <p>The grammar gains the vocabulary a name needs to say that its count or rate is expressed in equivalent electrons. It is one addition that composes with the existing count and source-rate bases and with the species, accumulation, prefill and process tokens those names already use. It is not a new base per quantity. The word reads <code>equivalent_electron</code> and sits directly before the base, so the argon inventory is <code>accumulated_argon_equivalent_electron_count</code> and the lithium rate is <code>lithium_equivalent_electron_source_rate_due_to_gas_injection</code>. If the grammar's canonical order forces a different position, the spelling it does produce is reported for the lead before it is merged, with the reason.</p>
+    <p>The grammar gains the vocabulary a name needs to say that its count or rate is expressed in equivalent electrons. It is one addition that composes with the existing count and source-rate bases and with the species, accumulation, prefill and process tokens those names already use. It is not a new base per quantity. The lead ruled the spelling on 2026-11-13: the word reads <code>equivalent_electron</code> and is the word next to the base, after any other word that forms the kind of count, so the argon inventory is <code>accumulated_argon_equivalent_electron_count</code>, a prefill inventory is <code>neon_prefill_equivalent_electron_count</code>, and the lithium rate is <code>lithium_equivalent_electron_source_rate_due_to_gas_injection</code>. The repository already records this convention under the spelling <code>electron_equivalent</code>, as a transformation its tests expect to be absent; that record is retired in the same change, so one convention has one spelling and no test asserts the feature does not exist. The change adds one public vocabulary word and no refusal: no word of this kind is restricted to particular bases today, and this one is not made the exception.</p>
+    <p>The word is a unit convention, which none of the grammar's present presentation groups for such words names, so the group it is filed under is stated in the change and in the landing record.</p>
     <p>Done when:</p>
     <ul>
-      <li>each of these six names parses, renders back to the same string, and reports the equivalent-electron convention as a distinct part of its parse rather than as part of a species or a base: <code>accumulated_argon_equivalent_electron_count</code>, <code>accumulated_ammonia_equivalent_electron_count</code>, <code>neon_equivalent_electron_prefill_count</code>, <code>accumulated_oxygen_equivalent_electron_prefill_count_due_to_gas_injection</code>, <code>lithium_equivalent_electron_source_rate_due_to_gas_injection</code>, <code>total_equivalent_electron_source_rate_at_wall_due_to_gas_injection</code>;</li>
+      <li>each of these six names parses, renders back to the same string, and reports the equivalent-electron convention as a distinct part of its parse rather than as part of a species or a base: <code>accumulated_argon_equivalent_electron_count</code>, <code>accumulated_ammonia_equivalent_electron_count</code>, <code>neon_prefill_equivalent_electron_count</code>, <code>accumulated_oxygen_prefill_equivalent_electron_count_due_to_gas_injection</code>, <code>lithium_equivalent_electron_source_rate_due_to_gas_injection</code>, <code>total_equivalent_electron_source_rate_at_wall_due_to_gas_injection</code>;</li>
       <li>the six plain names they replace still parse as they do at the base revision, and no name in the grammar's own round-trip corpus changes its parse;</li>
-      <li>the word is refused on a base it has no meaning for, shown on <code>argon_equivalent_electron_temperature</code>, and a test fails when the word is removed from the vocabulary;</li>
-      <li>the word carries a definition that states the convention (one unit per electron carried by the injected atom or molecule) and is listed wherever the grammar documents its vocabulary, so a composer can find it;</li>
+      <li>a test fails when the word is removed from the vocabulary, and the spelling with the two words in the other order, <code>neon_equivalent_electron_prefill_count</code>, is not what the grammar renders for that parse;</li>
+      <li>no test in the suite expects the convention to be absent, and <code>electron_equivalent</code> is not accepted as a second spelling of it;</li>
+      <li>the word's definition (one unit per electron carried by the injected atom or molecule) is held once, where the grammar holds the definitions of its conventions, and the word is registered at every site the grammar's own invariant tests require of a word of its kind, with those tests passing;</li>
       <li>the grammar test suite passes on a compute partition with no failure added against the base revision, in a committed log ending with its exit status.</li>
     </ul>
 
