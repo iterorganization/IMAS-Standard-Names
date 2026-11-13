@@ -49,7 +49,30 @@
   "plan_slug": "equivalent-electron-counting-qualifier",
   "plan_version": 0,
   "project": "imas-standard-names",
-  "responses": {},
+  "response_events": [
+    {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "finding": "reuse_search-1",
+      "note": "The plan adopts the lead-ruled spelling equivalent_electron and retires the recorded electron_equivalent placeholder in the same change, with a done-when item that no test expects the convention absent.",
+      "reason": "",
+      "when": "2026-11-13T11:36:23.571396+00:00"
+    }
+  ],
+  "responses": {
+    "reuse_search-1": {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "note": "The plan adopts the lead-ruled spelling equivalent_electron and retires the recorded electron_equivalent placeholder in the same change, with a done-when item that no test expects the convention absent.",
+      "reason": "",
+      "when": "2026-11-13T11:36:23.571396+00:00"
+    }
+  },
+  "review_path": "/home/ITER/mcintos/Code/imas-standard-names/docs/state/imas-standard-names/reviews/plan/equivalent-electron-counting-qualifier/r-20261113T093404287735-plan-review-of-equivalent-electron-counting-qualifier.json",
   "review_run_id": "r-20261113T093404287735-plan-review-of-equivalent-electron-counting-qualifier",
   "reviewed_blob_sha": "b2f8cde48d409e4472c2a7abc7cbc1117bdcf426",
   "rubric": "design",
