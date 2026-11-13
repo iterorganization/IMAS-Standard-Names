@@ -41,7 +41,30 @@
   "plan_slug": "equivalent-electron-counting-qualifier",
   "plan_version": 1,
   "project": "imas-standard-names",
-  "responses": {},
+  "response_events": [
+    {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "cc83f8791a07365286ad13e9aac9e18e425db8bb",
+      "commit_basis": "edit",
+      "finding": "reasoning-1",
+      "note": "The count of 64 is gone: the section now cites the two readers' 42 flagged count and rate names on the release candidate and does not divide them.",
+      "reason": "",
+      "when": "2026-11-13T12:07:17.880234+00:00"
+    }
+  ],
+  "responses": {
+    "reasoning-1": {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "cc83f8791a07365286ad13e9aac9e18e425db8bb",
+      "commit_basis": "edit",
+      "note": "The count of 64 is gone: the section now cites the two readers' 42 flagged count and rate names on the release candidate and does not divide them.",
+      "reason": "",
+      "when": "2026-11-13T12:07:17.880234+00:00"
+    }
+  },
+  "review_path": "/home/ITER/mcintos/Code/imas-standard-names/docs/state/imas-standard-names/reviews/plan/equivalent-electron-counting-qualifier/r-20261113T113724048007-plan-review-of-equivalent-electron-counting-qualifier.json",
   "review_run_id": "r-20261113T113724048007-plan-review-of-equivalent-electron-counting-qualifier",
   "reviewed_blob_sha": "835443a097a15c613b70cd7905a0ff0a9ee87220",
   "rubric": "content",
