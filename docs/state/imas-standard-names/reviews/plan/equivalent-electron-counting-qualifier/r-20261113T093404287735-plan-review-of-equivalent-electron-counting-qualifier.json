@@ -89,6 +89,16 @@
       "note": "The definition is held once where convention definitions live, and the word is registered at every site the invariant tests require; the presentation group is stated in the change.",
       "reason": "",
       "when": "2026-11-13T11:36:58.299025+00:00"
+    },
+    {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "finding": "interface_budget-1",
+      "note": "Section 2 now states it adds one public vocabulary word and no refusal.",
+      "reason": "",
+      "when": "2026-11-13T11:37:07.171340+00:00"
     }
   ],
   "responses": {
@@ -109,6 +119,15 @@
       "note": "The definition is held once where convention definitions live, and the word is registered at every site the invariant tests require; the presentation group is stated in the change.",
       "reason": "",
       "when": "2026-11-13T11:36:58.299025+00:00"
+    },
+    "interface_budget-1": {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "note": "Section 2 now states it adds one public vocabulary word and no refusal.",
+      "reason": "",
+      "when": "2026-11-13T11:37:07.171340+00:00"
     },
     "reuse_search-1": {
       "action": "acted",
