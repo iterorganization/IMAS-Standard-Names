@@ -296,6 +296,46 @@
   "plan_link": null,
   "promoted_by": null,
   "promoted_revision": "0e1f538b8c60de91b47af4857e9714a9642f1dfd",
+  "release": {
+    "arms_kept": [],
+    "arms_logs_copied": [],
+    "arms_removed_paths": [],
+    "arms_withheld": "gate verdict 'not-run' is not passing; cited arms retained as evidence",
+    "process_signalled": false,
+    "process_withheld": "process is not alive",
+    "run_archived": "/home/ITER/mcintos/.config/reckon/crew/archive/runs/r-20261113T093409860439-plan-review-of-equivalent-electron-counting-qualifier",
+    "scratch_bytes": 0,
+    "scratch_host": "98dci4-clu-2023.iter.org",
+    "scratch_path": "/tmp/reckon-crew-scratch/r-20261113T093409860439-plan-review-of-equivalent-electron-counting-qualifier",
+    "scratch_removed": true,
+    "scratch_removed_paths": [
+      {
+        "bytes": 0,
+        "path": "/tmp/reckon-crew-scratch/r-20261113T093409860439-plan-review-of-equivalent-electron-counting-qualifier"
+      }
+    ],
+    "scratch_withheld": "",
+    "worktree_audit": {
+      "counts": {
+        "dirty": 0,
+        "disposable": 0,
+        "integrated": 0,
+        "live-referenced": 0,
+        "retained-for-resume": 0,
+        "unintegrated": 0
+      },
+      "worktrees": [
+        {
+          "available": false,
+          "detail": "tree is no longer available",
+          "path": "/home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9/plan-review-of-equivalent-electron-counting-qualifier",
+          "unavailable_state": "missing"
+        }
+      ]
+    },
+    "worktree_released": true,
+    "worktree_trash_left": "/home/ITER/mcintos/Code/.reckon-worktrees/imas-standard-names-5be88ee0fdc3/_trash/r-20261113T093409860439-plan-review-of-equivalent-electron-counting-qualifier-20261113T113605648468Z"
+  },
   "resume_waiver": null,
   "review": {
     "absent": [],
