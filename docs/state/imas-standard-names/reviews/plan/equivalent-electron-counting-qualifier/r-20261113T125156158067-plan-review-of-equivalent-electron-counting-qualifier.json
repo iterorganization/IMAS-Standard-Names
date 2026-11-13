@@ -1,0 +1,34 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-13T13:17:53.057Z",
+  "dispatched_at": "2026-11-13T13:02:23Z",
+  "findings": [],
+  "plan_commit": "2abb575fc71a4c3ef70738cf91777719d890349f",
+  "plan_fingerprint": "4a0175b0bab87c8544d33d062546c6719e2fd8775d69c9521540b4610b7854a2",
+  "plan_slug": "equivalent-electron-counting-qualifier",
+  "plan_version": 5,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261113T125156158067-plan-review-of-equivalent-electron-counting-qualifier",
+  "reviewed_blob_sha": "83263d795d019c0a4ca60a5efce9d65fde952a83",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 `v0.11.1` is a real tag (`git tag --list` in this repository) and is published on PyPI with a wheel; `docs/evidence/` and `sn-definitions-by-construction` resolve; the extensionless `#s2` href resolves to a section heading in the snapshot.",
+    "done_when": "pass \u2014 s3's done-when names four observations (tag pushed, workflow green, PyPI lists the version, the six names parse from an index install) and a declared negative control, the same six refused by `v0.11.1` installed the same way, and it now names where both results are committed; I confirmed the control can fail by parsing all six names against the published `v0.11.1` wheel, which refused every one.",
+    "evidence_paths": "pass \u2014 the release log now lands under `docs/evidence/`, which exists in this repository (`docs/evidence/archive/`, `docs/evidence/fragments/`, `docs/evidence/grammar-release-and-downstream-pin/`), and is not a session or node-local path.",
+    "naming": "pass \u2014 s3 names no code symbol, file or function, and carries no plan label, ticket number or version tag into anything it would put in source; the only version strings are release anchors in plan prose.",
+    "reasoning": "pass \u2014 the root cause (the grammar can spell neither a count nor a rate in equivalent electrons) matches \u00a71's refused rename and is confirmed by the published `v0.11.1` refusing all six names; the endpoint is reachable (the `release` workflow triggers on `v<major>.<minor>.<patch>` and on `rc`/`a`/`b` tag suffixes, so a release candidate publishes, and the CLI's `_check_on_main` refuses a detached worktree as the section states); the section prescribes no code path, step sequence, formula or function.",
+    "single_goal": "pass \u2014 s3 carries the release and the handoff only, and the consumer's pin and grammar-snapshot sync are explicitly excluded as imas-codex's own work under `sn-definitions-by-construction`.",
+    "wiring": "pass \u2014 s3 declares `data-links=\"equivalent-electron-counting-qualifier#s2\"` and the plan's `plan-section-depends-on` maps s3 to s2; \u00a72 exists as the section that lands the word, and `sn-definitions-by-construction` resolves at `/home/ITER/mcintos/Code/imas-codex/docs/plans/sn-definitions-by-construction.html`."
+  },
+  "section_digests": {
+    "_document": "1e07da856b47a6966a181b9d06db4b3c846511a4edbd31a498226a9690a84fb9",
+    "s1": "b5ea3eefde9b7019fd69eecc55369d69dd57ca8ad6b4aaa8d5622aff1367ba3b",
+    "s2": "ef9838650c5d3049f1ecd447b8d87dc549a444fe92a1361c655a7f6ade20c36d",
+    "s3": "f511a6874b0bda5b5149695eb5f304a0642b8b1a3fdab094d6b97885b215c7e5"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-13T16:58:04.826800+00:00",
+  "total": null
+}
