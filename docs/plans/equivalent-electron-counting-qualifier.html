@@ -24,7 +24,7 @@
   <title>A Name Can Say It Counts Equivalent Electrons | imas-standard-names</title>
   <link rel="stylesheet" href="/_shared/foundation.css">
   <link rel="stylesheet" href="/_shared/dashboard.css">
-<meta name="plan-version" content="3">
+<meta name="plan-version" content="4">
 <meta name="plan-modified" content="2026-11-13">
 </head>
 <body>
@@ -45,14 +45,14 @@
       <li>the six plain names they replace still parse as they do at the base revision, and no name in the grammar's own round-trip corpus changes its parse;</li>
       <li>a test fails when the word is removed from the vocabulary, and the spelling with the two words in the other order, <code>neon_equivalent_electron_prefill_count</code>, is not what the grammar renders for that parse;</li>
       <li>no test in the suite expects the convention to be absent, and <code>electron_equivalent</code> is not accepted as a second spelling of it;</li>
-      <li>the word's definition (one unit per electron carried by the injected atom or molecule) is held once, where the grammar holds the definitions of its conventions, and the word is registered at every site the grammar's own invariant tests require of a word of its kind, with those tests passing;</li>
+      <li>the word's definition (one unit per electron carried by the injected atom or molecule) is held once, where the grammar holds the definitions of its conventions, and the word is registered at every site the grammar's own invariant tests require of a word of its kind, with those tests passing, and the landing record names the presentation group the word is filed under;</li>
       <li>the grammar test suite passes on a compute partition with no failure added against the base revision, in a committed log ending with its exit status.</li>
     </ul>
 
     <h2 id="s3">§3 — The grammar is released and handed to imas-codex</h2>
     <section data-reckon="section" data-id="s3" data-effort-hours="1.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="standard" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable" data-links="equivalent-electron-counting-qualifier#s2"></section>
-    <p>Once §2 lands, a release candidate is cut from <code>main</code> with the release CLI, which the coordinator runs from the main checkout after CI is green on upstream; the CLI refuses a detached worktree. The lead authorised the release and the push of <code>main</code> to upstream on 2026-11-13. imas-codex then bumps both pins in its <code>pyproject.toml</code> and syncs its graph grammar snapshot under <code>sn-definitions-by-construction</code>.</p>
-    <p>Done when: a tag above <code>v0.11.1</code> carrying §2 is pushed to upstream, its publish workflow is green, and PyPI lists that version; the six names of §2 parse under the published package installed from PyPI, not from the checkout.</p>
+    <p>Once §2 lands, a release candidate is cut from <code>main</code> with the release CLI, which the coordinator runs from the main checkout after CI is green on upstream; the CLI refuses a detached worktree. The lead authorised the release and the push of <code>main</code> to upstream on 2026-11-13. Raising the consumer's pins and syncing its grammar snapshot is imas-codex's own work under <code>sn-definitions-by-construction</code> and is not part of this section.</p>
+    <p>Done when: a tag above <code>v0.11.1</code> carrying §2 is pushed to upstream, its publish workflow is green, and PyPI lists that version; the six names of §2 parse under that version installed from PyPI into a fresh environment, and the same six are refused by <code>v0.11.1</code> installed the same way, with the package importing from that environment's site-packages in both checks.</p>
 
     <section data-reckon="followups" id="followups" class="r-followups">
 <h2><span class="sec">§</span> Followups</h2>
