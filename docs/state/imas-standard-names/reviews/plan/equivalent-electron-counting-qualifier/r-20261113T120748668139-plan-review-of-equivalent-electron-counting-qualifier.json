@@ -1,0 +1,51 @@
+{
+  "absent_items": [],
+  "completed_at": "2026-11-13T12:17:04.268Z",
+  "dispatched_at": "2026-11-13T12:08:15Z",
+  "findings": [
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/equivalent-electron-counting-qualifier.html:35",
+      "id": "reasoning-1",
+      "reason": "the rename population bounds how many names the grammar word is expected to carry and which ones imas-codex must respell, so a worker sizing the change from this sentence starts from a number its own evidence contradicts.",
+      "text": "the sentence says the readers \"disagree on 4 more\" names, but the record it cites (`two-reader-agreement.json`, 1,975 rows) has 42 names both readers flag with equivalent-electron wording and exactly 2 further names where one reader flags and the other passes (`deuterium_source_rate_due_to_injection`, `tritium_source_rate_due_to_injection`), so the two-reader population is 44, not 46; the sibling plan the reviewer checked puts the rewrite population at 61 under its two-of-three-readers rule, which makes the size of the set this word must serve the one figure the section states without a source",
+      "type": "reasoning",
+      "would_change": true
+    },
+    {
+      "anchor": "/home/ITER/mcintos/Code/imas-standard-names/docs/plans/equivalent-electron-counting-qualifier.html:55",
+      "id": "evidence_paths-1",
+      "reason": "without a durable record the negative arm is unfalsifiable after the fact, and the section would ship a claim a later reader can only take on trust, which is the gap \u00a72 already closes for its own gate.",
+      "text": "the done-when requires two contrasted installs (the new tag accepting the six names, `v0.11.1` refusing them) and names no committed log or evidence path, so the one result that distinguishes the release from its predecessor survives only in the transcript of whoever ran it, while \u00a72 explicitly requires \"a committed log ending with its exit status\" for \u00a72's suite",
+      "type": "evidence_paths",
+      "would_change": true
+    }
+  ],
+  "plan_commit": "cc83f8791a07365286ad13e9aac9e18e425db8bb",
+  "plan_fingerprint": "3ba6189753779e42bd83e56299342a65ae5df447a511835a03561ca97f736ce2",
+  "plan_slug": "equivalent-electron-counting-qualifier",
+  "plan_version": 4,
+  "project": "imas-standard-names",
+  "responses": {},
+  "review_run_id": "r-20261113T120748668139-plan-review-of-equivalent-electron-counting-qualifier",
+  "reviewed_blob_sha": "9b267529592c158857b6b9edbc20b548e39ebbb0",
+  "rubric": "content",
+  "rubric_items": {
+    "anchors_resolve": "pass \u2014 `v0.11.1` resolves as both a repository tag and a PyPI release, the two cited absolute paths exist, and the extensionless plan reference resolves under the docs convention.",
+    "done_when": "pass \u2014 \u00a73's done-when now names a negative control (the same six names refused by `v0.11.1` installed the same way) and both arms are readable off the published index; the control is live, since strict parsing refuses all four spellings tested on the current tree.",
+    "evidence_paths": "a finding \u2014 \u00a73's done-when leaves no durable record of either install arm, while \u00a72's does.",
+    "naming": "pass \u2014 \u00a73 introduces no symbol, file or stage label, and the document-level metadata carries no plan or ticket identifier.",
+    "reasoning": "a finding \u2014 \u00a71's revised evidence sentence states that the two readers \"disagree on 4 more\", and the cited record contains 2 such names.",
+    "single_goal": "pass \u2014 \u00a73 now states that raising the consumer's pins and syncing its snapshot is imas-codex's own work, leaving one deliverable (the tagged published release) measured by its own gate.",
+    "wiring": "pass \u2014 `plan-section-depends-on` declares `s3` on `#s2`, the block map names `imas-codex:sn-definitions-by-construction`, and that plan contains the consumer-side equivalent-electron ruling the exclusion points to."
+  },
+  "section_digests": {
+    "_document": "1e07da856b47a6966a181b9d06db4b3c846511a4edbd31a498226a9690a84fb9",
+    "s1": "dab2fd089a92e4c3c08adb38fb4696fa66812aeb61cd2034a1951b63109c78d4",
+    "s2": "ef9838650c5d3049f1ecd447b8d87dc549a444fe92a1361c655a7f6ade20c36d",
+    "s3": "46c85e99e4b9f8cf3b330d764c759e2bfe9cab23e1fda25277a60dfcf5800124"
+  },
+  "status": "ready",
+  "times_source": "run-record",
+  "timestamp": "2026-11-13T12:42:25.731038+00:00",
+  "total": null
+}
