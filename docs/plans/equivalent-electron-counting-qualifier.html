@@ -7,7 +7,7 @@
   <meta name="reckon-type" content="plan">
   <meta name="plan-slug" content="equivalent-electron-counting-qualifier">
   <meta name="plan-title" content="A Name Can Say It Counts Equivalent Electrons">
-  <meta name="plan-summary" content="One grammar word for counts and rates in equivalent electrons, so 64 gas-injection names can say what their definitions say, then a release.">
+  <meta name="plan-summary" content="One grammar word for counts and rates in equivalent electrons, so gas-injection names can say what their definitions say, then a release.">
   <meta name="plan-status" content="active">
   <meta name="plan-roi" content="high">
   <meta name="plan-effort-hours" content="3.0">
@@ -24,7 +24,7 @@
   <title>A Name Can Say It Counts Equivalent Electrons | imas-standard-names</title>
   <link rel="stylesheet" href="/_shared/foundation.css">
   <link rel="stylesheet" href="/_shared/dashboard.css">
-<meta name="plan-version" content="1">
+<meta name="plan-version" content="3">
 <meta name="plan-modified" content="2026-11-13">
 </head>
 <body>
@@ -32,8 +32,8 @@
     <h2 id="s1">§1 — A count that is not a count of atoms</h2>
     <section data-reckon="section" data-id="s1" data-effort-hours="0.25" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="standard" data-capability-verification="strict" data-capability-risk="low" data-status="done" data-links=""></section>
     <p>The Data Dictionary stores gas-injection inventories and rates in equivalent electrons: each injected atom or molecule contributes as many units as it carries electrons. The published catalog names these quantities as plain counts and rates. <code>accumulated_argon_count</code> is defined as 18 units per argon atom, <code>lithium_source_rate_due_to_gas_injection</code> as 3 per atom, <code>accumulated_ammonia_count</code> as 10 per molecule. A reader of the name expects atoms and is wrong by the atomic number.</p>
-    <p>A name-against-definition reading of the 1,977 names published in catalog release candidate <code>v0.4.0rc8</code> found 64 such names. They are listed, with the phrase each definition uses, as the findings carrying the <code>equivalent-electron-count</code> family in <code>/home/ITER/mcintos/Code/imas-codex/docs/evidence/fragments/sn-definitions-by-construction/name-definition-seat-catalog.json</code> (imas-codex <code>4da5d1034</code>). The lead ruled on 2026-11-13 that the definitions stay, because they describe the stored data, and the names are regenerated to state the convention.</p>
-    <p>The grammar cannot spell that today. On 2026-11-13 imas-codex's signed rename refused <code>accumulated_argon_equivalent_electron_count</code>: the spelling matches no physical base. The lead authorised a new token and a grammar release the same day. Of the 64 names, 42 are counts (<code>…_count</code>, <code>…_prefill_count</code>) and 22 are rates (<code>…_source_rate</code>), so one word must serve both.</p>
+    <p>Two blind readers read all 1,975 names published in catalog release candidate <code>v0.4.0rc8</code>. Both flag 42 count and rate names whose definitions use equivalent-electron wording, and they disagree on 4 more. The names and the phrase each reader quoted are in <code>/home/ITER/mcintos/Code/imas-codex/docs/evidence/fragments/sn-name-definition-catalog-reading/two-reader-agreement.json</code> (imas-codex <code>fc26c2f4d</code>). The lead ruled on 2026-11-13 that the definitions stay, because they describe the stored data, and the names are regenerated to state the convention.</p>
+    <p>The grammar cannot spell that today. On 2026-11-13 imas-codex's signed rename refused <code>accumulated_argon_equivalent_electron_count</code>: the spelling matches no physical base. The lead authorised a new token and a grammar release the same day. The flagged names include both counts (<code>…_count</code>, <code>…_prefill_count</code>) and rates (<code>…_source_rate</code>), so one word must serve both.</p>
 
     <h2 id="s2">§2 — One word for the equivalent-electron convention</h2>
     <section data-reckon="section" data-id="s2" data-effort-hours="1.75" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable" data-links=""></section>
