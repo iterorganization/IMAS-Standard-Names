@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="docs-project" content="imas-standard-names">
+  <meta name="reckon-type" content="plan">
+  <meta name="plan-slug" content="equivalent-electron-counting-qualifier">
+  <meta name="plan-title" content="A Name Can Say It Counts Equivalent Electrons">
+  <meta name="plan-summary" content="One grammar word for counts and rates in equivalent electrons, so 64 gas-injection names can say what their definitions say, then a release.">
+  <meta name="plan-status" content="active">
+  <meta name="plan-roi" content="high">
+  <meta name="plan-effort-hours" content="3.0">
+  <meta name="plan-capability-version" content="1.0">
+  <meta name="plan-capability-class" content="general">
+  <meta name="plan-capability-reasoning" content="deep">
+  <meta name="plan-capability-verification" content="strict">
+  <meta name="plan-capability-risk" content="moderate">
+  <meta name="plan-owner" content="Simon McIntosh">
+  <meta name="plan-tags" content="grammar,vocabulary,release">
+  <meta name="plan-blocks" content="imas-codex:sn-definitions-by-construction">
+  <meta name="plan-section-depends-on" content="{&quot;s3&quot;: [&quot;equivalent-electron-counting-qualifier#s2&quot;]}">
+  <meta name="plan-section-declarations" content="{&quot;s1&quot;:&quot;done&quot;,&quot;s2&quot;:&quot;implementable&quot;,&quot;s3&quot;:&quot;implementable&quot;}">
+  <title>A Name Can Say It Counts Equivalent Electrons | imas-standard-names</title>
+  <link rel="stylesheet" href="/_shared/foundation.css">
+  <link rel="stylesheet" href="/_shared/dashboard.css">
+<meta name="plan-version" content="0">
+<meta name="plan-modified" content="2026-11-13">
+</head>
+<body>
+  <main class="plan-doc">
+    <h2 id="s1">§1 — A count that is not a count of atoms</h2>
+    <section data-reckon="section" data-id="s1" data-effort-hours="0.25" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="standard" data-capability-verification="strict" data-capability-risk="low" data-status="done" data-links=""></section>
+    <p>The Data Dictionary stores gas-injection inventories and rates in equivalent electrons: each injected atom or molecule contributes as many units as it carries electrons. The published catalog names these quantities as plain counts and rates. <code>accumulated_argon_count</code> is defined as 18 units per argon atom, <code>lithium_source_rate_due_to_gas_injection</code> as 3 per atom, <code>accumulated_ammonia_count</code> as 10 per molecule. A reader of the name expects atoms and is wrong by the atomic number.</p>
+    <p>A name-against-definition reading of the 1,977 names published in catalog release candidate <code>v0.4.0rc8</code> found 64 such names. They are listed, with the phrase each definition uses, as the findings carrying the <code>equivalent-electron-count</code> family in <code>/home/ITER/mcintos/Code/imas-codex/docs/evidence/fragments/sn-definitions-by-construction/name-definition-seat-catalog.json</code> (imas-codex <code>4da5d1034</code>). The lead ruled on 2026-11-13 that the definitions stay, because they describe the stored data, and the names are regenerated to state the convention.</p>
+    <p>The grammar cannot spell that today. On 2026-11-13 imas-codex's signed rename refused <code>accumulated_argon_equivalent_electron_count</code>: the spelling matches no physical base. The lead authorised a new token and a grammar release the same day. Of the 64 names, 42 are counts (<code>…_count</code>, <code>…_prefill_count</code>) and 22 are rates (<code>…_source_rate</code>), so one word must serve both.</p>
+
+    <h2 id="s2">§2 — One word for the equivalent-electron convention</h2>
+    <section data-reckon="section" data-id="s2" data-effort-hours="1.75" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="deep" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable" data-links=""></section>
+    <p>The grammar gains the vocabulary a name needs to say that its count or rate is expressed in equivalent electrons. It is one addition that composes with the existing count and source-rate bases and with the species, accumulation, prefill and process tokens those names already use. It is not a new base per quantity. The word reads <code>equivalent_electron</code> and sits directly before the base, so the argon inventory is <code>accumulated_argon_equivalent_electron_count</code> and the lithium rate is <code>lithium_equivalent_electron_source_rate_due_to_gas_injection</code>. If the grammar's canonical order forces a different position, the spelling it does produce is reported for the lead before it is merged, with the reason.</p>
+    <p>Done when:</p>
+    <ul>
+      <li>each of these six names parses, renders back to the same string, and reports the equivalent-electron convention as a distinct part of its parse rather than as part of a species or a base: <code>accumulated_argon_equivalent_electron_count</code>, <code>accumulated_ammonia_equivalent_electron_count</code>, <code>neon_equivalent_electron_prefill_count</code>, <code>accumulated_oxygen_equivalent_electron_prefill_count_due_to_gas_injection</code>, <code>lithium_equivalent_electron_source_rate_due_to_gas_injection</code>, <code>total_equivalent_electron_source_rate_at_wall_due_to_gas_injection</code>;</li>
+      <li>the six plain names they replace still parse as they do at the base revision, and no name in the grammar's own round-trip corpus changes its parse;</li>
+      <li>the word is refused on a base it has no meaning for, shown on <code>argon_equivalent_electron_temperature</code>, and a test fails when the word is removed from the vocabulary;</li>
+      <li>the word carries a definition that states the convention (one unit per electron carried by the injected atom or molecule) and is listed wherever the grammar documents its vocabulary, so a composer can find it;</li>
+      <li>the grammar test suite passes on a compute partition with no failure added against the base revision, in a committed log ending with its exit status.</li>
+    </ul>
+
+    <h2 id="s3">§3 — The grammar is released and handed to imas-codex</h2>
+    <section data-reckon="section" data-id="s3" data-effort-hours="1.0" data-capability-version="1.0" data-capability-class="general" data-capability-reasoning="standard" data-capability-verification="strict" data-capability-risk="moderate" data-status="implementable" data-links="equivalent-electron-counting-qualifier#s2"></section>
+    <p>Once §2 lands, a release candidate is cut from <code>main</code> with the release CLI, which the coordinator runs from the main checkout after CI is green on upstream; the CLI refuses a detached worktree. The lead authorised the release and the push of <code>main</code> to upstream on 2026-11-13. imas-codex then bumps both pins in its <code>pyproject.toml</code> and syncs its graph grammar snapshot under <code>sn-definitions-by-construction</code>.</p>
+    <p>Done when: a tag above <code>v0.11.1</code> carrying §2 is pushed to upstream, its publish workflow is green, and PyPI lists that version; the six names of §2 parse under the published package installed from PyPI, not from the checkout.</p>
+
+    <section data-reckon="followups" id="followups" class="r-followups">
+<h2><span class="sec">§</span> Followups</h2>
+<article class="r-fu" data-id="f-eecq-001" data-status="open" data-capability-version="1.0" data-capability-class="general" data-written-by="reckon-create" data-written-at="2026-11-13" data-recommends-skill="" data-resolved-at="" data-resolved-by="">
+    <h4 class="r-fu-title">Add the equivalent-electron word, then release</h4>
+    <div class="r-fu-body"><p>§2 is ready. §3 follows it.</p></div>
+    <pre class="r-fu-prompt">/reckon-build equivalent-electron-counting-qualifier</pre>
+    </article>
+</section>
+  </main>
+</body>
+</html>
