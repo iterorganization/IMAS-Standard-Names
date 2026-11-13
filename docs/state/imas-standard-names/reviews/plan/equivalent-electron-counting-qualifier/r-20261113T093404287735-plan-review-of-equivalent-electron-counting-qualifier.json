@@ -59,9 +59,28 @@
       "note": "The plan adopts the lead-ruled spelling equivalent_electron and retires the recorded electron_equivalent placeholder in the same change, with a done-when item that no test expects the convention absent.",
       "reason": "",
       "when": "2026-11-13T11:36:23.571396+00:00"
+    },
+    {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "finding": "deep_module-1",
+      "note": "The order is ruled: the word is next to the base, after prefill; the two prefill names in the done-when are respelled and the other order is shown not to render.",
+      "reason": "",
+      "when": "2026-11-13T11:36:35.739710+00:00"
     }
   ],
   "responses": {
+    "deep_module-1": {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "note": "The order is ruled: the word is next to the base, after prefill; the two prefill names in the done-when are respelled and the other order is shown not to render.",
+      "reason": "",
+      "when": "2026-11-13T11:36:35.739710+00:00"
+    },
     "reuse_search-1": {
       "action": "acted",
       "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
