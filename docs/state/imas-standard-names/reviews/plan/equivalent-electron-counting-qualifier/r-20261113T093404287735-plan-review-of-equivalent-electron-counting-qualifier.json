@@ -69,6 +69,16 @@
       "note": "The order is ruled: the word is next to the base, after prefill; the two prefill names in the done-when are respelled and the other order is shown not to render.",
       "reason": "",
       "when": "2026-11-13T11:36:35.739710+00:00"
+    },
+    {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "finding": "thin_wrapper-1",
+      "note": "The refusal on a meaningless base is dropped; the plan states no word of this kind is base-restricted and this one is not made the exception.",
+      "reason": "",
+      "when": "2026-11-13T11:36:47.656504+00:00"
     }
   ],
   "responses": {
@@ -89,6 +99,15 @@
       "note": "The plan adopts the lead-ruled spelling equivalent_electron and retires the recorded electron_equivalent placeholder in the same change, with a done-when item that no test expects the convention absent.",
       "reason": "",
       "when": "2026-11-13T11:36:23.571396+00:00"
+    },
+    "thin_wrapper-1": {
+      "action": "acted",
+      "by": "07a8cbfa-1dc5-41ed-bf84-0d88174bdbe9",
+      "commit": "2ed75e1c8dc71bc16f1c4df17d15ca6339fbfcc8",
+      "commit_basis": "edit",
+      "note": "The refusal on a meaningless base is dropped; the plan states no word of this kind is base-restricted and this one is not made the exception.",
+      "reason": "",
+      "when": "2026-11-13T11:36:47.656504+00:00"
     }
   },
   "review_path": "/home/ITER/mcintos/Code/imas-standard-names/docs/state/imas-standard-names/reviews/plan/equivalent-electron-counting-qualifier/r-20261113T093404287735-plan-review-of-equivalent-electron-counting-qualifier.json",
