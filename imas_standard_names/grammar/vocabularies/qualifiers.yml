@@ -321,3 +321,6 @@
 - tangency  # Selects the closest-approach geometry where a beam centreline is tangent to a toroidal circle.
 
 - sourced  # Selects the additive contribution supplied by a source term to the named physical quantity, rather than the total quantity. It does not assert a particular mechanism or external origin, and it preserves the dimensions of the named quantity rather than introducing a temporal derivative.
+
+# Unit convention; its definition is held in conventions/concepts.yml.
+- equivalent_electron

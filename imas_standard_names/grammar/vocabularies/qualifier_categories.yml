@@ -158,10 +158,11 @@ qualifier_categories:
     # time_average -> time_averaged reduction operator (operators.yml), not a
     # base-binding qualifier.
 
-  # Dimensionless / normalized forms
+  # Normalized forms and unit conventions
   normalized:
     - bohm
     - ejima
+    - equivalent_electron
     - greenwald
     - gyro_bohm
     - ipb98y2
