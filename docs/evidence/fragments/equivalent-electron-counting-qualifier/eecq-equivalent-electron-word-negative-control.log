@@ -1,0 +1,1361 @@
+# revision: 135c42e6217f3631e704ec5bcdfe24787bd6b321; mutation: remove equivalent_electron from qualifiers.yml; tree: /tmp/isn-head-1314015-k2jQ; partition: all_debug; command: timeout 120 uv run --no-sync --directory /tmp/isn-head-1314015-k2jQ pytest -q -p no:cacheprovider --basetemp /tmp/isn-head-1314015-k2jQ/negative-pytest /tmp/isn-head-1314015-k2jQ/tests/test_equivalent_electron_word.py 
+# module: /tmp/isn-head-1314015-k2jQ/imas_standard_names/grammar/parser.py
+# cwd: /tmp/isn-head-1314015-k2jQ
+FFFFFFFF......FFFFFF                                                     [100%]
+=================================== FAILURES ===================================
+_ test_equivalent_electron_is_a_distinct_qualifier[accumulated_argon_equivalent_electron_count] _
+
+name = 'accumulated_argon_equivalent_electron_count'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_equivalent_electron_is_a_distinct_qualifier(name: str) -> None:
+>       ir = parse(name, strict=True).ir
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/parser.py:2250: in parse
+    result = _parse_uncached(name, v, strict=strict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+imas_standard_names/grammar/parser.py:2189: in _parse_uncached
+    base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'accumulated_argon_equivalent_electron_count'
+v = Vocabularies(axes=frozenset({'z', 'normalized_toroidal', 'perpendicular', 'normalized_radial', 'radial', 'poloidal', '...qualifiable_loci=frozenset({'strike_point', 'divertor_plate', 'divertor_target', 'x_point', 'midplane', 'separatrix'}))
+_allow_projection = True
+
+    def _match_base_with_qualifiers(
+        s: str, v: Vocabularies, *, _allow_projection: bool = True
+    ) -> tuple[QuantityOrCarrier, list[Qualifier], AxisProjection | None]:
+        """Match ``s`` as ``[axis_][qualifier_]*(base|carrier)``.
+    
+        Resolution priority: carrier > base > axis > qualifier.
+    
+        When ``_allow_projection`` is True (the default), an axis prefix
+        followed by a resolvable base/carrier is interpreted as a projection:
+        axis + quantity base → COMPONENT, axis + carrier → COORDINATE.
+        Nested projections (projection inside a projection) are blocked by
+        recursing with ``_allow_projection=False``.
+    
+        Returns ``(base_or_carrier, qualifiers, projection_or_none)``.
+        """
+    
+        if s in v.carrier_aliases:
+            return (
+                QuantityOrCarrier(token=v.carrier_aliases[s], kind=BaseKind.GEOMETRY),
+                [],
+                None,
+            )
+        if s in v.base_aliases:
+            return (
+                QuantityOrCarrier(token=v.base_aliases[s], kind=BaseKind.QUANTITY),
+                [],
+                None,
+            )
+        if s in v.carriers:
+            return QuantityOrCarrier(token=s, kind=BaseKind.GEOMETRY), [], None
+        if s in v.bases:
+            return QuantityOrCarrier(token=s, kind=BaseKind.QUANTITY), [], None
+    
+        parts = s.split("_")
+    
+        # A plane token may also be a projection axis (poloidal). When the
+        # remainder is explicitly cross-sectional, the section-plane reading is
+        # authoritative and must win before projection matching.
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            section_plane = v.section_planes.get(prefix)
+            if section_plane is None or not rest:
+                continue
+            try:
+                base, deeper, inner_proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=False
+                )
+            except ParseError:
+                continue
+            cross_sectional = base.token == "cross_section" or any(
+                qualifier.token == "cross_sectional" for qualifier in deeper
+            )
+            if inner_proj is not None or not cross_sectional:
+                continue
+            return (
+                base,
+                [Qualifier(token=section_plane, category="section_plane"), *deeper],
+                None,
+            )
+    
+        # --- Priority 3: axis prefix → projection ---
+        if _allow_projection:
+            projection_axes = v.axes | v.component_axes
+            for split in range(len(parts) - 1, 0, -1):
+                prefix = "_".join(parts[:split])
+                rest = "_".join(parts[split:])
+                if prefix not in projection_axes or not rest:
+                    continue
+                try:
+                    base, quals, inner_proj = _match_base_with_qualifiers(
+                        rest, v, _allow_projection=False
+                    )
+                except ParseError:
+                    continue
+                if inner_proj is not None:
+                    continue  # nested projections not allowed
+                shape = (
+                    ProjectionShape.COORDINATE
+                    if base.kind is BaseKind.GEOMETRY
+                    else ProjectionShape.COMPONENT
+                )
+                allowed_axes = (
+                    v.axes
+                    if shape is ProjectionShape.COORDINATE
+                    else (v.component_axes or v.axes)
+                )
+                if prefix not in allowed_axes:
+                    continue
+                return base, quals, AxisProjection(axis=prefix, shape=shape)
+    
+        # --- Priority 4: qualifier prefix ---
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            if prefix not in v.qualifiers:
+                continue
+            if not rest:
+                continue
+            try:
+                base, deeper, proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=_allow_projection
+                )
+            except ParseError:
+                continue
+            return (
+                base,
+                [
+                    Qualifier(token=prefix, category=v.qualifier_categories.get(prefix)),
+                    *deeper,
+                ],
+                proj,
+            )
+    
+        suggestions = get_close_matches(s, list(v.base_universe()), n=3)
+>       raise ParseError(
+            f"residue {s!r} does not match any physical_base or geometry_carrier; "
+            f"nearest candidates: {suggestions or '(none)'}",
+            suggestions=suggestions,
+            residue=s,
+        )
+E       imas_standard_names.grammar.parser.ParseError: residue 'accumulated_argon_equivalent_electron_count' does not match any physical_base or geometry_carrier; nearest candidates: (none)
+
+imas_standard_names/grammar/parser.py:1435: ParseError
+_ test_equivalent_electron_is_a_distinct_qualifier[accumulated_ammonia_equivalent_electron_count] _
+
+name = 'accumulated_ammonia_equivalent_electron_count'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_equivalent_electron_is_a_distinct_qualifier(name: str) -> None:
+>       ir = parse(name, strict=True).ir
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/parser.py:2250: in parse
+    result = _parse_uncached(name, v, strict=strict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+imas_standard_names/grammar/parser.py:2189: in _parse_uncached
+    base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'accumulated_ammonia_equivalent_electron_count'
+v = Vocabularies(axes=frozenset({'z', 'normalized_toroidal', 'perpendicular', 'normalized_radial', 'radial', 'poloidal', '...qualifiable_loci=frozenset({'strike_point', 'divertor_plate', 'divertor_target', 'x_point', 'midplane', 'separatrix'}))
+_allow_projection = True
+
+    def _match_base_with_qualifiers(
+        s: str, v: Vocabularies, *, _allow_projection: bool = True
+    ) -> tuple[QuantityOrCarrier, list[Qualifier], AxisProjection | None]:
+        """Match ``s`` as ``[axis_][qualifier_]*(base|carrier)``.
+    
+        Resolution priority: carrier > base > axis > qualifier.
+    
+        When ``_allow_projection`` is True (the default), an axis prefix
+        followed by a resolvable base/carrier is interpreted as a projection:
+        axis + quantity base → COMPONENT, axis + carrier → COORDINATE.
+        Nested projections (projection inside a projection) are blocked by
+        recursing with ``_allow_projection=False``.
+    
+        Returns ``(base_or_carrier, qualifiers, projection_or_none)``.
+        """
+    
+        if s in v.carrier_aliases:
+            return (
+                QuantityOrCarrier(token=v.carrier_aliases[s], kind=BaseKind.GEOMETRY),
+                [],
+                None,
+            )
+        if s in v.base_aliases:
+            return (
+                QuantityOrCarrier(token=v.base_aliases[s], kind=BaseKind.QUANTITY),
+                [],
+                None,
+            )
+        if s in v.carriers:
+            return QuantityOrCarrier(token=s, kind=BaseKind.GEOMETRY), [], None
+        if s in v.bases:
+            return QuantityOrCarrier(token=s, kind=BaseKind.QUANTITY), [], None
+    
+        parts = s.split("_")
+    
+        # A plane token may also be a projection axis (poloidal). When the
+        # remainder is explicitly cross-sectional, the section-plane reading is
+        # authoritative and must win before projection matching.
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            section_plane = v.section_planes.get(prefix)
+            if section_plane is None or not rest:
+                continue
+            try:
+                base, deeper, inner_proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=False
+                )
+            except ParseError:
+                continue
+            cross_sectional = base.token == "cross_section" or any(
+                qualifier.token == "cross_sectional" for qualifier in deeper
+            )
+            if inner_proj is not None or not cross_sectional:
+                continue
+            return (
+                base,
+                [Qualifier(token=section_plane, category="section_plane"), *deeper],
+                None,
+            )
+    
+        # --- Priority 3: axis prefix → projection ---
+        if _allow_projection:
+            projection_axes = v.axes | v.component_axes
+            for split in range(len(parts) - 1, 0, -1):
+                prefix = "_".join(parts[:split])
+                rest = "_".join(parts[split:])
+                if prefix not in projection_axes or not rest:
+                    continue
+                try:
+                    base, quals, inner_proj = _match_base_with_qualifiers(
+                        rest, v, _allow_projection=False
+                    )
+                except ParseError:
+                    continue
+                if inner_proj is not None:
+                    continue  # nested projections not allowed
+                shape = (
+                    ProjectionShape.COORDINATE
+                    if base.kind is BaseKind.GEOMETRY
+                    else ProjectionShape.COMPONENT
+                )
+                allowed_axes = (
+                    v.axes
+                    if shape is ProjectionShape.COORDINATE
+                    else (v.component_axes or v.axes)
+                )
+                if prefix not in allowed_axes:
+                    continue
+                return base, quals, AxisProjection(axis=prefix, shape=shape)
+    
+        # --- Priority 4: qualifier prefix ---
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            if prefix not in v.qualifiers:
+                continue
+            if not rest:
+                continue
+            try:
+                base, deeper, proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=_allow_projection
+                )
+            except ParseError:
+                continue
+            return (
+                base,
+                [
+                    Qualifier(token=prefix, category=v.qualifier_categories.get(prefix)),
+                    *deeper,
+                ],
+                proj,
+            )
+    
+        suggestions = get_close_matches(s, list(v.base_universe()), n=3)
+>       raise ParseError(
+            f"residue {s!r} does not match any physical_base or geometry_carrier; "
+            f"nearest candidates: {suggestions or '(none)'}",
+            suggestions=suggestions,
+            residue=s,
+        )
+E       imas_standard_names.grammar.parser.ParseError: residue 'accumulated_ammonia_equivalent_electron_count' does not match any physical_base or geometry_carrier; nearest candidates: (none)
+
+imas_standard_names/grammar/parser.py:1435: ParseError
+_ test_equivalent_electron_is_a_distinct_qualifier[neon_prefill_equivalent_electron_count] _
+
+name = 'neon_prefill_equivalent_electron_count'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_equivalent_electron_is_a_distinct_qualifier(name: str) -> None:
+>       ir = parse(name, strict=True).ir
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/parser.py:2250: in parse
+    result = _parse_uncached(name, v, strict=strict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+imas_standard_names/grammar/parser.py:2189: in _parse_uncached
+    base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'neon_prefill_equivalent_electron_count'
+v = Vocabularies(axes=frozenset({'z', 'normalized_toroidal', 'perpendicular', 'normalized_radial', 'radial', 'poloidal', '...qualifiable_loci=frozenset({'strike_point', 'divertor_plate', 'divertor_target', 'x_point', 'midplane', 'separatrix'}))
+_allow_projection = True
+
+    def _match_base_with_qualifiers(
+        s: str, v: Vocabularies, *, _allow_projection: bool = True
+    ) -> tuple[QuantityOrCarrier, list[Qualifier], AxisProjection | None]:
+        """Match ``s`` as ``[axis_][qualifier_]*(base|carrier)``.
+    
+        Resolution priority: carrier > base > axis > qualifier.
+    
+        When ``_allow_projection`` is True (the default), an axis prefix
+        followed by a resolvable base/carrier is interpreted as a projection:
+        axis + quantity base → COMPONENT, axis + carrier → COORDINATE.
+        Nested projections (projection inside a projection) are blocked by
+        recursing with ``_allow_projection=False``.
+    
+        Returns ``(base_or_carrier, qualifiers, projection_or_none)``.
+        """
+    
+        if s in v.carrier_aliases:
+            return (
+                QuantityOrCarrier(token=v.carrier_aliases[s], kind=BaseKind.GEOMETRY),
+                [],
+                None,
+            )
+        if s in v.base_aliases:
+            return (
+                QuantityOrCarrier(token=v.base_aliases[s], kind=BaseKind.QUANTITY),
+                [],
+                None,
+            )
+        if s in v.carriers:
+            return QuantityOrCarrier(token=s, kind=BaseKind.GEOMETRY), [], None
+        if s in v.bases:
+            return QuantityOrCarrier(token=s, kind=BaseKind.QUANTITY), [], None
+    
+        parts = s.split("_")
+    
+        # A plane token may also be a projection axis (poloidal). When the
+        # remainder is explicitly cross-sectional, the section-plane reading is
+        # authoritative and must win before projection matching.
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            section_plane = v.section_planes.get(prefix)
+            if section_plane is None or not rest:
+                continue
+            try:
+                base, deeper, inner_proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=False
+                )
+            except ParseError:
+                continue
+            cross_sectional = base.token == "cross_section" or any(
+                qualifier.token == "cross_sectional" for qualifier in deeper
+            )
+            if inner_proj is not None or not cross_sectional:
+                continue
+            return (
+                base,
+                [Qualifier(token=section_plane, category="section_plane"), *deeper],
+                None,
+            )
+    
+        # --- Priority 3: axis prefix → projection ---
+        if _allow_projection:
+            projection_axes = v.axes | v.component_axes
+            for split in range(len(parts) - 1, 0, -1):
+                prefix = "_".join(parts[:split])
+                rest = "_".join(parts[split:])
+                if prefix not in projection_axes or not rest:
+                    continue
+                try:
+                    base, quals, inner_proj = _match_base_with_qualifiers(
+                        rest, v, _allow_projection=False
+                    )
+                except ParseError:
+                    continue
+                if inner_proj is not None:
+                    continue  # nested projections not allowed
+                shape = (
+                    ProjectionShape.COORDINATE
+                    if base.kind is BaseKind.GEOMETRY
+                    else ProjectionShape.COMPONENT
+                )
+                allowed_axes = (
+                    v.axes
+                    if shape is ProjectionShape.COORDINATE
+                    else (v.component_axes or v.axes)
+                )
+                if prefix not in allowed_axes:
+                    continue
+                return base, quals, AxisProjection(axis=prefix, shape=shape)
+    
+        # --- Priority 4: qualifier prefix ---
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            if prefix not in v.qualifiers:
+                continue
+            if not rest:
+                continue
+            try:
+                base, deeper, proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=_allow_projection
+                )
+            except ParseError:
+                continue
+            return (
+                base,
+                [
+                    Qualifier(token=prefix, category=v.qualifier_categories.get(prefix)),
+                    *deeper,
+                ],
+                proj,
+            )
+    
+        suggestions = get_close_matches(s, list(v.base_universe()), n=3)
+>       raise ParseError(
+            f"residue {s!r} does not match any physical_base or geometry_carrier; "
+            f"nearest candidates: {suggestions or '(none)'}",
+            suggestions=suggestions,
+            residue=s,
+        )
+E       imas_standard_names.grammar.parser.ParseError: residue 'neon_prefill_equivalent_electron_count' does not match any physical_base or geometry_carrier; nearest candidates: (none)
+
+imas_standard_names/grammar/parser.py:1435: ParseError
+_ test_equivalent_electron_is_a_distinct_qualifier[accumulated_oxygen_prefill_equivalent_electron_count_due_to_gas_injection] _
+
+name = 'accumulated_oxygen_prefill_equivalent_electron_count_due_to_gas_injection'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_equivalent_electron_is_a_distinct_qualifier(name: str) -> None:
+>       ir = parse(name, strict=True).ir
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/parser.py:2250: in parse
+    result = _parse_uncached(name, v, strict=strict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+imas_standard_names/grammar/parser.py:2189: in _parse_uncached
+    base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'accumulated_oxygen_prefill_equivalent_electron_count'
+v = Vocabularies(axes=frozenset({'z', 'normalized_toroidal', 'perpendicular', 'normalized_radial', 'radial', 'poloidal', '...qualifiable_loci=frozenset({'strike_point', 'divertor_plate', 'divertor_target', 'x_point', 'midplane', 'separatrix'}))
+_allow_projection = True
+
+    def _match_base_with_qualifiers(
+        s: str, v: Vocabularies, *, _allow_projection: bool = True
+    ) -> tuple[QuantityOrCarrier, list[Qualifier], AxisProjection | None]:
+        """Match ``s`` as ``[axis_][qualifier_]*(base|carrier)``.
+    
+        Resolution priority: carrier > base > axis > qualifier.
+    
+        When ``_allow_projection`` is True (the default), an axis prefix
+        followed by a resolvable base/carrier is interpreted as a projection:
+        axis + quantity base → COMPONENT, axis + carrier → COORDINATE.
+        Nested projections (projection inside a projection) are blocked by
+        recursing with ``_allow_projection=False``.
+    
+        Returns ``(base_or_carrier, qualifiers, projection_or_none)``.
+        """
+    
+        if s in v.carrier_aliases:
+            return (
+                QuantityOrCarrier(token=v.carrier_aliases[s], kind=BaseKind.GEOMETRY),
+                [],
+                None,
+            )
+        if s in v.base_aliases:
+            return (
+                QuantityOrCarrier(token=v.base_aliases[s], kind=BaseKind.QUANTITY),
+                [],
+                None,
+            )
+        if s in v.carriers:
+            return QuantityOrCarrier(token=s, kind=BaseKind.GEOMETRY), [], None
+        if s in v.bases:
+            return QuantityOrCarrier(token=s, kind=BaseKind.QUANTITY), [], None
+    
+        parts = s.split("_")
+    
+        # A plane token may also be a projection axis (poloidal). When the
+        # remainder is explicitly cross-sectional, the section-plane reading is
+        # authoritative and must win before projection matching.
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            section_plane = v.section_planes.get(prefix)
+            if section_plane is None or not rest:
+                continue
+            try:
+                base, deeper, inner_proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=False
+                )
+            except ParseError:
+                continue
+            cross_sectional = base.token == "cross_section" or any(
+                qualifier.token == "cross_sectional" for qualifier in deeper
+            )
+            if inner_proj is not None or not cross_sectional:
+                continue
+            return (
+                base,
+                [Qualifier(token=section_plane, category="section_plane"), *deeper],
+                None,
+            )
+    
+        # --- Priority 3: axis prefix → projection ---
+        if _allow_projection:
+            projection_axes = v.axes | v.component_axes
+            for split in range(len(parts) - 1, 0, -1):
+                prefix = "_".join(parts[:split])
+                rest = "_".join(parts[split:])
+                if prefix not in projection_axes or not rest:
+                    continue
+                try:
+                    base, quals, inner_proj = _match_base_with_qualifiers(
+                        rest, v, _allow_projection=False
+                    )
+                except ParseError:
+                    continue
+                if inner_proj is not None:
+                    continue  # nested projections not allowed
+                shape = (
+                    ProjectionShape.COORDINATE
+                    if base.kind is BaseKind.GEOMETRY
+                    else ProjectionShape.COMPONENT
+                )
+                allowed_axes = (
+                    v.axes
+                    if shape is ProjectionShape.COORDINATE
+                    else (v.component_axes or v.axes)
+                )
+                if prefix not in allowed_axes:
+                    continue
+                return base, quals, AxisProjection(axis=prefix, shape=shape)
+    
+        # --- Priority 4: qualifier prefix ---
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            if prefix not in v.qualifiers:
+                continue
+            if not rest:
+                continue
+            try:
+                base, deeper, proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=_allow_projection
+                )
+            except ParseError:
+                continue
+            return (
+                base,
+                [
+                    Qualifier(token=prefix, category=v.qualifier_categories.get(prefix)),
+                    *deeper,
+                ],
+                proj,
+            )
+    
+        suggestions = get_close_matches(s, list(v.base_universe()), n=3)
+>       raise ParseError(
+            f"residue {s!r} does not match any physical_base or geometry_carrier; "
+            f"nearest candidates: {suggestions or '(none)'}",
+            suggestions=suggestions,
+            residue=s,
+        )
+E       imas_standard_names.grammar.parser.ParseError: residue 'accumulated_oxygen_prefill_equivalent_electron_count' does not match any physical_base or geometry_carrier; nearest candidates: (none)
+
+imas_standard_names/grammar/parser.py:1435: ParseError
+_ test_equivalent_electron_is_a_distinct_qualifier[lithium_equivalent_electron_source_rate_due_to_gas_injection] _
+
+name = 'lithium_equivalent_electron_source_rate_due_to_gas_injection'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_equivalent_electron_is_a_distinct_qualifier(name: str) -> None:
+>       ir = parse(name, strict=True).ir
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/parser.py:2250: in parse
+    result = _parse_uncached(name, v, strict=strict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+imas_standard_names/grammar/parser.py:2189: in _parse_uncached
+    base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'lithium_equivalent_electron_source_rate'
+v = Vocabularies(axes=frozenset({'z', 'normalized_toroidal', 'perpendicular', 'normalized_radial', 'radial', 'poloidal', '...qualifiable_loci=frozenset({'strike_point', 'divertor_plate', 'divertor_target', 'x_point', 'midplane', 'separatrix'}))
+_allow_projection = True
+
+    def _match_base_with_qualifiers(
+        s: str, v: Vocabularies, *, _allow_projection: bool = True
+    ) -> tuple[QuantityOrCarrier, list[Qualifier], AxisProjection | None]:
+        """Match ``s`` as ``[axis_][qualifier_]*(base|carrier)``.
+    
+        Resolution priority: carrier > base > axis > qualifier.
+    
+        When ``_allow_projection`` is True (the default), an axis prefix
+        followed by a resolvable base/carrier is interpreted as a projection:
+        axis + quantity base → COMPONENT, axis + carrier → COORDINATE.
+        Nested projections (projection inside a projection) are blocked by
+        recursing with ``_allow_projection=False``.
+    
+        Returns ``(base_or_carrier, qualifiers, projection_or_none)``.
+        """
+    
+        if s in v.carrier_aliases:
+            return (
+                QuantityOrCarrier(token=v.carrier_aliases[s], kind=BaseKind.GEOMETRY),
+                [],
+                None,
+            )
+        if s in v.base_aliases:
+            return (
+                QuantityOrCarrier(token=v.base_aliases[s], kind=BaseKind.QUANTITY),
+                [],
+                None,
+            )
+        if s in v.carriers:
+            return QuantityOrCarrier(token=s, kind=BaseKind.GEOMETRY), [], None
+        if s in v.bases:
+            return QuantityOrCarrier(token=s, kind=BaseKind.QUANTITY), [], None
+    
+        parts = s.split("_")
+    
+        # A plane token may also be a projection axis (poloidal). When the
+        # remainder is explicitly cross-sectional, the section-plane reading is
+        # authoritative and must win before projection matching.
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            section_plane = v.section_planes.get(prefix)
+            if section_plane is None or not rest:
+                continue
+            try:
+                base, deeper, inner_proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=False
+                )
+            except ParseError:
+                continue
+            cross_sectional = base.token == "cross_section" or any(
+                qualifier.token == "cross_sectional" for qualifier in deeper
+            )
+            if inner_proj is not None or not cross_sectional:
+                continue
+            return (
+                base,
+                [Qualifier(token=section_plane, category="section_plane"), *deeper],
+                None,
+            )
+    
+        # --- Priority 3: axis prefix → projection ---
+        if _allow_projection:
+            projection_axes = v.axes | v.component_axes
+            for split in range(len(parts) - 1, 0, -1):
+                prefix = "_".join(parts[:split])
+                rest = "_".join(parts[split:])
+                if prefix not in projection_axes or not rest:
+                    continue
+                try:
+                    base, quals, inner_proj = _match_base_with_qualifiers(
+                        rest, v, _allow_projection=False
+                    )
+                except ParseError:
+                    continue
+                if inner_proj is not None:
+                    continue  # nested projections not allowed
+                shape = (
+                    ProjectionShape.COORDINATE
+                    if base.kind is BaseKind.GEOMETRY
+                    else ProjectionShape.COMPONENT
+                )
+                allowed_axes = (
+                    v.axes
+                    if shape is ProjectionShape.COORDINATE
+                    else (v.component_axes or v.axes)
+                )
+                if prefix not in allowed_axes:
+                    continue
+                return base, quals, AxisProjection(axis=prefix, shape=shape)
+    
+        # --- Priority 4: qualifier prefix ---
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            if prefix not in v.qualifiers:
+                continue
+            if not rest:
+                continue
+            try:
+                base, deeper, proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=_allow_projection
+                )
+            except ParseError:
+                continue
+            return (
+                base,
+                [
+                    Qualifier(token=prefix, category=v.qualifier_categories.get(prefix)),
+                    *deeper,
+                ],
+                proj,
+            )
+    
+        suggestions = get_close_matches(s, list(v.base_universe()), n=3)
+>       raise ParseError(
+            f"residue {s!r} does not match any physical_base or geometry_carrier; "
+            f"nearest candidates: {suggestions or '(none)'}",
+            suggestions=suggestions,
+            residue=s,
+        )
+E       imas_standard_names.grammar.parser.ParseError: residue 'lithium_equivalent_electron_source_rate' does not match any physical_base or geometry_carrier; nearest candidates: (none)
+
+imas_standard_names/grammar/parser.py:1435: ParseError
+_ test_equivalent_electron_is_a_distinct_qualifier[total_equivalent_electron_source_rate_at_wall_due_to_gas_injection] _
+
+name = 'total_equivalent_electron_source_rate_at_wall_due_to_gas_injection'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_equivalent_electron_is_a_distinct_qualifier(name: str) -> None:
+>       ir = parse(name, strict=True).ir
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/parser.py:2250: in parse
+    result = _parse_uncached(name, v, strict=strict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+imas_standard_names/grammar/parser.py:2189: in _parse_uncached
+    base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'total_equivalent_electron_source_rate'
+v = Vocabularies(axes=frozenset({'z', 'normalized_toroidal', 'perpendicular', 'normalized_radial', 'radial', 'poloidal', '...qualifiable_loci=frozenset({'strike_point', 'divertor_plate', 'divertor_target', 'x_point', 'midplane', 'separatrix'}))
+_allow_projection = True
+
+    def _match_base_with_qualifiers(
+        s: str, v: Vocabularies, *, _allow_projection: bool = True
+    ) -> tuple[QuantityOrCarrier, list[Qualifier], AxisProjection | None]:
+        """Match ``s`` as ``[axis_][qualifier_]*(base|carrier)``.
+    
+        Resolution priority: carrier > base > axis > qualifier.
+    
+        When ``_allow_projection`` is True (the default), an axis prefix
+        followed by a resolvable base/carrier is interpreted as a projection:
+        axis + quantity base → COMPONENT, axis + carrier → COORDINATE.
+        Nested projections (projection inside a projection) are blocked by
+        recursing with ``_allow_projection=False``.
+    
+        Returns ``(base_or_carrier, qualifiers, projection_or_none)``.
+        """
+    
+        if s in v.carrier_aliases:
+            return (
+                QuantityOrCarrier(token=v.carrier_aliases[s], kind=BaseKind.GEOMETRY),
+                [],
+                None,
+            )
+        if s in v.base_aliases:
+            return (
+                QuantityOrCarrier(token=v.base_aliases[s], kind=BaseKind.QUANTITY),
+                [],
+                None,
+            )
+        if s in v.carriers:
+            return QuantityOrCarrier(token=s, kind=BaseKind.GEOMETRY), [], None
+        if s in v.bases:
+            return QuantityOrCarrier(token=s, kind=BaseKind.QUANTITY), [], None
+    
+        parts = s.split("_")
+    
+        # A plane token may also be a projection axis (poloidal). When the
+        # remainder is explicitly cross-sectional, the section-plane reading is
+        # authoritative and must win before projection matching.
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            section_plane = v.section_planes.get(prefix)
+            if section_plane is None or not rest:
+                continue
+            try:
+                base, deeper, inner_proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=False
+                )
+            except ParseError:
+                continue
+            cross_sectional = base.token == "cross_section" or any(
+                qualifier.token == "cross_sectional" for qualifier in deeper
+            )
+            if inner_proj is not None or not cross_sectional:
+                continue
+            return (
+                base,
+                [Qualifier(token=section_plane, category="section_plane"), *deeper],
+                None,
+            )
+    
+        # --- Priority 3: axis prefix → projection ---
+        if _allow_projection:
+            projection_axes = v.axes | v.component_axes
+            for split in range(len(parts) - 1, 0, -1):
+                prefix = "_".join(parts[:split])
+                rest = "_".join(parts[split:])
+                if prefix not in projection_axes or not rest:
+                    continue
+                try:
+                    base, quals, inner_proj = _match_base_with_qualifiers(
+                        rest, v, _allow_projection=False
+                    )
+                except ParseError:
+                    continue
+                if inner_proj is not None:
+                    continue  # nested projections not allowed
+                shape = (
+                    ProjectionShape.COORDINATE
+                    if base.kind is BaseKind.GEOMETRY
+                    else ProjectionShape.COMPONENT
+                )
+                allowed_axes = (
+                    v.axes
+                    if shape is ProjectionShape.COORDINATE
+                    else (v.component_axes or v.axes)
+                )
+                if prefix not in allowed_axes:
+                    continue
+                return base, quals, AxisProjection(axis=prefix, shape=shape)
+    
+        # --- Priority 4: qualifier prefix ---
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            if prefix not in v.qualifiers:
+                continue
+            if not rest:
+                continue
+            try:
+                base, deeper, proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=_allow_projection
+                )
+            except ParseError:
+                continue
+            return (
+                base,
+                [
+                    Qualifier(token=prefix, category=v.qualifier_categories.get(prefix)),
+                    *deeper,
+                ],
+                proj,
+            )
+    
+        suggestions = get_close_matches(s, list(v.base_universe()), n=3)
+>       raise ParseError(
+            f"residue {s!r} does not match any physical_base or geometry_carrier; "
+            f"nearest candidates: {suggestions or '(none)'}",
+            suggestions=suggestions,
+            residue=s,
+        )
+E       imas_standard_names.grammar.parser.ParseError: residue 'total_equivalent_electron_source_rate' does not match any physical_base or geometry_carrier; nearest candidates: (none)
+
+imas_standard_names/grammar/parser.py:1435: ParseError
+______________ test_prefill_keeps_the_convention_next_to_the_base ______________
+
+    def test_prefill_keeps_the_convention_next_to_the_base() -> None:
+        model = StandardName(
+            subject="neon", physical_base="prefill_equivalent_electron_count"
+        )
+>       rendered = compose_standard_name(model)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/model.py:1821: in compose_standard_name
+    _parse_ir(rendered, strict=True)
+imas_standard_names/grammar/parser.py:2250: in parse
+    result = _parse_uncached(name, v, strict=strict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+imas_standard_names/grammar/parser.py:2189: in _parse_uncached
+    base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'neon_prefill_equivalent_electron_count'
+v = Vocabularies(axes=frozenset({'z', 'normalized_toroidal', 'perpendicular', 'normalized_radial', 'radial', 'poloidal', '...qualifiable_loci=frozenset({'strike_point', 'divertor_plate', 'divertor_target', 'x_point', 'midplane', 'separatrix'}))
+_allow_projection = True
+
+    def _match_base_with_qualifiers(
+        s: str, v: Vocabularies, *, _allow_projection: bool = True
+    ) -> tuple[QuantityOrCarrier, list[Qualifier], AxisProjection | None]:
+        """Match ``s`` as ``[axis_][qualifier_]*(base|carrier)``.
+    
+        Resolution priority: carrier > base > axis > qualifier.
+    
+        When ``_allow_projection`` is True (the default), an axis prefix
+        followed by a resolvable base/carrier is interpreted as a projection:
+        axis + quantity base → COMPONENT, axis + carrier → COORDINATE.
+        Nested projections (projection inside a projection) are blocked by
+        recursing with ``_allow_projection=False``.
+    
+        Returns ``(base_or_carrier, qualifiers, projection_or_none)``.
+        """
+    
+        if s in v.carrier_aliases:
+            return (
+                QuantityOrCarrier(token=v.carrier_aliases[s], kind=BaseKind.GEOMETRY),
+                [],
+                None,
+            )
+        if s in v.base_aliases:
+            return (
+                QuantityOrCarrier(token=v.base_aliases[s], kind=BaseKind.QUANTITY),
+                [],
+                None,
+            )
+        if s in v.carriers:
+            return QuantityOrCarrier(token=s, kind=BaseKind.GEOMETRY), [], None
+        if s in v.bases:
+            return QuantityOrCarrier(token=s, kind=BaseKind.QUANTITY), [], None
+    
+        parts = s.split("_")
+    
+        # A plane token may also be a projection axis (poloidal). When the
+        # remainder is explicitly cross-sectional, the section-plane reading is
+        # authoritative and must win before projection matching.
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            section_plane = v.section_planes.get(prefix)
+            if section_plane is None or not rest:
+                continue
+            try:
+                base, deeper, inner_proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=False
+                )
+            except ParseError:
+                continue
+            cross_sectional = base.token == "cross_section" or any(
+                qualifier.token == "cross_sectional" for qualifier in deeper
+            )
+            if inner_proj is not None or not cross_sectional:
+                continue
+            return (
+                base,
+                [Qualifier(token=section_plane, category="section_plane"), *deeper],
+                None,
+            )
+    
+        # --- Priority 3: axis prefix → projection ---
+        if _allow_projection:
+            projection_axes = v.axes | v.component_axes
+            for split in range(len(parts) - 1, 0, -1):
+                prefix = "_".join(parts[:split])
+                rest = "_".join(parts[split:])
+                if prefix not in projection_axes or not rest:
+                    continue
+                try:
+                    base, quals, inner_proj = _match_base_with_qualifiers(
+                        rest, v, _allow_projection=False
+                    )
+                except ParseError:
+                    continue
+                if inner_proj is not None:
+                    continue  # nested projections not allowed
+                shape = (
+                    ProjectionShape.COORDINATE
+                    if base.kind is BaseKind.GEOMETRY
+                    else ProjectionShape.COMPONENT
+                )
+                allowed_axes = (
+                    v.axes
+                    if shape is ProjectionShape.COORDINATE
+                    else (v.component_axes or v.axes)
+                )
+                if prefix not in allowed_axes:
+                    continue
+                return base, quals, AxisProjection(axis=prefix, shape=shape)
+    
+        # --- Priority 4: qualifier prefix ---
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            if prefix not in v.qualifiers:
+                continue
+            if not rest:
+                continue
+            try:
+                base, deeper, proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=_allow_projection
+                )
+            except ParseError:
+                continue
+            return (
+                base,
+                [
+                    Qualifier(token=prefix, category=v.qualifier_categories.get(prefix)),
+                    *deeper,
+                ],
+                proj,
+            )
+    
+        suggestions = get_close_matches(s, list(v.base_universe()), n=3)
+>       raise ParseError(
+            f"residue {s!r} does not match any physical_base or geometry_carrier; "
+            f"nearest candidates: {suggestions or '(none)'}",
+            suggestions=suggestions,
+            residue=s,
+        )
+E       imas_standard_names.grammar.parser.ParseError: residue 'neon_prefill_equivalent_electron_count' does not match any physical_base or geometry_carrier; nearest candidates: (none)
+
+imas_standard_names/grammar/parser.py:1435: ParseError
+________ test_equivalent_electron_is_public_and_has_no_base_restriction ________
+
+    def test_equivalent_electron_is_public_and_has_no_base_restriction() -> None:
+        assert Qualifier("equivalent_electron") == Qualifier.EQUIVALENT_ELECTRON
+        name = "equivalent_electron_pressure"
+>       assert compose(parse(name, strict=True).ir) == name
+                       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/parser.py:2250: in parse
+    result = _parse_uncached(name, v, strict=strict)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+imas_standard_names/grammar/parser.py:2189: in _parse_uncached
+    base, qualifiers, projection = _match_base_with_qualifiers(s, v)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+s = 'equivalent_electron_pressure'
+v = Vocabularies(axes=frozenset({'z', 'normalized_toroidal', 'perpendicular', 'normalized_radial', 'radial', 'poloidal', '...qualifiable_loci=frozenset({'strike_point', 'divertor_plate', 'divertor_target', 'x_point', 'midplane', 'separatrix'}))
+_allow_projection = True
+
+    def _match_base_with_qualifiers(
+        s: str, v: Vocabularies, *, _allow_projection: bool = True
+    ) -> tuple[QuantityOrCarrier, list[Qualifier], AxisProjection | None]:
+        """Match ``s`` as ``[axis_][qualifier_]*(base|carrier)``.
+    
+        Resolution priority: carrier > base > axis > qualifier.
+    
+        When ``_allow_projection`` is True (the default), an axis prefix
+        followed by a resolvable base/carrier is interpreted as a projection:
+        axis + quantity base → COMPONENT, axis + carrier → COORDINATE.
+        Nested projections (projection inside a projection) are blocked by
+        recursing with ``_allow_projection=False``.
+    
+        Returns ``(base_or_carrier, qualifiers, projection_or_none)``.
+        """
+    
+        if s in v.carrier_aliases:
+            return (
+                QuantityOrCarrier(token=v.carrier_aliases[s], kind=BaseKind.GEOMETRY),
+                [],
+                None,
+            )
+        if s in v.base_aliases:
+            return (
+                QuantityOrCarrier(token=v.base_aliases[s], kind=BaseKind.QUANTITY),
+                [],
+                None,
+            )
+        if s in v.carriers:
+            return QuantityOrCarrier(token=s, kind=BaseKind.GEOMETRY), [], None
+        if s in v.bases:
+            return QuantityOrCarrier(token=s, kind=BaseKind.QUANTITY), [], None
+    
+        parts = s.split("_")
+    
+        # A plane token may also be a projection axis (poloidal). When the
+        # remainder is explicitly cross-sectional, the section-plane reading is
+        # authoritative and must win before projection matching.
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            section_plane = v.section_planes.get(prefix)
+            if section_plane is None or not rest:
+                continue
+            try:
+                base, deeper, inner_proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=False
+                )
+            except ParseError:
+                continue
+            cross_sectional = base.token == "cross_section" or any(
+                qualifier.token == "cross_sectional" for qualifier in deeper
+            )
+            if inner_proj is not None or not cross_sectional:
+                continue
+            return (
+                base,
+                [Qualifier(token=section_plane, category="section_plane"), *deeper],
+                None,
+            )
+    
+        # --- Priority 3: axis prefix → projection ---
+        if _allow_projection:
+            projection_axes = v.axes | v.component_axes
+            for split in range(len(parts) - 1, 0, -1):
+                prefix = "_".join(parts[:split])
+                rest = "_".join(parts[split:])
+                if prefix not in projection_axes or not rest:
+                    continue
+                try:
+                    base, quals, inner_proj = _match_base_with_qualifiers(
+                        rest, v, _allow_projection=False
+                    )
+                except ParseError:
+                    continue
+                if inner_proj is not None:
+                    continue  # nested projections not allowed
+                shape = (
+                    ProjectionShape.COORDINATE
+                    if base.kind is BaseKind.GEOMETRY
+                    else ProjectionShape.COMPONENT
+                )
+                allowed_axes = (
+                    v.axes
+                    if shape is ProjectionShape.COORDINATE
+                    else (v.component_axes or v.axes)
+                )
+                if prefix not in allowed_axes:
+                    continue
+                return base, quals, AxisProjection(axis=prefix, shape=shape)
+    
+        # --- Priority 4: qualifier prefix ---
+        for split in range(len(parts) - 1, 0, -1):
+            prefix = "_".join(parts[:split])
+            rest = "_".join(parts[split:])
+            if prefix not in v.qualifiers:
+                continue
+            if not rest:
+                continue
+            try:
+                base, deeper, proj = _match_base_with_qualifiers(
+                    rest, v, _allow_projection=_allow_projection
+                )
+            except ParseError:
+                continue
+            return (
+                base,
+                [
+                    Qualifier(token=prefix, category=v.qualifier_categories.get(prefix)),
+                    *deeper,
+                ],
+                proj,
+            )
+    
+        suggestions = get_close_matches(s, list(v.base_universe()), n=3)
+>       raise ParseError(
+            f"residue {s!r} does not match any physical_base or geometry_carrier; "
+            f"nearest candidates: {suggestions or '(none)'}",
+            suggestions=suggestions,
+            residue=s,
+        )
+E       imas_standard_names.grammar.parser.ParseError: residue 'equivalent_electron_pressure' does not match any physical_base or geometry_carrier; nearest candidates: (none)
+
+imas_standard_names/grammar/parser.py:1435: ParseError
+_ test_count_and_rate_share_one_convention_definition[accumulated_argon_equivalent_electron_count] _
+
+name = 'accumulated_argon_equivalent_electron_count'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_count_and_rate_share_one_convention_definition(name: str) -> None:
+>       convention = load_concepts().concepts["equivalent_electron"]
+                     ^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/vocab_loaders.py:804: in load_concepts
+    _validate_convention_key("concepts.yml", token, known)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'concepts.yml', token = 'equivalent_electron'
+known = frozenset({'absorbed', 'absorptivity', 'acceleration', 'accumulated', 'active_limiter_point', 'active_spatial_resolution_zone', ...})
+
+    def _validate_convention_key(filename: str, token: str, known: frozenset[str]) -> None:
+        if token not in known:
+>           raise ValueError(
+                f"{filename}: key {token!r} is not a token in the current grammar "
+                f"vocabularies"
+            )
+E           ValueError: concepts.yml: key 'equivalent_electron' is not a token in the current grammar vocabularies
+
+imas_standard_names/grammar/vocab_loaders.py:784: ValueError
+_ test_count_and_rate_share_one_convention_definition[accumulated_ammonia_equivalent_electron_count] _
+
+name = 'accumulated_ammonia_equivalent_electron_count'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_count_and_rate_share_one_convention_definition(name: str) -> None:
+>       convention = load_concepts().concepts["equivalent_electron"]
+                     ^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/vocab_loaders.py:804: in load_concepts
+    _validate_convention_key("concepts.yml", token, known)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'concepts.yml', token = 'equivalent_electron'
+known = frozenset({'absorbed', 'absorptivity', 'acceleration', 'accumulated', 'active_limiter_point', 'active_spatial_resolution_zone', ...})
+
+    def _validate_convention_key(filename: str, token: str, known: frozenset[str]) -> None:
+        if token not in known:
+>           raise ValueError(
+                f"{filename}: key {token!r} is not a token in the current grammar "
+                f"vocabularies"
+            )
+E           ValueError: concepts.yml: key 'equivalent_electron' is not a token in the current grammar vocabularies
+
+imas_standard_names/grammar/vocab_loaders.py:784: ValueError
+_ test_count_and_rate_share_one_convention_definition[neon_prefill_equivalent_electron_count] _
+
+name = 'neon_prefill_equivalent_electron_count'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_count_and_rate_share_one_convention_definition(name: str) -> None:
+>       convention = load_concepts().concepts["equivalent_electron"]
+                     ^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/vocab_loaders.py:804: in load_concepts
+    _validate_convention_key("concepts.yml", token, known)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'concepts.yml', token = 'equivalent_electron'
+known = frozenset({'absorbed', 'absorptivity', 'acceleration', 'accumulated', 'active_limiter_point', 'active_spatial_resolution_zone', ...})
+
+    def _validate_convention_key(filename: str, token: str, known: frozenset[str]) -> None:
+        if token not in known:
+>           raise ValueError(
+                f"{filename}: key {token!r} is not a token in the current grammar "
+                f"vocabularies"
+            )
+E           ValueError: concepts.yml: key 'equivalent_electron' is not a token in the current grammar vocabularies
+
+imas_standard_names/grammar/vocab_loaders.py:784: ValueError
+_ test_count_and_rate_share_one_convention_definition[accumulated_oxygen_prefill_equivalent_electron_count_due_to_gas_injection] _
+
+name = 'accumulated_oxygen_prefill_equivalent_electron_count_due_to_gas_injection'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_count_and_rate_share_one_convention_definition(name: str) -> None:
+>       convention = load_concepts().concepts["equivalent_electron"]
+                     ^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/vocab_loaders.py:804: in load_concepts
+    _validate_convention_key("concepts.yml", token, known)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'concepts.yml', token = 'equivalent_electron'
+known = frozenset({'absorbed', 'absorptivity', 'acceleration', 'accumulated', 'active_limiter_point', 'active_spatial_resolution_zone', ...})
+
+    def _validate_convention_key(filename: str, token: str, known: frozenset[str]) -> None:
+        if token not in known:
+>           raise ValueError(
+                f"{filename}: key {token!r} is not a token in the current grammar "
+                f"vocabularies"
+            )
+E           ValueError: concepts.yml: key 'equivalent_electron' is not a token in the current grammar vocabularies
+
+imas_standard_names/grammar/vocab_loaders.py:784: ValueError
+_ test_count_and_rate_share_one_convention_definition[lithium_equivalent_electron_source_rate_due_to_gas_injection] _
+
+name = 'lithium_equivalent_electron_source_rate_due_to_gas_injection'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_count_and_rate_share_one_convention_definition(name: str) -> None:
+>       convention = load_concepts().concepts["equivalent_electron"]
+                     ^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/vocab_loaders.py:804: in load_concepts
+    _validate_convention_key("concepts.yml", token, known)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'concepts.yml', token = 'equivalent_electron'
+known = frozenset({'absorbed', 'absorptivity', 'acceleration', 'accumulated', 'active_limiter_point', 'active_spatial_resolution_zone', ...})
+
+    def _validate_convention_key(filename: str, token: str, known: frozenset[str]) -> None:
+        if token not in known:
+>           raise ValueError(
+                f"{filename}: key {token!r} is not a token in the current grammar "
+                f"vocabularies"
+            )
+E           ValueError: concepts.yml: key 'equivalent_electron' is not a token in the current grammar vocabularies
+
+imas_standard_names/grammar/vocab_loaders.py:784: ValueError
+_ test_count_and_rate_share_one_convention_definition[total_equivalent_electron_source_rate_at_wall_due_to_gas_injection] _
+
+name = 'total_equivalent_electron_source_rate_at_wall_due_to_gas_injection'
+
+    @pytest.mark.parametrize("name", NAMES)
+    def test_count_and_rate_share_one_convention_definition(name: str) -> None:
+>       convention = load_concepts().concepts["equivalent_electron"]
+                     ^^^^^^^^^^^^^^^
+
+tests/test_equivalent_electron_word.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+imas_standard_names/grammar/vocab_loaders.py:804: in load_concepts
+    _validate_convention_key("concepts.yml", token, known)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = 'concepts.yml', token = 'equivalent_electron'
+known = frozenset({'absorbed', 'absorptivity', 'acceleration', 'accumulated', 'active_limiter_point', 'active_spatial_resolution_zone', ...})
+
+    def _validate_convention_key(filename: str, token: str, known: frozenset[str]) -> None:
+        if token not in known:
+>           raise ValueError(
+                f"{filename}: key {token!r} is not a token in the current grammar "
+                f"vocabularies"
+            )
+E           ValueError: concepts.yml: key 'equivalent_electron' is not a token in the current grammar vocabularies
+
+imas_standard_names/grammar/vocab_loaders.py:784: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_equivalent_electron_word.py::test_equivalent_electron_is_a_distinct_qualifier[accumulated_argon_equivalent_electron_count]
+FAILED tests/test_equivalent_electron_word.py::test_equivalent_electron_is_a_distinct_qualifier[accumulated_ammonia_equivalent_electron_count]
+FAILED tests/test_equivalent_electron_word.py::test_equivalent_electron_is_a_distinct_qualifier[neon_prefill_equivalent_electron_count]
+FAILED tests/test_equivalent_electron_word.py::test_equivalent_electron_is_a_distinct_qualifier[accumulated_oxygen_prefill_equivalent_electron_count_due_to_gas_injection]
+FAILED tests/test_equivalent_electron_word.py::test_equivalent_electron_is_a_distinct_qualifier[lithium_equivalent_electron_source_rate_due_to_gas_injection]
+FAILED tests/test_equivalent_electron_word.py::test_equivalent_electron_is_a_distinct_qualifier[total_equivalent_electron_source_rate_at_wall_due_to_gas_injection]
+FAILED tests/test_equivalent_electron_word.py::test_prefill_keeps_the_convention_next_to_the_base
+FAILED tests/test_equivalent_electron_word.py::test_equivalent_electron_is_public_and_has_no_base_restriction
+FAILED tests/test_equivalent_electron_word.py::test_count_and_rate_share_one_convention_definition[accumulated_argon_equivalent_electron_count]
+FAILED tests/test_equivalent_electron_word.py::test_count_and_rate_share_one_convention_definition[accumulated_ammonia_equivalent_electron_count]
+FAILED tests/test_equivalent_electron_word.py::test_count_and_rate_share_one_convention_definition[neon_prefill_equivalent_electron_count]
+FAILED tests/test_equivalent_electron_word.py::test_count_and_rate_share_one_convention_definition[accumulated_oxygen_prefill_equivalent_electron_count_due_to_gas_injection]
+FAILED tests/test_equivalent_electron_word.py::test_count_and_rate_share_one_convention_definition[lithium_equivalent_electron_source_rate_due_to_gas_injection]
+FAILED tests/test_equivalent_electron_word.py::test_count_and_rate_share_one_convention_definition[total_equivalent_electron_source_rate_at_wall_due_to_gas_injection]
+14 failed, 6 passed in 2.48s
+EXIT=1

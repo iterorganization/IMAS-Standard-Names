@@ -1,0 +1,5 @@
+# revision: 135c42e6217f3631e704ec5bcdfe24787bd6b321; tree: /tmp/isn-corpus-1314042-IpW8; partition: all_debug; host: 98dci4-clu-3141; command: timeout 300 uv run --no-sync --directory /tmp/isn-corpus-1314042-IpW8 python /home/ITER/mcintos/.config/reckon/crew/runs/r-20261113T124343172148-eecq-equivalent-electron-word/corpus_probe.py compare /home/ITER/mcintos/.config/reckon/crew/runs/r-20261113T124343172148-eecq-equivalent-electron-word/baseline-corpus.json 
+module: /tmp/isn-corpus-1314042-IpW8/imas_standard_names/grammar/parser.py
+cwd: /tmp/isn-corpus-1314042-IpW8
+CORPUS_UNCHANGED: 5600 names; 0 parse or render differences; six plain names strict
+EXIT=0

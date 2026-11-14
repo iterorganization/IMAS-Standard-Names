@@ -19,6 +19,22 @@
 # documentation names it and links to it.
 concepts:
 
+  equivalent_electron:
+    phrase: equivalent-electron counting convention
+    definition: >-
+      A count or rate expressed as one unit per electron carried by each
+      injected atom or molecule, using its electron content rather than its
+      instantaneous ionization state.
+    equation: 'N_{\mathrm{eq}} = \sum_s Z_s N_s'
+    symbols:
+      - symbol: N_{\mathrm{eq}}
+        meaning: equivalent-electron count
+      - symbol: N_s
+        meaning: number of injected atoms or molecules of species s
+      - symbol: Z_s
+        meaning: electron content per injected atom or molecule of species s
+    restates_equation: false
+
   # --- operators ------------------------------------------------------------
 
   flux_surface_averaged:

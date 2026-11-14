@@ -299,6 +299,7 @@ class Qualifier(StrEnum):
     ROTATIONAL = "rotational"
     TANGENCY = "tangency"
     SOURCED = "sourced"
+    EQUIVALENT_ELECTRON = "equivalent_electron"
 
 
 class ChannelQualifier(StrEnum):

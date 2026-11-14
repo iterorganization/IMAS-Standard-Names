@@ -1,0 +1,39 @@
+<section id="eecq-equivalent-electron-word-landing">
+  <h3>Equivalent-electron counting vocabulary</h3>
+  <p>Registered <code>equivalent_electron</code> in
+  <code>grammar/vocabularies/qualifiers.yml</code> and regenerated the public
+  <code>Qualifier.EQUIVALENT_ELECTRON</code> member with the repository generator.
+  Its presentation group is <code>normalized</code>, which includes unit conventions.
+  The qualifier uses the existing kind-forming composition and has no base restriction.</p>
+  <p>The single definition is held in
+  <code>grammar/vocabularies/conventions/concepts.yml</code>: one unit per electron
+  carried by each injected atom or molecule, using electron content rather than
+  instantaneous ionization state. Count and source-rate names select that same concept.</p>
+  <table><thead><tr><th>Strictly validated name</th><th>Physical base</th></tr></thead>
+  <tbody><tr><td><code>accumulated_argon_equivalent_electron_count</code></td><td><code>count</code></td></tr>
+<tr><td><code>accumulated_ammonia_equivalent_electron_count</code></td><td><code>count</code></td></tr>
+<tr><td><code>neon_prefill_equivalent_electron_count</code></td><td><code>count</code></td></tr>
+<tr><td><code>accumulated_oxygen_prefill_equivalent_electron_count_due_to_gas_injection</code></td><td><code>count</code></td></tr>
+<tr><td><code>lithium_equivalent_electron_source_rate_due_to_gas_injection</code></td><td><code>source_rate</code></td></tr>
+<tr><td><code>total_equivalent_electron_source_rate_at_wall_due_to_gas_injection</code></td><td><code>source_rate</code></td></tr></tbody></table>
+  <p>Each name reports the convention as a distinct qualifier immediately before
+  the base and renders unchanged through the IR and flat public APIs. All six
+  plain names retain their baseline parses. Prefill composition emits
+  <code>neon_prefill_equivalent_electron_count</code>, not
+  <code>neon_equivalent_electron_prefill_count</code> for that parse.
+  <code>electron_equivalent</code> is refused as an alias; the tests that treated
+  it as an absent transformation have been removed.</p>
+  <p id="eecq-equivalent-electron-word-measure">On <code>all_debug</code>, the grammar suite and its
+  importing tests report baseline: 1652 passed, 32 skipped, 17 xfailed in 541.48s (0:09:01); head:
+  1672 passed, 32 skipped, 15 xfailed in 545.17s (0:09:05). Both end <code>EXIT=0</code>, with zero added failures.
+  The exact corpus comparison reports 5,600 unchanged parses and renderings,
+  including strict validation of the six plain names. Removing the vocabulary
+  word produces <code>14 failed, 6 passed in 2.48s</code> and <code>EXIT=1</code>,
+  including all six distinct-qualifier parsing cases. Generated-file drift and
+  scoped lint checks pass.</p>
+  <ul><li><a href="/imas-standard-names/evidence/fragments/equivalent-electron-counting-qualifier/eecq-equivalent-electron-word-grammar-base.log">grammar-base.log</a></li>
+<li><a href="/imas-standard-names/evidence/fragments/equivalent-electron-counting-qualifier/eecq-equivalent-electron-word-grammar-head.log">grammar-head.log</a></li>
+<li><a href="/imas-standard-names/evidence/fragments/equivalent-electron-counting-qualifier/eecq-equivalent-electron-word-negative-control.log">negative-control.log</a></li>
+<li><a href="/imas-standard-names/evidence/fragments/equivalent-electron-counting-qualifier/eecq-equivalent-electron-word-baseline-corpus.log">baseline-corpus.log</a></li>
+<li><a href="/imas-standard-names/evidence/fragments/equivalent-electron-counting-qualifier/eecq-equivalent-electron-word-corpus-comparison.log">corpus-comparison.log</a></li></ul>
+</section>

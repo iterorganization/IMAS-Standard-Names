@@ -1,0 +1,7 @@
+# revision: 7c0809e231ebd6c659270331b9a141cfffe85c7e; tree: /tmp/isn-baseline-1313976-nXmR
+# command: uv run --no-sync python /home/ITER/mcintos/.config/reckon/crew/runs/r-20261113T124343172148-eecq-equivalent-electron-word/corpus_probe.py record /home/ITER/mcintos/.config/reckon/crew/runs/r-20261113T124343172148-eecq-equivalent-electron-word/baseline-corpus.json
+module: /tmp/isn-baseline-1313976-nXmR/imas_standard_names/grammar/parser.py
+cwd: /tmp/isn-baseline-1313976-nXmR
+Corpus instrumentation reuses one vocabulary snapshot for the unchanged test generators.
+CORPUS_RECORDED: 5600 names including six plain names
+EXIT=0

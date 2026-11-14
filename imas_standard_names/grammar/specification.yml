@@ -225,6 +225,10 @@ segments:
       prefill_count, saturated_current, deposited_power) and stay glued to
       it, INNER of the species block (ion_atomic_mass, argon_prefill_count,
       electron_deposited_power — recipient-possessive). The segment admits
+      the unit-convention token equivalent_electron immediately before the
+      base, after other kind-forming qualifiers (neon_prefill_equivalent_electron_count).
+      Its presentation category is normalized; it imposes no base restriction.
+      The segment admits
       MULTIPLE tokens; stacked scoping qualifiers keep their authored order
       (a canonical intra-order by category rank is planned but not yet
       enforced). Genuinely LEXICALISED compounds (decay_length, decay_time,

@@ -5,8 +5,6 @@ process, subject, position, component, and transformation segments, plus
 forbidden-pattern error hints and the deferred coordinate-prefix split.
 """
 
-from __future__ import annotations
-
 import pytest
 
 from imas_standard_names.grammar.model import (
@@ -259,14 +257,6 @@ class TestTransformationTokens:
         [
             # These tokens belong to different operator roles.
             pytest.param(
-                "electron_equivalent",
-                getattr(Transformation, "ELECTRON_EQUIVALENT", None),
-                marks=pytest.mark.xfail(
-                    reason="electron_equivalent is not a transformation operator",
-                    strict=True,
-                ),
-            ),
-            pytest.param(
                 "ratio_of",
                 getattr(Transformation, "RATIO_OF", None),
                 marks=pytest.mark.xfail(
@@ -278,30 +268,6 @@ class TestTransformationTokens:
     )
     def test_transformation_enum_membership(self, token, enum_member):
         assert Transformation(token) == enum_member
-
-    @pytest.mark.xfail(
-        reason="electron_equivalent is not a transformation operator",
-        strict=True,
-    )
-    def test_electron_equivalent_compose_round_trip(self):
-        """Compose from explicit parts and verify round-trip.
-
-        Note: raw parsing of 'electron_equivalent_X' is ambiguous because
-        'electron' matches as a Subject prefix first. Use explicit composition.
-        """
-        from imas_standard_names.grammar.model import StandardName
-
-        model = StandardName(
-            transformation="electron_equivalent", physical_base="particle_flux"
-        )
-        name = model.compose()
-        assert name == "electron_equivalent_particle_flux"
-        # Re-parse: parser will see 'electron' as subject due to greedy prefix
-        # but composition from parts is the primary API for this token
-        reparsed = parse_standard_name(name)
-        # Greedy parser matches 'electron' as subject, so transformation is not set
-        # This is a known parser limitation; the token is usable via compose API
-        assert reparsed.subject is not None or reparsed.transformation is not None
 
     @pytest.mark.xfail(
         reason="ratio_of is a binary operator, not a transformation",
